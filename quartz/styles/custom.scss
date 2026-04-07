@@ -1,14 +1,53 @@
 @use "./base.scss";
 
-// hide Quartz's auto-generated date (filesystem date, not note date)
+// ── Page Title → ASCII art logo ───────────────────────────────────────────────
+h2.page-title a {
+  font-size: 0;        // hide "Ethan Corn" text
+  color: transparent;
+
+  &::before {
+    content: "███████╗ ██████╗\A██╔════╝██╔════╝\A█████╗  ██║     \A██╔══╝  ██║     \A███████╗╚██████╗\A╚══════╝ ╚═════╝";
+    white-space: pre;
+    display: block;
+    font-size: 0.6rem;
+    line-height: 1.3;
+    font-family: var(--codeFont);
+    color: #9aaa8a;    // sage green
+  }
+}
+
+// ── Explorer: padding + bullet prefix ────────────────────────────────────────
+.explorer-content ul li > a {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  display: block;
+
+  &::before {
+    content: "· ";
+    color: var(--gray);
+  }
+}
+
+// ── Search: sage green border + highlight ─────────────────────────────────────
+.search > .search-button {
+  border-color: #9aaa8a;
+}
+
+.search-space > input {
+  border-color: #9aaa8a;
+}
+
+.search-layout .highlight {
+  background: rgba(154, 170, 138, 0.25);
+  border-radius: 5px;
+}
+
+// ── Hide auto-generated Quartz date ──────────────────────────────────────────
 .content-meta time {
   display: none;
 }
 
-// Midnight Tan — matching Obsidian CSS snippet
-// Note: uses JetBrains Mono (Google Fonts) as Iosevka is not on Google Fonts.
-// To use Iosevka exactly, self-host the font and add @font-face declarations here.
-
+// ── Midnight Tan ─────────────────────────────────────────────────────────────
 article {
   blockquote {
     color: #b8b0a4;
@@ -37,7 +76,7 @@ article {
   h2 { color: #9aaa8a; }
 }
 
-// light mode heading colors (darker variants for warm bg)
+// light mode heading colors
 :root[saved-theme="light"] article {
   h1 { color: #7a3a40; }
   h2 { color: #4a6a3a; }
