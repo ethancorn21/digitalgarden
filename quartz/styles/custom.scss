@@ -1,5 +1,10 @@
 @use "./base.scss";
 
+// hide Quartz's auto-generated date (filesystem date, not note date)
+.content-meta time {
+  display: none;
+}
+
 // Midnight Tan — matching Obsidian CSS snippet
 // Note: uses JetBrains Mono (Google Fonts) as Iosevka is not on Google Fonts.
 // To use Iosevka exactly, self-host the font and add @font-face declarations here.
