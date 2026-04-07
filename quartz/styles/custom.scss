@@ -1,3 +1,49 @@
 @use "./base.scss";
 
-// put your custom CSS here!
+// Midnight Tan — matching Obsidian CSS snippet
+// Note: uses JetBrains Mono (Google Fonts) as Iosevka is not on Google Fonts.
+// To use Iosevka exactly, self-host the font and add @font-face declarations here.
+
+article {
+  h1 {
+    color: #a7565d;
+  }
+
+  h2 {
+    color: #9aaa8a;
+  }
+
+  h3, h4, h5, h6 {
+    color: var(--dark);
+  }
+
+  blockquote {
+    color: #b8b0a4;
+    background-color: #252520;
+    border-left: 3px solid #8c9ea9;
+    border-radius: 0 4px 4px 0;
+    padding: 0.4em 1em;
+    margin: 0.5em 0;
+  }
+
+  code {
+    background-color: #1a1a1a;
+    color: #d7cfc3;
+  }
+
+  pre, pre code {
+    background-color: #1a1a1a;
+    color: #d7cfc3;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid #333333;
+    margin: 1.5em 0;
+  }
+
+  p {
+    line-height: 1.7;
+    margin-bottom: 0.75em;
+  }
+}
