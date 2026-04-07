@@ -6,6 +6,7 @@ tags: [[life vision]]; [[value creation]]; [[synthesis]];
 # How to Build Capability 
 
 Capability consists of:
+
 1) Physically capable
 		Take care of your health. Do not allow yourself to waste away. But also don't stress out if you are not the most physically capable. That's not the goal here. The goal is to be good enough in this domain so that you are never hindered or set back because of your physicality. So, go to the gym a few times a week. Get good sleep. Eat well. Get some sun. That's it.
 2) Intellectually sharp
