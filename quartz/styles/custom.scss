@@ -5,40 +5,18 @@
 // To use Iosevka exactly, self-host the font and add @font-face declarations here.
 
 article {
-  h1 {
-    color: #a7565d;
-  }
-
-  h2 {
-    color: #9aaa8a;
-  }
-
-  h3, h4, h5, h6 {
-    color: var(--dark);
-  }
-
   blockquote {
     color: #b8b0a4;
-    background-color: #252520;
-    border-left: 3px solid #8c9ea9;
+    background-color: #25251e;
+    border-left: 3px solid var(--secondary);
     border-radius: 0 4px 4px 0;
     padding: 0.4em 1em;
     margin: 0.5em 0;
   }
 
-  code {
-    background-color: #1a1a1a;
-    color: #d7cfc3;
-  }
-
-  pre, pre code {
-    background-color: #1a1a1a;
-    color: #d7cfc3;
-  }
-
   hr {
     border: none;
-    border-top: 1px solid #333333;
+    border-top: 1px solid var(--lightgray);
     margin: 1.5em 0;
   }
 
@@ -46,4 +24,16 @@ article {
     line-height: 1.7;
     margin-bottom: 0.75em;
   }
+}
+
+// dark mode heading colors
+:root[saved-theme="dark"] article {
+  h1 { color: #a7565d; }
+  h2 { color: #9aaa8a; }
+}
+
+// light mode heading colors (darker variants for warm bg)
+:root[saved-theme="light"] article {
+  h1 { color: #7a3a40; }
+  h2 { color: #4a6a3a; }
 }
