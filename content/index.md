@@ -2,10 +2,10 @@
 title: Ethan Corn
 ---
 
-Hey, I'm Ethan — IS student, CCNA certified, and IT generalist with a focus on networking, DevOps, and automation.
+Hey, I'm Ethan
 
-[GitHub](https://github.com/TODO) | [Spotify](https://open.spotify.com/user/TODO)
 
-## Notes
+Browse here [[homepage|here]] to see my notes.
 
-Browse my [[TODO - link to index note here]].
+[GitHub](https://github.com/ethancorn21) | [Spotify](https://open.spotify.com/user/ethancorn-us?si=a12dba2279084e86)
+
