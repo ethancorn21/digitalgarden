@@ -1,9 +1,10 @@
 @use "./base.scss";
 
-// ── Page Title → ASCII art logo ───────────────────────────────────────────────
+// ── Page Title → EC ASCII logo (home button) ─────────────────────────────────
 h2.page-title a {
-  font-size: 0;        // hide "Ethan Corn" text
+  font-size: 0;
   color: transparent;
+  display: block;
 
   &::before {
     content: "███████╗ ██████╗\A██╔════╝██╔════╝\A█████╗  ██║     \A██╔══╝  ██║     \A███████╗╚██████╗\A╚══════╝ ╚═════╝";
@@ -12,7 +13,7 @@ h2.page-title a {
     font-size: 0.6rem;
     line-height: 1.3;
     font-family: var(--codeFont);
-    color: #9aaa8a;    // sage green
+    color: #9aaa8a;
   }
 }
 
