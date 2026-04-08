@@ -29,6 +29,17 @@ h2.page-title a {
   }
 }
 
+// ── Backlinks: padding + bullet prefix ───────────────────────────────────────
+.backlinks ul.overflow > li {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+
+  & > a::before {
+    content: "· ";
+    color: var(--gray);
+  }
+}
+
 // ── Search: sage green border + highlight ─────────────────────────────────────
 .search > .search-button {
   border-color: #9aaa8a;
