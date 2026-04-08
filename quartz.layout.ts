@@ -45,7 +45,13 @@ export const defaultContentPageLayout: PageLayout = {
       globalGraph: { showTags: false },
     }),
     Component.DesktopOnly(Component.TableOfContents()),
-    Component.Backlinks(),
+    Component.ConditionalRender({
+      component: Component.Backlinks(),
+      condition: (page) => {
+        const slug = page.fileData.slug ?? ""
+        return slug.startsWith("5 - indexes/") || slug.startsWith("4 - tags/")
+      },
+    }),
   ],
 }
 
