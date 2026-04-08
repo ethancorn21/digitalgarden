@@ -4,9 +4,11 @@ title: Introduction
 
 Hey, I'm Ethan
 
-This is a digital zettelkasten. The goal is to take ideas, expand upon them, then work, and apply ideas in novel ways.
+This is a digital zettelkasten. The goal is to take ideas, expand upon them, then work, and apply ideas in novel ways. The notes will be rough and not make sense a lot of the time.
 
-The site works much the same as Wikipedia. At the top are tags, these are the general subject(s) of the note below it. At the bottom are similar notes that are related to the current note in some way. Some links will be broken but...oh well.
+The site works much the same as Wikipedia, links will take you further into the site. At the top are tags, these are the general subject(s) of the content below it. At the bottom are similar notes that are related to the current note in some way. Some links will be broken but...oh well.
+
+Click the graph view to see a map of all of the connections in the vault, it's pretty neat imo.
 
 Use the sidebar or check [[homepage|here]] to see an index of my notes.
 

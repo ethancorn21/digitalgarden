@@ -1,6 +1,6 @@
 2025-10-28 10:43
 status: #baby
-tags: [[Social Behavior]], [[Super Communicator]], [[religion]], [[thinking traps]]
+tags: [[Social Behavior]], [[superior communication]], [[religion]], [[thinking traps]]
 
 ---
 # Purity Spiral

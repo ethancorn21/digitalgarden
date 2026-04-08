@@ -12,7 +12,7 @@ For example, for others to understand you, you must first understand others.
 
 ---
 #### Reference
-In [[Super Communicator]], to get people to listen to you, you must listen to others. Different than the generally accepted first instinct to command others.
+In [[superior communication]], to get people to listen to you, you must listen to others. Different than the generally accepted first instinct to command others.
 - [[Acknowledge People's Ideas]]
 
 People are more likely to help some they have helped before, not someone who has helped them.

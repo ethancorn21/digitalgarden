@@ -1,6 +1,6 @@
 2025-10-02 21:28
 status: #baby
-tags:[[Super Communicator]], [[synthesis]], [[Make People Feel heard]]
+tags:[[superior communication]], [[synthesis]], [[Make People Feel heard]]
 
 # Why I Like Talking to Nerds
 

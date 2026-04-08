@@ -1,6 +1,6 @@
 2025-10-13 16:48
 status: #baby
-tags:  [[Super Communicator]]
+tags:  [[superior communication]]
 
 ---
 

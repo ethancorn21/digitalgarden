@@ -9,3 +9,4 @@ Things to meditate on :
 - What could help you achieve what needs to be done?
 - What processes do you have that could be more efficient?
 - Is there areas of your habits / processes that can be improved?
+- [[My Quest to Regain The Dopaminergic Response of a Caveman]]

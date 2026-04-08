@@ -1,11 +1,15 @@
-Stuff I've written:
+
 [[A Behind The Scenes]]
 [[Christian Ideals of The Group]]
 [[Plagued By Curiosity]]
 [[Idolatry of the Yeoman Class]]
 [[The Oracles]]
-
-Frameworks:
-
-Perspectives:
+[[Common Themes of Self Actualization]]
+[[Palace and Dog Kennel]]
+[[Plagued By Curiosity]]
+[[The internet as a collective conscious]]
+[[Steve Jobs mentality]]
+[[The Oracles]]
+[[To reap what you sow]]
+[[Valley of Despair and the Heroes Journey]]
 [[life long learner]]

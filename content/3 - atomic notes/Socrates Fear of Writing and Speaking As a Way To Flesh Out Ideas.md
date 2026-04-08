@@ -1,6 +1,6 @@
 2026-03-18 22:46
 status: #baby 
-tags: [[Super Communicator]] ; [[Inversion Philosophy]]
+tags: [[superior communication]] ; [[Inversion Philosophy]]
 
 ---
 # Socrates Fear of Writing and Speaking As a Way To Flesh Out Ideas

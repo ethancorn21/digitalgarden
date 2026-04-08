@@ -1,6 +1,6 @@
 2025-09-29 06:34
 status: #adult 
-tags: [[Super Communicator]], [[synthesis]], [[analysis]],
+tags: [[superior communication]], [[synthesis]], [[analysis]],
 
 ---
 ## nobody ever truly understands what we communicate

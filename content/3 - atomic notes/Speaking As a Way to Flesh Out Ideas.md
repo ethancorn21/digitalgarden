@@ -1,6 +1,6 @@
 2026-03-18 22:50
 status: #baby 
-tags: [[process]] ; [[Super Communicator]]
+tags: [[process]] ; [[superior communication]]
 
 ---
 # Speaking As a Way to Flesh Out Ideas

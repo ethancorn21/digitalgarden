@@ -1,6 +1,6 @@
 2025-10-21 08:29
 status: #baby
-tags: [[learning]], [[Super Communicator]], [[thinking traps]]
+tags: [[learning]], [[superior communication]], [[thinking traps]]
 
 ---
 # curse of knowledge

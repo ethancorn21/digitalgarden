@@ -1,6 +1,6 @@
 2025-10-04 10:21
 status: #baby 
-tags: [[Super Communicator]]
+tags: [[superior communication]]
 
 # meetings != productivity
 

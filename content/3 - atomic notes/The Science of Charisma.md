@@ -1,6 +1,6 @@
 2025-12-04 11:45
 status: #baby
-tags: [[Super Communicator]]
+tags: [[superior communication]]
 
 ---
 # The Science of Charisma

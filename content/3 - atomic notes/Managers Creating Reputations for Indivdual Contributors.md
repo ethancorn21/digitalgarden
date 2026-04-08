@@ -1,6 +1,6 @@
 2026-03-03 11:32
 status: #baby
-tags: [[Super Communicator]]; [[analysis]]; [[ ]]
+tags: [[superior communication]]; [[analysis]]; [[ ]]
 
 ---
 # Managers Creating Reputations for Individual Contributors

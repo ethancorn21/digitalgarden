@@ -1,6 +1,6 @@
 2025-10-06 09:48
 status: #baby
-tags:[[Super Communicator]], [[synthesis]],
+tags:[[superior communication]], [[synthesis]],
 # Sled Dogs as a Way to Think of Organization
 
 The act of a team of dogs pulling a vehicle/payload, called mushing, is thought to be over 9,500 years old [1]. What can we learn from this?

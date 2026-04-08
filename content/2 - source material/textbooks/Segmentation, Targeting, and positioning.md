@@ -1,5 +1,5 @@
 Ch.9 MKT
-class: [[marketing]]
+class: [[marketing]] [[school]]
 Third step in the Marketing Plan:
 Segmentation, targeting, and positioning process:
 ```mermaid

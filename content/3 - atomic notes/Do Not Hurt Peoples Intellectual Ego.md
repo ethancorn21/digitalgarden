@@ -1,6 +1,6 @@
 2026-03-18 23:28
 status: #baby 
-tags: [[thinking traps]]; [[Super Communicator]]; [[Social Behavior]]
+tags: [[thinking traps]]; [[superior communication]]; [[Social Behavior]]
 
 ---
 # Intellectual Ego

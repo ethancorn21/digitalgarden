@@ -1,6 +1,6 @@
 2025-10-06 19:48
 status: #baby
-tags: [[synthesis]]; [[Super Communicator]];
+tags: [[synthesis]]; [[superior communication]];
 
 ---
 ## Attempts to Prevent Communication Scramble

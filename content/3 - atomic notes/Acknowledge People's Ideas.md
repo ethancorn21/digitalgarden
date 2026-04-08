@@ -1,6 +1,6 @@
 2025-10-15 17:34
 status: #baby
-tags: [[Super Communicator]], [[Make People Feel heard]]
+tags: [[superior communication]], [[Make People Feel heard]]
 
 ---
 

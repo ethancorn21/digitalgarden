@@ -1,4 +1,4 @@
-[[marketing]]
+[[marketing]] [[school]]
 product = anything of value to a customer that can be bought or sold voluntarily
 
 core customer value - what problem the product is fixing for the customer

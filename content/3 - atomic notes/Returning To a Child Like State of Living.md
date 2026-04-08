@@ -1,6 +1,6 @@
 2026-03-23 16:37
 status: #baby 
-tags: [[analysis]] ; [[Things to Meditate On]] ; [[mastery]] ; [[Inversion Philosophy]]
+tags: [[analysis]] ; [[things to contemplate]] ; [[mastery]] ; [[Inversion Philosophy]]
 
 ---
 # Returning To a Child Like State of Living

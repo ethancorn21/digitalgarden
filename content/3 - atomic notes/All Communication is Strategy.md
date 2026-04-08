@@ -1,6 +1,6 @@
 2025-10-24 15:30
 status: #baby 
-tags: [[Super Communicator]], [[Social Behavior]]
+tags: [[superior communication]], [[Social Behavior]]
 
 ---
 # All Communication is Strategy

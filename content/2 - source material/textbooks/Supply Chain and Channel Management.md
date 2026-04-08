@@ -1,4 +1,4 @@
-[[marketing]]
+[[marketing]] [[school]]
 
 marketing channel management = supply chain management
 - direct channel - manufacturer to consumer

@@ -29,4 +29,4 @@ Customers usually use 5 perception of quality to decide if a service met their e
 service recovery - when delivery of service not good, can listen to customer complaint and feedback and compensate them.
 
 
-[[marketing]]
+[[marketing]] [[school]]

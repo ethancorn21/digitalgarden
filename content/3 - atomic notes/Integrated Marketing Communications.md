@@ -1,4 +1,4 @@
-[[marketing]]
+[[marketing]] [[school]]
 
 represents the Promotion part of the 4 P's:
 - advertising

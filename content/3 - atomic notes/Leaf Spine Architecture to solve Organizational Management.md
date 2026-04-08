@@ -1,6 +1,6 @@
 2025-10-28 11:29
 status: #baby
-tags: [[Super Communicator]]
+tags: [[superior communication]]
 
 ---
 # Leaf Spine Architecture to solve Organizational Management

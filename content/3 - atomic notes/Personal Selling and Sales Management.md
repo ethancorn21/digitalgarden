@@ -1,4 +1,4 @@
-[[marketing]]
+[[marketing]] [[school]]
 
 personal selling - sales man talking to you essentially, has to include a back and forth
 

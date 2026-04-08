@@ -1,6 +1,6 @@
 2026-03-18 22:55
 status: #baby 
-tags: [[process]] ; [[Super Communicator]]; [[simplify everything]]
+tags: [[process]] ; [[superior communication]]; [[simplify everything]]
 
 ---
 # Slow and Deliberate Speech

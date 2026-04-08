@@ -1,6 +1,6 @@
 2026-03-02 14:55
 status: #baby
-tags: [[analysis]], [[Super Communicator]], [[analysis]], [[Technology]]
+tags: [[analysis]], [[superior communication]], [[analysis]], [[Technology]]
 
 ---
 # Speed of Information as a Indicator of Organizational Size

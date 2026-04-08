@@ -1,4 +1,4 @@
-[[marketing]]
+[[marketing]] [[school]]
 
 Planning and executing an ad campaign:
 1) identify the target audience

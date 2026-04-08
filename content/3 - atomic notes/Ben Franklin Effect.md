@@ -1,6 +1,6 @@
 2025-10-19 15:04
 status: #baby
-tags: [[Super Communicator]], [[thinking traps]], 
+tags: [[superior communication]], [[thinking traps]], 
 
 ---
 # Ben Franklin Effect
