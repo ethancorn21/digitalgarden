@@ -49,7 +49,7 @@ export const defaultContentPageLayout: PageLayout = {
       component: Component.Backlinks(),
       condition: (page) => {
         const slug = page.fileData.slug ?? ""
-        return slug.startsWith("5 - indexes/") || slug.startsWith("4 - tags/")
+        return slug.startsWith("5---indexes/") || slug.startsWith("4---tags/")
       },
     }),
   ],
