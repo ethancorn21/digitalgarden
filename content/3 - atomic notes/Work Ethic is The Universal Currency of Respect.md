@@ -4,8 +4,12 @@ tags: [[process]], [[consistency]]
 
 ---
 # Work Ethic is The Universal Currency of Respect
-Even if someone is divided by culture, time, technology hard work is respected throughout history. People admire hard things and having a high work output is a hard thing to consistently achieve.
 
+Hard work is hard. Nobody wants to do it. 
+
+Yet, even if people are divided by culture, time, and technology, hard work is respected throughout history. We as Humans mythicize the people that faced impossible odds and yet accomplished things so great that they echo in history as a permanent part of the Human canon. 
+
+The ability to work hard and complete difficult tasks will always be respected.
 
 ---
 #### Reference

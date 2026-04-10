@@ -1,13 +1,21 @@
 2025-10-20 19:35
 status: #baby 
-tags: [[consistency]], [[process]]
+tags: [[consistency]], [[process]]; [[importance of failure]]; [[Life is About Actively Trying]]; [[mastery]]
 
 ---
 # Your work volume has to be insane
-The best peoples work volume dwarfs the average person. Work volume is a critical mass. You achieve so much of it over a period of time and you are bound to be successful. Not guaranteed but unlucky if you aren't.
+
+The masters work volume dwarfs the average persons. Work volume should be thought of as a critical mass. You can only achieve so much of it over a period of time because it is bounded by how much effort you put in and how many attempts you take. Through statistical probability, if you take X amount of quality shots on target you are bound to be successful at what you were aiming to do.
+
+The hard part is failing hundreds and thousands of time and not quitting. This is why the process is more important than the destination. The process has to be automatic. You don't dwell on the failure but mechanistically adapt and learn from it.
 
 ---
-#### Reference
+## See also:
+
 [[shots on target]]
 [[Work Ethic is The Universal Currency of Respect]]
-[[Critical Mass]]
+work volume contributes to : [[Critical Mass]]
+[[the law of large numbers]]
+[[Sustaining the Unknown]]
+[[10,000 hour rule]]
+[[deliberate practice]]

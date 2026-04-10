@@ -1,6 +1,6 @@
 2025-10-01 11:18
 status: #adult
-tags: [[superior communication]], [[Social Behavior]], [[simplify everything]], [[synthesis]]
+tags: [[superior communication]], [[Social Behavior]], [[simplify]], [[synthesis]]
 
 # Speaking your language
 

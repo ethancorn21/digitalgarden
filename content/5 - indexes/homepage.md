@@ -12,7 +12,7 @@ Topics:
 [[learning]] - thoughts on becoming a better learner.
 [[process]] - processes and systems to implement into my life to actuate on latent potential.
 [[religion]] - thoughts and analysis of religion.
-[[simplify everything]] - evidence that less is always more.
+[[simplify]] - evidence that less is always more.
 [[The Human Condition Throughout Time]] - The human environment has changed, but not humans.
 
 [[superior communication]] - communication

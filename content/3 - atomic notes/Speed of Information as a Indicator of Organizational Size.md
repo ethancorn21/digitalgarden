@@ -1,6 +1,6 @@
 2026-03-02 14:55
-status: #baby
-tags: [[analysis]], [[superior communication]], [[analysis]], [[Technology]]
+status: #adult 
+tags: [[analysis]], [[superior communication]], [[synthesis]], [[Technology]]; [[organizing people]]
 
 ---
 # Speed of Information as a Indicator of Organizational Size
@@ -10,7 +10,11 @@ With our ancestors, we were able to grow bigger because language and voice can t
 
 Efficiency of a group is limited by the lowest base factor of the group. Group think and crowd control rely on the guiding the lowest denominator toward a controlled way of thinking, such that when the group inevitably falls upon the lowest denominator, that denominator is aimed toward the desired thoughts.
 
+Of course, how information is diffused through a group matters. For most organizations, information is reliant upon meetings. But meetings are not an efficient way of communication. So the key is to find and create an information warehouse that is easily accessible and navigable to those that need it. Project and organizational information should be attainable without a need to schedule a meeting. 
+
 ---
 ## see also:
 [[Information Networks]]
 [[Communication networks as the foundation for proliferation of ideas.]]
+
+Meetings are a roadblock to information osmosis : [[meetings != productivity]]
