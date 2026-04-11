@@ -1,12 +1,12 @@
-# For Topics of Interest
-
-Topics I am interested in:
 
 stuff I write:
 [[synthesis]]
 [[analysis]]
 
-Topics:
+stuff I read:
+[[Books I've Read]]
+
+Thoughts on:
 [[philosophy]]
 [[Technology]]
 [[learning]] - thoughts on becoming a better learner.
@@ -15,12 +15,10 @@ Topics:
 [[simplify]] - evidence that less is always more.
 [[The Human Condition Throughout Time]] - The human environment has changed, but not humans.
 
-[[superior communication]] - communication
-[[things to contemplate]] - things to think about
+[[superior communication]] - How to better hear and be heard 
+[[things to contemplate]] - running list of things to think about
 
-
-[[free will]] - the free will problem
-
+[[free will]] - Do we truly have free will?
 
 school:
 [[webdev]]
