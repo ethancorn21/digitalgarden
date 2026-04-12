@@ -1,1 +1,1 @@
-[[Technology]], 
+[[technology]], 

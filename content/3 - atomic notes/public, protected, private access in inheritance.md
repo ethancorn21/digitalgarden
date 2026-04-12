@@ -1,6 +1,6 @@
 2026-03-08 14:17
 status:
-tags: [[Technology]] ; [[Programming]];
+tags: [[technology]] ; [[Programming]];
 
 ---
 # public, protected, private access in inheritance

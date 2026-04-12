@@ -1,6 +1,6 @@
 2025-10-22 08:18
 status: #adult
-tags: [[Artificial Intelligence]], [[analysis]], [[Technology]], [[The Human Condition Throughout Time]], [[consciousness]]
+tags: [[Artificial Intelligence]], [[analysis]], [[technology]], [[The Human Condition Throughout Time]], [[consciousness]]
 
 ---
 # Sanctity of Artificial Intelligence

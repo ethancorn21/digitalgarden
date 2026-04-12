@@ -1,4 +1,4 @@
-[[Technology]], [[Programming]]
+[[technology]], [[Programming]]
 #baby
 
 Instance methods are methods that are specific to a class. You must instantiate a version of that class into your current class to call the method.

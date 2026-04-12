@@ -1,5 +1,5 @@
 #baby 
-[[Technology]], [[Programming]], [[INFS3400]]
+[[technology]], [[Programming]], [[INFS3400]]
 
 ```cs
 Main(){

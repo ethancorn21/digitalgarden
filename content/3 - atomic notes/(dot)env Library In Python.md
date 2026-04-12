@@ -1,4 +1,4 @@
-[[Technology]], [[Programming]], [[Automation Project]]
+[[technology]], [[Programming]], [[Automation Project]]
 
 #baby
 

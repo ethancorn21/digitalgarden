@@ -1,6 +1,6 @@
 2026-03-20 17:50
 status: #baby
-tags: [[Technology]] ; [[Programming]]; [[INFS3400]]
+tags: [[technology]] ; [[Programming]]; [[INFS3400]]
 
 ---
 # Virtual Method in C(Sharp)

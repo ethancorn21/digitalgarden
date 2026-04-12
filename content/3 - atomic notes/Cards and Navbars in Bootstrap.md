@@ -1,6 +1,6 @@
 2026-02-27 10:36
 status:
-tags: [[school]]; [[Technology]]; [[webdev]]
+tags: [[school]]; [[technology]]; [[webdev]]
 
 ---
 # Cards and Navbars in Bootstrap

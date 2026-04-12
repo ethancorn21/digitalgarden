@@ -1,6 +1,6 @@
 2026-02-27 11:12
 status: #baby 
-tags: [[Technology]], [[process]]
+tags: [[technology]], [[process]]
 
 ---
 # vim motions cheatsheet

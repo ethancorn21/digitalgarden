@@ -1,4 +1,4 @@
-[[Technology]], [[Programming]]
+[[technology]], [[Programming]]
 #baby 
 
 ---

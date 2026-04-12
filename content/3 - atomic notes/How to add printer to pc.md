@@ -1,4 +1,4 @@
-[[work]]
+[[work]], [[technology]]
 
 Printer
 - print printers ip settings, should be an option somewhere

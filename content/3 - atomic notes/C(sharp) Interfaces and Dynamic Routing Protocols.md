@@ -1,6 +1,6 @@
 2026-03-27 10:25
 status: #adult
-tags: [[Technology]]; [[synthesis]]; [[Programming]]; [[networking]]
+tags: [[technology]]; [[synthesis]]; [[Programming]]; [[networking]]
 
 ---
 # C(sharp) Interfaces and Dynamic Routing Protocols

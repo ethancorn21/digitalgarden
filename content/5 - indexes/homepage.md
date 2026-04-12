@@ -1,14 +1,14 @@
-
-stuff I write:
+## stuff I write:
 [[synthesis]]
 [[analysis]]
 
-stuff I read:
-[[Books I've Read]]
+## My favorite things to think about:
+[[consciousness]]
+[[thinking traps]]
 
-Thoughts on:
+## Thoughts on:
 [[philosophy]]
-[[Technology]]
+[[technology]]
 [[learning]] - thoughts on becoming a better learner.
 [[process]] - processes and systems to implement into my life to actuate on latent potential.
 [[religion]] - thoughts and analysis of religion.
@@ -20,9 +20,8 @@ Thoughts on:
 
 [[free will]] - Do we truly have free will?
 
-school:
-[[webdev]]
-[[MGMT3620 - Supply Chain Operations]]
-[[INFS3400]]
-[[marketing]]
-[[macroeconomics]]
+## stuff I read:
+[[Books I've Read]]
+
+## Still lost?
+Start here : [[Social Media Addiction as a Byproduct of Consciousness Projection]]

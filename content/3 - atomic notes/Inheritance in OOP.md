@@ -1,6 +1,6 @@
 2026-03-08 13:47
 status:
-tags: [[Technology]] ; [[Programming]] ; [[INFS3400]]
+tags: [[technology]] ; [[Programming]] ; [[INFS3400]]
 
 ---
 # Inheritance in OOP

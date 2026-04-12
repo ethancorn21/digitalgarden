@@ -1,5 +1,5 @@
 #baby
-[[Technology]], [[Programming]]
+[[technology]], [[Programming]]
 
 ---
 

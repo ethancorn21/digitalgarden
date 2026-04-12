@@ -1,4 +1,4 @@
-[[work]], [[Technology]]
+[[work]], [[technology]]
 Ensure you have a keyboard plugged in, hold cmd + r.
 
 Disk utility, click Macintosh HD, erase on the top button.

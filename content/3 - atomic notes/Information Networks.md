@@ -1,6 +1,6 @@
 2025-11-04 11:33
 status: #baby
-tags: [[Technology]], [[analysis]]
+tags: [[technology]], [[analysis]]
 
 ---
 # Information Networks

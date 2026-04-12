@@ -1,6 +1,6 @@
 2026-03-02 15:05
 status: #baby
-tags: [[analysis]] ; [[superior communication]]; [[Technology]]; [[Programming]]
+tags: [[analysis]] ; [[superior communication]]; [[technology]]; [[Programming]]
 
 ---
 ## Object Oriented Communication In the Future

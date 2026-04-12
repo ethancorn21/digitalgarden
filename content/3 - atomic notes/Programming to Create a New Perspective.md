@@ -1,6 +1,6 @@
 2025-09-30 20:35
 status: #baby
-tags: [[Technology]], [[analysis]], [[Programming]]
+tags: [[technology]], [[analysis]], [[Programming]]
 
 # Programming to Create a New Perspective
 

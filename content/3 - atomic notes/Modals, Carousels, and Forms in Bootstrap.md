@@ -1,6 +1,6 @@
 2026-02-27 11:05
 status: #baby
-tags: [[school]], [[Technology]], [[webdev]]
+tags: [[school]], [[technology]], [[webdev]]
 
 ---
 # Modals, Carousels, and Forms in Bootstrap

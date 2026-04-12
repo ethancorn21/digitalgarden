@@ -1,6 +1,6 @@
 2026-03-29 13:02
 status: #baby
-tags: [[Technology]] ; [[Programming]]; [[INFS3400]]
+tags: [[technology]] ; [[Programming]]; [[INFS3400]]
 
 ---
 # Polymorphism in C(sharp)

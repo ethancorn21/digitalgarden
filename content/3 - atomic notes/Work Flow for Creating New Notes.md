@@ -2,6 +2,7 @@
 status: #baby
 tags:  [[tutorial]], avoid too vague tags, 4-5 at most, "am I going to use this tag again?"
 
+---
 # Work Flow for Creating New Notes
 
 `Cmd + O` = new note / search for existing note
@@ -11,6 +12,12 @@ These will be independent from source material. Should be able to stand alone. B
 
 
 Short and concise. NO SCROLLING. One idea one note.
+
+tag #baby and leave in rough draft
+
+after a day or two, come back and revise what is needed. This will then go into atomic notes. There will still be a #baby tag. When you stumble upon a note that is a few months old and it has the #baby tag, revise it. If you are happy with it, convert it to #adult. #evergreen will be used for notes that are years old and the knowledge within them is most likely permanent.
+
+---
 ## Reference
 
 src materials

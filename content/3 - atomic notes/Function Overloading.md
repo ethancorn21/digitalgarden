@@ -1,5 +1,5 @@
 
-[[Technology]], [[Programming]], [[INFS3400]]
+[[technology]], [[Programming]], [[INFS3400]]
 
 Overloading a function is creating two functions with the same names. The functions can then take different parameters but be called by the same name. It ensures that theres extra redundancy and availability of the function.
 

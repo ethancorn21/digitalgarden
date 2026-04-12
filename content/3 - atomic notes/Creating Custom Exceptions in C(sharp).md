@@ -1,6 +1,6 @@
 2026-04-09 14:04
 status:
-tags: [[Technology]]; [[Programming]]; [[INFS3400]]
+tags: [[technology]]; [[Programming]]; [[INFS3400]]
 
 ---
 # Creating Custom Exceptions in C(sharp)

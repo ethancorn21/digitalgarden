@@ -1,6 +1,6 @@
 2025-10-28 11:37
 status: #baby
-tags: [[Technology]], [[philosophy]]
+tags: [[technology]], [[philosophy]]
 
 ---
 # The internet as a collective conscious

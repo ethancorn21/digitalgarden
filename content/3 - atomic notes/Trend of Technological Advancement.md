@@ -1,6 +1,6 @@
 2025-10-07 12:21
 status: #baby 
-tags: [[synthesis]]. [[Technology]]
+tags: [[synthesis]]. [[technology]]
 
 # Trend of Technological Advancement
 As technology moves forwards, it becomes smaller, easier to use, and harder to master.

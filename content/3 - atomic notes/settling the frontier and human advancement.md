@@ -1,6 +1,6 @@
 2025-10-13 00:19
 status: #baby 
-tags: [[synthesis]], [[Technology]]
+tags: [[synthesis]], [[technology]]
 
 ---
 

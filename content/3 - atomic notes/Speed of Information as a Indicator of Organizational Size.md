@@ -1,6 +1,6 @@
 2026-03-02 14:55
 status: #adult 
-tags: [[analysis]], [[superior communication]], [[synthesis]], [[Technology]]; [[organizing people]]
+tags: [[analysis]], [[superior communication]], [[synthesis]], [[technology]]; [[organizing people]]
 
 ---
 # Speed of Information as a Indicator of Organizational Size
