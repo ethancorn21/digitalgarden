@@ -1,6 +1,6 @@
 2026-03-13 08:33
 status: #baby 
-tags: [[]]
+tags:
 
 ---
 # Gaussian Distribution

@@ -3,7 +3,7 @@ status: #baby
 tags: [[analysis]] ; [[superior communication]]; [[technology]]; [[Programming]]
 
 ---
-## Object Oriented Communication In the Future
+# Object Oriented Communication In the Future
 
 To convey a thought, an idea must be formed from known words and known ideas. An imprecise process that never fully grasps the depth of each individual thought. The problem comes from translating two mediums that are not the same. Thoughts and mind matter into words. 
 

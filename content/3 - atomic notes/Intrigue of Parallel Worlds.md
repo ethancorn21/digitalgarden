@@ -16,3 +16,4 @@ Is it any surprise then that we love our devices? Mental stimulation, which we c
 
 More thoughts on this "parallel world" : [[Social Media Addiction as a Byproduct of Consciousness Projection]]
 
+Always looking for the next king to rule our minds : [[Appeal of the Peasant Mindset]]

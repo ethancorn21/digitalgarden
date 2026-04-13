@@ -12,3 +12,6 @@ I have been substance and social media free for close to a year now. I used to f
 ---
 ## see also:
 
+Mechanism for why dopamine falls off : [[Law of diminishing marginal utility]]
+
+[[Hedonic Pleasure Treadmill]]

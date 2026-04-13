@@ -3,7 +3,8 @@ status: #adult
 tags: [[analysis]], [[superior communication]], [[synthesis]], [[technology]]; [[organizing people]]
 
 ---
-# Speed of Information as a Indicator of Organizational Size
+# Speed of Information Dissimnation as a Indicator of Organizational Size
+
 How fast information disseminates in an organization is indicative of it's maximal size. Fast information = greater pool of tribal / societal knowledge. Chimp pack size is limited by how clearly each chimp of the "pack" can see the body language of the top chimp. 
 
 With our ancestors, we were able to grow bigger because language and voice can travel further. The same principle still applies. How clearly the individual can receive a pool of info from the group the bigger the herd can grow. 

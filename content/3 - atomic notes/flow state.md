@@ -1,5 +1,5 @@
 
-[[process]], [[value creation]], [[psychology]], [[compounding]], [[]]
+[[process]], [[value creation]], [[psychology]], [[compounding]]
 status: #baby
 
 ---

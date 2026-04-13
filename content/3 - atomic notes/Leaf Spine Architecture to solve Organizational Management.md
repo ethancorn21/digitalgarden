@@ -16,4 +16,4 @@ Flat organizational structure aim to solve this. Companies like Valve have seen 
 [[All Communication is Strategy]]
 [[The inherent problem of communication]]
 [[meetings != productivity]]
-[[Speed of Information as a Indicator of Organizational Size]]
+[[Speed of Information Dissemination as a Indicator of Organizational Size]]
