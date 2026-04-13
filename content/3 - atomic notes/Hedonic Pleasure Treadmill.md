@@ -14,7 +14,7 @@ Be wary, it is a lonely and difficult path. Those that can fathom the benefits o
 ---
 ## see also:
 [[Valley of Despair and the Heroes Journey]]
-[[A Good Life = Hard Work Applied At Stuff You Find Fun]]
+[[A Good Life = Hard Work Applied At Stuff You Find Interesting]]
 [[Law of diminishing marginal utility]]
 [[Life is About Actively Trying]]
 
