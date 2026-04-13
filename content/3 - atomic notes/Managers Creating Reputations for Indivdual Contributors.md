@@ -9,4 +9,3 @@ If Individual contributors can focus solely on shipping great work, and managers
 
 ---
 ## see also:
-
