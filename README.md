@@ -1,5 +1,4 @@
-# forked from Quartz
+# Digital Garden from Obsidian Notes
 
-Digital Garden born from Obsidian notes
-
+forked from Quartz project.
 Infrastructure, code, deployment pipelines built w/ Claude. Content by me.
