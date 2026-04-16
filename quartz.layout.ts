@@ -55,6 +55,10 @@ export const defaultContentPageLayout: PageLayout = {
             node.displayName = "Source Material"
           } else if (node.slugSegment === "3---atomic-notes") {
             node.displayName = "Atomic Notes"
+          } else if (node.slugSegment === "4---tags") {
+            node.displayName = "Tags"
+          } else if (node.slugSegment === "5---indexes") {
+            node.displayName = "Indexes"
           }
         }
       },
@@ -99,6 +103,10 @@ export const defaultListPageLayout: PageLayout = {
             node.displayName = "Source Material"
           } else if (node.slugSegment === "3---atomic-notes") {
             node.displayName = "Atomic Notes"
+          } else if (node.slugSegment === "4---tags") {
+            node.displayName = "Tags"
+          } else if (node.slugSegment === "5---indexes") {
+            node.displayName = "Indexes"
           }
         }
       },
