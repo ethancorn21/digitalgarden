@@ -54,6 +54,15 @@ export const defaultContentPageLayout: PageLayout = {
         }
         return a.isFolder ? -1 : 1
       },
+      mapFn: (node) => {
+        if (node.isFolder) {
+          if (node.slugSegment === "2---source-material") {
+            node.displayName = "Source Material"
+          } else if (node.slugSegment === "3---atomic-notes") {
+            node.displayName = "Atomic Notes"
+          }
+        }
+      },
     }),
   ],
   right: [
@@ -88,6 +97,15 @@ export const defaultListPageLayout: PageLayout = {
           return dateB - dateA
         }
         return a.isFolder ? -1 : 1
+      },
+      mapFn: (node) => {
+        if (node.isFolder) {
+          if (node.slugSegment === "2---source-material") {
+            node.displayName = "Source Material"
+          } else if (node.slugSegment === "3---atomic-notes") {
+            node.displayName = "Atomic Notes"
+          }
+        }
       },
     }),
   ],
