@@ -43,8 +43,8 @@ export const defaultContentPageLayout: PageLayout = {
     Component.Explorer({
       sortFn: (a, b) => {
         if ((!a.isFolder && !b.isFolder) || (a.isFolder && b.isFolder)) {
-          const dateA = a.data?.date?.getTime() ?? 0
-          const dateB = b.data?.date?.getTime() ?? 0
+          const dateA = a.data?.date ? new Date(a.data.date).getTime() : 0
+          const dateB = b.data?.date ? new Date(b.data.date).getTime() : 0
           return dateB - dateA
         }
         return a.isFolder ? -1 : 1
@@ -87,8 +87,8 @@ export const defaultListPageLayout: PageLayout = {
     Component.Explorer({
       sortFn: (a, b) => {
         if ((!a.isFolder && !b.isFolder) || (a.isFolder && b.isFolder)) {
-          const dateA = a.data?.date?.getTime() ?? 0
-          const dateB = b.data?.date?.getTime() ?? 0
+          const dateA = a.data?.date ? new Date(a.data.date).getTime() : 0
+          const dateB = b.data?.date ? new Date(b.data.date).getTime() : 0
           return dateB - dateA
         }
         return a.isFolder ? -1 : 1
