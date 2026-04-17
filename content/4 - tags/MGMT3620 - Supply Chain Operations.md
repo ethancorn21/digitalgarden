@@ -1,1 +1,0 @@
-[[school]] : [[MGMT3620 - Supply Chain Operations]]
