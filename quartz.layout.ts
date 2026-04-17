@@ -42,10 +42,13 @@ export const defaultContentPageLayout: PageLayout = {
     }),
     Component.Explorer({
       sortFn: (a, b) => {
-        if ((!a.isFolder && !b.isFolder) || (a.isFolder && b.isFolder)) {
-          const dateA = a.data?.date ? new Date(a.data.date).getTime() : 0
-          const dateB = b.data?.date ? new Date(b.data.date).getTime() : 0
-          return dateB - dateA
+        if (a.isFolder && b.isFolder) {
+          return a.displayName.localeCompare(b.displayName, undefined, { numeric: true, sensitivity: "base" })
+        }
+        if (!a.isFolder && !b.isFolder) {
+          if (!(a as any)._r) (a as any)._r = Math.random()
+          if (!(b as any)._r) (b as any)._r = Math.random()
+          return (a as any)._r - (b as any)._r
         }
         return a.isFolder ? -1 : 1
       },
@@ -90,10 +93,13 @@ export const defaultListPageLayout: PageLayout = {
     }),
     Component.Explorer({
       sortFn: (a, b) => {
-        if ((!a.isFolder && !b.isFolder) || (a.isFolder && b.isFolder)) {
-          const dateA = a.data?.date ? new Date(a.data.date).getTime() : 0
-          const dateB = b.data?.date ? new Date(b.data.date).getTime() : 0
-          return dateB - dateA
+        if (a.isFolder && b.isFolder) {
+          return a.displayName.localeCompare(b.displayName, undefined, { numeric: true, sensitivity: "base" })
+        }
+        if (!a.isFolder && !b.isFolder) {
+          if (!(a as any)._r) (a as any)._r = Math.random()
+          if (!(b as any)._r) (b as any)._r = Math.random()
+          return (a as any)._r - (b as any)._r
         }
         return a.isFolder ? -1 : 1
       },
