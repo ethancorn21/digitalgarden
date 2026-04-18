@@ -1,0 +1,12 @@
+Things to meditate on :
+- [[Spend Time Deliberately Thinking]]
+- Body language of others and what it could possibly hint to in their subconscious / way of thought
+- Internal audits of your wants / desires
+- Internal audits of why you do the things you do
+- Reading through the lines of people's words and actions
+- How to enact the world that needs to occur in order for you to do what needs to be done
+- What could possibly stop you from doing what needs to be done?
+- What could help you achieve what needs to be done?
+- What processes do you have that could be more efficient?
+- Is there areas of your habits / processes that can be improved?
+- [[My Quest to Regain The Dopaminergic Response of a Caveman]]

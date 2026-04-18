@@ -1,0 +1,1 @@
+Notes I took from when I CLEP'd out of macro course.
