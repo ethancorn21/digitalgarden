@@ -11,6 +11,6 @@ Networks either computer or human will drive the change of a globally connected 
 ---
 #### Reference
 
-[[Communication networks as the foundation for proliferation of ideas.]]
+[[Communication networks as the foundation for proliferation of ideas]]
 
 [[Consequences of Globalization for Young Professionals]]

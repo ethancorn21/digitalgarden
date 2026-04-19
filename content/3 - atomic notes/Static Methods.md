@@ -1,4 +1,4 @@
-[[Programming]]
+[[technology]][[Programming]]
 #baby
 
 Static methods are methods that can only be called by the class in which they reside.

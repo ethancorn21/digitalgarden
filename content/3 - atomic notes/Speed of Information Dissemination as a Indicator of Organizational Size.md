@@ -16,6 +16,6 @@ Of course, how information is diffused through a group matters. For most organiz
 ---
 ## see also:
 [[Information Networks]]
-[[Communication networks as the foundation for proliferation of ideas.]]
+[[Communication networks as the foundation for proliferation of ideas]]
 
 Meetings are a roadblock to information osmosis : [[meetings != productivity]]
