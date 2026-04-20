@@ -5,20 +5,17 @@ tags: [[thinking traps]] ; [[mindful consumption]]; [[Life is About Actively Try
 ---
 # Hedonic Pleasure Treadmill
 
-A lived filled with comforts is a short life filled with even shorter comforts. To waste a life is to spend it in comfort. Never in pain, only obeying and enslaving oneself to the dopamine produced there within.
+Repeated exposure to dopamine rich activities is raising the baseline of motivation needed to overcome the friction of starting a new activity. Procrastination becomes easier to slip into as tasks seem more daunting to complete. The drive to learn and become better becomes blunted. 
 
-To live a good life, embrace difficulty. It is through difficulty that the cult of the lambs pales away and the greats are left. Difficulty is a redeemer. A test. Those that can suffer it will gain more than those that can't. 
+Extrapolate this individual response to millions of people. How would society handle it? 
 
-Be wary, it is a lonely and difficult path. Those that can fathom the benefits of the hard life will justify the easy one as the only correct way to live. In the times of the abyss, the death and rebirth, of the heroes journey, it will start to seem true. But persevere through the abyss into the transformation phase and you will find yourself holding the abyss that was torturing you. 
+I think we are seeing the outsized effects of it today. We live in a hedonistic society where pleasurable things are easy to obtain and extremely fun. You never even stood a chance, of course you will shirk duties in pursuit of supernormal stimuli perfectly targeted towards the uniqueness of your individual brain. Of course a pleasure seeking society will focus on the quick gratifications over the reward after a long strenuous journey. It is only natural that people will devolve into degeneracy beholden to their base instincts which are in pursuits of the primitive markers of satisfaction. It as the monkey brain was designed.
+
+Will society collapse because we are enslaved to our own pleasure? No. Will we eventually be overcome by neckbeard reddit moderators and illiterate Gen-Alpha brain rotters? Probably.
 
 ---
 ## see also:
 
-Life is solely yours to make of it what you will : [[Life Pours From You or On You]]
-
-
-[[Valley of Despair and the Heroes Journey]]
-[[A Good Life = Hard Work Applied At Stuff You Find Interesting]]
-[[Law of diminishing marginal utility]]
+Why dopamine response tapers with more dopamine produced:[[Law of diminishing marginal utility]]
 
 
