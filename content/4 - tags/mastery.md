@@ -1,6 +1,6 @@
 2025-10-02 22:54
 status: #baby 
-tags:[[learning]], [[process]],
+tags: [[learning]], [[process]],
 
 # mastery
 what does mastery look like?

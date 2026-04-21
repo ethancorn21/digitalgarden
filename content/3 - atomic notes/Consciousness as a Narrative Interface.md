@@ -14,7 +14,7 @@ We can abstract this out to brain function and the unconscious. If we are not co
 It seems that Consciousness is a narrative device that assigns meaning so that the viewer, us, has a clue about what we are watching. What does that say about the brains architecture if we leap to conclusions rather than conceptualize the gaps? If our brains are adapted from our environment, what does this say about the environment in which it adapted from?
 
 ---
-#### Reference
+## Reference
 [[Split Brain Experiment]]
 [[Severing the Corpus Callosum and System 1]]
 [[Free Will as the Unfolding of Causal Links]]
