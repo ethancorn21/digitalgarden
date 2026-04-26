@@ -8,3 +8,5 @@ The question then moves to: "How can I implement self-iterating processes into m
 
 ---
 ## See also:
+
+Refine learning process: [[Refining the Process of Learning]]
