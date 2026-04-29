@@ -46,9 +46,9 @@ export const defaultContentPageLayout: PageLayout = {
           return a.displayName.localeCompare(b.displayName, undefined, { numeric: true, sensitivity: "base" })
         }
         if (!a.isFolder && !b.isFolder) {
-          if (!(a as any)._r) (a as any)._r = Math.random()
-          if (!(b as any)._r) (b as any)._r = Math.random()
-          return (a as any)._r - (b as any)._r
+          const aDate = a.data?.date ? new Date(a.data.date).getTime() : 0
+          const bDate = b.data?.date ? new Date(b.data.date).getTime() : 0
+          return bDate - aDate
         }
         return a.isFolder ? -1 : 1
       },
@@ -97,9 +97,9 @@ export const defaultListPageLayout: PageLayout = {
           return a.displayName.localeCompare(b.displayName, undefined, { numeric: true, sensitivity: "base" })
         }
         if (!a.isFolder && !b.isFolder) {
-          if (!(a as any)._r) (a as any)._r = Math.random()
-          if (!(b as any)._r) (b as any)._r = Math.random()
-          return (a as any)._r - (b as any)._r
+          const aDate = a.data?.date ? new Date(a.data.date).getTime() : 0
+          const bDate = b.data?.date ? new Date(b.data.date).getTime() : 0
+          return bDate - aDate
         }
         return a.isFolder ? -1 : 1
       },

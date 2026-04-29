@@ -378,10 +378,10 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
       interactive: false,
       eventMode: "none",
       text: n.text,
-      alpha: 1,
+      alpha: 0,
       anchor: { x: 0.5, y: 1.2 },
       style: {
-        fontSize: fontSize * 15,
+        fontSize: fontSize * 10,
         fill: computedStyleMap["--dark"],
         fontFamily: computedStyleMap["--bodyFont"],
       },
@@ -402,16 +402,18 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
       .fill({ color: isTagNode ? computedStyleMap["--light"] : color(n) })
       .on("pointerover", (e) => {
         updateHoverInfo(e.target.label)
-        oldLabelOpacity = label.alpha
+        updateLabelOpacity()
         if (!dragging) {
-          renderPixiFromD3()
+          renderNodes()
+          renderLinks()
         }
       })
       .on("pointerleave", () => {
         updateHoverInfo(null)
-        label.alpha = oldLabelOpacity
+        updateLabelOpacity()
         if (!dragging) {
-          renderPixiFromD3()
+          renderNodes()
+          renderLinks()
         }
       })
 
@@ -451,6 +453,23 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
 
   let currentTransform = zoomIdentity
   let currentK = 1
+
+  function updateLabelOpacity() {
+    const minZoomThreshold = 1.5
+    const maxZoom = 4
+    let zoomOpacity = 0
+    if (currentK >= minZoomThreshold) {
+      zoomOpacity = (currentK - minZoomThreshold) / (maxZoom - minZoomThreshold)
+      zoomOpacity = Math.min(1, zoomOpacity)
+    }
+    const defaultScale = (1 / scale) / currentK
+    const hoveredScale = 1 / scale
+    for (const n of nodeRenderData) {
+      const isHovered = n.simulationData.id === hoveredNodeId
+      n.label.scale.set(isHovered ? hoveredScale : defaultScale)
+      n.label.alpha = isHovered ? 1 : zoomOpacity
+    }
+  }
   if (enableDrag) {
     select<HTMLCanvasElement, NodeData | undefined>(app.canvas).call(
       drag<HTMLCanvasElement, NodeData | undefined>()
@@ -510,13 +529,7 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
           currentK = transform.k
           stage.scale.set(transform.k, transform.k)
           stage.position.set(transform.x, transform.y)
-
-          // inverse-scale labels to counteract stage zoom so they stay readable
-          const labelScale = (1 / scale) / transform.k
-          for (const label of labelsContainer.children) {
-            label.scale.set(labelScale, labelScale)
-            label.alpha = 1
-          }
+          updateLabelOpacity()
         }),
     )
   }
