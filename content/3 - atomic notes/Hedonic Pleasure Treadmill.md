@@ -9,9 +9,9 @@ Repeated exposure to dopamine rich activities is raising the baseline of motivat
 
 Extrapolate this individual response to millions of people. How would society handle it? 
 
-I think we are seeing the outsized effects of it today. We live in a hedonistic society where pleasurable things are easy to obtain and extremely fun. You never even stood a chance, of course you will shirk duties in pursuit of supernormal stimuli perfectly targeted towards the uniqueness of your individual brain. Of course a pleasure seeking society will focus on the quick gratifications over the reward after a long strenuous journey. It is only natural that people will devolve into degeneracy beholden to their base instincts which are in pursuits of the primitive markers of satisfaction. It as the monkey brain was designed.
+I think we are seeing the outsized effects of it today. We live in a hedonistic society where pleasurable things are easy to obtain and extremely fun. You never even stood a chance, of course you will shirk duties in pursuit of supernormal stimuli perfectly targeted towards the uniqueness of your individual brain. Of course a pleasure seeking society will focus on the quick gratifications over the reward after a long strenuous journey. It is only natural that people will devolve into degeneracy beholden to their base instincts which are in pursuits of the primitive markers of satisfaction. It's as the monkey brain was designed.
 
-Will society collapse because we are enslaved to our own pleasure? No. Will we eventually be overcome by neckbeard reddit moderators and illiterate Gen-Alpha brain rotters? Probably.
+Will society collapse because we are enslaved to our own pleasure? No. Will we eventually be overcome by insufferable hedonists and illiterate Gen Alpha brain rotters? Probably. All you can say is, "won't be me", and do better.
 
 ---
 ## see also:

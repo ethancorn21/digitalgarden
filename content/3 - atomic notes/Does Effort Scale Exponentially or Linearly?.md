@@ -9,7 +9,7 @@ I am curious about the role of compounding for total output of a system versus t
 
 Does output per input scale according to power law or logarithmically?
 
-Logarithmic scaling would imply that energy invested into the system has diminishing marginal utility such that their is an efficient point in life where you should stop investing energy into certain systems and begin redirecting them to where the opportunity cost is greatest. 
+Logarithmic scaling would imply that energy invested into the system has diminishing marginal utility such that there is an efficient point in life where you should stop investing energy into certain systems and begin redirecting them to where the opportunity cost is greatest. 
 
 Power law distribution of output to input would suggest that most of the output is tied to the energy put into the system in the beginning. This is similar to what Andrew Grove says in, [[High Output Management]], that energy should be invested into systems at the beginning, while entropy is low and can be contained.
 

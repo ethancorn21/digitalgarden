@@ -5,9 +5,9 @@ tags: [[analysis]], [[superior communication]], [[synthesis]], [[technology]]; [
 ---
 # Speed of Information Dissimnation as a Indicator of Organizational Size
 
-How fast information disseminates in an organization is indicative of it's maximal size. Fast information = greater pool of tribal / societal knowledge. Chimp pack size is limited by how clearly each chimp of the "pack" can see the body language of the top chimp. 
+How fast information disseminates in an organization is indicative of it's maximal size. Fast information = greater pool of tribal / societal knowledge. Chimp troop size is limited by how clearly each chimp of the troop can see the body language of the top chimp. 
 
-With our ancestors, we were able to grow bigger because language and voice can travel further. The same principle still applies. How clearly the individual can receive a pool of info from the group the bigger the herd can grow. 
+With our ancestors, we were able to grow bigger groups because language and voice can travel further. The same principle still applies. How clearly the individual can receive a pool of info from the group the bigger the herd can grow. 
 
 Efficiency of a group is limited by the lowest base factor of the group. Group think and crowd control rely on the guiding the lowest denominator toward a controlled way of thinking, such that when the group inevitably falls upon the lowest denominator, that denominator is aimed toward the desired thoughts.
 

@@ -455,8 +455,8 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
   let currentK = 1
 
   function updateLabelOpacity() {
-    const minZoomThreshold = 1.5
-    const maxZoom = 4
+    const minZoomThreshold = 1.2
+    const maxZoom = 2.8
     let zoomOpacity = 0
     if (currentK >= minZoomThreshold) {
       zoomOpacity = (currentK - minZoomThreshold) / (maxZoom - minZoomThreshold)

@@ -5,7 +5,8 @@ tags:[[process]]
 ---
 # Critical Mass
 
-The world works through critical mass. For anything to change there must first be enough of something to cause change. 
+The world works through critical mass. For anything to change there must first be enough energy put into the system to cause change. To activate potential energy.
+
 A flake of snow on a mountainside is nothing. But millions of flakes is enough to build up enough snow to cause an avalanche.
 
 ---
@@ -14,3 +15,5 @@ See [[The Law of Accumulation]] for how to reach.
 [[obsession = consistent effort]]
 [[shots on target]]
 [[Upward Spiral]]
+
+[[Actuate Potential Energy]]
