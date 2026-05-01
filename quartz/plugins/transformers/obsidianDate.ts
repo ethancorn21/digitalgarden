@@ -11,7 +11,7 @@ export const ObsidianNoteDate: QuartzTransformerPlugin = () => ({
         const firstLine = content.split("\n")[0].trim()
         const match = firstLine.match(obsidianDateRegex)
         if (match) {
-          const parsed = new Date(match[1])
+          const parsed = new Date(match[1].replace(" ", "T"))
           if (!isNaN(parsed.getTime())) {
             if (!file.data.dates) {
               file.data.dates = { created: parsed, modified: parsed, published: parsed }
