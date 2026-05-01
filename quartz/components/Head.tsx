@@ -82,7 +82,7 @@ export default (() => {
           </>
         )}
 
-        <link rel="icon" href={iconPath} />
+        <link rel="icon" type="image/png" href={iconPath + "?v=2"} />
         <meta name="description" content={description} />
         <meta name="generator" content="Quartz" />
 

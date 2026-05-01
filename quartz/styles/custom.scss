@@ -59,6 +59,12 @@ h2.page-title a {
   display: none;
 }
 
+// ── Center all images ────────────────────────────────────────────────────────
+article img {
+  display: block;
+  margin: 0 auto;
+}
+
 // ── Midnight Tan ─────────────────────────────────────────────────────────────
 article {
   blockquote {

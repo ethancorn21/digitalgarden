@@ -1,0 +1,19 @@
+.now-playing {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  & .now-playing-label {
+    font-size: 0.75rem;
+    color: var(--gray);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  & iframe {
+    border-radius: 8px;
+    width: 100%;
+    border: none;
+  }
+}
