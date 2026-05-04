@@ -16,6 +16,7 @@ export const ObsidianNoteDate: QuartzTransformerPlugin = () => ({
             if (!file.data.dates) {
               file.data.dates = { created: parsed, modified: parsed, published: parsed }
             } else {
+              file.data.dates.created = parsed
               file.data.dates.modified = parsed
             }
           }

@@ -16,7 +16,7 @@ const config: QuartzConfig = {
     locale: "en-US",
     baseUrl: "ethanlawcorn.com",
     ignorePatterns: ["private", "templates", ".obsidian", "1 - rough notes", "6 - templates", "8 - miscellaneous"],
-    defaultDateType: "modified",
+    defaultDateType: "created",
     theme: {
       fontOrigin: "googleFonts",
       cdnCaching: true,
