@@ -6,6 +6,8 @@ I write notes in books as I read them. I will then go back and expand upon the i
 [[Atomic Habits]]
 
 Books waiting to be transcribed:
+Skunk Works
+The Count of Monte Christo
 [[Thinking, Fast and Slow]]
 [[Poor Charlie's Almanack]]
 [[The Art of Doing Science and Engineering]]
