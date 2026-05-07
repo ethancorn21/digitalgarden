@@ -4,6 +4,7 @@ tags: [[thinking traps]], [[mindful consumption]]
 
 ---
 # Montesquieu on Comparative Happiness
+
  >"If we only wanted to be happy, it would be easy; but we want to be happier than other people, which is almost always difficult, since we think them happier than they are." - Charles de Montesquieu
  
  Comparative happiness is destined to fail. As you well know by now the brain is dog shit at estimating anything. And yet, we rely on these dog shit estimation of other's happiness to measure our on by. We over attribute happiness to others, as such our own happiness is bound to become quite minuscule in comparison.
@@ -15,3 +16,6 @@ tags: [[thinking traps]], [[mindful consumption]]
 ---
 #### Reference
 [[The Defining Decade]], pg.43
+
+[[Ever Moving Goal Post Of Satisfaction]]
+[[Hedonic Pleasure Treadmill]]
