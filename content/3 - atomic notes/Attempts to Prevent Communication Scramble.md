@@ -15,7 +15,6 @@ In our modern day, we use science and 18 years of education to try to create a b
 ### Reference:
 see also:
 What causes the communication scramble: [[The inherent problem of communication]]
-How sled dog teams deal with communication scramble: [[Sled Dogs as a Way to Think of Organization]]
 Read more *about* baseline education:
 [[Science, Education, Religion]]
 sourced from:
