@@ -4,7 +4,6 @@ tags:
 
 ---
 # Efficiency Multiplication Since Using Claude Code
-
 ![[IMG_3042.jpeg|400]]
 
 
