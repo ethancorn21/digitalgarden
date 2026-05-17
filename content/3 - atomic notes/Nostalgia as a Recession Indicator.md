@@ -10,3 +10,5 @@ When the past starts seeming more glamorous than the future, we can extrapolate 
 
 ---
 #### Reference
+
+Modern stewardship : [[Stewardship for the Modern Day]]
