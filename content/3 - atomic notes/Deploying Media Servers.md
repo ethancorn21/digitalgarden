@@ -1,8 +1,8 @@
 # Media Server Project
 
-[[homelab]]
+[[homelab]] : *AI WRITTEN REPORT*
 
-## Project Overview
+# Project Overview
 
 A complete media server stack across two physical servers, with external access for family members to request and stream media without needing a VPN.
 
@@ -18,7 +18,12 @@ A complete media server stack across two physical servers, with external access 
 - `requests.ethanlawcorn.com` - Media request portal
 
 ---
+## Physical Look
 
+![[IMG_3161.jpeg | 400]]
+yes there is a dead drive :/
+
+---
 ## Architecture
 
 ```
