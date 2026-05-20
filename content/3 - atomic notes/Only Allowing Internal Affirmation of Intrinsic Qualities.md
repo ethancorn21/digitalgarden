@@ -7,9 +7,11 @@ tags: [[thinking traps]];
 
 Intrinsic qualities should only be reaffirm internally. It would not make sense for intrinsic qualities to be externally bestowed. 
 
-What I mean by is this is to not let a desire to be seen as smart or anything of the like to be reaffirmed by external circumstances. It must only be internally confirmed. 
+What I mean by is this is to not let a desire to be seen as smart, funny, or proper dashing bruv be reaffirmed by external circumstances. It must only be internally confirmed. 
 
 Anything outside of yourself is a variable. It can and will change. So letting inherent characteristics be defined by changing and moveable markers is bound to set yourself up for failure.
+
+Take clues and analyze trends from the external environment but don't let it be the sole deciding factor for what you define yourself as.
 
 ---
 ## see also:
