@@ -5,7 +5,7 @@ title: Introduction
 
 Hey, I'm Ethan
 
-This is a digital garden, a live feed of my Obsidian notes. Every note is connected with every other note in some way. The mind retains better new ideas bwhen they are connected to existing ones. This is called elaborative encoding.
+This is a digital garden, a live feed of my Obsidian notes. Every note is connected with every other note in some way. The mind better retains new ideas when they are connected to existing ones. This is called elaborative encoding.
 
 The goal is to take ideas I come across, expand upon them, then try to apply them in novel ways. Some notes will be unpolished, but it's ok as each one is and will forever remain a work in progress, so it most likely will be polished further with time.
 
