@@ -1,6 +1,6 @@
 2025-11-04 11:25
 status: #adult
-tags: [[consciousness]], [[free will]]
+tags: [[5 - indexes/brain]], [[free will]]
 
 ---
 # Severing the Corpus Callosum and System 1

@@ -3,7 +3,7 @@
 [[analysis]]
 
 ## My favorite things to learn about:
-[[consciousness]]
+[[5 - indexes/brain]]
 [[thinking traps]]
 
 ## Thoughts on:

@@ -1,6 +1,6 @@
 2025-11-01 11:33
 status: #baby
-tags: [[consciousness]], [[free will]]
+tags: [[5 - indexes/brain]], [[free will]]
 
 ---
 # Absence of free will

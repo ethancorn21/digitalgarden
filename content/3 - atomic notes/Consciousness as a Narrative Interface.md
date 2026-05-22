@@ -1,6 +1,6 @@
 2025-11-04 07:57
 status: #adult
-tags: [[consciousness]], [[free will]], [[synthesis]]
+tags: [[5 - indexes/brain]], [[free will]], [[synthesis]]
 
 ---
 # Consciousness as a Narrative Interface

@@ -1,6 +1,6 @@
 2025-10-24 16:22
 status: #baby
-tags: [[consciousness]], [[Artificial Intelligence]], [[analysis]]
+tags: [[5 - indexes/brain]], [[Artificial Intelligence]], [[analysis]]
 
 ---
 # Attribution of Consciousness and The False Consensus Effect

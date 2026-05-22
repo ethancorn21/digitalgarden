@@ -1,6 +1,6 @@
 2025-11-01 19:03
 status: #adult 
-tags: [[process]], [[mindful consumption]], [[consciousness]]
+tags: [[process]], [[mindful consumption]], [[5 - indexes/brain]]
 
 ---
 # Unconscious Processing

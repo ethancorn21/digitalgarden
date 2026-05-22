@@ -1,6 +1,6 @@
 2025-11-04 08:05
 status: #baby 
-tags: [[consciousness]]
+tags: [[brain]]
 
 ---
 # Split Brain Experiment
