@@ -9,7 +9,7 @@ There is a part of me that knowledges the instinctual programming with which I w
 
 I know that allowing myself to live in tune with the animalistic part of myself in a smart, healthy way is key to living a good life. Yet I also urge to reject it. I cringe at the animal having control over me. 
 
-Man is supposed to be "The Thinking Animal", yet we are emergently complex from animal parts. Which makes our foundation as a people inherently animal. Our first instincts that of animals. It feels as though we have made all of these grand advancements that on the surface seem to augment us past our natural state into something different. Yet, we are still controlled largely by the primate brain.
+Man is supposed to be "The Thinking Animal", yet we are emergently complex from animal parts. Which makes our foundation as a people inherently animal. Our first instincts that of animals. It feels as though we have made all of these grand advancements that on the surface seem to augment us past our natural state into something different. Yet, we are still controlled largely by the primate brain. A frustrating dichotomy, are we or aren't we?
 
 Perhaps the goal is not to control the baser instincts and only reside in the purely emergent mind, but to flow between both. Utilizing what is necessary when it is necessary.
 

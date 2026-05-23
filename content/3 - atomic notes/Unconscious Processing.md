@@ -1,6 +1,6 @@
 2025-11-01 19:03
 status: #adult 
-tags: [[process]], [[mindful consumption]], [[5 - indexes/brain]]
+tags: [[process]], [[mindful consumption]], [[consciousness]]
 
 ---
 # Unconscious Processing
@@ -16,6 +16,8 @@ The key is to partake in activities that allow your mind to disengage from what'
 ---
 #### Reference
 [[The Origin of Consciousness in the Breakdown of the Bicameral Mind]], ch.2 pg.44
+
 [[How To Take Smart Notes]], pg.118
+
 perfect for:
 [[zettelkasten]]

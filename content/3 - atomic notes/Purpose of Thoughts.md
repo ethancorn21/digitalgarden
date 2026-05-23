@@ -1,6 +1,6 @@
 2025-09-30 06:46
 status: #adult
-tags: [[synthesis]], [[brain]]
+tags: [[synthesis]], [[consciousness]]
 
 ---
 # Purpose of Thoughts

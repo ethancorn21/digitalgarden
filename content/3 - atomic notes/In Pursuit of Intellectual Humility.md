@@ -1,6 +1,6 @@
 2026-03-17 12:59
 status: #baby
-tags: [[thinking traps]], [[importance of failure]], [[5 - indexes/brain]]
+tags: [[thinking traps]], [[importance of failure]], [[consciousness]]
 
 ---
 # In Pursuit of Intellectual Humility

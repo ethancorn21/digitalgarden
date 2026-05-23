@@ -1,6 +1,6 @@
 2025-10-24 16:21
 status: #baby
-tags: [[5 - indexes/brain]], [[Creatures of habit]]
+tags: [[consciousness]], [[Creatures of habit]]
 
 ---
 # Attribution of Consciousness

@@ -1,6 +1,6 @@
 2026-04-12 15:23
 status: #baby
-tags: [[5 - indexes/brain]]; [[Evolutionary Psychology]]; [[synthesis]]; [[analysis]]
+tags: [[consciousness]]; [[Evolutionary Psychology]]; [[synthesis]]; [[analysis]]
 
 ---
 # Social Media Addiction as a Byproduct of Consciousness Projection

@@ -1,6 +1,6 @@
 2025-11-12 11:25
 status: #baby
-tags:[[5 - indexes/brain]], [[The Human Condition Throughout Time]]
+tags:[[consciousness]], [[The Human Condition Throughout Time]]
 
 ---
 # peasant mindset and the bicameral mind

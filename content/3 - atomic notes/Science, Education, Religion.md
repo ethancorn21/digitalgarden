@@ -13,8 +13,8 @@ What used to be shamans which performed rituals and ensured the cohesion of the 
 
 Imagine if shamans did not teach their religion to their tribes, it would have quickly died out and with it the knowledge of how they believed the world worked along with it. Imagine if teachers did not teach their craft. It would quickly disappear and with it, the knowledge of how they believed it fit into wider society.
 
-#### Reference
-Inspired by: 
+## Reference
+
 [[Civilization 2 - Religion and the Dawn of Society]]
 
 for early religion:
