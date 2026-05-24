@@ -19,3 +19,5 @@ tags: [[thinking traps]], [[mindful consumption]]
 
 [[Ever Moving Goal Post Of Satisfaction]]
 [[Hedonic Pleasure Treadmill]]
+
+bad at estimation example: [[Why We Suck at Estimating Time]]

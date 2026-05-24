@@ -14,3 +14,5 @@ All have in common the overcoming of a hardship / failure to reach a new transce
 #### Reference
 The overcoming of hardships as a vehicle to understanding highlights the [[importance of failure]]. In attaining that higher state, a trough had to be scaled before a peak. [[Valley of Despair and the Heroes Journey]].
 
+[[A Good Life = Hard Work Applied At Stuff You Find Interesting]]
+

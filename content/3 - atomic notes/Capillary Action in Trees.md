@@ -11,6 +11,13 @@ If you know anything about water limitations in physics, you will know that we d
 
 Yet, trees like the California Redwood are able to draw water hundreds of feet into the air. Precisely evolved organisms. 
 
+The capillary system of trees reminds of JIT and lean manufacturing principles. As water is evaporated on leaves (products is shipped out), it pulls more water through the leaves from the tree, which forces all water in the system to move upwards (similar to how work exiting the system pulls new work back into the system).
+
 ---
 ## see also:
 
+
+[[Why JIT is Faster Than Traditional Manufacturing]]
+[[Push vs Pull In Systems]]
+
+[[Fathers of Quality Management]]

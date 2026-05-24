@@ -1,6 +1,6 @@
 2025-10-02 19:09
 status: 
-tags: [[value creation]], [[personal-development DELETE]]
+tags: [[value creation]]
 source: https://www.youtube.com/watch?v=ub1D6RQocRU
 # Advice for 20 year olds - Alex Hormozi
 

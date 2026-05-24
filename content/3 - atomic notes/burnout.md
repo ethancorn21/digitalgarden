@@ -1,6 +1,6 @@
 2025-09-30 18:03
 status: #baby
-tags: [[psychology]], [[thinking traps]], [[mastery]], [[consistency]]
+tags: [[psychology]], [[thinking traps]], [[mastery]], [[consistency]]; [[things to contemplate]]
 
 ---
 
@@ -10,4 +10,5 @@ What separates the people who are able to do something, like playing the same ga
 
 ---
 ## See also
-[[obsession = consistent effort]]
+
+Can you push past burnout? [[obsession = consistent effort]]

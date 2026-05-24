@@ -61,10 +61,22 @@ LOG_FILE="$HOME/Library/Logs/digitalgarden-sync.log"
   git commit -m "sync vault notes [automated]"
 
   echo "[$(date +'%Y-%m-%d %H:%M:%S')] Pushing to origin"
-  if git push origin main; then
+  if ! git push origin main; then
+    echo "[ERROR] Push failed"
+    exit 1
+  fi
+
+  echo "[$(date +'%Y-%m-%d %H:%M:%S')] Building site"
+  if ! npx quartz build; then
+    echo "[ERROR] Build failed"
+    exit 1
+  fi
+
+  echo "[$(date +'%Y-%m-%d %H:%M:%S')] Deploying to Cloudflare Workers"
+  if npx wrangler deploy; then
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] Success"
   else
-    echo "[ERROR] Push failed"
+    echo "[ERROR] Deploy failed"
     exit 1
   fi
 

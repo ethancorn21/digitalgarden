@@ -1,7 +1,7 @@
 AKA: Retrieval practice
 2025-10-06 21:33
 status: #baby
-tags:[[learning]], [[psychology]], [[personal-development DELETE]]
+tags:[[learning]], [[psychology]],
 
 # retrieval practice
 The act of recalling learned information actively rather than passively reintaking it. The testing effect can be achieved through flashcards, quizzes, recalling what you just read, etc. By actively recalling the memory, its long term remembrance is strengthened.

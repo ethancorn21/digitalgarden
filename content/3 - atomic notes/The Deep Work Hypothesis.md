@@ -1,6 +1,6 @@
 2025-09-28 15:37
 status: #baby 
-tags: [[learning]], [[personal-development DELETE]], [[value creation]], 
+tags: [[learning]], [[value creation]], 
 
 # The Deep Work Hypothesis
 "The ability to perform deep work is becoming increasingly *rare* at exactly the same time is is becoming increasingly *valuable* in our economy. As a consequence, the few who cultivate this skill, and then make it the core of their working life will thrive." - Cal Newport

@@ -16,14 +16,14 @@ const config: QuartzConfig = {
     locale: "en-US",
     baseUrl: "ethanlawcorn.com",
     ignorePatterns: ["private", "templates", ".obsidian", "1 - rough notes", "6 - templates", "8 - miscellaneous"],
-    defaultDateType: "created",
+    defaultDateType: "modified",
     theme: {
-      fontOrigin: "googleFonts",
+      fontOrigin: "local",
       cdnCaching: true,
       typography: {
-        header: "JetBrains Mono",
-        body: "JetBrains Mono",
-        code: "JetBrains Mono",
+        header: "Iosevka",
+        body: "Iosevka",
+        code: "Iosevka",
       },
       colors: {
         lightMode: {
@@ -55,7 +55,7 @@ const config: QuartzConfig = {
     transformers: [
       Plugin.FrontMatter(),
       Plugin.CreatedModifiedDate({
-        priority: ["frontmatter", "git", "filesystem"],
+        priority: ["frontmatter", "filesystem", "git"],
       }),
       Plugin.ObsidianNoteDate(),
       Plugin.SyntaxHighlighting({

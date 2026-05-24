@@ -9,6 +9,5 @@ Is not all addiction a propensity for consumption? even the ones you think are a
 
 Obviously addiction is not what you would wish to be taken by, as such why consume anything not purposefully? Why consume social media or media as a way to fill boredom? Is that not by its very means an addiction?
 
-
 ---
 #### Reference

@@ -1,6 +1,6 @@
 2025-10-28 10:43
-status: #baby
-tags: [[Social Behavior]], [[superior communication]], [[religion]], [[thinking traps]]
+status: #adult
+tags: [[Social Behavior]], [[religion]], [[thinking traps]]; [[analysis]]
 
 ---
 # Purity Spiral
@@ -9,10 +9,12 @@ In a group setting, people will try to outbid the zealousness of the group, this
 
 This would spiral out of control to now the believers perform violence as performative art for the collective rather than reinforcing a belief.
 
+Make no mistake, this happens in every group with shared beliefs. Cultures, religions, communities. 
+
 ### example:
-Imagine a religion that promoted violence. The believers in this religion would see violence as virtuous and in acts to increase social standing would commit increasingly virtuous acts. Such that was once extremely virtuous becomes the norm. 
+Imagine a religion that promoted violence. The believers in this religion would see violence as virtuous and in acts to increase social standing would commit increasingly virtuous acts. Such that was once extremely virtuous becomes the norm. So, violence in increasingly grotesque ways spirals out of control. 
 
 ---
-#### Reference
+## Reference
 
-Perhaps we can begin to see this as a result of the impending [[Socio Christian Movement]]
+Perhaps we can begin to see this as a result in the impending [[Socio Christian Movement]]
