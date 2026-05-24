@@ -14,10 +14,9 @@ export const ObsidianNoteDate: QuartzTransformerPlugin = () => ({
           const parsed = new Date(match[1].replace(" ", "T"))
           if (!isNaN(parsed.getTime())) {
             if (!file.data.dates) {
-              file.data.dates = { created: parsed, modified: parsed, published: parsed }
+              file.data.dates = { created: parsed, modified: new Date(), published: parsed }
             } else {
               file.data.dates.created = parsed
-              file.data.dates.modified = parsed
             }
           }
         }
