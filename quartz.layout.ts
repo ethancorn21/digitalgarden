@@ -46,16 +46,17 @@ export const defaultContentPageLayout: PageLayout = {
           return a.displayName.localeCompare(b.displayName, undefined, { numeric: true, sensitivity: "base" })
         }
         if (!a.isFolder && !b.isFolder) {
+          const obsidianDateRe = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}/
+          const aHas = obsidianDateRe.test((a.data?.content ?? "").trim())
+          const bHas = obsidianDateRe.test((b.data?.content ?? "").trim())
+          if (aHas && !bHas) return -1
+          if (!aHas && bHas) return 1
+          if (!aHas && !bHas) {
+            return a.displayName.localeCompare(b.displayName, undefined, { numeric: true, sensitivity: "base" })
+          }
           const aDate = a.data?.date ? new Date(a.data.date).getTime() : 0
           const bDate = b.data?.date ? new Date(b.data.date).getTime() : 0
-          if (aDate !== bDate) return bDate - aDate
-          const obsidianDateRe = /^(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/
-          const aMatch = (a.data?.content ?? "").trim().match(obsidianDateRe)
-          const bMatch = (b.data?.content ?? "").trim().match(obsidianDateRe)
-          if (aMatch && !bMatch) return -1
-          if (!aMatch && bMatch) return 1
-          if (aMatch && bMatch) return bMatch[1].localeCompare(aMatch[1])
-          return 0
+          return bDate - aDate
         }
         return a.isFolder ? -1 : 1
       },
@@ -105,16 +106,17 @@ export const defaultListPageLayout: PageLayout = {
           return a.displayName.localeCompare(b.displayName, undefined, { numeric: true, sensitivity: "base" })
         }
         if (!a.isFolder && !b.isFolder) {
+          const obsidianDateRe = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}/
+          const aHas = obsidianDateRe.test((a.data?.content ?? "").trim())
+          const bHas = obsidianDateRe.test((b.data?.content ?? "").trim())
+          if (aHas && !bHas) return -1
+          if (!aHas && bHas) return 1
+          if (!aHas && !bHas) {
+            return a.displayName.localeCompare(b.displayName, undefined, { numeric: true, sensitivity: "base" })
+          }
           const aDate = a.data?.date ? new Date(a.data.date).getTime() : 0
           const bDate = b.data?.date ? new Date(b.data.date).getTime() : 0
-          if (aDate !== bDate) return bDate - aDate
-          const obsidianDateRe = /^(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/
-          const aMatch = (a.data?.content ?? "").trim().match(obsidianDateRe)
-          const bMatch = (b.data?.content ?? "").trim().match(obsidianDateRe)
-          if (aMatch && !bMatch) return -1
-          if (!aMatch && bMatch) return 1
-          if (aMatch && bMatch) return bMatch[1].localeCompare(aMatch[1])
-          return 0
+          return bDate - aDate
         }
         return a.isFolder ? -1 : 1
       },
