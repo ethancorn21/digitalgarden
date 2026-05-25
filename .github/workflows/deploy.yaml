@@ -35,7 +35,7 @@ jobs:
         run: npm ci
 
       - name: Check types
-        run: npm run check
+        run: npx tsc --noEmit
 
       - name: Build
         run: npx quartz build
