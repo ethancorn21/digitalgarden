@@ -1,6 +1,6 @@
 2025-11-04 10:38
 status: #adult
-tags: [[thinking traps]], [[process]]
+tags: [[thinking traps]], [[process]]; [[importance of failure]]; [[Life is About Actively Trying]]
 
 ---
 # Sustaining the Unknown
@@ -10,4 +10,4 @@ With this said, at what point will it be better to seek answers than work throug
 
 ---
 #### Reference
-From [[Outliers]], Why Asians are better at match chapter. 
+From [[Outliers]], Why Asians are better at math chapter. 

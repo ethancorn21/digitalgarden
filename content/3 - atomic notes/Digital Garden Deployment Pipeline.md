@@ -4,7 +4,7 @@
 
 # Digital Garden Deployment Pipeline
 
-Every night at midnight, notes written in Obsidian are automatically synced, built, and deployed to production without any manual intervention. The pipeline runs entirely on the local machine via a macOS launchd job.
+Every night at midnight, notes written in Obsidian are automatically synced, built, and deployed to production without any manual intervention. The pipeline runs entirely on the local machine via a macOS launchd job. 
 
 ---
 

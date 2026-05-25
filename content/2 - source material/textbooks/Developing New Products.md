@@ -35,4 +35,4 @@ Growth
 Maturity
 Decline
 
-[[The Business Cycle is just a collection of Product Life Cycles]]
+[[The Business Cycle is a collection of Product Life Cycles]]

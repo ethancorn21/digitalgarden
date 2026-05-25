@@ -1,4 +1,4 @@
-[[process]], [[value creation]], [[consistency]], [[compounding]], [[mastery]]
+[[process]], [[value creation]], [[consistency]], [[compounding]], [[mastery]]; [[Life is About Actively Trying]]
 status: #baby 
 
 ---
