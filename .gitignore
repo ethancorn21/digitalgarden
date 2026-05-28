@@ -18,3 +18,4 @@ replit.nix
 !.dev.vars.example
 .env*
 !.env.example
+quartz/.quartz-cache/

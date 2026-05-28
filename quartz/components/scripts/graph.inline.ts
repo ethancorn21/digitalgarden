@@ -87,6 +87,7 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
     showTags,
     focusOnHover,
     enableRadial,
+    initialZoom,
   } = JSON.parse(graph.dataset["cfg"]!) as D3Config
 
   const data: Map<SimpleSlug, ContentDetails> = new Map(
@@ -517,21 +518,33 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
   }
 
   if (enableZoom) {
-    select<HTMLCanvasElement, NodeData>(app.canvas).call(
-      zoom<HTMLCanvasElement, NodeData>()
-        .extent([
-          [0, 0],
-          [width, height],
-        ])
-        .scaleExtent([0.25, 4])
-        .on("zoom", ({ transform }) => {
-          currentTransform = transform
-          currentK = transform.k
-          stage.scale.set(transform.k, transform.k)
-          stage.position.set(transform.x, transform.y)
-          updateLabelOpacity()
-        }),
-    )
+    const zoomBehavior = zoom<HTMLCanvasElement, NodeData>()
+      .extent([
+        [0, 0],
+        [width, height],
+      ])
+      .scaleExtent([0.25, 4])
+      .on("zoom", ({ transform }) => {
+        currentTransform = transform
+        currentK = transform.k
+        stage.scale.set(transform.k, transform.k)
+        stage.position.set(transform.x, transform.y)
+        updateLabelOpacity()
+      })
+
+    const canvasSelection = select<HTMLCanvasElement, NodeData>(app.canvas)
+    canvasSelection.call(zoomBehavior)
+
+    if (initialZoom && initialZoom !== 1) {
+      const cx = width / 2
+      const cy = height / 2
+      canvasSelection.call(
+        zoomBehavior.transform,
+        zoomIdentity
+          .translate(cx * (1 - initialZoom), cy * (1 - initialZoom))
+          .scale(initialZoom),
+      )
+    }
   }
 
   let stopAnimation = false

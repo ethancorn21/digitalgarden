@@ -19,6 +19,7 @@ export interface D3Config {
   showTags: boolean
   focusOnHover?: boolean
   enableRadial?: boolean
+  initialZoom?: number
 }
 
 interface GraphOptions {
@@ -35,12 +36,13 @@ const defaultOptions: GraphOptions = {
     repelForce: 0.5,
     centerForce: 0.3,
     linkDistance: 30,
-    fontSize: 0.75,
+    fontSize: 1.0,
     opacityScale: 1,
     showTags: true,
     removeTags: [],
     focusOnHover: false,
     enableRadial: false,
+    initialZoom: 1.5,
   },
   globalGraph: {
     drag: true,
