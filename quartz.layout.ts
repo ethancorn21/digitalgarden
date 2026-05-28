@@ -43,12 +43,22 @@ export const defaultContentPageLayout: PageLayout = {
     Component.Explorer({
       sortFn: (a, b) => {
         if (a.isFolder && b.isFolder) {
-          return a.displayName.localeCompare(b.displayName, undefined, { numeric: true, sensitivity: "base" })
+          const aName = a.displayName
+          const bName = b.displayName
+          // sensitivity:"base" treats non-letters as equal to letters on some envs
+          // (Cloudflare Linux, iOS Safari) — guard special chars explicitly
+          const aIsLetter = /^[a-zA-Z]/u.test(aName)
+          const bIsLetter = /^[a-zA-Z]/u.test(bName)
+          if (!aIsLetter && bIsLetter) return -1
+          if (aIsLetter && !bIsLetter) return 1
+          return aName.localeCompare(bName, "en", { numeric: true, sensitivity: "base" })
         }
         if (!a.isFolder && !b.isFolder) {
           const aDate = a.data?.date ? new Date(a.data.date).getTime() : 0
           const bDate = b.data?.date ? new Date(b.data.date).getTime() : 0
-          return bDate - aDate
+          if (bDate !== aDate) return bDate - aDate
+          // fallback: alphabetical when dates are equal (e.g. shallow CI clone gives same git date)
+          return a.displayName.localeCompare(b.displayName, "en", { numeric: true, sensitivity: "base" })
         }
         return a.isFolder ? -1 : 1
       },
@@ -95,12 +105,19 @@ export const defaultListPageLayout: PageLayout = {
     Component.Explorer({
       sortFn: (a, b) => {
         if (a.isFolder && b.isFolder) {
-          return a.displayName.localeCompare(b.displayName, undefined, { numeric: true, sensitivity: "base" })
+          const aName = a.displayName
+          const bName = b.displayName
+          const aIsLetter = /^[a-zA-Z]/u.test(aName)
+          const bIsLetter = /^[a-zA-Z]/u.test(bName)
+          if (!aIsLetter && bIsLetter) return -1
+          if (aIsLetter && !bIsLetter) return 1
+          return aName.localeCompare(bName, "en", { numeric: true, sensitivity: "base" })
         }
         if (!a.isFolder && !b.isFolder) {
           const aDate = a.data?.date ? new Date(a.data.date).getTime() : 0
           const bDate = b.data?.date ? new Date(b.data.date).getTime() : 0
-          return bDate - aDate
+          if (bDate !== aDate) return bDate - aDate
+          return a.displayName.localeCompare(b.displayName, "en", { numeric: true, sensitivity: "base" })
         }
         return a.isFolder ? -1 : 1
       },
