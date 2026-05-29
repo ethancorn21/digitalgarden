@@ -27,7 +27,7 @@ Deep dive into stuff you find interesting. Fall down the wikipedia rabbit hole. 
 
 Remembering the inputs. Take notes and use Anki for the stuff you want to remember. Connect new knowledge to existing knowledge through novel connections.
 
-Strategic use of chemical stimulants. Don't abuse caffeine, use it as a tool. Don't drink it on the weekends, unless you have work that needs to be done. Allow your tolerance to diminish so that when you need caffeine, it's efficacy is insane.\[2]
+Strategic use of chemical stimulants. Don't abuse caffeine, use it as a tool. Don't drink it on the weekends, unless you have work that needs to be done. Allow your tolerance to diminish so that when you need caffeine, it's efficacy is insane.
 
 ## outputs:
 
