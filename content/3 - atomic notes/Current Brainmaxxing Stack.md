@@ -5,7 +5,7 @@ tags: [[process]]
 ---
 # Current Brainmaxxing Stack
 
-Training the brain is as much about the environment in which it exists as feeding it constant inputs. Create your learning system and stick to it. Compounded over years, the mind will expand to fill the space allotted to it.
+Training the brain is as much about the environment in which it exists as feeding it constant, yet controlled inputs. Create your learning system and stick to it. Compounded over years, the mind will expand to fill the space allotted to it.
 
 ## Foundational stuff:
 
