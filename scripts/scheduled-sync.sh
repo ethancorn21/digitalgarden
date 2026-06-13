@@ -67,13 +67,13 @@ LOG_FILE="$HOME/Library/Logs/digitalgarden-sync.log"
   fi
 
   echo "[$(date +'%Y-%m-%d %H:%M:%S')] Building site"
-  if ! npx quartz build; then
+  if ! /usr/local/bin/npx quartz build; then
     echo "[ERROR] Build failed"
     exit 1
   fi
 
   echo "[$(date +'%Y-%m-%d %H:%M:%S')] Deploying to Cloudflare Workers"
-  if npx wrangler deploy; then
+  if /usr/local/bin/npx wrangler deploy; then
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] Success"
   else
     echo "[ERROR] Deploy failed"
