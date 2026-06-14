@@ -41,6 +41,8 @@ export const defaultContentPageLayout: PageLayout = {
       ],
     }),
     Component.Explorer({
+      folderClickBehavior: "collapse",
+      defaultOpenFolders: ["3---atomic-notes"],
       sortFn: (a, b) => {
         if (a.isFolder && b.isFolder) {
           const aName = a.displayName
@@ -103,6 +105,8 @@ export const defaultListPageLayout: PageLayout = {
       ],
     }),
     Component.Explorer({
+      folderClickBehavior: "collapse",
+      defaultOpenFolders: ["3---atomic-notes"],
       sortFn: (a, b) => {
         if (a.isFolder && b.isFolder) {
           const aName = a.displayName

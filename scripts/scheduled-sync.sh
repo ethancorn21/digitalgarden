@@ -50,13 +50,14 @@ LOG_FILE="$HOME/Library/Logs/digitalgarden-sync.log"
   # Go to repo and check for changes
   cd "$REPO_DIR" || exit 1
 
-  if [ -z "$(git status --porcelain content/)" ]; then
+  if [ -z "$(git status --porcelain)" ]; then
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] No changes to commit"
     exit 0
   fi
 
   # Stage, commit, and push
   echo "[$(date +'%Y-%m-%d %H:%M:%S')] Changes detected, committing"
+  git add -u
   git add content/
   git commit -m "sync vault notes [automated]"
 
