@@ -3,6 +3,8 @@
 
 set -o pipefail
 
+export PATH="/usr/local/bin:$PATH"
+
 VAULT="$HOME/Documents/Me"
 REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 CONTENT="$REPO_DIR/content"
