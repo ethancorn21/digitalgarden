@@ -4,6 +4,7 @@ tags: [[Artificial Intelligence]], [[analysis]], [[technology]], [[The Human Con
 
 ---
 # Sanctity of Artificial Intelligence
+
 Does artificial intelligence deserve to be treated as such, intelligent? We seem to already coddle the way we interact with LLM's in fear of being T-1000'd by them, Skynet is a possibility in the minds of many people. We say please and thank you when we get a great answer. But we also say please and thank you to dogs when they do what we wish for them to do. Is that how AI will be in the future? We will attribute consciousness to it in the same way that we attribute consciousness to insects, mammals, and all other variety of animals?
 
 Where else in history have we attributed consciousness to something? How did it go? Dogs? Cats? Religion? Animism?
