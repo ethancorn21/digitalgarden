@@ -1,5 +1,5 @@
 2026-05-23 16:54
-status: #baby
+status: #adult
 tags: [[process]]; [[Life is About Actively Trying]]; [[analysis]]; [[mindful consumption]]; [[a life well lived]]; [[Inversion Philosophy]]
 
 ---
@@ -11,7 +11,9 @@ Imagine if you did not try, or suffer, or push through those first hellish 30 mi
 
 To live a good life, embrace difficulty. Difficulty is a redeemer. A test. Those that can suffer it will gain more than those that can't. 
 
-Those that can't fathom the benefits of the hard life will justify the easy one as the only correct way to live because intuitively the hedonic life seems best. In the times of the abyss, the death and rebirth, of the heroes journey, it will start to seem true. But persevere through the abyss into the transformation phase and you will find yourself holding the abyss that was torturing you. 
+Those that can't fathom the benefits of the hard life will justify the easy one as the only correct way to live because intuitively the hedonic life seems best. In the times of the abyss, the death and rebirth, of the heroes journey, it will start to seem true. But persevere through the abyss into the transformation phase and you will find yourself holding the abyss that was once torturing you.
+
+Doing the hard thing, allowing yourself to focus solely on your goal, allows you to retreat away from the day to day BS in favor of the higher goal. The option to choose feels awesome, to actively do away with trivial stuff that tends to consumes one’s life.
 
 ---
 ## see also:

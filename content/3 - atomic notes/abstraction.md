@@ -1,5 +1,5 @@
 2025-09-28 13:55
-status: #baby 
+status: #adult
 tags: [[learning]], [[systems design]]
 
 # conceptualize and contextualize
@@ -8,6 +8,8 @@ When learning a new topic, understand the big ideas of the topic. What does it d
 Next, contextualize the topic within the scope of whatever field it is from. What ideas point to it? What ideas stem from it? Are there any connections you can make outside the field it exists?
 
 Abstraction can be seen as a black box. You do not really understand how it works in depth, but you understand the output you get from the input.
+
+Why do I begin to say “ok I need to understand what’s happening inside the black box”, versus being ok with high level abstraction?
 
 ---
 ## Reference
