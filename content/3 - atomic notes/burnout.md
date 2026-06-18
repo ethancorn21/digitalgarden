@@ -1,6 +1,6 @@
 2025-09-30 18:03
 status: #baby
-tags: [[psychology]], [[thinking traps]], [[mastery]], [[consistency]]; [[things to contemplate]]
+tags: [[psychology]], [[thinking traps]], [[mastery]], [[consistency]]; [[things to think about]]
 
 ---
 

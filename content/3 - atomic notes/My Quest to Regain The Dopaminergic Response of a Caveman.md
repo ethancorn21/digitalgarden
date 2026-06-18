@@ -1,6 +1,6 @@
 2026-04-07 19:48
 status: #baby
-tags: [[synthesis]] ; [[process]]; [[things to contemplate]]; [[thinking traps]]
+tags: [[synthesis]] ; [[process]]; [[things to think about]]; [[thinking traps]]
 
 ---
 # My Quest to Regain The Dopaminergic Response of a Caveman

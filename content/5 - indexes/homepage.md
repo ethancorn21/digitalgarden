@@ -15,7 +15,7 @@
 [[The Human Condition Throughout Time]] - The human environment has changed, but not humans.
 
 [[superior communication]] - How to better hear and be heard 
-[[things to contemplate]] - running list of things to think about
+[[things to think about]] - running list of things to think about
 
 [[free will]] - Do we truly have free will?
 

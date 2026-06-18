@@ -1,6 +1,6 @@
 2026-03-23 16:37
 status: #adult
-tags: [[analysis]] ; [[things to contemplate]] ; [[mastery]] ; [[Inversion Philosophy]]
+tags: [[analysis]] ; [[things to think about]] ; [[mastery]] ; [[Inversion Philosophy]]
 
 ---
 # Returning To a Child Like State of Living

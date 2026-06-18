@@ -1,6 +1,6 @@
 2026-03-26 14:43
 status: #baby 
-tags: [[things to contemplate]]; [[synthesis]]; [[thinking traps]]
+tags: [[things to think about]]; [[synthesis]]; [[thinking traps]]
 
 ---
 # Reaffirm Intellectual Ego

@@ -1,13 +1,13 @@
 2026-06-15 21:16
 status: #baby
-tags: [[Artificial Intelligence]]; [[things to contemplate]]; [[technology]]; [[synthesis]]; [[analysis]]
+tags: [[Artificial Intelligence]]; [[things to think about]]; [[technology]]; [[synthesis]]; [[analysis]]
 
 ---
 # Roadblocks For Mechanistic Consciousness
 
 ![[IMG_3155.jpeg|300]]
 
-In order for AI to begin to "feel" the same way a conscious human does, we must first start with breaking down what that means.
+In order for AI to begin to experience the same way a conscious human does, we must first start with breaking down what that means. The issue is, we can't quite articulate what that entails.
 
 What is a feeling? Does any one person feel the same way as any other person? I would wager not, but we associate the different feelings with the same label. Plato tried to answer this with his "World of Forms". The labels that we put onto the world are the imperfect reflection of a perfect reality. So we know that an object made of wood, with stick like objects attached to the main structure is a tree, but how do we know it's not a chair?
 
