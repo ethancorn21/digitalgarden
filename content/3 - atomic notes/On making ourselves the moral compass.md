@@ -5,7 +5,7 @@ tags: [[Social Behavior]], [[synthesis]], [[religion]]
 ---
 # On making ourselves the moral compass
 
-![[JEAN_LOUIS_THÉODORE_GÉRICAULT_-_La_Balsa_de_la_Medusa_(Museo_del_Louvre,_1818-19).jpg]]
+![[Raft_of_the_Medusa_Gericault.jpg]]
 
 In the absence of a higher power, whether religious or institutional. The mind becomes the arbiter of what is moral and right. The problem is that the human moral compass can be reasoned and bargained with. 
 
