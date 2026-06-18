@@ -5,7 +5,7 @@ tags: [[Artificial Intelligence]]; [[things to contemplate]]; [[technology]]; [[
 ---
 # Roadblocks For Mechanistic Consciousness
 
-![[IMG_3155.jpeg|100px]]
+![[IMG_3155.jpeg|300]]
 
 In order for AI to begin to "feel" the same way a conscious human does, we must first start with breaking down what that means.
 
