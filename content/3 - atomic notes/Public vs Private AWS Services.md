@@ -30,5 +30,5 @@ When accessing public zone, like s3 buckets, can be accessed from home. Internet
 ## see also:
 
 [[Elastic Compute Cloud (EC2)]]
-[[Simple Storage Solution (S3)]]
+[[Simple Storage Service (S3)]]
 

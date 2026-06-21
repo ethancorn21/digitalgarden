@@ -1,5 +1,5 @@
 2026-06-17 21:24
-status: #babyjk
+status: #baby
 tags: [[analysis]]; [[thinking traps]]; [[things to think about]]; [[The Human Condition Throughout Time]]
 
 ---

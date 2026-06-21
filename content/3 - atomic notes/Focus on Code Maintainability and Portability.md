@@ -15,3 +15,5 @@ DOOM's organization sort of reminds me of virtualization. The system dependent c
 ## see also:
 
 [[Platform Dependency Sandboxing for Cross-platform Applications]]
+
+issue with runaway configs and runaway complexity : [[Complex Systems Needs to Be Designed For the Lowest Base Denominator]]
