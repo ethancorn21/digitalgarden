@@ -8,7 +8,12 @@ Move the automated vault sync + deploy pipeline from a local launchd job (Mac mu
 
 ## Why
 
-Local launchd job runs `scheduled-sync.sh` nightly at midnight — syncs Obsidian vault → builds Quartz → deploys to Cloudflare Workers. Problem: Mac asleep or off = no sync, no deploy. EC2 fixes this.
+Local launchd job runs `scheduled-sync.sh` nightly at midnight — syncs Obsidian vault → builds Quartz → deploys to Cloudflare Workers. Two problems:
+
+1. **Mac asleep or off** = no sync, no deploy
+2. **macOS FDA (Full Disk Access) not granted to launchd bash** = rsync runs but can't read vault directories, silently succeeds with exit 0, git sees no changes. Also: Obsidian Sync mid-flight at midnight causes race condition where new notes are skipped.
+
+EC2 fixes both — always on, no macOS TCC gatekeeper.
 
 GitHub Actions was ruled out — it clones shallow with fake git timestamps, which breaks the sidebar sort order in Quartz.
 
@@ -125,15 +130,24 @@ npx wrangler login
 
 Follow the browser OAuth flow (will need to open the URL on your Mac).
 
-### 8. Update scheduled-sync.sh Vault Path
+### 8. Update scheduled-sync.sh for EC2
 
-The script currently points at `~/Documents/Me`. Update it to point at the EC2 vault:
+Two variables need updating — vault path and log path. Ubuntu has no `~/Library/Logs/`.
 
 ```bash
 # In scripts/scheduled-sync.sh, change:
 VAULT="$HOME/Documents/Me"
+LOG_FILE="$HOME/Library/Logs/digitalgarden-sync.log"
+
 # To:
 VAULT="$HOME/vault"
+LOG_FILE="$HOME/logs/digitalgarden-sync.log"
+```
+
+Create the log directory on EC2:
+
+```bash
+mkdir -p ~/logs
 ```
 
 Commit and push this change from your Mac before the EC2 pulls it.
@@ -171,9 +185,45 @@ bash ~/digitalgarden/scripts/scheduled-sync.sh
 Check logs:
 
 ```bash
-tail -f ~/Library/Logs/digitalgarden-sync.log
-# (log path is set inside the script — update it for EC2 if needed)
+tail -f ~/logs/digitalgarden-sync.log
 ```
+
+## Optional Extensions
+
+Ideas to add during or after deployment — none required, pick what's interesting.
+
+### S3 Vault Transport (Alternative to Obsidian Sync on EC2)
+
+Skip the obsidian-headless service entirely. Mac pushes vault to S3, EC2 pulls from there.
+
+```
+Mac (launchd) ──aws s3 sync──► S3 bucket ──EventBridge / S3 event──► EC2 pulls ──► quartz build ──► deploy
+```
+
+Setup:
+- Create an S3 bucket (`ethan-vault-sync` or similar)
+- IAM policy: Mac gets write-only to bucket; EC2 instance role gets read-only
+- Replace rsync step in script with `aws s3 sync ~/Documents/Me s3://your-bucket`
+- On EC2: `aws s3 sync s3://your-bucket ~/vault` before the build step
+- Optionally trigger EC2 via EventBridge on `s3:PutObject` instead of a fixed cron — vault syncs, deploy fires automatically
+
+SAA services: S3, IAM roles + instance profiles, EventBridge, EC2.
+
+### EventBridge Instead of Cron
+
+Replace the EC2 crontab with an EventBridge scheduled rule that invokes an SSM Run Command or triggers a Lambda. Keeps the scheduler managed by AWS instead of baked into the instance.
+
+### Wrangler Token Rotation via Secrets Manager
+
+Store the Cloudflare API token in AWS Secrets Manager. Script fetches it at runtime with `aws secretsmanager get-secret-value`. Avoids plaintext token in env or `.env` file on the instance.
+
+### Build Notifications
+
+Add an SNS topic. Script publishes success/failure at the end of `scheduled-sync.sh` — you get an email or SMS after every nightly run. One `aws sns publish` call, good SNS practice for SAA.
+
+### S3 Static Backup of Built Site
+
+After `quartz build`, run `aws s3 sync public/ s3://your-backup-bucket` before wrangler deploy. Free point-in-time backup of every build. Can set lifecycle rule to expire after 30 days.
 
 ## Notes
 

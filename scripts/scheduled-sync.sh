@@ -41,7 +41,7 @@ LOG_FILE="$HOME/Library/Logs/digitalgarden-sync.log"
   # Sync each folder (without --delete to prevent wipeouts)
   for folder in "${SYNC_FOLDERS[@]}"; do
     mkdir -p "$CONTENT/$folder"
-    if ! rsync -a "$VAULT/$folder/" "$CONTENT/$folder/"; then
+    if ! rsync -av "$VAULT/$folder/" "$CONTENT/$folder/"; then
       echo "[ERROR] Sync failed for: $folder"
       exit 1
     fi
