@@ -5,6 +5,8 @@ tags: [[thinking traps]]; [[analysis]]
 ---
 # Superiority Through Adherence of Esoteric Shared Principles
 
+![[Kylix_Theseus_Aison_MNA_Inv11365_n1.jpg|50px]]
+
 Humans can create feelings of status and superiority by following a shared set of esoteric principles that are different than the norm. 
 
 We are simultaneously status seeking creatures and creatures that want to expense the least amount of energy seeking that status, and so we try to get the highest ROI of our energy spent to status gained.

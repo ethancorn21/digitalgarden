@@ -9,5 +9,8 @@ Buying something based on the excised gain it will give you. Spending $100 to ma
 
 Don't falter to face value. The value is greater for one of the decisions, yet the cost is also greater. Think not in costs, but in value gained. 
 
+
 ---
 ## see also:
+
+In marketing, [[Customer Acquisition Cost vs Lifetime Value]]
