@@ -1,6 +1,6 @@
 2026-06-22 18:44
 status: #baby
-tags: [[Applying Manufacturing Principles]]; [[process]]; [[systems design]]
+tags: [[Manufacturing Principles]]; [[process]]; [[systems design]]
 
 ---
 # Lean Manufacturing Movement

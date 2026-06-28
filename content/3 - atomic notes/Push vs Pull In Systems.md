@@ -1,6 +1,6 @@
 2026-04-20 15:18
 status: #baby
-tags: [[process]]; [[Applying Manufacturing Principles]]; [[analysis]];
+tags: [[process]]; [[Manufacturing Principles]]; [[analysis]];
 
 ---
 # Push vs Pull In Systems

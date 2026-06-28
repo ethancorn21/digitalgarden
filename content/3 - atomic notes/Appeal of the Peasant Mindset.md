@@ -18,3 +18,5 @@ But what is all of this but an appeal to a inner entity acted upon by an outside
 
 [[Autonomy and Security]]
 [[peasant mindset and the bicameral mind]]
+
+When zealousness is worshipped, [[Purity Spiral]] ensues.
