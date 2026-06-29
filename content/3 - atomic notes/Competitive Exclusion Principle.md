@@ -14,4 +14,4 @@ Mechanism by which late-stage capitalism forces conglomeration into a few truly 
 
 read about in [[Thinking in Systems]]
 
-[[Competition eliminates market competition]]
+[[Competition Systematically Eliminates Market Competition]]
