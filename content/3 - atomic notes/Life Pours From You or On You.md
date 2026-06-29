@@ -1,5 +1,5 @@
 2026-04-13 15:11
-status: #baby
+status: #adult
 tags: [[Life is About Actively Trying]]; [[process]]; [[thinking traps]]
 
 ---

@@ -5,9 +5,13 @@ tags: [[analysis]]; [[synthesis]]; [[systems design]]; [[Manufacturing Principle
 ---
 # Lean - Stocks and Flows
 
+![[stocks-and-flows.excalidraw]]
+
 All systems contains stocks and flows. An input to a holding state to an output. For example manufactured good flowing into inventory which are then shipped off.
 
 Leans aims to increase the flow and reduce the stock. By increasing flow, throughput is increased. By decreasing stock, there is a decrease in WIP and lead times. 
+
+Essentially we don't want work piling up in stock because that means it is WIP and it is the bottleneck of our process.
 
 ---
 ## see also:
