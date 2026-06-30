@@ -23,8 +23,8 @@ LOG_FILE="$HOME/Library/Logs/digitalgarden-sync.log"
   mkdir -p "$CONTENT"
 
   SYNC_FOLDERS=(
-    "2 - source material"
-    "3 - atomic notes"
+    "2 - atomic notes"
+    "3 - source material"
     "4 - tags"
     "5 - indexes"
     "7 - attachments"
