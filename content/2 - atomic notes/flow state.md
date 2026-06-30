@@ -9,7 +9,7 @@ To increase the efficacy and efficiency of your work, focus on flow state.
 
 ---
 ### see also:
-[[3 - atomic notes/deep work|deep work]]
+[[2 - atomic notes/deep work|deep work]]
 [[Hermeneutic]] - entering flow state helps you get better and understand flow state, which repeats over again.
 
 

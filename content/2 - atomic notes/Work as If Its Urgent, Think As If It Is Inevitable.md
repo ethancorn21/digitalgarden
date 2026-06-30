@@ -12,4 +12,4 @@ Be assured of your success because of the amount of time and energy dedicated to
 leads to more [[shots on target]]
 ensures that efficient [[deliberate practice]] is being accomplished.
 [[Work Ethic is The Universal Currency of Respect]]
-[[3 - atomic notes/deep work|deep work]]
+[[2 - atomic notes/deep work|deep work]]

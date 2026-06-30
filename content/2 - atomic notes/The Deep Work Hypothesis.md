@@ -10,7 +10,7 @@ The ability to concentrate deeply to learn and quickly master new skills is beco
 ## Reference
 
 Source:
-[[2 - source material/books/Deep Work|Deep Work]]
+[[3 - source material/books/Deep Work|Deep Work]]
 
 related concept:
-[[3 - atomic notes/deep work|deep work]]
+[[2 - atomic notes/deep work|deep work]]

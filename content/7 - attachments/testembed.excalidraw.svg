@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-177.15493774414062 -221.13509298828126 549.443359375 224.18292236328125" width="100%" style="max-width:549px">
+  <style>text { font-family: Nunito, ui-sans-serif, system-ui, sans-serif; }</style>
+  <rect x="-177.15493774414062" y="-221.13509298828126" width="549.443359375" height="224.18292236328125" fill="#ffffff"/>
+  <rect x="-147.15493774414062" y="-188.78904724121094" width="196.54620361328125" height="159.90557861328125" rx="8" ry="8" stroke="#1e1e1e" stroke-width="1"  fill="none"/>
+  <text text-anchor="middle" font-size="20" font-family="Nunito, ui-sans-serif, system-ui, sans-serif" fill="#1e1e1e">
+  <tspan x="-48.8818359375" y="-126.33625793457031">this is a test</tspan>
+  <tspan x="-48.8818359375" y="-101.33625793457031">diagram, just seeing</tspan>
+  <tspan x="-48.8818359375" y="-76.33625793457031">where this saves to</tspan>
+  </text>
+  <rect x="133.62301635742188" y="-191.13509298828126" width="208.6654052734375" height="164.18292236328125" rx="8" ry="8" stroke="#1e1e1e" stroke-width="1"  fill="none"/>
+  <text text-anchor="middle" font-size="20" font-family="Nunito, ui-sans-serif, system-ui, sans-serif" fill="#1e1e1e">
+  <tspan x="237.95571899414062" y="-126.54363180664063">what does</tspan>
+  <tspan x="237.95571899414062" y="-101.54363180664063">embedding this test</tspan>
+  <tspan x="237.95571899414062" y="-76.54363180664063">look like?</tspan>
+  </text>
+  <polyline points="54.891265869140625,-108.83378014061007 128.12301635742188,-109.01370075050319" stroke="#1e1e1e" stroke-width="1"  fill="none"/>
+  
+</svg>

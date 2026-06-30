@@ -4,7 +4,7 @@ finish: 2025-09-10
 
 ### Key Takeaways:
 [[The Deep Work Hypothesis]]
-[[3 - atomic notes/deep work|deep work]]
+[[2 - atomic notes/deep work|deep work]]
 [[deliberate practice]]
 ### Summary:
 We live in an information economy. That means specialized knowledge is needed to ensure our world runs. Yet, at the same time, because of a number of factors: social media, interconnectedness, and distraction, people who can learn and produce specialized things are becoming increasingly rare. So, as specialized knowledge is becoming needed, the people who can do these things are becoming rarer, meaning that those that can learn and apply specialized knowledge are the winners of the new economy. To become one of the rare individuals who is a winner in todays economy, it requires intense, undistracted focus on a specific skill. Deep work is essentially a framework for accomplishing this state of focus.
@@ -14,7 +14,7 @@ We live in an information economy. That means specialized knowledge is needed to
 3
 >"deep work: professional activities performed in a state of distraction-free concentration that push your cognitive capabilities to their limit. These efforts create new value, improve your skill, and are hard to replicate."
 
-The keywords are "push your cognitive capabilities to their limit". Every [[3 - atomic notes/deep work|deep work]] session is a workout for your attention and ability to concentrate, which will only hypertrophy ever more as you continually reach your limit.
+The keywords are "push your cognitive capabilities to their limit". Every [[2 - atomic notes/deep work|deep work]] session is a workout for your attention and ability to concentrate, which will only hypertrophy ever more as you continually reach your limit.
 
 >"Jung built a tower out of stone in the woods to promote deep work in his professional life"
 

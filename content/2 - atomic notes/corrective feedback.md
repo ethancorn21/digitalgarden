@@ -9,5 +9,5 @@ feedback that acts as course correction to let you know if what you are doing is
 
 ## Reference
 needed in [[growth mindset]] and [[deliberate practice]].
-Talked about in [[Make it Stick]] and  [[2 - source material/books/Deep Work|Deep Work]].
+Talked about in [[Make it Stick]] and  [[3 - source material/books/Deep Work|Deep Work]].
 feedback cycles create a [[feedback loop]].

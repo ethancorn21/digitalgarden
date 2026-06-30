@@ -26,7 +26,7 @@ Obsidian (Mac) ──Obsidian Sync──► EC2 t3.micro
                                   keeps vault in sync
                                       │
                                   cron @ midnight
-                                  scheduled-sync.sh
+                                  pipeline.sh
                                       │
                             git commit + push + wrangler deploy
                                       │
@@ -130,17 +130,25 @@ npx wrangler login
 
 Follow the browser OAuth flow (will need to open the URL on your Mac).
 
-### 8. Update scheduled-sync.sh for EC2
+### 8. Update pipeline scripts for EC2
 
-Two variables need updating — vault path and log path. Ubuntu has no `~/Library/Logs/`.
+The pipeline is now modular — two variables need updating across different files. Ubuntu has no `~/Library/Logs/`.
+
+**Vault path** — in `scripts/lib/01-sync-vault.sh`, change:
 
 ```bash
-# In scripts/scheduled-sync.sh, change:
+# From:
 VAULT="$HOME/Documents/Me"
-LOG_FILE="$HOME/Library/Logs/digitalgarden-sync.log"
-
 # To:
 VAULT="$HOME/vault"
+```
+
+**Log path** — in `scripts/pipeline.sh`, change:
+
+```bash
+# From:
+LOG_FILE="$HOME/Library/Logs/digitalgarden-sync.log"
+# To:
 LOG_FILE="$HOME/logs/digitalgarden-sync.log"
 ```
 
@@ -150,7 +158,9 @@ Create the log directory on EC2:
 mkdir -p ~/logs
 ```
 
-Commit and push this change from your Mac before the EC2 pulls it.
+> Note: `scripts/scheduled-sync.sh` (the original monolithic script) still exists on the Mac as a rollback option. It does not need to run on EC2 — `pipeline.sh` is the active script.
+
+Commit and push these changes from your Mac before the EC2 pulls them.
 
 ### 9. Set Up Cron on EC2
 
@@ -161,7 +171,7 @@ crontab -e
 Add:
 
 ```
-0 0 * * * /bin/bash /home/ubuntu/digitalgarden/scripts/scheduled-sync.sh
+0 0 * * * /bin/bash /home/ubuntu/digitalgarden/scripts/pipeline.sh
 ```
 
 ### 10. Disable Local launchd Job

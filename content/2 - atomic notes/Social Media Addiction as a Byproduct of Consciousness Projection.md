@@ -16,7 +16,7 @@ In the modern day, social media allows us to project our consciousness into the 
 ---
 ## see also:
 
-For more on consciousness acting as an interface: [[3 - atomic notes/Consciousness as a Narrative Interface|Consciousness as a Narrative Interface]]
+For more on consciousness acting as an interface: [[Consciousness as a Narrative Interface|Consciousness as a Narrative Interface]]
 
 Consciousness byproduct of being a social creature? : [[Social Intelligence Hypothesis]]
 

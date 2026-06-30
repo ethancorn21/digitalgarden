@@ -20,7 +20,7 @@ Doing the hard thing, allowing yourself to focus solely on your goal, allows you
 
 [[Life Pours From You or On You]]
 
-In [[2 - source material/books/Deep Work|Deep Work]], Newport mentions a study that people who experience flow state regularly report higher life satisfactions.
+In [[3 - source material/books/Deep Work|Deep Work]], Newport mentions a study that people who experience flow state regularly report higher life satisfactions.
 
 Aligns with idea that satisfaction is more permanent than happiness: [[Ever Moving Goal Post Of Satisfaction]]
 

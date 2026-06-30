@@ -45,15 +45,16 @@ export const defaultContentPageLayout: PageLayout = {
       defaultOpenFolders: ["3---atomic-notes"],
       sortFn: (a, b) => {
         if (a.isFolder && b.isFolder) {
-          const aName = a.displayName
-          const bName = b.displayName
-          // sensitivity:"base" treats non-letters as equal to letters on some envs
-          // (Cloudflare Linux, iOS Safari) — guard special chars explicitly
-          const aIsLetter = /^[a-zA-Z]/u.test(aName)
-          const bIsLetter = /^[a-zA-Z]/u.test(bName)
-          if (!aIsLetter && bIsLetter) return -1
-          if (aIsLetter && !bIsLetter) return 1
-          return aName.localeCompare(bName, "en", { numeric: true, sensitivity: "base" })
+          // order comes from the folder's numeric prefix (e.g. "3---atomic-notes"),
+          // never from displayName — displayName is cosmetic only (mapFn strips the number)
+          // NOTE: no helper function here — esbuild wraps named fns with a __name()
+          // call that doesn't exist when Explorer evals this via `new Function(...)`
+          const aMatch = a.slugSegment?.match(/^(\d+)---/)
+          const bMatch = b.slugSegment?.match(/^(\d+)---/)
+          const aOrder = aMatch ? parseInt(aMatch[1], 10) : Infinity
+          const bOrder = bMatch ? parseInt(bMatch[1], 10) : Infinity
+          if (aOrder !== bOrder) return aOrder - bOrder
+          return a.displayName.localeCompare(b.displayName, "en", { numeric: true, sensitivity: "base" })
         }
         if (!a.isFolder && !b.isFolder) {
           const aDate = a.data?.date ? new Date(a.data.date).getTime() : 0
@@ -74,6 +75,8 @@ export const defaultContentPageLayout: PageLayout = {
             node.displayName = "Tags"
           } else if (node.slugSegment === "5---indexes") {
             node.displayName = "Indexes"
+          } else if (node.slugSegment === "7---attachments") {
+            node.displayName = "Attachments"
           }
         }
       },
@@ -109,13 +112,16 @@ export const defaultListPageLayout: PageLayout = {
       defaultOpenFolders: ["3---atomic-notes"],
       sortFn: (a, b) => {
         if (a.isFolder && b.isFolder) {
-          const aName = a.displayName
-          const bName = b.displayName
-          const aIsLetter = /^[a-zA-Z]/u.test(aName)
-          const bIsLetter = /^[a-zA-Z]/u.test(bName)
-          if (!aIsLetter && bIsLetter) return -1
-          if (aIsLetter && !bIsLetter) return 1
-          return aName.localeCompare(bName, "en", { numeric: true, sensitivity: "base" })
+          // order comes from the folder's numeric prefix (e.g. "3---atomic-notes"),
+          // never from displayName — displayName is cosmetic only (mapFn strips the number)
+          // NOTE: no helper function here — esbuild wraps named fns with a __name()
+          // call that doesn't exist when Explorer evals this via `new Function(...)`
+          const aMatch = a.slugSegment?.match(/^(\d+)---/)
+          const bMatch = b.slugSegment?.match(/^(\d+)---/)
+          const aOrder = aMatch ? parseInt(aMatch[1], 10) : Infinity
+          const bOrder = bMatch ? parseInt(bMatch[1], 10) : Infinity
+          if (aOrder !== bOrder) return aOrder - bOrder
+          return a.displayName.localeCompare(b.displayName, "en", { numeric: true, sensitivity: "base" })
         }
         if (!a.isFolder && !b.isFolder) {
           const aDate = a.data?.date ? new Date(a.data.date).getTime() : 0
@@ -135,6 +141,8 @@ export const defaultListPageLayout: PageLayout = {
             node.displayName = "Tags"
           } else if (node.slugSegment === "5---indexes") {
             node.displayName = "Indexes"
+          } else if (node.slugSegment === "7---attachments") {
+            node.displayName = "Attachments"
           }
         }
       },

@@ -11,7 +11,7 @@ Characterized by:
 If I wished to master the art of snowboarding, would I stick to the bunny slopes and green zones? No, sure I might start off there, learning the basics, building a foundation of snowboarding skills. But soon, those bunny slopes will be too easy and I will be able to carve down them without any effort. Enter, the intermediate slopes. The intermediate slopes are beyond what I have done so far, but using the knowledge I have gained in the bunny slopes I can tackle a bigger challenge. Now, I have to deal with a longer, steeper, more rugged course. This forces me to learn new things, try new things, master the things I have already learned. My feedback for how well I am doing is how far I am able to make it down the slope without falling, or how smoothly I can carve down the slope. Thus, deliberate practice is underway.
 ## Reference
 source:
-[[2 - source material/books/Deep Work|Deep Work]]
+[[3 - source material/books/Deep Work|Deep Work]]
 [[Make it Stick]]
 
 Used in:

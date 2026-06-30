@@ -14,7 +14,7 @@ If you imagine a cartoon, deep work leaves my head smoking after a good session,
 ---
 ## See also
 source:
-[[2 - source material/books/Deep Work|Deep Work]]
+[[3 - source material/books/Deep Work|Deep Work]]
 
 related concepts:
 [[The Deep Work Hypothesis]]

@@ -2,7 +2,7 @@ I write notes in books as I read them. I will then go back and expand upon the i
 [[Read to Lead]]
 [[How To Take Smart Notes]]
 [[Make it Stick]]
-[[2 - source material/books/Deep Work|Deep Work]]
+[[3 - source material/books/Deep Work|Deep Work]]
 [[Atomic Habits]]
 
 Books waiting to be transcribed:
