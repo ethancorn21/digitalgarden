@@ -42,10 +42,10 @@ export const defaultContentPageLayout: PageLayout = {
     }),
     Component.Explorer({
       folderClickBehavior: "collapse",
-      defaultOpenFolders: ["3---atomic-notes"],
+      defaultOpenFolders: ["2---atomic-notes"],
       sortFn: (a, b) => {
         if (a.isFolder && b.isFolder) {
-          // order comes from the folder's numeric prefix (e.g. "3---atomic-notes"),
+          // order comes from the folder's numeric prefix (e.g. "2---atomic-notes"),
           // never from displayName — displayName is cosmetic only (mapFn strips the number)
           // NOTE: no helper function here — esbuild wraps named fns with a __name()
           // call that doesn't exist when Explorer evals this via `new Function(...)`
@@ -67,10 +67,10 @@ export const defaultContentPageLayout: PageLayout = {
       },
       mapFn: (node) => {
         if (node.isFolder) {
-          if (node.slugSegment === "2---source-material") {
-            node.displayName = "Source Material"
-          } else if (node.slugSegment === "3---atomic-notes") {
+          if (node.slugSegment === "2---atomic-notes") {
             node.displayName = "Atomic Notes"
+          } else if (node.slugSegment === "3---source-material") {
+            node.displayName = "Source Material"
           } else if (node.slugSegment === "4---tags") {
             node.displayName = "Tags"
           } else if (node.slugSegment === "5---indexes") {
@@ -109,10 +109,10 @@ export const defaultListPageLayout: PageLayout = {
     }),
     Component.Explorer({
       folderClickBehavior: "collapse",
-      defaultOpenFolders: ["3---atomic-notes"],
+      defaultOpenFolders: ["2---atomic-notes"],
       sortFn: (a, b) => {
         if (a.isFolder && b.isFolder) {
-          // order comes from the folder's numeric prefix (e.g. "3---atomic-notes"),
+          // order comes from the folder's numeric prefix (e.g. "2---atomic-notes"),
           // never from displayName — displayName is cosmetic only (mapFn strips the number)
           // NOTE: no helper function here — esbuild wraps named fns with a __name()
           // call that doesn't exist when Explorer evals this via `new Function(...)`
@@ -133,10 +133,10 @@ export const defaultListPageLayout: PageLayout = {
       },
       mapFn: (node) => {
         if (node.isFolder) {
-          if (node.slugSegment === "2---source-material") {
-            node.displayName = "Source Material"
-          } else if (node.slugSegment === "3---atomic-notes") {
+          if (node.slugSegment === "2---atomic-notes") {
             node.displayName = "Atomic Notes"
+          } else if (node.slugSegment === "3---source-material") {
+            node.displayName = "Source Material"
           } else if (node.slugSegment === "4---tags") {
             node.displayName = "Tags"
           } else if (node.slugSegment === "5---indexes") {
