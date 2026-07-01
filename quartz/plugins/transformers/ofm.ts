@@ -230,7 +230,24 @@ export const ObsidianFlavoredMarkdown: QuartzTransformerPlugin<Partial<Options>>
                 if (value.startsWith("!")) {
                   const ext: string = path.extname(fp).toLowerCase()
                   const url = slugifyFilePath(fp as FilePath)
-                  if ([".png", ".jpg", ".jpeg", ".gif", ".bmp", ".svg", ".webp"].includes(ext)) {
+                  if (ext === ".excalidraw") {
+                    // Obsidian's Excalidraw plugin embeds drawings as ![[name.excalidraw]];
+                    // Quartz has no scene renderer, so embed the auto-exported .svg sibling instead.
+                    const svgUrl = slugifyFilePath(`${fp}.svg` as FilePath)
+                    return {
+                      type: "image",
+                      url: svgUrl,
+                      data: {
+                        hProperties: {
+                          width: "auto",
+                          height: "auto",
+                          alt: "",
+                        },
+                      },
+                    }
+                  } else if (
+                    [".png", ".jpg", ".jpeg", ".gif", ".bmp", ".svg", ".webp"].includes(ext)
+                  ) {
                     const match = wikilinkImageEmbedRegex.exec(alias ?? "")
                     const alt = match?.groups?.alt ?? ""
                     const width = match?.groups?.width ?? "auto"

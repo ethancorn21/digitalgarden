@@ -5,7 +5,7 @@ tags: [[analysis]]; [[synthesis]]; [[systems design]]; [[Manufacturing Principle
 ---
 # Lean - Stocks and Flows
 
-![[stocks-and-flows.excalidraw.svg]]
+![[stocks-and-flows.excalidraw]]
 
 All systems contains stocks and flows. An input to a holding state to an output. For example manufactured good flowing into inventory which are then shipped off.
 
