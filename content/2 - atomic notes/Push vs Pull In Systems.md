@@ -5,7 +5,7 @@ tags: [[process]]; [[Manufacturing Principles]]; [[analysis]];
 ---
 # Push vs Pull In Systems
 
-![[push-vs-pull.excalidraw]]
+![[push-vs-pull.excalidraw.svg]]
 
 forceful push vs cooperative pull
 humans hate to have things forced onto them yet we don't seem to mind being pulled somewhere. Think social media doom scrolling or rabbit holes. The hard part is figuring what is pushing and what is pulling.
