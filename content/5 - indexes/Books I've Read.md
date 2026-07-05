@@ -1,11 +1,10 @@
-I write notes in books as I read them. I will then go back and expand upon the idea digitally:
 [[Read to Lead]]
 [[How To Take Smart Notes]]
 [[Make it Stick]]
 [[3 - source material/books/Deep Work|Deep Work]]
 [[Atomic Habits]]
 
-Books waiting to be transcribed:
+Books waiting to be digitally transcribed:
 Skunk Works
 The Count of Monte Christo
 [[Thinking, Fast and Slow]]
@@ -36,3 +35,4 @@ The Count of Monte Christo
 [[High Output Management]]
 [[Thinking in Systems]]
 [[The Iliad]]
+[[DevOps Handbook]]
