@@ -5,7 +5,7 @@ title: Introduction
 
 Hey, I'm Ethan
 
-This is a digital commonplace notebook, a place to note down and work with ideas I find interesting. Every note is connected with every other note in some way. The mind better retains new ideas when they are connected to existing ones; this is called elaborative encoding.
+This is a digital commonplace notebook, a place to note down and work with ideas I find interesting. Every note is connected with every other note in some way because the mind better retains new ideas when they are connected to existing ones; this is called elaborative encoding.
 
 To start, use the sidebar or browse the [[homepage|note index]].
 
