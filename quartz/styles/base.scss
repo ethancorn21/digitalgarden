@@ -9,6 +9,7 @@ html {
   text-size-adjust: none;
   overflow-x: hidden;
   width: 100vw;
+  font-size: clamp(16px, 0.75vw + 10px, 20px);
 
   @media all and ($mobile) {
     scroll-padding-top: 4rem;
@@ -160,7 +161,7 @@ a {
 }
 
 .page {
-  max-width: calc(#{map.get($breakpoints, desktop)} + 300px);
+  max-width: max(calc(#{map.get($breakpoints, desktop)} + 300px), min(90vw, 2100px));
   margin: 0 auto;
   & article {
     & > h1 {
