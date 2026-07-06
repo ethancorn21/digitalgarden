@@ -13,3 +13,5 @@ If the stress is inescapable you must find ways to actively recover. A weekend o
 ## see also:
 
 Part of actively recovering and not allowing yourself to rot is controlling your dopaminergic response: [[My Quest to Regain The Dopaminergic Response of a Caveman]]
+
+Mechanisms of why passive recovery fails: [[Why Passive Recovery Fails]]

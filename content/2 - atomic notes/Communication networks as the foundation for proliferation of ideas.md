@@ -5,7 +5,11 @@ tags: [[technology]], [[synthesis]], [[superior communication]]
 ---
 # Communication networks as the foundation for proliferation of ideas
 
-The speed of knowledge acquisition and accumulation is the basis for critical mass so that advancement in a society can take place. Factors that influence efficiency of conveying information can include how much information is conveyed in the fewest number of words. In other words, information efficiency of a language. Will we, as language evolves, move towards a larger language that requires fewer words to convey more meaning?
+The speed of knowledge acquisition and accumulation is the basis for critical mass so that advancement in a society can take place.
+
+Factors that influence efficiency of conveying information can include how much information is conveyed in the fewest number of words. So information per word. In a sense, information efficiency of a language. 
+
+So then, as a natural next step, will we, as language evolves, move towards a larger language that requires fewer words to convey more meaning?
 
 ---
 ## Reference

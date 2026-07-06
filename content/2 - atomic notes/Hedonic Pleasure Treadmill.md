@@ -19,3 +19,5 @@ Will society collapse because we are enslaved to our own pleasure? No. Will we e
 Why dopamine response tapers with more dopamine produced:[[Law of diminishing marginal utility]]
 
 [[My Quest to Regain The Dopaminergic Response of a Caveman]]
+
+applying this to recovery: [[Why Passive Recovery Fails]]
