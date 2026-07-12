@@ -5,7 +5,9 @@
 set -o pipefail
 export PATH="/usr/local/bin:$PATH"
 
-VAULT="$HOME/Documents/Me"
+VAULT="/tmp/vault"
+aws s3 sync s3://digitalgarden-vault-sync "$VAULT" --delete
+
 REPO_DIR="${1:-$(cd "$(dirname "$0")/../.." && pwd)}"
 CONTENT="$REPO_DIR/content"
 
