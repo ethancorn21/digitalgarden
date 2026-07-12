@@ -1,0 +1,22 @@
+{
+  "family": "digitalgarden-pipeline",
+  "requiresCompatibilities": ["FARGATE"],
+  "networkMode": "awsvpc",
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::526426842375:role/digitalgarden-ecs-execution-role",
+  "taskRoleArn": "arn:aws:iam::526426842375:role/digitalgarden-ecs-task-role",
+  "containerDefinitions": [{
+    "name": "pipeline",
+    "image": "526426842375.dkr.ecr.us-east-1.amazonaws.com/digitalgarden-pipeline:latest",
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "/ecs/digitalgarden-pipeline",
+        "awslogs-region": "us-east-1",
+        "awslogs-stream-prefix": "run",
+        "awslogs-create-group": "true"
+      }
+    }
+  }]
+}

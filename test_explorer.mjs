@@ -1,0 +1,12 @@
+import { chromium } from 'playwright';
+const browser = await chromium.launch();
+const page = await browser.newPage();
+const logs = [];
+page.on('console', msg => logs.push(msg.text()));
+page.on('pageerror', err => logs.push('PAGEERROR: ' + err.message));
+await page.goto('http://localhost:8080', { waitUntil: 'networkidle' });
+await page.waitForTimeout(1500);
+const titles = await page.$$eval('.explorer-ul > li > div.folder-container .folder-title, .explorer-ul > li > a', els => els.slice(0,15).map(e => e.textContent.trim()));
+console.log('TOP LEVEL ITEMS:', titles);
+console.log('LOGS:', logs);
+await browser.close();

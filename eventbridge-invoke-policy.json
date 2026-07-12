@@ -1,0 +1,18 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "ecs:RunTask",
+      "Resource": "arn:aws:ecs:us-east-1:526426842375:task-definition/digitalgarden-pipeline:*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iam:PassRole",
+      "Resource": [
+        "arn:aws:iam::526426842375:role/digitalgarden-ecs-execution-role",
+        "arn:aws:iam::526426842375:role/digitalgarden-ecs-task-role"
+      ]
+    }
+  ]
+}
