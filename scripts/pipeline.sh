@@ -8,7 +8,7 @@ set -o pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 LIB="$SCRIPT_DIR/lib"
-LOG_FILE="$HOME/Library/Logs/digitalgarden-sync.log"
+LOG_FILE="/dev/stdout"
 
 {
   "$LIB/01-sync-vault.sh" "$REPO_DIR" || exit 1
