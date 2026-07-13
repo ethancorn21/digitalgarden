@@ -19,3 +19,6 @@ replit.nix
 .env*
 !.env.example
 quartz/.quartz-cache/
+*-policy.json
+trust-policy.json
+task-def.json
