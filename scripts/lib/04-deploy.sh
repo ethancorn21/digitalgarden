@@ -12,12 +12,10 @@ log() { echo "[$(date +'%Y-%m-%d %H:%M:%S')] $*"; }
 log "Deploying to Cloudflare Workers"
 cd "$REPO_DIR" || exit 1
 
-CLOUDFLARE_API_TOKEN="$(security find-generic-password -a "$USER" -s "cloudflare-api-token" -w 2>/dev/null)"
 if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
-  log "[ERROR] No cloudflare-api-token found in Keychain"
+  log "[ERROR] CLOUDFLARE_API_TOKEN not set in environment"
   exit 1
 fi
-export CLOUDFLARE_API_TOKEN
 
 MAX_ATTEMPTS=3
 attempt=1

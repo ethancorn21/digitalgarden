@@ -39,7 +39,7 @@ done
 
 for folder in "${SYNC_FOLDERS[@]}"; do
   mkdir -p "$CONTENT/$folder"
-  if ! rsync -av "$VAULT/$folder/" "$CONTENT/$folder/"; then
+  if ! rsync -av --delete "$VAULT/$folder/" "$CONTENT/$folder/"; then
     log "[ERROR] Sync failed for: $folder"
     exit 1
   fi
