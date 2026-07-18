@@ -18,7 +18,8 @@ replit.nix
 !.dev.vars.example
 .env*
 !.env.example
-quartz/.quartz-cache/
+quartz/.quartz-cache/*
+!quartz/.quartz-cache/fonts
 *-policy.json
 trust-policy.json
 task-def.json
