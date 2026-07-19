@@ -2,7 +2,28 @@ import fs from "fs"
 import { Repository } from "@napi-rs/simple-git"
 import { QuartzTransformerPlugin } from "../types"
 import path from "path"
-import { styleText } from "util"
+import { styleText, promisify } from "util"
+import { execFile } from "child_process"
+
+const execFileAsync = promisify(execFile)
+
+// earliest commit date for a file, walking full rename history.
+// git log lists newest-first, so the last line is the oldest commit.
+async function getFileEarliestCommitDate(
+  cwd: string,
+  relativePath: string,
+): Promise<number | undefined> {
+  const { stdout } = await execFileAsync(
+    "git",
+    ["log", "--follow", "--format=%aI", "--", relativePath],
+    { cwd },
+  )
+  const lines = stdout.split("\n").filter((l) => l.trim().length > 0)
+  if (lines.length === 0) return undefined
+  const oldest = lines[lines.length - 1]
+  const parsed = new Date(oldest).getTime()
+  return isNaN(parsed) ? undefined : parsed
+}
 
 export interface Options {
   priority: ("frontmatter" | "git" | "filesystem")[]
@@ -81,6 +102,7 @@ export const CreatedModifiedDate: QuartzTransformerPlugin<Partial<Options>> = (u
                 try {
                   const relativePath = path.relative(repositoryWorkdir, fullFp)
                   modified ||= await repo.getFileLatestModifiedDateAsync(relativePath)
+                  created ||= await getFileEarliestCommitDate(repositoryWorkdir, relativePath)
                 } catch {
                   console.log(
                     styleText(
