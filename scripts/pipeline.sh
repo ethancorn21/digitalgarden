@@ -14,8 +14,13 @@ LOG_FILE="/dev/stdout"
   "$LIB/01-sync-vault.sh" "$REPO_DIR" || exit 1
 
   "$LIB/02-git-publish.sh" "$REPO_DIR"
-  case $? in
-    0) ;;        # pushed — continue to build + deploy
+  publish_status=$?
+  if [ "$publish_status" -eq 2 ] && [ -n "${FORCE_DEPLOY:-}" ]; then
+    echo "[$(date +'%Y-%m-%d %H:%M:%S')] No vault changes, but FORCE_DEPLOY set — continuing to build + deploy"
+    publish_status=0
+  fi
+  case $publish_status in
+    0) ;;        # pushed (or forced) — continue to build + deploy
     2) exit 0 ;; # no changes — clean stop
     *) exit 1 ;; # error
   esac
