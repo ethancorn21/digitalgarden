@@ -1,6 +1,6 @@
 2026-07-13 21:22
 status: #baby
-tags: [[analysis]]; [[psychology]]; [[]]
+tags: [[analysis]]; [[psychology]]; 
 
 ---
 # Contracts of Self-Criticism and Dissatisfaction
@@ -11,9 +11,7 @@ Our goals are a sort of self-contract. We tell ourselves to aspire to something,
 
 Desire can be a self-contract. One that places pieces of ourselves inside an ever elusive object. One that can't be attained so we can never get those pieces back. A chase of an ever elusive desire.
 
-Perhaps the most destructive contracts are those that combine the two. The desire to achieve goals. To become more. When we are constantly in a state of desire for a future state, we can never be in our current state.
-
-A constant and perpetual state of future facing prospects, locking us into "what ifs" rather than "what is".
+Perhaps the most destructive contracts are those that combine the two. The desire to achieve goals. To become more. When we are constantly in a state of desire for a future state, we can never experience the depth of our current state. A constant and perpetual state of future facing prospects, locking us into "what ifs" rather than "what is".
 
 ---
 ## see also:
