@@ -5,7 +5,7 @@ tags: [[systems design]]; [[analysis]]
 ---
 # Purposeful Introduction of Chaos
 
-A system needs to be tested and strained in order to see it's flaws. You can purposefully introduce chaos into your systems that you can understand how the system reacts and what steps are needed to regain function of the system. Take out and shut off a piece of the system and what happens?
+A system needs to be tested and strained in order to see it's flaws. You can purposefully introduce chaos into your systems so that you can understand how the system reacts and what steps are needed to regain function of the system. Take out and shut off a piece of the system and what happens?
 
 Netflix created Chaos Monkey, an application that would randomly shut off processes inside their own servers to see what would happen. The goal was for process to instantly start back up if Chaos Monkey shut them off, such that their systems were now fault tolerant and more resilient because of the introduced Chaos.
 
