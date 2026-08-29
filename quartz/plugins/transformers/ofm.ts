@@ -128,6 +128,18 @@ export const tableRegex = new RegExp(/^\|([^\n])+\|\n(\|)( ?:?-{3,}:? ?\|)+\n(\|
 // matches any wikilink, only used for escaping wikilinks inside tables
 export const tableWikilinkRegex = new RegExp(/(!?\[\[[^\]]*?\]\]|\[\^[^\]]*?\])/g)
 
+// code fences and spans, used to skip wikilink rewriting inside code
+const codeRegex = new RegExp(/(```[\s\S]*?```|~~~[\s\S]*?~~~|`[^`\n]+`)/g)
+
+// Obsidian resolves wikilinks before inline markdown, so a filename like
+// `a_-_b_-_c.jpg` is a valid embed there. remark parses emphasis first, which
+// turns `_-_b_-_` into an <em> and splits the surrounding text node, so the
+// mdast wikilink pass never matches it and the embed renders as literal text.
+// Escaping `_` and `*` in the target keeps the parser's hands off it — the
+// escapes are consumed at parse time, so the mdast pass still sees the original
+// filename.
+const escapeEmphasis = (raw: string) => raw.replace(/[_*]/g, "\\$&")
+
 const highlightRegex = new RegExp(/==([^=]+)==/g)
 const commentRegex = new RegExp(/%%[\s\S]*?%%/g)
 // from https://github.com/escwxyz/remark-obsidian-callout/blob/main/src/index.ts
@@ -188,8 +200,19 @@ export const ObsidianFlavoredMarkdown: QuartzTransformerPlugin<Partial<Options>>
           })
         })
 
-        // replace all other wikilinks
-        src = src.replace(wikilinkRegex, (value, ...capture) => {
+        // code spans and fences are split out so the wikilink rewrite never
+        // touches code the author wrote verbatim
+        src = src
+          .split(codeRegex)
+          .map((segment, i) => (i % 2 === 1 ? segment : replaceWikilinks(segment)))
+          .join("")
+      }
+
+      return src
+
+      // replace all other wikilinks
+      function replaceWikilinks(src: string): string {
+        return src.replace(wikilinkRegex, (value, ...capture) => {
           const [rawFp, rawHeader, rawAlias]: (string | undefined)[] = capture
 
           const [fp, anchor] = splitAnchor(`${rawFp ?? ""}${rawHeader ?? ""}`)
@@ -202,11 +225,9 @@ export const ObsidianFlavoredMarkdown: QuartzTransformerPlugin<Partial<Options>>
             return `${embedDisplay}[${displayAlias.replace(/^\|/, "")}](${rawFp})`
           }
 
-          return `${embedDisplay}[[${fp}${displayAnchor}${displayAlias}]]`
+          return `${embedDisplay}[[${escapeEmphasis(fp)}${escapeEmphasis(displayAnchor)}${escapeEmphasis(displayAlias)}]]`
         })
       }
-
-      return src
     },
     markdownPlugins(ctx) {
       const plugins: PluggableList = []
