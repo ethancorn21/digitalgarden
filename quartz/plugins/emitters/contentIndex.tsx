@@ -18,6 +18,10 @@ export type ContentDetails = {
   content: string
   richContent?: string
   date?: Date
+  // date of the last commit that changed this note by more than a trivial number
+  // of lines; used by the Explorer to surface recently-revisited old notes.
+  // undefined when the note has only ever seen bulk/trivial rewrites
+  edited?: Date
   description?: string
 }
 
@@ -114,6 +118,7 @@ export const ContentIndex: QuartzEmitterPlugin<Partial<Options>> = (opts) => {
               ? escapeHTML(toHtml(tree as Root, { allowDangerousHtml: true }))
               : undefined,
             date: date,
+            edited: file.data.dates?.substantiveModified,
             description: file.data.description ?? "",
           })
         }

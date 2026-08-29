@@ -37,11 +37,12 @@ export const defaultContentPageLayout: PageLayout = {
           grow: true,
         },
         { Component: Component.Darkmode() },
-        { Component: Component.ReaderMode() },
       ],
     }),
     Component.Explorer({
       folderClickBehavior: "collapse",
+      // first-time visitors (no saved fileTree in localStorage) get the tree expanded
+      folderDefaultState: "open",
       defaultOpenFolders: ["2---atomic-notes"],
       sortFn: (a, b) => {
         if (a.isFolder && b.isFolder) {
@@ -57,8 +58,20 @@ export const defaultContentPageLayout: PageLayout = {
           return a.displayName.localeCompare(b.displayName, "en", { numeric: true, sensitivity: "base" })
         }
         if (!a.isFolder && !b.isFolder) {
-          const aDate = a.data?.date ? new Date(a.data.date).getTime() : 0
-          const bDate = b.data?.date ? new Date(b.data.date).getTime() : 0
+          // surfacing rule: a note edited within the last 30 days sorts by its
+          // modified date, so revisiting an old note floats it to the top; once the
+          // window lapses it falls back to created and drops to its chronological
+          // spot, so a stray reformat commit can't permanently reorder the tree.
+          // NOTE: inlined, no helper fn — esbuild wraps named fns with a __name()
+          // call that doesn't exist when Explorer evals this via `new Function(...)`
+          const surfaceWindowMs = 30 * 24 * 60 * 60 * 1000
+          const now = Date.now()
+          const aCreated = a.data?.date ? new Date(a.data.date).getTime() : 0
+          const bCreated = b.data?.date ? new Date(b.data.date).getTime() : 0
+          const aMod = a.data?.edited ? new Date(a.data.edited).getTime() : 0
+          const bMod = b.data?.edited ? new Date(b.data.edited).getTime() : 0
+          const aDate = aMod > aCreated && now - aMod < surfaceWindowMs ? aMod : aCreated
+          const bDate = bMod > bCreated && now - bMod < surfaceWindowMs ? bMod : bCreated
           if (bDate !== aDate) return bDate - aDate
           // fallback: alphabetical when dates are equal (e.g. shallow CI clone gives same git date)
           return a.displayName.localeCompare(b.displayName, "en", { numeric: true, sensitivity: "base" })
@@ -109,6 +122,8 @@ export const defaultListPageLayout: PageLayout = {
     }),
     Component.Explorer({
       folderClickBehavior: "collapse",
+      // first-time visitors (no saved fileTree in localStorage) get the tree expanded
+      folderDefaultState: "open",
       defaultOpenFolders: ["2---atomic-notes"],
       sortFn: (a, b) => {
         if (a.isFolder && b.isFolder) {
@@ -124,8 +139,20 @@ export const defaultListPageLayout: PageLayout = {
           return a.displayName.localeCompare(b.displayName, "en", { numeric: true, sensitivity: "base" })
         }
         if (!a.isFolder && !b.isFolder) {
-          const aDate = a.data?.date ? new Date(a.data.date).getTime() : 0
-          const bDate = b.data?.date ? new Date(b.data.date).getTime() : 0
+          // surfacing rule: a note edited within the last 30 days sorts by its
+          // modified date, so revisiting an old note floats it to the top; once the
+          // window lapses it falls back to created and drops to its chronological
+          // spot, so a stray reformat commit can't permanently reorder the tree.
+          // NOTE: inlined, no helper fn — esbuild wraps named fns with a __name()
+          // call that doesn't exist when Explorer evals this via `new Function(...)`
+          const surfaceWindowMs = 30 * 24 * 60 * 60 * 1000
+          const now = Date.now()
+          const aCreated = a.data?.date ? new Date(a.data.date).getTime() : 0
+          const bCreated = b.data?.date ? new Date(b.data.date).getTime() : 0
+          const aMod = a.data?.edited ? new Date(a.data.edited).getTime() : 0
+          const bMod = b.data?.edited ? new Date(b.data.edited).getTime() : 0
+          const aDate = aMod > aCreated && now - aMod < surfaceWindowMs ? aMod : aCreated
+          const bDate = bMod > bCreated && now - bMod < surfaceWindowMs ? bMod : bCreated
           if (bDate !== aDate) return bDate - aDate
           return a.displayName.localeCompare(b.displayName, "en", { numeric: true, sensitivity: "base" })
         }
