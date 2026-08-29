@@ -3,7 +3,7 @@ status: #baby
 tags: [[thinking traps]]; [[analysis]]
 
 ---
-# Superiority Through Adherence of Esoteric Shared Principles
+# Superiority Through Adherence To Esoteric Shared Principles
 
 ![[Kylix_Theseus_Aison_MNA_Inv11365_n1.jpg|50px]]
 

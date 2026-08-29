@@ -5,7 +5,7 @@ tags: [[analysis]]; [[thinking traps]]; [[systems design]];
 ---
 # Accomplishing Stability in an Unstable Environment
 
-Long term thinking is the only way to accomplish stability in a long-term environment.
+Long term thinking is the only way to accomplish stability in an unstable environment.
 
 The issue is that the problems of today seem to always be the biggest looming threat. Yet, we never look to the problems of yesterday and the giant issues they once were. 
 
