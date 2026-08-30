@@ -5,7 +5,7 @@ tags: [[analysis]]; [[synthesis]];
 ---
 # Justification of Being Wanted Through The Commercialization of Taste
 
-![[John_William_Waterhouse_-_Echo_and_Narcissus_-_Google_Art_Project.jpg]]
+![[John_William_Waterhouse_-_Echo_and_Narcissus_-_Google_Art_Project.jpg|1200]]
 
 Niche this, niche that. We feel so drawn to project out aspects of the self onto social media. Aspects that we think makes us rare, rareness which we see as justification of our wanting to be prized.
 
