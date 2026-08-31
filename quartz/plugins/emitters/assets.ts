@@ -4,6 +4,7 @@ import path from "path"
 import fs from "fs"
 import { glob } from "../../util/glob"
 import { Argv } from "../../util/ctx"
+import { optimizedImagePath } from "../../util/images"
 import { QuartzConfig } from "../../cfg"
 
 const filesToCopy = async (argv: Argv, cfg: QuartzConfig) => {
@@ -21,7 +22,9 @@ const copyFile = async (argv: Argv, fp: FilePath) => {
   const dir = path.dirname(dest) as FilePath
   await fs.promises.mkdir(dir, { recursive: true })
 
-  await fs.promises.copyFile(src, dest)
+  // large rasters are downscaled + re-encoded on the way out; filenames and
+  // extensions are preserved so no link rewriting is needed
+  await fs.promises.copyFile(await optimizedImagePath(src), dest)
   return dest
 }
 

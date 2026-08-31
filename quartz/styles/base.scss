@@ -556,6 +556,9 @@ tr {
 
 img {
   max-width: 100%;
+  // images now carry intrinsic width/height so they reserve space before they
+  // load; without this the attributes would also fix their rendered height
+  height: auto;
   border-radius: 5px;
   margin: 1rem 0;
   content-visibility: auto;

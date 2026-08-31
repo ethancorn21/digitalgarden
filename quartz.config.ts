@@ -68,6 +68,7 @@ const config: QuartzConfig = {
       Plugin.ObsidianFlavoredMarkdown({ enableInHtmlEmbed: false }),
       Plugin.GitHubFlavoredMarkdown(),
       Plugin.HardLineBreaks(),
+      Plugin.ImageAttributes(),
       Plugin.TableOfContents(),
       Plugin.CrawlLinks({ markdownLinkResolution: "shortest" }),
       Plugin.Description(),
@@ -88,6 +89,7 @@ const config: QuartzConfig = {
       Plugin.Static(),
       Plugin.Favicon(),
       Plugin.NotFoundPage(),
+      Plugin.CloudflareHeaders(),
       // Comment out CustomOgImages to speed up build time
       Plugin.CustomOgImages(),
     ],
