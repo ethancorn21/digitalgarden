@@ -87,6 +87,18 @@ export const ImageAttributes: QuartzTransformerPlugin = () => ({
 
           const dims = await dimensionsOf(onDisk)
           if (!dims) continue
+
+          const authored = Number(props.width)
+          if (Number.isFinite(authored) && authored > 0) {
+            // author sized the embed themselves (`![[img.jpg|1200]]`); keep their
+            // width but derive height from it, or the pair describes the wrong
+            // aspect ratio and the browser reserves a misshapen box
+            if (props.height === undefined || props.height === "auto") {
+              props.height = Math.round((dims.height * authored) / dims.width)
+            }
+            continue
+          }
+
           if (props.width === undefined || props.width === "auto") props.width = dims.width
           if (props.height === undefined || props.height === "auto") props.height = dims.height
         }
