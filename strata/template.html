@@ -338,12 +338,59 @@ svg.tracing .hub { opacity: .35; }
 .trlink { display: inline-block; margin: 0 0 22px 18px; font: 600 12px/1 var(--bd-label); letter-spacing: .16em; text-transform: uppercase; text-decoration: none; border-bottom: 1.5px solid var(--survey); padding-bottom: 3px; }
 .trlink:hover { color: var(--survey); }
 
+/* note preview: a card in the corner on desktop, a bottom sheet on phones. Positioned, so it never pushes the block */
+.pv {
+  position: fixed; right: 24px; bottom: 24px; z-index: 20; width: 380px; max-height: min(72vh, 620px); overflow-y: auto;
+  background: var(--bd-paper); border: 1.5px solid var(--bd-ink); box-shadow: 5px 5px 0 var(--bd-ink);
+  padding: 14px 16px 16px; animation: pvin .32s ease-out both; overscroll-behavior: contain;
+}
+@keyframes pvin { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.pv-top { display: flex; align-items: center; gap: 10px; }
+.pv-top .eyebrow { margin: 0; color: var(--survey); min-width: 0; }
+.pv-x { margin-left: auto; flex: none; width: 34px; height: 34px; font: 400 22px/1 var(--bd-title); background: transparent; color: var(--bd-ink); border: 1px solid var(--bd-ink); cursor: pointer; padding: 0; }
+.pv-x:hover { background: var(--bd-ink); color: var(--bd-paper); }
+.pv-t { margin: 8px 0 4px; font: 700 18px/1.25 var(--bd-title); letter-spacing: .02em; }
+.pv-m { margin: 0 0 10px; font: 500 11px/1.4 var(--bd-label); letter-spacing: .12em; text-transform: uppercase; color: var(--bd-ink-2); }
+.pv-ex { margin: 0 0 12px; font: 400 14.5px/1.55 var(--bd-title); }
+.pv-ex.none { font-style: italic; color: var(--bd-ink-2); }
+.pv-go { display: block; text-align: center; text-decoration: none; padding: 12px 14px 11px; margin-bottom: 12px;
+  font: 600 12.5px/1 var(--bd-label); letter-spacing: .18em; text-transform: uppercase; background: var(--bd-ink); color: var(--bd-paper); border: 1px solid var(--bd-ink); }
+.pv-go:hover { background: var(--survey); border-color: var(--survey); }
+.pv h4 { margin: 4px 0 6px; }
+.pv .list { max-height: none; }
+.pv .list button { all: unset; box-sizing: border-box; width: 100%; display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 6px 2px; font-size: 13.5px; line-height: 1.3; cursor: pointer; }
+.pv .list button:hover span, .pv .list button:focus-visible span { color: var(--accent); text-decoration: underline; }
+.pv .list button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.pv .lone { margin: 0; font: italic 13px/1.5 var(--bd-title); color: var(--bd-ink-2); }
+
+/* phone: the open block zooms onto one level; this bar steps through them */
+.lvnav { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; }
+.lvnav[hidden] { display: none; }
+.lvnav .tbtn { min-height: 44px; padding: 0 12px; flex: none; }
+.lvnav .lvname { flex: 1; min-width: 0; text-align: center; font: 600 12px/1.2 var(--bd-label); letter-spacing: .16em; text-transform: uppercase; }
+
+@media (max-width: 819px) {
+  .pv { left: 0; right: 0; bottom: 0; width: auto; max-height: 52vh; border-width: 1.5px 0 0; box-shadow: 0 -3px 0 var(--bd-ink);
+    padding: 12px 16px calc(14px + env(safe-area-inset-bottom)); animation-name: pvup; }
+  @keyframes pvup { from { transform: translateY(100%); } to { transform: none; } }
+  body.pv-on { padding-bottom: 52vh; }
+}
+/* touch: every control at least a fingertip tall */
+@media (pointer: coarse) {
+  .tbtn { min-height: 44px; padding: 0 14px; }
+  .rng input { height: 32px; }
+  .list a { padding: 11px 2px; font-size: 14.5px; }
+  .pv .list button { padding: 11px 2px; font-size: 14.5px; }
+  .q input { min-height: 44px; font-size: 16px; }
+  .q button { min-width: 44px; min-height: 44px; font-size: 18px; }
+  .tab { padding-top: 12px; padding-bottom: 12px; }
+}
 @media (max-width: 640px) {
   .ctl .hint { margin-left: 0; flex-basis: 100%; }
   .rng input { width: 120px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .tre, .trr, .hops li, .tr-sum, .rd-main > *, .rconn li { animation: none; stroke-dashoffset: 0; }
+  .tre, .trr, .hops li, .tr-sum, .rd-main > *, .rconn li, .pv { animation: none; stroke-dashoffset: 0; }
   svg.tracing .tg.lit { transition: none; }
 }
 </style>
@@ -373,7 +420,13 @@ svg.tracing .hub { opacity: .35; }
           <label class="rng" for="openr">Closed <input id="openr" type="range" min="0" max="100" value="100" aria-label="How far the strata are opened"> Open</label>
           <span class="hint">Every month is one slab. Open them into a stack of layers, then hover one to slide it out.</span>
         </div>
-        <div id="trace-strip" aria-live="polite"></div>
+        <div class="lvnav" id="lvnav" hidden>
+          <button type="button" class="tbtn" id="lvold" aria-label="Older level">&lsaquo; Older</button>
+          <span class="lvname" id="lvname"></span>
+          <button type="button" class="tbtn" id="lvnew" aria-label="Newer level">Newer &rsaquo;</button>
+          <button type="button" class="tbtn" id="lvall" aria-pressed="false">Whole</button>
+        </div>
+        <div id="trace-strip"></div>
         <div class="fig" id="fig"></div>
       </div>
       <aside class="expl" aria-label="Explanation" id="expl1"></aside>
@@ -398,6 +451,7 @@ svg.tracing .hub { opacity: .35; }
         <dl id="abbr"></dl>
       </section>
     </div>
+    <aside class="pv" id="pv" hidden aria-live="polite" aria-label="Note preview"></aside>
     <h2 class="cap" id="cap1">Isometric block diagram of the atomic notes, <span id="caprange"></span><span id="capx"></span></h2>
     <p class="credit">Notes by Ethan Corn. Plate compiled <span class="built"></span>.</p>
     <footer class="pf"><span>Ethanlawcorn.com</span><span>Drawn from the vault &mdash; Notebook Paper <span class="yr"></span></span></footer>
@@ -480,6 +534,13 @@ var GEO = {};
 var GAP = 56, PMAX = 30, HOP_MS = 420, TO = 5;
 var RM = false;
 try { RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+/* HOVER: a real hovering pointer (mouse, trackpad). Touch fires pointerover/move/leave inside one tap, so
+   every hover path is off without it. CAM: a narrow screen, where the open block zooms onto one level. */
+var HOVER = true, CAM = false, CAMZ = 0, CAMOUT = false;
+function modes() {
+  try { HOVER = window.matchMedia('(hover: hover) and (pointer: fine)').matches; CAM = window.matchMedia('(max-width: 819px)').matches; } catch (e) {}
+}
+modes();
 var anim = { e: RM ? 0 : 1, from: 0, to: 0, t0: 0, dur: 0, raf: 0, last: 0 };
 var SLAB = [], WEB = [], DRIFT = [], INK = null, TR = null, TILE = [], HUBEL = [], CODEL = [];
 var SXR = [], REL = [], SX = [], SL = { hover: -1, timer: 0, at: null, userPin: false }, SLIDE = 0;
@@ -542,9 +603,9 @@ function buildBlock() {
       s += '<g class="tg ' + tileCls(ni) + '" data-l="' + L + '"><polygon class="pr"/><polygon class="pf"/>' +
         '<polygon class="tile ' + tileCls(ni) + ' s' + N[ni].s + '" data-i="' + ni + '"/></g>';
     });
-    var nm = (L === 0 ? 'Basement' : l.name) + ' level';
+    var nm = L === 0 ? 'Basement' : l.name;
     s += '<text class="lvl" data-l="' + L + '">' + nm.toUpperCase() + '</text>' +
-      '<text class="lvn" data-l="' + L + '" text-anchor="end">' + l.idx.length + (L === 0 ? ' UNDATED' : ' NOTES') + '</text>';
+      '<text class="lvn" data-l="' + L + '" text-anchor="end">' + l.idx.length + (L === 0 ? ' UNDATED' : l.idx.length === 1 ? ' NOTE' : ' NOTES') + '</text>';
     var a = 0;
     while (a < l.idx.length) {
       var b = a, pp = N[l.idx[a]].p;
@@ -699,7 +760,20 @@ function render(now) {
   var mR = Math.max.apply(null, SXR), farx = GEO.Wo + SLIDE * mR * s;
   var left = Math.min(0, P(0, far, 0)[0] - 16), bot = Math.max(GEO.VH, P(GEO.Wo, far, 0)[1] + 16, P(farx, GEO.YO * a + GEO.Wo, 0)[1] + 16);
   var right = Math.max(GEO.VW, P(farx, GEO.YO * a, 0)[0] + 150);
-  svg1.setAttribute('viewBox', left.toFixed(1) + ' ' + top.toFixed(1) + ' ' + (right - left).toFixed(1) + ' ' + (bot - top).toFixed(1));
+  var vb = [left, top, right - left, bot - top];
+  /* phone camera: frame the focused level (it is slid out of the stack) at a fixed aspect, so the svg's
+     height holds still under the thumb once zoomed */
+  if (CAMZ > .001) {
+    var fg = G[blockState.pinned], xs = [], ys = [];
+    [[fg.x0, fg.y0, fg.z1 + 44], [fg.xR, fg.y0, fg.z1 + 44], [fg.xR, fg.y1, fg.z1], [fg.x0, fg.y1, fg.z1], [fg.xR, fg.y1, fg.z0], [fg.x0, fg.y1, fg.z0]]
+      .forEach(function (q) { var p = P(q[0], q[1], q[2]); xs.push(p[0]); ys.push(p[1]); });
+    var x0 = Math.min.apply(null, xs) - 10, x1 = Math.max.apply(null, xs) + 10, y0 = Math.min.apply(null, ys) - 10, y1 = Math.max.apply(null, ys) + 10;
+    var cw = x1 - x0, chh = y1 - y0, AR = .92;
+    if (chh / cw < AR) { var dh = cw * AR - chh; y0 -= dh / 2; chh = cw * AR; } else { var dw = chh / AR - cw; x0 -= dw / 2; cw = chh / AR; }
+    var z = ease(CAMZ), fb = [x0, y0, cw, chh];
+    vb = vb.map(function (v, k) { return lerp(v, fb[k], z); });
+  }
+  svg1.setAttribute('viewBox', vb.map(function (v) { return v.toFixed(1); }).join(' '));
   OUTL.style.opacity = 1 - clamp(a * 3);
   $('#triad').style.opacity = 1 - mR;
   $('#oldnew').style.opacity = 1 - a;
@@ -729,7 +803,10 @@ function render(now) {
 
 /* the drawer: the pinned level's gap opens wide enough to read its whole plate */
 /* the drawer: the hovered layer (or the clicked one) slides forward out of the stack */
-function slideTarget() { return SL.hover >= 0 ? SL.hover : TR ? N[TR.src].m : SL.userPin ? blockState.pinned : -1; }
+function slideTarget() {
+  if (CAM && anim.e > .5) return blockState.pinned;
+  return SL.hover >= 0 ? SL.hover : TR ? N[TR.src].m : SL.userPin ? blockState.pinned : -1;
+}
 function wantSlide(L, x, y) {
   if (L === SL.hover) { clearTimeout(SL.timer); return; }
   /* layers move under a still pointer; only a real pointer move may change the drawer, or it would flicker */
@@ -762,6 +839,8 @@ function tick(now) {
     var t = TR && TR.levels[L] && L !== st && anim.e > .5 ? 1 : 0, d = t - g;
     if (Math.abs(d) < .004) SXR[L] = t; else { SXR[L] = g + d * k2; busy = true; }
   });
+  var ct = CAM && anim.e > .5 && !CAMOUT ? 1 : 0, dc = ct - CAMZ, kc = RM ? 1 : 1 - Math.exp(-dt / 220);
+  if (Math.abs(dc) < .003) CAMZ = ct; else { CAMZ += dc * kc; busy = true; }
   if (TR && !TR.settled) {
     if (now - TR.t0 > TR.maxHop * TR.ms + 700) TR.settled = true; else busy = true;
   }
@@ -781,6 +860,7 @@ function syncControls(target) {
   b.textContent = on ? 'Close the strata' : 'Open the strata';
   $('#openr').value = Math.round(target * 100);
   $('#capx').textContent = on ? ', with the strata opened' : '';
+  syncNav();
 }
 
 /* ---------- red ink under the pointer ---------- */
@@ -803,6 +883,7 @@ function showInk(i) {
 /* a trace is the note and its direct links only, never the links of its links */
 function startTrace(src) {
   clearTrace(true);
+  if (CAM && N[src].m !== blockState.pinned) { CAMOUT = false; pinLevel(N[src].m, true); }
   var hop = N.map(function () { return -1; }), nb = [], lv = {}, ms = HOP_MS;
   hop[src] = 0;
   N[src].o.concat(IN[src]).forEach(function (j) {
@@ -845,38 +926,48 @@ function clearTrace(quiet) {
   TILE.forEach(function (T) { T.g.classList.remove('lit'); T.el.classList.remove('src'); T.g.style.removeProperty('--d'); });
   if (!quiet) { renderTrace(); kick(); }
 }
+function restHint() {
+  return HOVER ?
+    'Notes stand off their level by how many links they have. Hover a layer to slide it out; click a note to preview it and draw its links. With the strata open, the levels it links to slide out to the right.' :
+    CAM ? 'Step through the months with Older and Newer, or tap a level that peeks into view. Tap a note to preview it.' :
+    'Tap a level to slide it out of the stack, then tap a note to preview it and draw its links.';
+}
+function excerpt(n) {
+  if (!n.b) return '';
+  var d = document.createElement('div'), out = '';
+  d.innerHTML = mdBlocks(n.b);
+  [].slice.call(d.querySelectorAll('p, li, blockquote')).some(function (e) {
+    var t = e.textContent.replace(/\s+/g, ' ').trim();
+    if (t) out += (out ? ' ' : '') + t;
+    return out.length > 300;
+  });
+  return out.length > 300 ? out.slice(0, 300).replace(/\s+\S*$/, '') + '…' : out;
+}
 function renderTrace() {
-  var el = $('#trace-strip');
-  if (!TR) {
-    el.innerHTML = '<p class="tr-rest">Notes stand off their level by how many links they have. Click one to raise it and draw its links; with the strata open, the levels it links to slide out to the right. Click it again to read it.</p>';
-    return;
-  }
-  var n = N[TR.src], nb = TR.nb.slice().sort(function (p, q) { return N[q].m - N[p].m || N[p].n.localeCompare(N[q].n); });
-  var nl = Object.keys(TR.levels).length, outs = N[TR.src].o.filter(function (j) { return j !== TR.src; }).length;
-  el.innerHTML = '<div class="tr-head"><span class="eyebrow">Links</span><a class="tr-t" href="#note-' + N[TR.src].k + '">' + esc(n.n) + '</a>' +
-    '<button type="button" id="trclear" class="tbtn">Clear</button></div>' +
-    '<p class="tr-sum">' + (nb.length ? nb.length + (nb.length === 1 ? ' linked note' : ' linked notes') + ': links to ' + outs + ', linked from ' + IN[TR.src].length +
-      (nl ? '. ' + nl + (nl === 1 ? ' other level holds' : ' other levels hold') + ' them' + (anim.e > .5 ? (nl === 1 ? ' and slides' : ' and slide') + ' out to the right' : '') : ', all on this level') + '.' :
-      'This note has no links yet. It stands alone in the garden.') +
-    ' <a href="#note-' + N[TR.src].k + '">Read the note &rarr;</a></p>' +
-    (nb.length ? '<ul class="list trl">' + nb.map(function (j, k) {
-      return '<li style="--d:' + (k * 25) + 'ms"><a href="#note-' + N[j].k + '"><i class="' + tileCls(j) + '"></i><span>' + esc(N[j].n) + '</span><small>' + LV[N[j].m].key + '</small></a></li>';
-    }).join('') + '</ul>' : '');
-  $('#trclear').addEventListener('click', function () { clearTrace(); });
-  return;
-  var reached = TR.by.reduce(function (a, b) { return a + (b || 0); }, 0), max = Math.max.apply(null, TR.by.slice(1).concat([1]));
-  var rows = TR.by.map(function (c, h) {
-    return '<li style="--d:' + (h * TR.ms) + 'ms"><span class="hk">' + (h ? 'Hop ' + h : 'Note') + '</span><span class="hb"><i style="width:' + (h ? Math.max(4, c / max * 100) : 4).toFixed(1) + '%"></i></span><span class="hc">' + c + '</span></li>';
-  }).join('');
-  var n = N[TR.src], lone = N.length - reached;
-  el.innerHTML = '<div class="tr-head"><span class="eyebrow">Trace</span><a class="tr-t" href="#note-' + N[TR.src].k + '">' + esc(n.n) + '</a>' +
-    '<button type="button" id="trclear" class="tbtn">Clear</button></div>' +
-    '<ol class="hops">' + rows + '</ol>' +
-    '<p class="tr-sum" style="--d:' + (TR.maxHop * TR.ms) + 'ms">' + (reached === 1 ?
-      'This note has no links yet. It stands alone in the garden.' :
-      'Reaches ' + reached + ' of ' + N.length + ' notes in ' + TR.maxHop + (TR.maxHop === 1 ? ' hop' : ' hops') + '. ' + lone + ' notes sit in other clusters, out of reach.') +
-    ' <a href="#note-' + N[TR.src].k + '">Read the note &rarr;</a></p>';
-  $('#trclear').addEventListener('click', function () { clearTrace(); });
+  $('#trace-strip').innerHTML = '<p class="tr-rest">' + restHint() + '</p>';
+  var pv = $('#pv');
+  if (!TR) { pv.hidden = true; pv.innerHTML = ''; document.body.classList.remove('pv-on'); return; }
+  var i = TR.src, n = N[i], L = n.m;
+  var nb = TR.nb.slice().sort(function (p, q) { return N[q].m - N[p].m || N[p].n.localeCompare(N[q].n); });
+  var outs = n.o.filter(function (j) { return j !== i; }).length, ex = excerpt(n);
+  pv.innerHTML = '<div class="pv-top"><span class="eyebrow">' + (L ? LV[L].name : 'Basement') + ' level' + (n.d ? ' &middot; ' + dFmt(n.d) : '') + '</span>' +
+    '<button type="button" class="pv-x" id="pvx" aria-label="Close the preview">&times;</button></div>' +
+    '<h3 class="pv-t">' + esc(n.n) + '</h3>' +
+    '<p class="pv-m">' + n.w + ' words &middot; links to ' + outs + ' &middot; linked from ' + IN[i].length + '</p>' +
+    '<p class="pv-ex' + (ex ? '' : ' none') + '">' + (ex ? esc(ex) : 'A title and links so far, with no prose yet.') + '</p>' +
+    '<a class="pv-go" href="#note-' + n.k + '">Read the note &rarr;</a>' +
+    (nb.length ? '<h4 class="h4">Linked notes &middot; ' + nb.length + '</h4>' +
+      '<ul class="list trl">' + nb.map(function (j, k) {
+        return '<li style="--d:' + (k * 25) + 'ms"><button type="button" data-j="' + j + '"><i class="' + tileCls(j) + '"></i><span>' + esc(N[j].n) + '</span><small>' + LV[N[j].m].key + '</small></button></li>';
+      }).join('') + '</ul>' :
+      '<p class="lone">No links yet. This note stands alone in the garden.</p>');
+  pv.hidden = false;
+  document.body.classList.add('pv-on');
+  pv.scrollTop = 0;
+  $('#pvx').addEventListener('click', function () { clearTrace(); });
+  pv.querySelectorAll('button[data-j]').forEach(function (b) {
+    b.addEventListener('click', function () { startTrace(+b.getAttribute('data-j')); });
+  });
 }
 
 function focusLevel(L) {
@@ -890,7 +981,21 @@ function pinLevel(L, user) {
   svg1.querySelectorAll('.band.pin').forEach(function (e) { e.classList.remove('pin'); });
   var t = svg1.querySelector('.band[data-b="' + L + '"]'); if (t) t.classList.add('pin');
   if (!blockState.q) renderRead(L);
+  syncNav();
   kick();
+}
+function filled(L, step) {
+  for (var k = L + step; k >= 0 && k < NL; k += step) if (LV[k].idx.length) return k;
+  return -1;
+}
+function syncNav() {
+  var nav = $('#lvnav');
+  if (!nav) return;
+  nav.hidden = !(CAM && (anim.dur ? anim.to : anim.e) > .5);
+  var L = blockState.pinned;
+  $('#lvname').textContent = (L ? LV[L].name : 'Basement');
+  $('#lvold').disabled = filled(L, -1) < 0; $('#lvnew').disabled = filled(L, 1) < 0;
+  $('#lvall').setAttribute('aria-pressed', CAMOUT ? 'true' : 'false');
 }
 function matches(i, q) {
   var n = N[i];
@@ -915,11 +1020,21 @@ function applySearch() {
   svg1.querySelectorAll('.tile').forEach(function (t) { t.parentNode.classList.toggle('dim', !!q && !hit[t.getAttribute('data-i')]); });
   renderRead(blockState.pinned);
 }
+function nearTile(x, y) {
+  var best = null, bd = 26;
+  TILE.forEach(function (T, i) {
+    if (!T || !T.el || (CAM && T.L !== blockState.pinned)) return;
+    var r = T.el.getBoundingClientRect(), d = Math.hypot(x - (r.left + r.width / 2), y - (r.top + r.height / 2));
+    if (d < bd) { bd = d; best = i; }
+  });
+  return best;
+}
 function tileOf(t) {
   return t && t.classList && t.classList.contains('tile') ? +t.getAttribute('data-i') : null;
 }
 function wireBlock() {
   svg1.addEventListener('pointerover', function (e) {
+    if (!HOVER) return;
     var t = e.target.closest ? e.target.closest('[data-l]') : null;
     if (!t) return;
     var L = +t.getAttribute('data-l');
@@ -928,11 +1043,13 @@ function wireBlock() {
     if (!blockState.q) renderRead(L);
   });
   svg1.addEventListener('pointerleave', function () {
+    if (!HOVER) return;
     dropSlide();
     focusLevel(null); tip.hidden = true; showInk(null);
     if (!blockState.q) renderRead(blockState.pinned);
   });
   svg1.addEventListener('pointermove', function (e) {
+    if (!HOVER) return;
     var ti = tileOf(e.target);
     if (ti != null) {
       var n = N[ti];
@@ -948,7 +1065,18 @@ function wireBlock() {
     } else { tip.hidden = true; if (INK != null) showInk(null); }
   });
   svg1.addEventListener('click', function (e) {
-    var ti = tileOf(e.target);
+    var ti = tileOf(e.target), lv0 = e.target.closest ? e.target.closest('[data-l]') : null;
+    /* phone, closed: the block is an overview. A tap opens it onto the level under the thumb */
+    if (CAM && anim.e < .5 && anim.to < .5) {
+      CAMOUT = false;
+      pinLevel(lv0 ? +lv0.getAttribute('data-l') : ti != null ? N[ti].m : blockState.pinned, true);
+      openTo(1); return;
+    }
+    /* a tap on another level brings that level forward; a tap near a note on this one hits it */
+    if (CAM && lv0 && +lv0.getAttribute('data-l') !== blockState.pinned && (ti == null || CAMOUT)) {
+      CAMOUT = false; pinLevel(+lv0.getAttribute('data-l'), true); if (TR) clearTrace(); return;
+    }
+    if (ti == null && !HOVER && anim.e > .5) ti = nearTile(e.clientX, e.clientY);
     if (ti != null) {
       if (TR && TR.src === ti) { go('#note-' + N[ti].k); return; }
       startTrace(ti); return;
@@ -962,6 +1090,16 @@ function wireBlock() {
   $('#prev').addEventListener('click', function () { $('#q').value = ''; blockState.q = ''; applySearch(); pinLevel(Math.max(0, blockState.pinned - 1), true); });
   $('#next').addEventListener('click', function () { $('#q').value = ''; blockState.q = ''; applySearch(); pinLevel(Math.min(NL - 1, blockState.pinned + 1), true); });
   $('#openb').addEventListener('click', function () { openTo(anim.to > .5 || (anim.dur === 0 && anim.e > .5) ? 0 : 1); });
+  $('#lvold').addEventListener('click', function () { var k = filled(blockState.pinned, -1); if (k >= 0) { CAMOUT = false; if (TR) clearTrace(); pinLevel(k, true); } });
+  $('#lvnew').addEventListener('click', function () { var k = filled(blockState.pinned, 1); if (k >= 0) { CAMOUT = false; if (TR) clearTrace(); pinLevel(k, true); } });
+  $('#lvall').addEventListener('click', function () { CAMOUT = !CAMOUT; syncNav(); kick(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && TR) clearTrace(); });
+  try {
+    ['(hover: hover) and (pointer: fine)', '(max-width: 819px)'].forEach(function (q) {
+      var m = window.matchMedia(q), f = function () { modes(); SL.hover = -1; syncNav(); renderTrace(); kick(); };
+      if (m.addEventListener) m.addEventListener('change', f); else m.addListener(f);
+    });
+  } catch (e) {}
   $('#openr').addEventListener('input', function (e) {
     anim.dur = 0; anim.e = anim.to = +e.target.value / 100;
     var b = $('#openb'), on = anim.e > .5;
@@ -1137,6 +1275,7 @@ function show(key) {
   cur = key;
   var p1 = key === 'p1';
   $('#plate1').hidden = !p1; $('#plate2').hidden = p1;
+  document.body.classList.toggle('pv-on', p1 && !!TR);
   if (p1) { $('#tab1').setAttribute('aria-current', 'page'); $('#tab2').removeAttribute('aria-current'); }
   else { $('#tab2').setAttribute('aria-current', 'page'); $('#tab1').removeAttribute('aria-current'); showRead(+key.slice(2)); }
   try { window.scrollTo(0, 0); } catch (e) {}
@@ -1181,11 +1320,13 @@ wireBlock();
 renderRead(blockState.pinned);
 renderTrace();
 syncControls(anim.e);
+if (!HOVER) $('.ctl .hint').textContent = CAM ? 'Every month is one slab. Tap the block to open it into a stack of layers.' : 'Every month is one slab. Open them into a stack of layers, then tap one to slide it out.';
 render(performance.now());
 /* old Quartz note addresses redirect to /?n=<slug> */
 try { var qn = new URLSearchParams(location.search).get('n'); if (qn) history.replaceState(null, '', '/#note-' + encodeURIComponent(qn)); } catch (e) {}
 route();
-if (!RM && !TR) setTimeout(function () { if (!anim.dur && anim.e === 1 && !TR) openTo(0, 3400); }, 700);
+if (CAM && !TR) { CAMOUT = true; syncNav(); setTimeout(function () { CAMOUT = false; syncNav(); kick(); }, RM ? 0 : 900); }
+else if (!RM && !TR) setTimeout(function () { if (!anim.dur && anim.e === 1 && !TR) openTo(0, 3400); }, 700);
 })();
 </script>
 </body>
