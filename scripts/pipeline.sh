@@ -13,6 +13,8 @@ LOG_FILE="/dev/stdout"
 {
   "$LIB/01-sync-vault.sh" "$REPO_DIR" || exit 1
 
+  "$LIB/01b-publish-gate.sh" "$REPO_DIR" || exit 1
+
   "$LIB/02-git-publish.sh" "$REPO_DIR"
   publish_status=$?
   if [ "$publish_status" -eq 2 ] && [ -n "${FORCE_DEPLOY:-}" ]; then
