@@ -1,0 +1,13 @@
+{
+  "_comment": "Principal tags drawn as tile tints. g: 0 technology, 1 mind and people, 2 method. A note takes the least common principal tag it carries (the most specific one). Notes with other tags fall into 'Other tags', notes with none into 'Untagged'.",
+  "principal": [
+    { "tag": "analysis", "code": "Ta", "name": "Analysis", "g": 2 },
+    { "tag": "technology", "code": "Tt", "name": "Technology", "g": 0 },
+    { "tag": "process", "code": "Tp", "name": "Process", "g": 2 },
+    { "tag": "thinking traps", "code": "Ttp", "name": "Thinking traps", "g": 1 },
+    { "tag": "synthesis", "code": "Ts", "name": "Synthesis", "g": 2 },
+    { "tag": "saa-c03", "code": "Saa", "name": "SAA-C03", "g": 0 },
+    { "tag": "systems design", "code": "Sd", "name": "Systems design", "g": 0 },
+    { "tag": "superior communication", "code": "Tsc", "name": "Superior communication", "g": 1 }
+  ]
+}

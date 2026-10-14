@@ -1,0 +1,1191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ethan Corn Digital Commonplace</title>
+<meta name="description" content="Atomic notes by Ethan Corn, drawn as a USGS-style block diagram: one level per month of writing.">
+<link rel="icon" href="/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+html{box-sizing:border-box}img{max-width:100%}[hidden]{display:none!important}
+/* Layout: two survey plates on a desk, built to the USGS Block Diagram language. Plate 1 is a stepped block, one level per month of writing, with an EXPLANATION column on the right. Plate 2 is one note with a cross section of its links. Cream paper only, by design. */
+:root {
+  --bd-paper: #F8EAD2;
+  --bd-paper-2: #E8DCB8;
+  --bd-ink: #2E241D;
+  --bd-ink-2: #5C4B3C;
+  --bd-plum: #926386;
+  --bd-mauve: #D2AEBF;
+  --bd-lilac: #E6D3DC;
+  --bd-blue: #7AA1B9;
+  --bd-cyan: #9ED9DB;
+  --bd-pink: #E4B0C1;
+  --bd-greylilac: #A696A6;
+  --bd-ore: #EE6656;
+  --survey: #CE2E4E;
+  --accent: var(--survey);
+  --desk: #CFC2A4;
+  --pat: rgba(248, 234, 210, .62);
+  --bd-title: "Old Standard TT", "Century Schoolbook", Georgia, serif;
+  --bd-label: "Archivo Narrow", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--desk);
+  color: var(--bd-ink);
+  font: 15px/1.5 var(--bd-title);
+  padding-block: 20px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 1400px; margin: 0 auto; }
+
+/* plate switcher */
+.tabs { display: flex; gap: 6px; margin: 0 0 -1px 12px; position: relative; z-index: 2; flex-wrap: wrap; }
+.tab {
+  font: 600 12px/1 var(--bd-label); letter-spacing: .16em; text-transform: uppercase;
+  text-decoration: none; color: var(--bd-ink-2);
+  padding: 10px 14px 9px; background: #DDD0AE; border: 1px solid var(--bd-ink); border-bottom: 0;
+}
+.tab b { color: var(--bd-ink); font-weight: 700; margin-right: .7em; }
+.tab[aria-current="page"] { background: var(--bd-paper); color: var(--bd-ink); }
+
+/* the plate: flat cream sheet */
+.plate {
+  position: relative; background: var(--bd-paper);
+  padding: 26px 28px 20px;
+  border: 1px solid var(--bd-ink);
+  box-shadow: 4px 6px 0 rgba(46, 36, 29, .22);
+}
+.ph { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 14px; }
+.ph div { font: 400 12.5px/1.5 var(--bd-title); letter-spacing: .1em; text-transform: uppercase; text-align: center; }
+.ph .ph-r { font-weight: 700; }
+
+.h4 { margin: 0 0 8px; font: 600 12px/1.2 var(--bd-label); letter-spacing: .18em; text-transform: uppercase; }
+.cap {
+  margin: 20px 0 2px; text-align: center; text-wrap: balance;
+  font: 700 clamp(15px, 2vw, 21px)/1.3 var(--bd-title); letter-spacing: .08em; text-transform: uppercase;
+}
+.credit { margin: 0; text-align: center; font: italic 12.5px/1.4 var(--bd-title); color: var(--bd-ink-2); }
+.pf {
+  display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 10px;
+  font: 500 10.5px/1.4 var(--bd-label); letter-spacing: .14em; text-transform: uppercase; color: var(--bd-ink-2);
+}
+
+/* plate 1 grid */
+.p1 { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 20px 28px; align-items: start; }
+.fig { position: relative; min-width: 0; overflow-x: auto; }
+.fig > svg { display: block; width: 100%; min-width: 640px; height: auto; }
+.tip {
+  position: absolute; z-index: 5; pointer-events: none; max-width: 260px;
+  background: var(--bd-paper); border: 1px solid var(--bd-ink); padding: 6px 9px;
+  font: 400 12px/1.35 var(--bd-title);
+}
+.tip b { display: block; font-weight: 700; font-size: 13px; }
+.tip span { font: 500 11px/1.3 var(--bd-label); letter-spacing: .1em; text-transform: uppercase; color: var(--bd-ink-2); }
+
+/* svg: flat tints, thin ink on every edge, heaviest line on the outer block */
+svg text { font-family: var(--bd-label); fill: var(--bd-ink); }
+.face { stroke: var(--bd-ink); stroke-width: .7; stroke-linejoin: round; }
+.fr { fill: var(--bd-plum); }
+.fw { fill: var(--bd-mauve); }
+.ft { fill: var(--bd-lilac); }
+.pat { stroke: none; pointer-events: none; }
+pattern circle { fill: var(--pat); }
+.tread.pin { stroke: var(--accent); stroke-width: 2.2; }
+.outline { fill: none; stroke: var(--bd-ink); stroke-width: 1.9; stroke-linejoin: round; pointer-events: none; }
+.g0 { --c: var(--bd-blue); } .g1 { --c: var(--bd-pink); } .g2 { --c: var(--bd-cyan); }
+.g3 { --c: var(--bd-greylilac); } .g4 { --c: var(--bd-paper); } .ore { --c: var(--bd-ore); }
+svg .tile, svg circle.dot { fill: var(--c); }
+.tile { stroke: var(--bd-ink); cursor: pointer; }
+.sa { stroke-width: 1.3; }
+.sb { stroke-width: .85; stroke-dasharray: 2.2 1.4; }
+.su { stroke-width: .45; stroke-opacity: .55; }
+.tile:hover { stroke: var(--accent); stroke-width: 1.9; stroke-dasharray: none; stroke-opacity: 1; }
+.tile.dim { opacity: .14; }
+.has-fx [data-l]:not(.fx) { opacity: .5; }
+.has-fx .tile.dim:not(.fx) { opacity: .1; }
+[data-l], .co { transition: opacity .15s ease; }
+.lvl { font-weight: 600; font-size: 8px; letter-spacing: .12em; pointer-events: none; }
+.lvn { font-weight: 500; font-size: 7.6px; letter-spacing: .12em; pointer-events: none; }
+.code { font-weight: 700; font-size: 7.2px; letter-spacing: .02em; pointer-events: none; paint-order: stroke; stroke: var(--bd-paper); stroke-width: 2px; stroke-linejoin: round; }
+.hubl { font-weight: 700; font-size: 8.6px; letter-spacing: .04em; paint-order: stroke; stroke: var(--bd-paper); stroke-width: 2.6px; stroke-linejoin: round; pointer-events: none; }
+.hubb { fill: var(--bd-paper); stroke: var(--bd-ink); stroke-width: 1.1; }
+.hubx { stroke: var(--bd-ink); stroke-width: 1; fill: none; }
+.drift { fill: none; stroke: var(--bd-ink); stroke-width: .6; stroke-opacity: .55; pointer-events: none; }
+.tkl { font-weight: 600; font-size: 8.4px; letter-spacing: .1em; }
+.tk { fill: none; stroke: var(--bd-ink); stroke-width: .8; }
+.sc { font-weight: 600; font-size: 8.4px; letter-spacing: .12em; }
+.arrow { fill: none; stroke: var(--bd-ink); stroke-width: 1; }
+.co { cursor: pointer; }
+.co .t1x { font: 400 13px var(--bd-title); fill: var(--bd-ink); }
+.co .t2x { font: 500 9px var(--bd-label); letter-spacing: .12em; fill: var(--bd-ink-2); }
+.co:hover .t1x, .co:focus-visible .t1x { fill: var(--accent); text-decoration: underline; }
+.co:focus-visible { outline: none; }
+.ld { fill: none; stroke: var(--bd-ink); stroke-width: .8; }
+.own { stroke-width: 1.9; }
+.faded { opacity: .5; }
+.lh { font-weight: 600; font-size: 10.5px; letter-spacing: .18em; }
+.empty { font: italic 12.5px var(--bd-title); fill: var(--bd-ink-2); }
+
+/* EXPLANATION legend */
+.expl { min-width: 0; }
+.expl h3 { margin: 0 0 12px; text-align: center; font: 400 15px/1.2 var(--bd-title); letter-spacing: .2em; }
+.grp { display: grid; grid-template-columns: minmax(0, 1fr) 20px; gap: 0 8px; margin-bottom: 9px; }
+.grp ol, .plain { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; align-content: start; }
+.grp .br {
+  border: 1px solid var(--bd-ink); border-left: 0; position: relative; margin: 2px 0;
+  display: grid; place-items: center;
+}
+.grp .br span {
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  font: 600 10px/1 var(--bd-label); letter-spacing: .2em; text-transform: uppercase; padding: 2px 0;
+}
+.row { display: grid; grid-template-columns: 50px minmax(0, 1fr) auto; gap: 10px; align-items: center; }
+.row.nc { grid-template-columns: 50px minmax(0, 1fr); }
+.sw {
+  height: 24px; border: 1px solid var(--bd-ink); display: grid; place-items: center; background: var(--c, transparent);
+  font: 700 11px/1 var(--bd-label); letter-spacing: .04em; color: var(--bd-ink);
+}
+.sw svg { display: block; width: 100%; height: 100%; }
+.nm { font: 400 13px/1.25 var(--bd-title); min-width: 0; }
+.nm b { display: block; font-weight: 700; }
+.nm em { display: block; font-style: italic; font-size: 12px; color: var(--bd-ink-2); line-height: 1.3; }
+.ct { font: 600 12.5px var(--bd-label); font-variant-numeric: tabular-nums; }
+.sep { border-top: 1px solid var(--bd-ink); margin: 12px 0 10px; }
+.sw.dash { border-style: dashed; background: var(--bd-paper); }
+.sw.hair { border-color: rgba(46, 36, 29, .5); background: var(--bd-paper); }
+
+/* below the figure */
+.below { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 32px; margin-top: 18px; }
+.below > section { min-width: 0; }
+.below p { margin: 0 0 8px; font-size: 13px; line-height: 1.5; }
+.q { display: flex; gap: 8px; margin-bottom: 10px; }
+.q input {
+  flex: 1; min-width: 0; font: 400 13px var(--bd-title); color: var(--bd-ink);
+  background: transparent; border: 0; border-bottom: 1.5px solid var(--bd-ink); padding: 5px 2px; border-radius: 0;
+}
+.q input::placeholder { color: var(--bd-ink-2); font-style: italic; }
+.q button { font: 600 14px/1 var(--bd-label); background: transparent; color: var(--bd-ink); border: 1px solid var(--bd-ink); padding: 3px 10px; cursor: pointer; }
+.q button:hover { background: var(--bd-ink); color: var(--bd-paper); }
+.rh { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; margin-bottom: 6px; }
+.rh .h4 { margin: 0; }
+.rh small { font: 500 11px var(--bd-label); letter-spacing: .12em; color: var(--bd-ink-2); text-transform: uppercase; white-space: nowrap; }
+.list { list-style: none; margin: 0; padding: 0; max-height: 236px; overflow-y: auto; border-top: 1px solid var(--bd-ink); }
+.list li { border-bottom: 1px dotted var(--bd-ink-2); }
+.list a { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 4px 2px; text-decoration: none; font-size: 13px; line-height: 1.3; }
+.list a:hover, .list a:focus-visible { color: var(--accent); }
+.list a:hover span:nth-child(2) { text-decoration: underline; }
+.list i { width: 12px; height: 12px; border: 1px solid var(--bd-ink); display: block; background: var(--c); }
+.list small { font: 500 11px var(--bd-label); color: var(--bd-ink-2); font-variant-numeric: tabular-nums; }
+.abbr dl { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 3px 12px; font: 400 13px/1.3 var(--bd-label); letter-spacing: .02em; }
+.abbr dt { font-weight: 700; font-variant-numeric: tabular-nums; }
+.abbr dd { margin: 0; }
+.abbr dd a { text-decoration: none; }
+.abbr dd a:hover { color: var(--accent); text-decoration: underline; }
+
+/* red ink: the links, drawn as hairline survey crimson over the block */
+#ink path { fill: none; stroke: var(--survey); stroke-width: .85; stroke-opacity: .85; stroke-linecap: round; }
+#ink circle { fill: none; stroke: var(--survey); stroke-width: .85; stroke-opacity: .85; }
+.sw.ink { border-color: rgba(46, 36, 29, .5); background: var(--bd-paper); }
+.sw.ink svg line { stroke: var(--survey); stroke-width: 1; }
+
+/* reading view */
+.rd { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 26px 56px; align-items: start; max-width: 1080px; margin: 0 auto; }
+.rd-main { min-width: 0; max-width: 40rem; }
+.rd-side { position: sticky; top: 16px; min-width: 0; }
+.back { display: inline-block; margin-bottom: 22px; font: 600 12px/1 var(--bd-label); letter-spacing: .16em; text-transform: uppercase; text-decoration: none; border-bottom: 1.5px solid var(--bd-ink); padding-bottom: 3px; }
+.back:hover { color: var(--survey); border-color: var(--survey); }
+.eyebrow { font: 600 12px/1.3 var(--bd-label); letter-spacing: .18em; text-transform: uppercase; color: var(--bd-ink-2); margin: 0 0 10px; }
+.rtitle { margin: 0 0 10px; font: 700 clamp(28px, 3.6vw, 42px)/1.12 var(--bd-title); letter-spacing: .05em; text-transform: uppercase; text-wrap: balance; }
+.nmeta { margin: 0 0 26px; padding-bottom: 14px; border-bottom: 1px solid var(--bd-ink); font: 500 12px/1.5 var(--bd-label); letter-spacing: .14em; text-transform: uppercase; }
+.rbody { font-size: 19px; line-height: 1.7; }
+.rbody p { margin: 0 0 1.1em; }
+.rbody.dc > p:first-child::first-letter { font-weight: 700; font-size: 3em; line-height: .82; float: left; padding: .05em .09em 0 0; }
+.rbody h2, .rbody h3, .rbody h4 { margin: 1.7em 0 .6em; font: 600 13px/1.3 var(--bd-label); letter-spacing: .18em; text-transform: uppercase; }
+.rbody h2 { padding-top: 14px; border-top: 1px solid var(--bd-ink); }
+.rbody ul, .rbody ol { margin: 0 0 1.1em; padding-left: 1.4em; }
+.rbody li { margin: .15em 0; }
+.rbody blockquote { margin: 0 0 1.1em; padding: 0 0 0 1em; border-left: 2px solid var(--bd-ink); font-style: italic; }
+.rbody hr { border: 0; border-top: 1px solid var(--bd-ink); margin: 1.6em 0; }
+.rbody code { font: 400 .82em/1.4 ui-monospace, "SF Mono", Menlo, Consolas, monospace; background: var(--bd-paper-2); padding: .08em .3em; }
+.rbody pre { margin: 0 0 1.2em; padding: 12px 14px; background: var(--bd-paper-2); border: 1px solid var(--bd-ink); overflow-x: auto; font: 400 14px/1.5 ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+.rbody pre code { background: none; padding: 0; font-size: inherit; }
+.rbody b { font-weight: 700; }
+.rbody img.emb { display: block; max-width: 100%; height: auto; margin: 0 auto 1.1em; border: 1px solid var(--bd-ink); background: #fff; }
+.rbody .tw { overflow-x: auto; margin: 0 0 1.2em; }
+.rbody table { border-collapse: collapse; font-size: 15px; line-height: 1.4; min-width: 100%; }
+.rbody th, .rbody td { border: 1px solid var(--bd-ink); padding: 5px 10px; text-align: left; vertical-align: top; }
+.rbody th { font: 600 12px/1.3 var(--bd-label); letter-spacing: .12em; text-transform: uppercase; background: var(--bd-paper-2); }
+a.wl, a.xl { color: var(--bd-ink); text-decoration: underline; text-decoration-color: var(--survey); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+a.wl:hover, a.xl:hover { color: var(--survey); }
+.nl { border-bottom: 1px dotted var(--bd-ink-2); }
+.rconn { margin-top: 38px; padding-top: 16px; border-top: 1px solid var(--bd-ink); }
+.rconn h2 { margin: 0 0 14px; font: 600 13px/1.3 var(--bd-label); letter-spacing: .18em; text-transform: uppercase; }
+.rconn .cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 30px; }
+.rconn h3 { margin: 0 0 6px; font: 600 11px/1.3 var(--bd-label); letter-spacing: .16em; text-transform: uppercase; color: var(--bd-ink-2); }
+.rconn ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--bd-ink); }
+.rconn li { border-bottom: 1px dotted var(--bd-ink-2); }
+.cx { display: grid; grid-template-columns: 22px 14px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 5px 0; text-decoration: none; font-size: 15px; line-height: 1.3; }
+.cx::before { content: ""; border-top: 1px solid var(--survey); width: 18px; }
+.cx i { width: 13px; height: 13px; border: 1px solid var(--bd-ink); display: block; background: var(--c); }
+.cx i.sa { border-width: 2px; } .cx i.sb { border-style: dashed; } .cx i.su { border-color: rgba(46, 36, 29, .5); }
+.cx:hover span { color: var(--survey); text-decoration: underline; }
+.cx small { font: 500 11px var(--bd-label); letter-spacing: .1em; color: var(--bd-ink-2); }
+.rnext { display: flex; justify-content: space-between; gap: 16px; margin-top: 26px; font: 600 12px/1.3 var(--bd-label); letter-spacing: .14em; text-transform: uppercase; }
+.rnext a { text-decoration: none; border-bottom: 1.5px solid var(--bd-ink); padding-bottom: 2px; max-width: 48%; }
+.rnext a:hover { color: var(--survey); border-color: var(--survey); }
+.stat { margin: 14px 0 0; padding: 12px 0 0; border-top: 1px solid var(--bd-ink); display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font: 400 13px/1.3 var(--bd-title); }
+.stat dt { font: 600 11px/1.6 var(--bd-label); letter-spacing: .16em; text-transform: uppercase; }
+.stat dd { margin: 0; font-variant-numeric: tabular-nums; }
+
+@media (max-width: 979px) {
+  .p1 { grid-template-columns: minmax(0, 1fr); }
+  .below { grid-template-columns: minmax(0, 1fr); }
+  .rd { grid-template-columns: minmax(0, 1fr); }
+  .rd-side { position: static; order: 2; }
+}
+@media (max-width: 819px) {
+  .plate { padding: 18px 14px 16px; }
+  .ph div { font-size: 10.5px; }
+  .rbody { font-size: 18px; }
+  .rconn .cols { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-l], .co { transition: none; }
+}
+
+/* ---- v2: open strata, red-ink web, trace ripple, core pillars ---- */
+.figwrap { min-width: 0; }
+.ctl {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px;
+  padding: 0 0 10px; margin-bottom: 10px; border-bottom: 1px solid var(--bd-ink);
+}
+.tbtn {
+  font: 600 11.5px/1 var(--bd-label); letter-spacing: .16em; text-transform: uppercase;
+  background: var(--bd-paper); color: var(--bd-ink); border: 1px solid var(--bd-ink);
+  padding: 8px 12px 7px; cursor: pointer; border-radius: 0;
+}
+.tbtn:hover { background: var(--bd-ink); color: var(--bd-paper); }
+.tbtn[aria-pressed="true"] { background: var(--bd-ink); color: var(--bd-paper); }
+.rng { display: flex; align-items: center; gap: 8px; font: 500 10.5px/1 var(--bd-label); letter-spacing: .14em; text-transform: uppercase; color: var(--bd-ink-2); }
+.rng input { width: 150px; accent-color: var(--bd-ink); }
+.ctl .hint { margin-left: auto; font: italic 12.5px/1.3 var(--bd-title); color: var(--bd-ink-2); }
+
+#trace-strip { min-height: 64px; margin-bottom: 8px; }
+.tr-rest { margin: 0; font: italic 13px/1.5 var(--bd-title); color: var(--bd-ink-2); max-width: 62ch; }
+.tr-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+.tr-head .eyebrow { margin: 0; color: var(--survey); }
+.tr-t { font: 700 15px/1.25 var(--bd-title); letter-spacing: .04em; text-decoration: none; text-transform: uppercase; min-width: 0; }
+.tr-t:hover { color: var(--survey); text-decoration: underline; }
+.tr-head .tbtn { padding: 5px 9px 4px; font-size: 10.5px; margin-left: auto; }
+.hops { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 3px 18px; }
+.hops li { display: grid; grid-template-columns: 44px minmax(0, 1fr) 30px; gap: 8px; align-items: center; animation: hopin .35s ease-out var(--d) both; }
+.hk { font: 600 10.5px/1 var(--bd-label); letter-spacing: .12em; text-transform: uppercase; }
+.hb { height: 9px; border: 1px solid var(--bd-ink); background: var(--bd-paper); position: relative; }
+.hb i { position: absolute; inset: 0 auto 0 0; background: var(--survey); }
+.hc { font: 600 12px var(--bd-label); font-variant-numeric: tabular-nums; text-align: right; }
+.tr-sum { margin: 8px 0 0; font: 400 13px/1.5 var(--bd-title); animation: hopin .4s ease-out var(--d) both; }
+.tr-sum a { color: var(--bd-ink); text-decoration-color: var(--survey); text-decoration-thickness: 2px; text-underline-offset: 3px; white-space: nowrap; }
+@keyframes hopin { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+.stepl { fill: none; stroke: var(--bd-ink); stroke-width: .7; pointer-events: none; }
+.band { fill: none; stroke: none; pointer-events: none; }
+.band.pin { stroke: var(--accent); stroke-width: 2.2; stroke-linejoin: round; }
+.souter { fill: none; stroke: var(--bd-ink); stroke-width: 1.6; stroke-linejoin: round; pointer-events: none; }
+#outl, #web, #drift { transition: none; }
+#web path { fill: none; stroke: var(--survey); stroke-width: .6; stroke-opacity: .42; stroke-linecap: round; pointer-events: none; }
+svg.inking #web path, svg.tracing #web path { stroke-opacity: .1; }
+#drift path { pointer-events: none; }
+svg.tracing #drift { visibility: hidden; }
+
+/* trace: the ripple. Unreached tiles drop back; reached ones come up at their hop's time */
+svg.tracing .tg { opacity: .13; }
+svg.tracing .tg.lit { opacity: 1; transition: opacity .3s ease-out var(--d, 0ms); }
+svg.tracing .tile.src { stroke: var(--accent); stroke-width: 2; stroke-dasharray: none; stroke-opacity: 1; }
+svg.tracing .hub { opacity: .35; }
+.tre { fill: none; stroke: var(--survey); stroke-width: 1; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; pointer-events: none; animation: draw .42s ease-out var(--d) forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.trr { fill: none; stroke: var(--survey); stroke-width: 1; pointer-events: none; transform-box: fill-box; transform-origin: center; animation: ring .55s ease-out var(--d) both; }
+.trr.src { stroke-width: 1.8; }
+@keyframes ring { from { opacity: 0; transform: scale(3.2); } to { opacity: 1; transform: scale(1); } }
+
+/* core pillars: a reached tile lifted into a prism. Flat tints, two values of the tile's hue on the sides */
+.tg .pr, .tg .pf { stroke: var(--bd-ink); stroke-width: .6; stroke-linejoin: round; pointer-events: none; }
+.tg .pf { fill: color-mix(in srgb, var(--c) 70%, var(--bd-ink)); }
+.tg .pr { fill: color-mix(in srgb, var(--c) 84%, var(--bd-ink)); }
+.tg.dim { opacity: .14; }
+.ghost { fill: none; stroke: none; pointer-events: fill; }
+.trl { max-height: 150px; margin-top: 8px; }
+.trl li { animation: hopin .3s ease-out var(--d) both; }
+
+.sw.open svg, .sw.pillar svg { display: block; }
+.sw.tr svg circle { fill: none; stroke: var(--survey); }
+
+/* reading view: lines come in once, top to bottom */
+.rd-main > * { animation: hopin .4s ease-out both; }
+.rd-main > *:nth-child(2) { animation-delay: 40ms; } .rd-main > *:nth-child(3) { animation-delay: 80ms; }
+.rd-main > *:nth-child(4) { animation-delay: 120ms; } .rd-main > *:nth-child(n+5) { animation-delay: 170ms; }
+.rconn li { animation: hopin .3s ease-out both; animation-delay: calc(200ms + var(--k, 0) * 30ms); }
+.trlink { display: inline-block; margin: 0 0 22px 18px; font: 600 12px/1 var(--bd-label); letter-spacing: .16em; text-transform: uppercase; text-decoration: none; border-bottom: 1.5px solid var(--survey); padding-bottom: 3px; }
+.trlink:hover { color: var(--survey); }
+
+@media (max-width: 640px) {
+  .ctl .hint { margin-left: 0; flex-basis: 100%; }
+  .rng input { width: 120px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tre, .trr, .hops li, .tr-sum, .rd-main > *, .rconn li { animation: none; stroke-dashoffset: 0; }
+  svg.tracing .tg.lit { transition: none; }
+}
+</style>
+
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <pattern id="p-stip-r" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="skewY(30)"><circle cx="1" cy="1" r=".62"/><circle cx="3.5" cy="2.6" r=".62"/><circle cx="1.6" cy="4.2" r=".5"/></pattern>
+  <pattern id="p-stip-w" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="skewY(-30)"><circle cx="1" cy="1" r=".62"/><circle cx="3.5" cy="2.6" r=".62"/><circle cx="1.6" cy="4.2" r=".5"/></pattern>
+</defs></svg>
+
+<div class="wrap">
+  <nav class="tabs" aria-label="Plates">
+    <a class="tab" id="tab1" href="#plate-1"><b>Plate 1</b>Block diagram</a>
+    <a class="tab" id="tab2" href="#note-271"><b>Reading view</b>Note</a>
+  </nav>
+
+  <article class="plate" id="plate1" aria-labelledby="cap1">
+    <header class="ph">
+      <div>Ethan Corn<br>Digital Commonplace</div>
+      <div class="ph-r">Notebook Paper <span class="yr"></span><br>Plate 1</div>
+    </header>
+    <div class="p1">
+      <div class="figwrap">
+        <div class="ctl" role="group" aria-label="Block controls">
+          <button type="button" class="tbtn" id="openb" aria-pressed="true">Close the strata</button>
+          <label class="rng" for="openr">Closed <input id="openr" type="range" min="0" max="100" value="100" aria-label="How far the strata are opened"> Open</label>
+          <span class="hint">Every month is one slab. Open them into a stack of layers, then hover one to slide it out.</span>
+        </div>
+        <div id="trace-strip" aria-live="polite"></div>
+        <div class="fig" id="fig"></div>
+      </div>
+      <aside class="expl" aria-label="Explanation" id="expl1"></aside>
+    </div>
+    <div class="below">
+      <section class="abs">
+        <h4 class="h4">Abstract</h4>
+        <div id="abstract"></div>
+      </section>
+      <section class="read" aria-live="polite">
+        <h4 class="h4">Locate and read</h4>
+        <form class="q" id="qform" role="search">
+          <input id="q" type="search" placeholder="Find a note by title or tag" autocomplete="off" aria-label="Find a note by title or tag">
+          <button type="button" id="prev" aria-label="Previous level">&lsaquo;</button>
+          <button type="button" id="next" aria-label="Next level">&rsaquo;</button>
+        </form>
+        <div class="rh"><h4 class="h4" id="rtitle"></h4><small id="rcount"></small></div>
+        <ul class="list" id="rlist"></ul>
+      </section>
+      <section class="abbr">
+        <h4 class="h4">Diagram abbreviations</h4>
+        <dl id="abbr"></dl>
+      </section>
+    </div>
+    <h2 class="cap" id="cap1">Isometric block diagram of the atomic notes, <span id="caprange"></span><span id="capx"></span></h2>
+    <p class="credit">Notes by Ethan Corn. Plate compiled <span class="built"></span>.</p>
+    <footer class="pf"><span>Ethanlawcorn.com</span><span>Drawn from the vault &mdash; Notebook Paper <span class="yr"></span></span></footer>
+  </article>
+
+  <article class="plate" id="plate2" hidden aria-label="Reading view">
+    <header class="ph">
+      <div>Ethan Corn<br>Digital Commonplace</div>
+      <div class="ph-r" id="ph2r">Notebook Paper<br>Note</div>
+    </header>
+    <div class="rd" id="p2"></div>
+    <p class="credit" style="margin-top:30px">Notes by Ethan Corn. Plate compiled <span class="built"></span>.</p>
+    <footer class="pf"><span>Ethanlawcorn.com</span><span>Drawn from the vault &mdash; Notebook Paper <span class="yr"></span></span></footer>
+  </article>
+</div>
+
+<script>
+(function () {
+'use strict';
+var D = /*__STRATA_DATA__*/null;
+var N = D.notes, MON = D.months;
+var C = Math.sqrt(3) / 2, S = 0.5;
+var MN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+var mName = function (m) { return MN[+m.slice(5) - 1] + ' ' + m.slice(0, 4); };
+var dFmt = function (d) { return d ? (+d.slice(8) + ' ' + MN[+d.slice(5, 7) - 1] + ' ' + d.slice(0, 4)) : 'undated'; };
+var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+var trunc = function (s, m) { return s.length > m ? s.slice(0, m - 1) + '…' : s; };
+var $ = function (s) { return document.querySelector(s); };
+
+/* principal tags come from strata/topics.json: g0 technology, g1 mind and people, g2 method, g3 other, g4 untagged */
+var TOPIC = D.topics;
+/* the live site publishes adult notes only, so status says nothing there and tiles keep their tag tint */
+var tileCls = function (i) { return N[i].s === 'a' && !D.allAdult ? 'ore' : 'g' + TOPIC[N[i].p].g; };
+var NL = MON.length + 1;
+var LV = [];
+for (var L = 0; L < NL; L++) LV.push({ L: L, idx: [], name: L ? mName(MON[L - 1]) : 'Basement', key: L ? MON[L - 1] : 'Undated' });
+N.forEach(function (n, i) { LV[n.m].idx.push(i); });
+LV.forEach(function (l) { l.idx.sort(function (a, b) { return N[a].p - N[b].p || N[a].n.localeCompare(N[b].n); }); });
+var IN = N.map(function () { return []; });
+N.forEach(function (n, i) { n.o.forEach(function (j) { IN[j].push(i); }); });
+var deg = function (i) { return N[i].o.length + IN[i].length; };
+var nLinks = N.reduce(function (a, n) { return a + n.o.length; }, 0);
+var cnt = { a: 0, b: 0, u: 0 };
+N.forEach(function (n) { cnt[n.s]++; });
+var tcount = TOPIC.map(function (_, p) { return N.filter(function (n) { return n.p === p; }).length; });
+TOPIC.forEach(function (t, p) {
+  t.ex = N.map(function (n, i) { return i; }).filter(function (i) { return N[i].p === p; })
+    .sort(function (a, b) { return deg(b) - deg(a) || N[a].n.localeCompare(N[b].n); }).slice(0, 1).map(function (i) { return N[i].n; });
+});
+var HUBCODE = {};
+var HUBMIN = D.hubMin;
+var HUBS = N.map(function (n, i) { return i; }).filter(function (i) { return deg(i) >= HUBMIN; })
+  .sort(function (a, b) { return deg(b) - deg(a) || N[a].n.localeCompare(N[b].n); });
+var hubCode = function (i) {
+  return HUBCODE[N[i].n] || N[i].n.split(/\s+/).map(function (w) { return w[0]; }).join('').toUpperCase().slice(0, 3);
+};
+var pts = function (a) { return a.map(function (p) { return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' '); };
+var spread = function (items, min, lo, hi) {
+  items.sort(function (a, b) { return a.y - b.y; });
+  var prev = lo - min;
+  items.forEach(function (it) { it.ly = Math.max(it.y, prev + min); prev = it.ly; });
+  var next = hi + min;
+  for (var k = items.length - 1; k >= 0; k--) { items[k].ly = Math.min(items[k].ly, next - min); next = items[k].ly; }
+  return items;
+};
+
+/* ---------- plate 1: the block, built as one slab per month so it can be opened ---------- */
+/* Closed: the v1 stepped block. Slab L spans the full width, from the back of the block to the front of its own
+   level, between z0 and z1 (thickness = notes that month).
+   Open: every slab slides back onto one common square footprint, the tiles regrid larger onto it, and the slabs
+   lift apart into an aligned stack, like the layers of a network. Links then run up and down through the stack.
+   One value e in [0,1] drives it in two overlapping phases: a = slide and reshape, s = vertical separation.
+   At a = 1, s = 0 the block is one solid square column. Everything is recomputed from geo(L) each frame.
+   Aligned plates hide each other in isometric, so the pinned level gets a tall gap above it (a drawer) and
+   can be read whole; the rest show a band. */
+/* start on the newest level that has notes; the current month may still be empty */
+var blockState = { pinned: (function () { for (var L = LV.length - 1; L > 0; L--) if (LV[L].idx.length) return L; return LV.length - 1; })(), q: '' };
+var svg1, tip, fig, inkG, webG, driftG, traceG, OUTL;
+var GEO = {};
+var GAP = 56, PMAX = 30, HOP_MS = 420, TO = 5;
+var RM = false;
+try { RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+var anim = { e: RM ? 0 : 1, from: 0, to: 0, t0: 0, dur: 0, raf: 0, last: 0 };
+var SLAB = [], WEB = [], DRIFT = [], INK = null, TR = null, TILE = [], HUBEL = [], CODEL = [];
+var SXR = [], REL = [], SX = [], SL = { hover: -1, timer: 0, at: null, userPin: false }, SLIDE = 0;
+var ease = function (x) { return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+var clamp = function (x) { return x < 0 ? 0 : x > 1 ? 1 : x; };
+var lerp = function (p, q, t) { return p + (q - p) * t; };
+var PH = { a: 0, s: 0 };
+function phases() {
+  PH.a = ease(clamp(anim.e / .6));
+  PH.s = ease(clamp((anim.e - .3) / .7));
+}
+
+function buildBlock() {
+  var COLS = 16, CELL = 11, LAB = CELL * 1.25, K = 0.5, FLOOR = 3, W = COLS * CELL;
+  var Ytot = 0;
+  LV.forEach(function (l) { l.rows = Math.max(1, Math.ceil(l.idx.length / COLS)); l.D = l.rows * CELL + LAB; Ytot += l.D; });
+  var yf = Ytot, Z = 0;
+  LV.forEach(function (l) {
+    l.yf = yf; l.yb = yf - l.D; yf = l.yb;
+    l.t = Math.max(l.idx.length * K, FLOOR); l.z0 = Z; Z += l.t; l.z1 = Z;
+  });
+  /* open plate: GN x GN cells of CO, plus a label strip at the front */
+  var maxN = Math.max.apply(null, LV.map(function (l) { return l.idx.length; }));
+  var GN = Math.ceil(Math.sqrt(maxN)), CO = 27, LABO = 18, Wo = GN * CO + LABO, MX = LABO / 2;
+  var OX = Ytot * C + 56, OY = Z + 64;
+  var P = function (x, y, z) { return [(x - y) * C + OX, (x + y) * S - z + OY]; };
+  var VW = Math.ceil(OX + Math.max(W, Wo) * C + 160), VH = Math.ceil(OY + (W + Ytot) * S + 70);
+  var YO = Math.round((Ytot - Wo) / 2);
+  GEO = { YO: YO, P: P, W: W, Wo: Wo, Z: Z, OX: OX, OY: OY, VW: VW, VH: VH, LAB: LAB, LABO: LABO };
+  LV.forEach(function (l, L) { SX[L] = 0; SXR[L] = 0; });
+  var MAXDEG = Math.max.apply(null, N.map(function (n, i) { return deg(i); }));
+  /* relief: every note stands off its level by how many links it has */
+  N.forEach(function (n, i) { var d = deg(i); REL[i] = d ? 3 + 21 * Math.sqrt(d / MAXDEG) : 0; });
+  SLIDE = Wo + 18;
+
+  /* each tile's rectangle in both layouts */
+  LV.forEach(function (l, L) {
+    var n = l.idx.length, rows = Math.ceil(n / GN), r0 = Math.floor((GN - rows) / 2);
+    l.idx.forEach(function (ni, k) {
+      var col = k % COLS, row = (k / COLS) | 0;
+      var c = { x0: col * CELL + 1, x1: (col + 1) * CELL - 1, y1: l.yf - LAB - row * CELL - 1 };
+      c.y0 = c.y1 - CELL + 2;
+      var rk = (k / GN) | 0, inRow = Math.min(GN, n - rk * GN), oc = (k % GN) + (GN - inRow) / 2, orow = r0 + rk;
+      var o = { x0: MX + oc * CO + 2, x1: MX + (oc + 1) * CO - 2, y1: YO + Wo - LABO - orow * CO - 2 };
+      o.y0 = o.y1 - CO + 4;
+      TILE[ni] = { L: L, c: c, o: o };
+    });
+  });
+
+  var slabs = '', L;
+  for (L = 0; L < NL; L++) {
+    var l = LV[L], s = '<polygon class="ghost" data-l="' + L + '"/>';
+    s += '<polygon class="face fw" data-l="' + L + '"/>' + (L === 0 ? '<polygon class="pat pw" data-l="0" style="fill:url(#p-stip-w)"/>' : '');
+    s += '<path class="stepl"/>';
+    s += '<polygon class="face fr" data-l="' + L + '"/>' + (L === 0 ? '<polygon class="pat pr0" data-l="0" style="fill:url(#p-stip-r)"/>' : '');
+    s += '<polygon class="face ft" data-l="' + L + '"/>';
+    s += '<polygon class="band' + (L === blockState.pinned ? ' pin' : '') + '" data-b="' + L + '"/>';
+    /* each note is a small prism: back to front in the open grid, so raised ones overlap correctly */
+    l.idx.slice().sort(function (p, q) { var A = TILE[p].o, B = TILE[q].o; return (A.x0 + A.y0) - (B.x0 + B.y0); }).forEach(function (ni) {
+      s += '<g class="tg ' + tileCls(ni) + '" data-l="' + L + '"><polygon class="pr"/><polygon class="pf"/>' +
+        '<polygon class="tile ' + tileCls(ni) + ' s' + N[ni].s + '" data-i="' + ni + '"/></g>';
+    });
+    var nm = (L === 0 ? 'Basement' : l.name) + ' level';
+    s += '<text class="lvl" data-l="' + L + '">' + nm.toUpperCase() + '</text>' +
+      '<text class="lvn" data-l="' + L + '" text-anchor="end">' + l.idx.length + (L === 0 ? ' UNDATED' : ' NOTES') + '</text>';
+    var a = 0;
+    while (a < l.idx.length) {
+      var b = a, pp = N[l.idx[a]].p;
+      while (b + 1 < l.idx.length && N[l.idx[b + 1]].p === pp) b++;
+      if (b - a + 1 >= 6) {
+        s += '<text class="code" data-l="' + L + '" text-anchor="middle" data-c="' + l.idx[(a + b) >> 1] + '">' + TOPIC[pp].code + '</text>';
+      }
+      a = b + 1;
+    }
+    HUBS.forEach(function (h) {
+      if (N[h].m !== L) return;
+      s += '<g class="hub" pointer-events="none" data-h="' + h + '"><rect class="hubb" x="-3.4" y="-3.4" width="6.8" height="6.8"/>' +
+        '<path class="hubx" d="M-3.4 -3.4l6.8 6.8M3.4 -3.4l-6.8 6.8"/>' +
+        '<text class="hubl" x="5.5" y="-4.5">' + hubCode(h) + '</text></g>';
+    });
+    s += '<polygon class="souter"/>';
+    slabs += '<g class="slab" data-s="' + L + '">' + s + '</g>';
+  }
+
+  /* outer block edge when closed: the heaviest line */
+  var top = LV[NL - 1], sil = [P(0, top.yb, top.z1), P(W, top.yb, top.z1)];
+  for (L = NL - 1; L >= 0; L--) { sil.push(P(W, LV[L].yb, LV[L].z1)); sil.push(P(W, LV[L].yf, LV[L].z1)); }
+  sil.push(P(W, Ytot, 0)); sil.push(P(0, Ytot, 0));
+  for (L = 0; L < NL; L++) { sil.push(P(0, LV[L].yf, LV[L].z1)); sil.push(P(0, LV[L].yb, LV[L].z1)); }
+  var outline = '<polygon class="outline" id="outl" points="' + pts(sil) + '"/>';
+
+  var ticks = '';
+  LV.forEach(function (l) { ticks += '<path class="tk" data-t="' + l.L + '"/><text class="tkl" data-l="' + l.L + '">' + (l.L ? l.key : 'BASEMENT') + '</text>'; });
+  ticks += '<text class="sc" id="lvlhd">LEVEL</text>';
+
+  var o = [VW - 190, VH - 92];
+  var triad = '<g id="triad">' +
+    '<path class="arrow" d="M' + o[0] + ' ' + o[1] + 'V' + (o[1] - 56) + 'M' + o[0] + ' ' + o[1] + 'L' + (o[0] + 88 * C).toFixed(1) + ' ' + (o[1] + 88 * S).toFixed(1) + 'M' + o[0] + ' ' + o[1] + 'L' + (o[0] - 44 * C).toFixed(1) + ' ' + (o[1] + 44 * S).toFixed(1) + '"/>' +
+    '<path class="arrow" d="M' + (o[0] - 4) + ' ' + (o[1] - 25) + 'h8M' + (o[0] - 4) + ' ' + (o[1] - 50) + 'h8"/>' +
+    '<text class="sc" x="' + (o[0] + 8) + '" y="' + (o[1] - 47) + '">100 NOTES</text>' +
+    '<text class="sc" x="' + (o[0] + 88 * C + 6).toFixed(1) + '" y="' + (o[1] + 88 * S + 3).toFixed(1) + '">8 TILES</text>' +
+    '<text class="sc" text-anchor="end" x="' + (o[0] - 44 * C - 6).toFixed(1) + '" y="' + (o[1] + 44 * S + 3).toFixed(1) + '">4 ROWS</text></g>';
+  var ar = [96, 240], ax2 = ar[0] + 150 * C, ay2 = ar[1] - 75;
+  var arrow = '<g id="oldnew"><path class="arrow" d="M' + ar[0] + ' ' + ar[1] + 'L' + ax2.toFixed(1) + ' ' + ay2.toFixed(1) +
+    'M' + (ax2 - 9).toFixed(1) + ' ' + (ay2 + 1.2).toFixed(1) + 'L' + ax2.toFixed(1) + ' ' + ay2.toFixed(1) + 'L' + (ax2 - 4.4).toFixed(1) + ' ' + (ay2 + 8.2).toFixed(1) + '"/>' +
+    '<text class="sc" transform="translate(' + (ar[0] - 4) + ' ' + (ar[1] + 14) + ')">OLDER</text>' +
+    '<text class="sc" transform="translate(' + (ax2 - 22).toFixed(1) + ' ' + (ay2 - 8).toFixed(1) + ')">NEWER</text></g>';
+
+  fig.innerHTML = '<svg id="block" viewBox="0 0 ' + VW + ' ' + VH + '" role="img" aria-label="Isometric block diagram of ' + N.length + ' notes in ' + NL + ' levels, one level per month. It can be opened into an aligned stack of layers.">' +
+    slabs + outline + '<g id="drift"></g><g id="web"></g><g id="trace"></g><g id="ink"></g>' + ticks + triad + arrow + '</svg><div class="tip" id="tip" hidden></div>';
+  svg1 = $('#block'); tip = $('#tip'); inkG = $('#ink'); webG = $('#web'); driftG = $('#drift'); traceG = $('#trace'); OUTL = $('#outl');
+  SLAB = [].slice.call(svg1.querySelectorAll('.slab')).map(function (g) {
+    var q = function (c) { return g.querySelector(c); };
+    return { g: g, fw: q('.fw'), fr: q('.fr'), ft: q('.ft'), pw: q('.pw'), pr: q('.pr0'), band: q('.band'), step: q('.stepl'),
+      lvl: q('.lvl'), lvn: q('.lvn'), ghost: q('.ghost'), out: q('.souter') };
+  });
+  svg1.querySelectorAll('.tile').forEach(function (t) {
+    var T = TILE[+t.getAttribute('data-i')], g = t.parentNode;
+    T.el = t; T.g = g; T.pr = g.querySelector('.pr'); T.pf = g.querySelector('.pf'); T.hid = false;
+  });
+  HUBEL = [].slice.call(svg1.querySelectorAll('.hub')).map(function (g) { return { g: g, i: +g.getAttribute('data-h') }; });
+  CODEL = [].slice.call(svg1.querySelectorAll('.code')).map(function (t) { return { t: t, i: +t.getAttribute('data-c') }; });
+
+  /* every linked pair once, as red ink (shown when open); hub links as drift (shown when closed) */
+  var seen = {}, ws = '', ds = '';
+  N.forEach(function (n, i) {
+    n.o.forEach(function (j) {
+      if (i === j) return;
+      var k = i < j ? i + '-' + j : j + '-' + i;
+      if (seen[k]) return; seen[k] = 1;
+      WEB.push({ a: i, b: j }); ws += '<path/>';
+    });
+  });
+  HUBS.forEach(function (h) {
+    N[h].o.concat(IN[h]).forEach(function (n2) { DRIFT.push({ a: h, b: n2 }); ds += '<path class="drift"/>'; });
+  });
+  webG.innerHTML = ws; driftG.innerHTML = ds;
+  [].slice.call(webG.children).forEach(function (p, k) { WEB[k].el = p; });
+  [].slice.call(driftG.children).forEach(function (p, k) { DRIFT[k].el = p; });
+}
+
+/* ---------- geometry at the current moment ---------- */
+var G = [];
+function geoAll() {
+  var a = PH.a, s = PH.s, Wo = GEO.Wo, b = 0;
+  LV.forEach(function (l, L) {
+    var YO = GEO.YO, dy = ease(SX[L]) * SLIDE * s, dx = ease(SXR[L]) * SLIDE * s;
+    var xR = lerp(GEO.W, Wo, a) + dx, y0 = YO * a + dy, y1 = lerp(l.yf, YO + Wo, a) + dy;
+    var z0 = lerp(l.z0, b, s), z1 = lerp(l.z1, b + TO, s);
+    G[L] = { dx: dx, dy: dy, x0: dx, xR: xR, y0: y0, y1: y1, by0: lerp(l.yb, YO, a) + dy, z0: z0, z1: z1, laby: lerp(l.yf - GEO.LAB * .34, YO + Wo - GEO.LABO * .38, a) + dy };
+    b += TO + GAP;
+  });
+}
+function rect(i) {
+  var t = TILE[i], a = PH.a, g = G[t.L];
+  return { x0: lerp(t.c.x0, t.o.x0, a) + g.dx, x1: lerp(t.c.x1, t.o.x1, a) + g.dx, y0: lerp(t.c.y0, t.o.y0, a) + g.dy, y1: lerp(t.c.y1, t.o.y1, a) + g.dy, z: g.z1 };
+}
+/* height off the level: relief by link count, plus a lift for the clicked note and its direct links.
+   Max 24 + 16 = 40 stays under GAP, so nothing pokes into the plate above. */
+function pillarH(i, now) {
+  var h = REL[i];
+  if (TR && TR.hop[i] >= 0) { var k = TR.hop[i], r = RM ? 1 : ease(clamp((now - TR.t0 - k * TR.ms) / 520)); h += (k ? 6 : 16) * r; }
+  return h * PH.s;
+}
+function pos(i, now) {
+  var r = rect(i), p = GEO.P((r.x0 + r.x1) / 2, (r.y0 + r.y1) / 2, r.z + pillarH(i, now));
+  return p;
+}
+function arc(a, b) {
+  var dx = b[0] - a[0], dy = b[1] - a[1], k = .16;
+  var cx = (a[0] + b[0]) / 2 + dy * k, cy = (a[1] + b[1]) / 2 - dx * k;
+  return 'M' + a[0].toFixed(1) + ' ' + a[1].toFixed(1) + 'Q' + cx.toFixed(1) + ' ' + cy.toFixed(1) + ' ' + b[0].toFixed(1) + ' ' + b[1].toFixed(1);
+}
+var seg = function (a, b) { return 'M' + a[0].toFixed(1) + ' ' + a[1].toFixed(1) + 'L' + b[0].toFixed(1) + ' ' + b[1].toFixed(1); };
+var quad = function (P, pp) { return pts(pp.map(function (q) { return P(q[0], q[1], q[2]); })); };
+
+function render(now) {
+  phases(); geoAll();
+  var P = GEO.P, a = PH.a, s = PH.s, minY = 0;
+  SLAB.forEach(function (sl, L) {
+    var g = G[L], l = LV[L], x = g.xR, xl = g.x0, y = g.y1, y0 = g.y0, z0 = g.z0, z1 = g.z1;
+    var fw = quad(P, [[x, y0, z0], [x, y, z0], [x, y, z1], [x, y0, z1]]);
+    var fr = quad(P, [[xl, y, z0], [x, y, z0], [x, y, z1], [xl, y, z1]]);
+    sl.fw.setAttribute('points', fw); if (sl.pw) sl.pw.setAttribute('points', fw);
+    sl.fr.setAttribute('points', fr); if (sl.pr) sl.pr.setAttribute('points', fr);
+    sl.ft.setAttribute('points', quad(P, [[xl, y0, z1], [x, y0, z1], [x, y, z1], [xl, y, z1]]));
+    sl.band.setAttribute('points', quad(P, [[xl, g.by0, z1], [x, g.by0, z1], [x, y, z1], [xl, y, z1]]));
+    sl.out.setAttribute('points', quad(P, [[xl, y0, z1], [x, y0, z1], [x, y0, z0], [x, y, z0], [xl, y, z0], [xl, y, z1]]));
+    /* the ghost keeps a slid-out layer's old place in the stack under the pointer, so the layer that slid
+       into view behind it can't steal the hover */
+    if (SX[L] > .02 && s > .5) {
+      var gy0 = y0 - g.dy, gy1 = y - g.dy;
+      sl.ghost.setAttribute('points', quad(P, [[xl, gy0, z1 + 40], [x, gy0, z1 + 40], [x, gy0, z0], [x, gy1, z0], [xl, gy1, z0], [xl, gy1, z1 + 40]]));
+    } else sl.ghost.setAttribute('points', '');
+    sl.out.style.opacity = s;
+    var st = '', so = 1 - clamp(a * 3);
+    if (so > 0) for (var j = L + 1; j < NL; j++) { var yj = Math.min(LV[j].yf, y); st += 'M' + pts([P(x, yj, z0)]) + 'L' + pts([P(x, yj, z1)]); }
+    sl.step.setAttribute('d', st); sl.step.style.opacity = so;
+    var lp = P(xl + 5, g.laby, z1), rp = P(x - 5, g.laby, z1);
+    sl.lvl.setAttribute('transform', 'translate(' + lp[0].toFixed(1) + ' ' + lp[1].toFixed(1) + ') rotate(30)');
+    sl.lvn.setAttribute('transform', 'translate(' + rp[0].toFixed(1) + ' ' + rp[1].toFixed(1) + ') rotate(30)');
+    l.idx.forEach(function (i) {
+      var r = rect(i), T = TILE[i], H = pillarH(i, now), zt = z1 + H;
+      T.el.setAttribute('points', quad(P, [[r.x0, r.y0, zt], [r.x1, r.y0, zt], [r.x1, r.y1, zt], [r.x0, r.y1, zt]]));
+      if (H > .3) {
+        T.pr.setAttribute('points', quad(P, [[r.x1, r.y0, z1], [r.x1, r.y1, z1], [r.x1, r.y1, zt], [r.x1, r.y0, zt]]));
+        T.pf.setAttribute('points', quad(P, [[r.x0, r.y1, z1], [r.x1, r.y1, z1], [r.x1, r.y1, zt], [r.x0, r.y1, zt]]));
+        if (T.hid) { T.pr.style.display = T.pf.style.display = ''; T.hid = false; }
+      } else if (!T.hid) { T.pr.style.display = T.pf.style.display = 'none'; T.hid = true; }
+    });
+    minY = Math.min(minY, P(0, y0, z1)[1]);
+  });
+  HUBEL.forEach(function (h) { var p = pos(h.i, now); h.g.setAttribute('transform', 'translate(' + p[0].toFixed(1) + ' ' + p[1].toFixed(1) + ')'); });
+  CODEL.forEach(function (c) { var p = pos(c.i, now); c.t.setAttribute('x', p[0].toFixed(1)); c.t.setAttribute('y', (p[1] + 2.5).toFixed(1)); });
+  /* room for a slid-out layer is reserved by s alone, so hovering never rescales the figure */
+  var top = Math.min(0, minY - 40), far = GEO.YO + GEO.Wo + SLIDE * s;
+  var mR = Math.max.apply(null, SXR), farx = GEO.Wo + SLIDE * mR * s;
+  var left = Math.min(0, P(0, far, 0)[0] - 16), bot = Math.max(GEO.VH, P(GEO.Wo, far, 0)[1] + 16, P(farx, GEO.YO * a + GEO.Wo, 0)[1] + 16);
+  var right = Math.max(GEO.VW, P(farx, GEO.YO * a, 0)[0] + 150);
+  svg1.setAttribute('viewBox', left.toFixed(1) + ' ' + top.toFixed(1) + ' ' + (right - left).toFixed(1) + ' ' + (bot - top).toFixed(1));
+  OUTL.style.opacity = 1 - clamp(a * 3);
+  $('#triad').style.opacity = 1 - mR;
+  $('#oldnew').style.opacity = 1 - a;
+  svg1.classList.toggle('open', anim.e > .5);
+
+  /* ticks follow their level's back-right edge, then spread so labels never collide */
+  var ex = Math.max(P(Math.max(GEO.W, GEO.Wo), 0, 0)[0], P(farx, GEO.YO * a, 0)[0] + 10);
+  var items = LV.map(function (l) { var g = G[l.L]; return { L: l.L, x: P(g.xR, g.y0, 0)[0], y: P(g.xR, g.y0, (g.z0 + g.z1) / 2)[1] }; });
+  var hi = Math.max(GEO.OY + GEO.W * S, Math.max.apply(null, items.map(function (it) { return it.y; })) + 10);
+  spread(items, 9.6, top + 50, hi);
+  items.forEach(function (it) {
+    svg1.querySelector('[data-t="' + it.L + '"]').setAttribute('d', 'M' + it.x.toFixed(1) + ' ' + it.y.toFixed(1) + 'L' + (ex + 5).toFixed(1) + ' ' + it.y.toFixed(1) + 'l14 ' + (it.ly - it.y).toFixed(1) + 'h6');
+    var tx = svg1.querySelector('.tkl[data-l="' + it.L + '"]');
+    tx.setAttribute('x', (ex + 29).toFixed(1)); tx.setAttribute('y', (it.ly + 2.9).toFixed(1));
+  });
+  var hd = $('#lvlhd'); hd.setAttribute('x', (ex + 29).toFixed(1)); hd.setAttribute('y', (items[0].ly - 14).toFixed(1));
+
+  webG.style.display = 'none';
+  driftG.style.opacity = 1 - s;
+  if (s < .99) DRIFT.forEach(function (w) { w.el.setAttribute('d', seg(pos(w.a, now), pos(w.b, now))); });
+  if (TR) TR.items.forEach(function (it) {
+    if (it.r != null) { var p = pos(it.r, now); it.el.setAttribute('cx', p[0].toFixed(1)); it.el.setAttribute('cy', p[1].toFixed(1)); }
+    else it.el.setAttribute('d', (s > .5 ? arc : seg)(pos(it.a, now), pos(it.b, now)));
+  });
+  if (INK != null) drawInk(INK, now);
+}
+
+/* the drawer: the pinned level's gap opens wide enough to read its whole plate */
+/* the drawer: the hovered layer (or the clicked one) slides forward out of the stack */
+function slideTarget() { return SL.hover >= 0 ? SL.hover : TR ? N[TR.src].m : SL.userPin ? blockState.pinned : -1; }
+function wantSlide(L, x, y) {
+  if (L === SL.hover) { clearTimeout(SL.timer); return; }
+  /* layers move under a still pointer; only a real pointer move may change the drawer, or it would flicker */
+  if (SL.at && Math.abs(x - SL.at[0]) + Math.abs(y - SL.at[1]) < 30) return;
+  clearTimeout(SL.timer);
+  SL.timer = setTimeout(function () { SL.hover = L; SL.at = [x, y]; kick(); }, 170);
+}
+function dropSlide() {
+  clearTimeout(SL.timer);
+  SL.timer = setTimeout(function () { SL.hover = -1; SL.at = null; kick(); }, 380);
+}
+function tick(now) {
+  anim.raf = 0;
+  var busy = false, dt = anim.last ? Math.min(64, now - anim.last) : 16;
+  anim.last = now;
+  if (anim.dur) {
+    var x = clamp((now - anim.t0) / anim.dur);
+    anim.e = anim.from + (anim.to - anim.from) * ease(x);
+    if (x < 1) busy = true; else anim.dur = 0;
+  }
+  var k = RM ? 1 : 1 - Math.exp(-dt / 150);
+  var st = slideTarget();
+  SX.forEach(function (g, L) {
+    var t = L === st ? 1 : 0, d = t - g;
+    if (Math.abs(d) < .004) SX[L] = t; else { SX[L] = g + d * k; busy = true; }
+  });
+  /* levels the clicked note links to slide out the other way, to the right */
+  var k2 = RM ? 1 : 1 - Math.exp(-dt / 260);
+  SXR.forEach(function (g, L) {
+    var t = TR && TR.levels[L] && L !== st && anim.e > .5 ? 1 : 0, d = t - g;
+    if (Math.abs(d) < .004) SXR[L] = t; else { SXR[L] = g + d * k2; busy = true; }
+  });
+  if (TR && !TR.settled) {
+    if (now - TR.t0 > TR.maxHop * TR.ms + 700) TR.settled = true; else busy = true;
+  }
+  render(now);
+  if (busy) anim.raf = requestAnimationFrame(tick); else anim.last = 0;
+}
+function kick() { if (!anim.raf) anim.raf = requestAnimationFrame(tick); }
+function openTo(target, ms) {
+  anim.from = anim.e; anim.to = target; anim.t0 = performance.now();
+  anim.dur = RM ? 1 : (ms || 2200) * Math.max(.35, Math.abs(target - anim.e));
+  syncControls(target);
+  kick();
+}
+function syncControls(target) {
+  var b = $('#openb'), on = target > .5;
+  b.setAttribute('aria-pressed', on ? 'true' : 'false');
+  b.textContent = on ? 'Close the strata' : 'Open the strata';
+  $('#openr').value = Math.round(target * 100);
+  $('#capx').textContent = on ? ', with the strata opened' : '';
+}
+
+/* ---------- red ink under the pointer ---------- */
+function drawInk(i, now) {
+  var a = pos(i, now), seen = {}, s = '';
+  N[i].o.concat(IN[i]).forEach(function (j) {
+    if (seen[j] || j === i) return; seen[j] = 1;
+    var b = pos(j, now);
+    s += '<path d="' + (anim.e > .5 ? arc(a, b) : seg(a, b)) + '"/><circle cx="' + b[0].toFixed(1) + '" cy="' + b[1].toFixed(1) + '" r="3.6"/>';
+  });
+  inkG.innerHTML = s + '<circle cx="' + a[0].toFixed(1) + '" cy="' + a[1].toFixed(1) + '" r="5"/>';
+}
+function showInk(i) {
+  INK = i == null ? null : i;
+  svg1.classList.toggle('inking', INK != null);
+  if (INK == null) inkG.innerHTML = ''; else drawInk(INK, performance.now());
+}
+
+/* ---------- trace: a ripple through the link graph, hop by hop ---------- */
+/* a trace is the note and its direct links only, never the links of its links */
+function startTrace(src) {
+  clearTrace(true);
+  var hop = N.map(function () { return -1; }), nb = [], lv = {}, ms = HOP_MS;
+  hop[src] = 0;
+  N[src].o.concat(IN[src]).forEach(function (j) {
+    if (j === src || hop[j] >= 0) return;
+    hop[j] = 1; nb.push(j);
+    if (N[j].m !== N[src].m) lv[N[j].m] = 1;
+  });
+  TR = { src: src, hop: hop, nb: nb, levels: lv, maxHop: nb.length ? 1 : 0, ms: ms, t0: performance.now(), items: [], settled: false };
+  var s = '', items = [];
+  nb.forEach(function (j) {
+    s += '<path class="tre" pathLength="1" style="--d:0ms"/>';
+    items.push({ a: src, b: j });
+  });
+  N.forEach(function (n, i) {
+    if (hop[i] < 0) return;
+    s += '<circle class="trr' + (i === src ? ' src' : '') + '" r="' + (i === src ? 6 : 3.4) + '" style="--d:' + (hop[i] * ms) + 'ms"/>';
+    items.push({ r: i });
+  });
+  traceG.innerHTML = s;
+  [].slice.call(traceG.children).forEach(function (el, k) { items[k].el = el; });
+  TR.items = items;
+
+  svg1.classList.add('tracing');
+  TILE.forEach(function (T) { T.g.classList.remove('lit'); T.el.classList.remove('src'); T.g.style.removeProperty('--d'); });
+  void svg1.getBoundingClientRect();
+  N.forEach(function (n, i) {
+    if (hop[i] < 0) return;
+    TILE[i].g.style.setProperty('--d', (hop[i] * ms) + 'ms');
+    TILE[i].g.classList.add('lit');
+    if (i === src) TILE[i].el.classList.add('src');
+  });
+  renderTrace();
+  kick();
+}
+function clearTrace(quiet) {
+  if (!TR) return;
+  TR = null;
+  traceG.innerHTML = '';
+  svg1.classList.remove('tracing');
+  TILE.forEach(function (T) { T.g.classList.remove('lit'); T.el.classList.remove('src'); T.g.style.removeProperty('--d'); });
+  if (!quiet) { renderTrace(); kick(); }
+}
+function renderTrace() {
+  var el = $('#trace-strip');
+  if (!TR) {
+    el.innerHTML = '<p class="tr-rest">Notes stand off their level by how many links they have. Click one to raise it and draw its links; with the strata open, the levels it links to slide out to the right. Click it again to read it.</p>';
+    return;
+  }
+  var n = N[TR.src], nb = TR.nb.slice().sort(function (p, q) { return N[q].m - N[p].m || N[p].n.localeCompare(N[q].n); });
+  var nl = Object.keys(TR.levels).length, outs = N[TR.src].o.filter(function (j) { return j !== TR.src; }).length;
+  el.innerHTML = '<div class="tr-head"><span class="eyebrow">Links</span><a class="tr-t" href="#note-' + N[TR.src].k + '">' + esc(n.n) + '</a>' +
+    '<button type="button" id="trclear" class="tbtn">Clear</button></div>' +
+    '<p class="tr-sum">' + (nb.length ? nb.length + (nb.length === 1 ? ' linked note' : ' linked notes') + ': links to ' + outs + ', linked from ' + IN[TR.src].length +
+      (nl ? '. ' + nl + (nl === 1 ? ' other level holds' : ' other levels hold') + ' them' + (anim.e > .5 ? (nl === 1 ? ' and slides' : ' and slide') + ' out to the right' : '') : ', all on this level') + '.' :
+      'This note has no links yet. It stands alone in the garden.') +
+    ' <a href="#note-' + N[TR.src].k + '">Read the note &rarr;</a></p>' +
+    (nb.length ? '<ul class="list trl">' + nb.map(function (j, k) {
+      return '<li style="--d:' + (k * 25) + 'ms"><a href="#note-' + N[j].k + '"><i class="' + tileCls(j) + '"></i><span>' + esc(N[j].n) + '</span><small>' + LV[N[j].m].key + '</small></a></li>';
+    }).join('') + '</ul>' : '');
+  $('#trclear').addEventListener('click', function () { clearTrace(); });
+  return;
+  var reached = TR.by.reduce(function (a, b) { return a + (b || 0); }, 0), max = Math.max.apply(null, TR.by.slice(1).concat([1]));
+  var rows = TR.by.map(function (c, h) {
+    return '<li style="--d:' + (h * TR.ms) + 'ms"><span class="hk">' + (h ? 'Hop ' + h : 'Note') + '</span><span class="hb"><i style="width:' + (h ? Math.max(4, c / max * 100) : 4).toFixed(1) + '%"></i></span><span class="hc">' + c + '</span></li>';
+  }).join('');
+  var n = N[TR.src], lone = N.length - reached;
+  el.innerHTML = '<div class="tr-head"><span class="eyebrow">Trace</span><a class="tr-t" href="#note-' + N[TR.src].k + '">' + esc(n.n) + '</a>' +
+    '<button type="button" id="trclear" class="tbtn">Clear</button></div>' +
+    '<ol class="hops">' + rows + '</ol>' +
+    '<p class="tr-sum" style="--d:' + (TR.maxHop * TR.ms) + 'ms">' + (reached === 1 ?
+      'This note has no links yet. It stands alone in the garden.' :
+      'Reaches ' + reached + ' of ' + N.length + ' notes in ' + TR.maxHop + (TR.maxHop === 1 ? ' hop' : ' hops') + '. ' + lone + ' notes sit in other clusters, out of reach.') +
+    ' <a href="#note-' + N[TR.src].k + '">Read the note &rarr;</a></p>';
+  $('#trclear').addEventListener('click', function () { clearTrace(); });
+}
+
+function focusLevel(L) {
+  svg1.querySelectorAll('.fx').forEach(function (e) { e.classList.remove('fx'); });
+  svg1.classList.toggle('has-fx', L != null && !TR);
+  if (L != null && !TR) svg1.querySelectorAll('[data-l="' + L + '"]').forEach(function (e) { e.classList.add('fx'); });
+}
+function pinLevel(L, user) {
+  blockState.pinned = L;
+  if (user) SL.userPin = true;
+  svg1.querySelectorAll('.band.pin').forEach(function (e) { e.classList.remove('pin'); });
+  var t = svg1.querySelector('.band[data-b="' + L + '"]'); if (t) t.classList.add('pin');
+  if (!blockState.q) renderRead(L);
+  kick();
+}
+function matches(i, q) {
+  var n = N[i];
+  return n.n.toLowerCase().indexOf(q) > -1 || n.g.some(function (g) { return g.indexOf(q) > -1; });
+}
+function renderRead(L) {
+  var q = blockState.q, ids, title, count;
+  if (q) {
+    ids = N.map(function (n, i) { return i; }).filter(function (i) { return matches(i, q); });
+    title = 'Results'; count = ids.length + ' of ' + N.length;
+  } else {
+    ids = LV[L].idx; title = LV[L].name + ' level'; count = ids.length + (ids.length === 1 ? ' note' : ' notes');
+  }
+  $('#rtitle').textContent = title; $('#rcount').textContent = count;
+  $('#rlist').innerHTML = ids.length ? ids.slice(0, 60).map(function (i) {
+    return '<li><a href="#note-' + N[i].k + '"><i class="' + tileCls(i) + '"></i><span>' + esc(N[i].n) + '</span><small>' + (N[i].d || '') + '</small></a></li>';
+  }).join('') : '<li style="padding:8px 2px;font-style:italic">' + (q ? 'No note matches that search.' : 'No notes written this month yet.') + '</li>';
+}
+function applySearch() {
+  var q = blockState.q, hit = {};
+  if (q) { clearTrace(); N.forEach(function (n, i) { if (matches(i, q)) hit[i] = 1; }); }
+  svg1.querySelectorAll('.tile').forEach(function (t) { t.parentNode.classList.toggle('dim', !!q && !hit[t.getAttribute('data-i')]); });
+  renderRead(blockState.pinned);
+}
+function tileOf(t) {
+  return t && t.classList && t.classList.contains('tile') ? +t.getAttribute('data-i') : null;
+}
+function wireBlock() {
+  svg1.addEventListener('pointerover', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-l]') : null;
+    if (!t) return;
+    var L = +t.getAttribute('data-l');
+    focusLevel(L);
+    if (anim.e > .5) wantSlide(L, e.clientX, e.clientY);
+    if (!blockState.q) renderRead(L);
+  });
+  svg1.addEventListener('pointerleave', function () {
+    dropSlide();
+    focusLevel(null); tip.hidden = true; showInk(null);
+    if (!blockState.q) renderRead(blockState.pinned);
+  });
+  svg1.addEventListener('pointermove', function (e) {
+    var ti = tileOf(e.target);
+    if (ti != null) {
+      var n = N[ti];
+      if (INK !== ti) showInk(ti);
+      tip.innerHTML = '<b>' + esc(n.n) + '</b><span>' + (n.d ? dFmt(n.d) : 'Undated') + ' &middot; ' +
+        ({ a: 'adult', b: 'baby', u: 'status not stated' })[n.s] + ' &middot; ' + TOPIC[n.p].name +
+        (TR && TR.hop[ti] > 0 ? ' &middot; hop ' + TR.hop[ti] : '') + '</span>';
+      tip.hidden = false;
+      var r = fig.getBoundingClientRect();
+      var x = e.clientX - r.left + fig.scrollLeft + 14, y = e.clientY - r.top + 16;
+      if (x + 270 > fig.scrollLeft + r.width) x = e.clientX - r.left + fig.scrollLeft - 270;
+      tip.style.left = Math.max(4, x) + 'px'; tip.style.top = y + 'px';
+    } else { tip.hidden = true; if (INK != null) showInk(null); }
+  });
+  svg1.addEventListener('click', function (e) {
+    var ti = tileOf(e.target);
+    if (ti != null) {
+      if (TR && TR.src === ti) { go('#note-' + N[ti].k); return; }
+      startTrace(ti); return;
+    }
+    var lv = e.target.closest ? e.target.closest('[data-l]') : null;
+    if (lv) pinLevel(+lv.getAttribute('data-l'), true);
+    if (TR) clearTrace();
+  });
+  $('#qform').addEventListener('submit', function (e) { e.preventDefault(); });
+  $('#q').addEventListener('input', function (e) { blockState.q = e.target.value.trim().toLowerCase(); applySearch(); });
+  $('#prev').addEventListener('click', function () { $('#q').value = ''; blockState.q = ''; applySearch(); pinLevel(Math.max(0, blockState.pinned - 1), true); });
+  $('#next').addEventListener('click', function () { $('#q').value = ''; blockState.q = ''; applySearch(); pinLevel(Math.min(NL - 1, blockState.pinned + 1), true); });
+  $('#openb').addEventListener('click', function () { openTo(anim.to > .5 || (anim.dur === 0 && anim.e > .5) ? 0 : 1); });
+  $('#openr').addEventListener('input', function (e) {
+    anim.dur = 0; anim.e = anim.to = +e.target.value / 100;
+    var b = $('#openb'), on = anim.e > .5;
+    b.setAttribute('aria-pressed', on ? 'true' : 'false'); b.textContent = on ? 'Close the strata' : 'Open the strata';
+    $('#capx').textContent = on ? ', with the strata opened' : '';
+    render(performance.now()); kick();
+  });
+}
+
+/* ---------- explanation legend ---------- */
+function formRow(p) {
+  var t = TOPIC[p], ex = t.ex.length ? 'e.g. ' + trunc(t.ex[0], 28) : '';
+  var desc = t.kind === 'none' ? 'No tag at all' : t.kind === 'other' ? 'Tags outside the principal ones' : ex;
+  return '<li class="row"><span class="sw g' + t.g + '">' + t.code + '</span><span class="nm"><b>' + t.name + '</b><em>' + esc(desc) + '</em></span><span class="ct">' + tcount[p] + '</span></li>';
+}
+function group(label, ps) { return '<div class="grp"><ol>' + ps.map(formRow).join('') + '</ol><div class="br"><span>' + label + '</span></div></div>'; }
+function LEGEND_GROUPS() {
+  return ['Technology', 'Mind', 'Method'].map(function (label, g) {
+    var ps = TOPIC.map(function (t, p) { return p; }).filter(function (p) { return !TOPIC[p].kind && TOPIC[p].g === g && tcount[p]; });
+    return ps.length ? group(label, ps) : '';
+  }).join('');
+}
+function legend1() {
+  var tri = '<svg viewBox="0 0 50 22" preserveAspectRatio="none" aria-hidden="true"><rect x="0" y="0" width="17" height="22" fill="var(--bd-lilac)"/><rect x="17" y="0" width="16" height="22" fill="var(--bd-mauve)"/><rect x="33" y="0" width="17" height="22" fill="var(--bd-plum)"/><path d="M17 0V22M33 0V22" stroke="var(--bd-ink)" stroke-width=".8"/></svg>';
+  var base = '<svg viewBox="0 0 50 22" preserveAspectRatio="none" aria-hidden="true"><rect width="50" height="22" fill="var(--bd-plum)"/><rect width="50" height="22" style="fill:url(#p-stip-r)"/></svg>';
+  var hub = '<svg viewBox="0 0 50 22" aria-hidden="true"><rect x="21" y="7" width="8" height="8" fill="var(--bd-paper)" stroke="var(--bd-ink)" stroke-width="1.2"/><path d="M21 7l8 8M29 7l-8 8" stroke="var(--bd-ink)" stroke-width="1" fill="none"/></svg>';
+  var drift = '<svg viewBox="0 0 50 22" aria-hidden="true"><path d="M2 16L48 6" stroke="var(--bd-ink)" stroke-width=".8" stroke-opacity=".6" fill="none"/></svg>';
+  var openSw = '<svg viewBox="0 0 50 22" aria-hidden="true"><path d="M4 16h30l8-4H12z" fill="var(--bd-lilac)" stroke="var(--bd-ink)" stroke-width=".7"/><path d="M4 16v3h30v-3M34 19l8-4v-3" fill="var(--bd-plum)" stroke="var(--bd-ink)" stroke-width=".7"/><path d="M4 7h30l8-4H12z" fill="var(--bd-lilac)" stroke="var(--bd-ink)" stroke-width=".7"/><path d="M4 7v3h30v-3M34 10l8-4v-3" fill="var(--bd-plum)" stroke="var(--bd-ink)" stroke-width=".7"/></svg>';
+  var pilSw = '<svg viewBox="0 0 50 22" aria-hidden="true"><path d="M10 19h30" stroke="var(--bd-ink)" stroke-width=".7"/><path d="M20 6l5-3 5 3v11l-5 3-5-3z" fill="var(--bd-ore)" stroke="var(--bd-ink)" stroke-width=".7"/><path d="M25 9v11M20 6l5 3 5-3" fill="none" stroke="var(--bd-ink)" stroke-width=".7"/><path d="M25 9l5-3v11l-5 3z" fill="color-mix(in srgb, var(--bd-ore) 84%, var(--bd-ink))" stroke="var(--bd-ink)" stroke-width=".7"/><path d="M20 6l5 3v11l-5-3z" fill="color-mix(in srgb, var(--bd-ore) 70%, var(--bd-ink))" stroke="var(--bd-ink)" stroke-width=".7"/></svg>';
+  var PR = { n: 0, x: 0 }, pseen = {};
+  N.forEach(function (n, i) { n.o.forEach(function (j) { var k = Math.min(i, j) + '-' + Math.max(i, j); if (i === j || pseen[k]) return; pseen[k] = 1; PR.n++; if (N[j].m !== n.m) PR.x++; }); });
+  $('#expl1').innerHTML = '<h3>EXPLANATION</h3>' +
+    LEGEND_GROUPS() +
+    '<ol class="plain">' + TOPIC.map(function (t, p) { return t.kind && tcount[p] ? formRow(p) : ''; }).join('') + '</ol>' +
+    '<div class="sep"></div><ul class="plain" style="list-style:none;padding:0;margin:0">' +
+    '<li class="row nc"><span class="sw ore"></span><span class="nm"><b>Adult note</b><em>Solid contact. ' + cnt.a + ' notes, the ore of the garden</em></span></li>' +
+    '<li class="row nc"><span class="sw dash"></span><span class="nm"><b>Baby note</b><em>Dashed contact. ' + cnt.b + ' notes</em></span></li>' +
+    '<li class="row nc"><span class="sw hair"></span><span class="nm"><b>Status not stated</b><em>Hairline contact. ' + cnt.u + ' notes</em></span></li>' +
+    '</ul><div class="sep"></div><ul class="plain" style="list-style:none;padding:0;margin:0">' +
+    '<li class="row nc"><span class="sw">' + tri + '</span><span class="nm"><b>Level</b><em>Floor, right cut, left cut. One month of writing</em></span></li>' +
+    '<li class="row nc"><span class="sw">' + base + '</span><span class="nm"><b>Basement</b><em>The ' + LV[0].idx.length + ' notes with no date</em></span></li>' +
+    '<li class="row nc"><span class="sw">' + hub + '</span><span class="nm"><b>Hub note</b><em>' + HUBMIN + ' or more links</em></span></li>' +
+    '<li class="row nc"><span class="sw">' + drift + '</span><span class="nm"><b>Drift</b><em>A link, drawn for hub notes only</em></span></li>' +
+    '<li class="row nc"><span class="sw ink"><svg viewBox="0 0 50 22" aria-hidden="true"><line x1="2" y1="16" x2="48" y2="6"/></svg></span><span class="nm"><b>Red ink</b><em>The links of the note under the pointer</em></span></li>' +
+    '<li class="row nc"><span class="sw open">' + openSw + '</span><span class="nm"><b>Open strata</b><em>Each month slid back onto one square and lifted off the one below. Hover a layer to slide it out</em></span></li>' +
+    '<li class="row nc"><span class="sw ink tr"><svg viewBox="0 0 50 22" aria-hidden="true"><circle cx="14" cy="11" r="5" stroke-width="1.6"/><circle cx="36" cy="11" r="3"/></svg></span><span class="nm"><b>Link ring</b><em>A note linked to the one you clicked</em></span></li>' +
+    '<li class="row nc"><span class="sw pillar">' + pilSw + '</span><span class="nm"><b>Relief</b><em>A note raised by its link count. A clicked note rises further</em></span></li>' +
+    '</ul>';
+  $('#abstract').innerHTML =
+    '<p>This commonplace notebook holds ' + N.length + ' atomic notes joined by ' + nLinks + ' links. Each level of the block is one month of writing, oldest at the base, and each tile is one note.</p>' +
+    '<p>The ' + LV[0].idx.length + ' notes that carry no date form the basement. Tiles are tinted by the most specific of eight principal tags and run from the front of each floor to the back, grouped by tag. Hover a tile to see its links in red ink.</p>' +
+    '<p>Open the strata and the months slide back into one square column and lift apart like the layers of a network. Hover a layer to slide it out of the stack, then hover a note to see its links in red ink; click a layer to keep it out. ' + PR.x + ' of the ' + PR.n + ' linked pairs join notes written in different months. Each note stands off its level by how many links it has. Click one to raise it and draw its direct links; the levels it links to slide out to the right.</p>';
+  $('#abbr').innerHTML = HUBS.map(function (h) {
+    return '<dt>' + hubCode(h) + '</dt><dd><a href="#note-' + N[h].k + '">' + esc(trunc(N[h].n, 46)) + '</a></dd>';
+  }).join('');
+}
+
+/* ---------- reading view ---------- */
+var IDX = {};
+N.forEach(function (n, i) { IDX[n.n.toLowerCase()] = i; });
+var unesc = function (s) { return s.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&'); };
+function mdInline(s) {
+  var codes = [];
+  s = s.replace(/``\s*([^\n]+?)\s*``/g, function (_, c) { codes.push(c); return '\u0001' + (codes.length - 1) + '\u0001'; });
+  s = s.replace(/`([^`\n]+)`/g, function (_, c) { codes.push(c); return '\u0001' + (codes.length - 1) + '\u0001'; });
+  s = esc(s);
+  s = s.replace(/\*\*([^*\n]+)\*\*/g, '<b>$1</b>').replace(/(^|[^*\w])\*([^*\n]+)\*(?!\*)/g, '$1<i>$2</i>');
+  s = s.replace(/\[\[([^\]|#]+)(?:#[^\]|]*)?(?:\|([^\]]+))?\]\]/g, function (_, name, alias) {
+    var k = IDX[unesc(name).trim().toLowerCase()], txt = alias || name;
+    return k != null ? '<a class="wl" href="#note-' + N[k].k + '">' + txt + '</a>' : '<span class="nl">' + txt + '</span>';
+  });
+  s = s.replace(/!\[([^\]]*)\]\((\/att\/[^)\s]+)\)/g, '<img class="emb" alt="$1" src="$2" loading="lazy">');
+  s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, '<a class="xl" href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+  return s.replace(/\u0001(\d+)\u0001/g, function (_, k) { return '<code>' + esc(codes[+k]) + '</code>'; });
+}
+function mdBlocks(src) {
+  var lines = src.split('\n'), out = '', i = 0, para = [], m;
+  var flush = function () { if (para.length) { out += '<p>' + para.map(mdInline).join('<br>') + '</p>'; para = []; } };
+  var LI = /^\s*([-*+]|\d+[.)])\s+/;
+  while (i < lines.length) {
+    var l = lines[i];
+    if (/^\s*```/.test(l)) {
+      flush(); var buf = []; i++;
+      while (i < lines.length && !/^\s*```/.test(lines[i])) { buf.push(lines[i]); i++; }
+      i++; out += '<pre><code>' + esc(buf.join('\n')) + '</code></pre>'; continue;
+    }
+    if ((m = l.match(/^(#{1,6})\s+(.*)$/))) { flush(); var lv = Math.min(4, m[1].length + 1); out += '<h' + lv + '>' + mdInline(m[2]) + '</h' + lv + '>'; i++; continue; }
+    if (/^\s*(-{3,}|\*{3,})\s*$/.test(l)) { flush(); out += '<hr>'; i++; continue; }
+    if (LI.test(l)) {
+      flush(); var ord = /^\s*\d/.test(l), items = '';
+      while (i < lines.length && LI.test(lines[i])) {
+        var mm = lines[i].match(/^(\s*)([-*+]|\d+[.)])\s+(.*)$/);
+        var d = Math.min(3, Math.floor(mm[1].replace(/\t/g, '  ').length / 2));
+        items += '<li style="margin-left:' + (d * 1.3) + 'em">' + mdInline(mm[3]) + '</li>'; i++;
+      }
+      out += (ord ? '<ol>' : '<ul>') + items + (ord ? '</ol>' : '</ul>'); continue;
+    }
+    if (/^\s*>/.test(l)) {
+      flush(); var q = [];
+      while (i < lines.length && /^\s*>/.test(lines[i])) { q.push(lines[i].replace(/^\s*>\s?/, '')); i++; }
+      out += '<blockquote>' + q.map(mdInline).join('<br>') + '</blockquote>'; continue;
+    }
+    if (/^\s*\|/.test(l)) {
+      flush(); var tb = [];
+      while (i < lines.length && /^\s*\|/.test(lines[i])) { tb.push(lines[i]); i++; }
+      var rows = tb.filter(function (r) { return !/^\s*\|(\s*:?-+:?\s*\|)+\s*$/.test(r); }).map(function (r) {
+        return r.trim().replace(/^\||\|$/g, '').split('|').map(function (c) { return mdInline(c.trim()); });
+      });
+      out += '<div class="tw"><table>' + rows.map(function (r, k) {
+        return '<tr>' + r.map(function (c) { return (k === 0 ? '<th>' : '<td>') + c + (k === 0 ? '</th>' : '</td>'); }).join('') + '</tr>';
+      }).join('') + '</table></div>'; continue;
+    }
+    if (!l.trim()) { flush(); i++; continue; }
+    para.push(l.replace(/\s+$/, '')); i++;
+  }
+  flush();
+  return out;
+}
+function cxItem(j, k) {
+  var nj = N[j];
+  return '<li style="--k:' + (k || 0) + '"><a class="cx" href="#note-' + N[j].k + '"><i class="' + tileCls(j) + ' s' + nj.s + '"></i><span>' + esc(nj.n) + '</span><small>' + LV[nj.m].key + '</small></a></li>';
+}
+function showRead(i) {
+  var n = N[i], L = n.m, back = IN[i], out = n.o;
+  var stTxt = { a: 'Adult', b: 'Baby', u: 'Status not stated' }[n.s];
+  var stSw = '<span class="sw ' + (n.s === 'a' ? 'ore' : n.s === 'b' ? 'dash' : 'hair') + '"></span>';
+  var tagRows = n.g.map(function (g) {
+    var p = TOPIC.findIndex(function (t) { return t.name.toLowerCase() === g; });
+    var cls = p > -1 ? 'g' + TOPIC[p].g : 'g3', code = p > -1 ? TOPIC[p].code : 'To';
+    return '<li class="row nc"><span class="sw ' + cls + '">' + code + '</span><span class="nm"><b>' + esc(g.charAt(0).toUpperCase() + g.slice(1)) + '</b><em>' +
+      (p === n.p ? 'Principal tag, sets the tint' : p > -1 ? 'Principal tag' : 'Minor tag') + '</em></span></li>';
+  }).join('') || '<li class="row nc"><span class="sw g4">pC</span><span class="nm"><b>No tags</b><em>Untagged note</em></span></li>';
+  var html = n.b ? mdBlocks(n.b) : '<p><em>This note is a title and links so far, with no prose yet.</em></p>';
+  var dc = /^<p>[A-Za-z]/.test(html) ? ' dc' : '';
+  var pos = LV[L].idx.indexOf(i), sib = LV[L].idx;
+  var prev = pos > 0 ? sib[pos - 1] : null, next = pos < sib.length - 1 ? sib[pos + 1] : null;
+  var conn = (back.length || out.length) ?
+    '<section class="rconn"><h2>Connections</h2><div class="cols">' +
+    '<div><h3>Links to &middot; ' + out.length + '</h3><ul>' + (out.length ? out.map(cxItem).join('') : '<li style="padding:6px 0;font-style:italic">None yet.</li>') + '</ul></div>' +
+    '<div><h3>Linked from &middot; ' + back.length + '</h3><ul>' + (back.length ? back.map(cxItem).join('') : '<li style="padding:6px 0;font-style:italic">None yet.</li>') + '</ul></div>' +
+    '</div></section>' : '';
+  var nav = '<nav class="rnext" aria-label="Same level">' +
+    (prev != null ? '<a href="#note-' + N[prev].k + '">&larr; ' + esc(trunc(N[prev].n, 34)) + '</a>' : '<span></span>') +
+    (next != null ? '<a href="#note-' + N[next].k + '">' + esc(trunc(N[next].n, 34)) + ' &rarr;</a>' : '<span></span>') + '</nav>';
+
+  $('#p2').innerHTML =
+    '<article class="rd-main"><div><a class="back" href="#plate-1">&larr; Block diagram</a><a class="trlink" href="#trace-' + N[i].k + '">Trace this note</a></div>' +
+    '<p class="eyebrow">Note ' + (i + 1) + ' of ' + N.length + ' &middot; ' + (L ? LV[L].name : 'Basement') + ' level</p>' +
+    '<h1 class="rtitle">' + esc(n.n) + '</h1>' +
+    '<p class="nmeta">' + (n.d ? 'Written ' + dFmt(n.d) : 'Undated') + ' &middot; ' + n.w + ' words &middot; ' + stTxt.toLowerCase() + '</p>' +
+    '<div class="rbody' + dc + '">' + html + '</div>' + conn + nav + '</article>' +
+    '<aside class="rd-side expl" aria-label="Explanation"><h3>EXPLANATION</h3><ol class="plain">' + tagRows + '</ol><div class="sep"></div><ul class="plain">' +
+    '<li class="row nc">' + stSw + '<span class="nm"><b>' + stTxt + '</b><em>' + ({ a: 'Solid contact, the ore', b: 'Dashed contact', u: 'Hairline contact' })[n.s] + '</em></span></li>' +
+    '<li class="row nc"><span class="sw"><svg viewBox="0 0 50 22" preserveAspectRatio="none" aria-hidden="true"><rect width="50" height="22" fill="var(--bd-plum)"/>' + (L === 0 ? '<rect width="50" height="22" style="fill:url(#p-stip-r)"/>' : '') + '</svg></span>' +
+    '<span class="nm"><b>' + (L ? LV[L].name : 'Basement') + ' level</b><em>' + LV[L].idx.length + ' notes, this is number ' + (pos + 1) + ' on its floor</em></span></li></ul>' +
+    '<dl class="stat"><dt>Links to</dt><dd>' + out.length + '</dd><dt>Linked from</dt><dd>' + back.length + '</dd><dt>Words</dt><dd>' + n.w + '</dd></dl></aside>';
+  $('#ph2r').innerHTML = 'Notebook Paper ' + D.built.slice(0, 4) + '<br>Note ' + (i + 1);
+  $('#tab2').setAttribute('href', '#note-' + N[i].k);
+}
+
+/* ---------- routing ---------- */
+var KEY = {};
+N.forEach(function (n, i) { KEY[n.k] = i; });
+function byKey(h, kind) {
+  var m = h.match(new RegExp('^#' + kind + '-(.+)$'));
+  if (!m) return null;
+  var k = m[1]; try { k = decodeURIComponent(k); } catch (e) {}
+  return KEY[k] != null ? KEY[k] : null;
+}
+var cur = '';
+function show(key) {
+  if (key === cur) return;
+  cur = key;
+  var p1 = key === 'p1';
+  $('#plate1').hidden = !p1; $('#plate2').hidden = p1;
+  if (p1) { $('#tab1').setAttribute('aria-current', 'page'); $('#tab2').removeAttribute('aria-current'); }
+  else { $('#tab2').setAttribute('aria-current', 'page'); $('#tab1').removeAttribute('aria-current'); showRead(+key.slice(2)); }
+  try { window.scrollTo(0, 0); } catch (e) {}
+}
+function route() {
+  var h = location.hash || '', t = byKey(h, 'trace');
+  if (t != null) { show('p1'); traceFromRead(t); return; }
+  var m = byKey(h, 'note');
+  show(m != null ? 'n:' + m : 'p1');
+}
+function traceFromRead(i) {
+  if (anim.e < .5 && anim.to < .5) openTo(1);
+  startTrace(i);
+  try { fig.scrollIntoView({ block: 'start', behavior: RM ? 'auto' : 'smooth' }); } catch (e) {}
+}
+function go(h) {
+  try { if (location.hash !== h) location.hash = h; } catch (e) {}
+  var t = byKey(h, 'trace');
+  if (t != null) { show('p1'); traceFromRead(t); return; }
+  var m = byKey(h, 'note');
+  show(m != null ? 'n:' + m : 'p1');
+}
+window.addEventListener('hashchange', route);
+document.addEventListener('click', function (e) {
+  var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+  if (!a) return;
+  var h = a.getAttribute('href');
+  if (h === '#plate-1' || /^#(note|trace)-/.test(h)) { e.preventDefault(); go(h); }
+});
+
+fig = $('#fig');
+legend1();
+document.querySelectorAll('.yr').forEach(function (e) { e.textContent = D.built.slice(0, 4); });
+document.querySelectorAll('.built').forEach(function (e) { e.textContent = MN[+D.built.slice(5, 7) - 1] + ' ' + D.built.slice(0, 4); });
+$('#caprange').textContent = mName(MON[0]) + ' to ' + mName(MON[MON.length - 1]);
+if (D.allAdult) {
+  var ar = [].slice.call(document.querySelectorAll('#expl1 .nm b')).filter(function (b) { return b.textContent === 'Adult note'; })[0];
+  if (ar) { var ul = ar.closest('ul'); if (ul.previousElementSibling) ul.previousElementSibling.remove(); ul.remove(); }
+}
+buildBlock();
+wireBlock();
+renderRead(blockState.pinned);
+renderTrace();
+syncControls(anim.e);
+render(performance.now());
+/* old Quartz note addresses redirect to /?n=<slug> */
+try { var qn = new URLSearchParams(location.search).get('n'); if (qn) history.replaceState(null, '', '/#note-' + encodeURIComponent(qn)); } catch (e) {}
+route();
+if (!RM && !TR) setTimeout(function () { if (!anim.dur && anim.e === 1 && !TR) openTo(0, 3400); }, 700);
+})();
+</script>
+</body>
+</html>
