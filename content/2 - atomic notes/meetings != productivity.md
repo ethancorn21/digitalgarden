@@ -19,8 +19,6 @@ A basic fix: Schedule IC meetings in one giant chunk of the day, either in the m
 ## Reference
 
 [[simplify]]
-[[All Communication is Strategy]]
 
 Balancing diffusion of info with enough time for deep work is a challenge but efficient information channels make it easier to combat : [[Speed of Information Dissemination as a Indicator of Organizational Size]]
 
-More thinking about this subject, trying to connect a datacenter networking architecture to organizational structure : [[Leaf Spine Architecture to solve Organizational Management]]

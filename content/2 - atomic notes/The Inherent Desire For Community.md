@@ -18,5 +18,3 @@ It's interesting to me how much we still conform to our desires in this way. I f
 
 This was called "Christian Ideals of The Group", but it read too strongly for what you were trying to say.
 
-[[Lonely Apes]]
-[[Man, The Thinking Animal]]

@@ -19,7 +19,7 @@ My take away from this that has been confirmed by numerous successful people is 
 29
 > "He that hath once done you a kindness will be more ready to do you another than he whom you yourself have obliged" - Benjamin Franklin
 
-This is the [[Ben Franklin Effect]], basically you are more willing to help someone who has asked you for help than someone who has helped you. I figure this is why so many people say "he needs to remember where he came from". It is also interesting that we have this inherent desire to please a new stimulus rather than pay back a known one. 
+This is the Ben Franklin Effect, basically you are more willing to help someone who has asked you for help than someone who has helped you. I figure this is why so many people say "he needs to remember where he came from". It is also interesting that we have this inherent desire to please a new stimulus rather than pay back a known one.
 I remember listening to Alex Hormozi talk about asking for help. He said most people are willing to help you and give you advice, even people who you think are way above you in social strata, but only if they think you are going to act on their help / advice.
 
 

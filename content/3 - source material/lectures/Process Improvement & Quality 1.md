@@ -15,7 +15,7 @@
 - Customer focus
 - leadership must emphasize quality
 - always room for improvement
--  How to implement myself? [[Cultivating a cultural mindset for process improvement]]
+-  How to implement myself?
 
 #### continuous improvement
 - sequence for problem solving and continuous improves
@@ -30,10 +30,8 @@
 - hire the best, pay them the best, give them the tools to fix problems. 
 	- The best are the best for a reason. Leave them alone. Drop them into the warzone and back away until they ask for backup. 
 	- Cost savings should not come from hiring budget. Empower those who want it.º
-[[quality as a strategy]]
 
 #### If quantity is needed, it can be mitigated with quality
-[[quantity can be mitigated with quality]]
 
 Cause and effect diagram
  - 4 M's

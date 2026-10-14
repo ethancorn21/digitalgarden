@@ -15,4 +15,4 @@ To do something for 10,000 hours without burning out, you must focus on the proc
 ## see also: 
 
 Read about in [[Outliers]].
-Useful to keep in mind when aiming for [[mastery]]. But, it must not be time wasted, you have to implement [[corrective feedback]] as part of [[deliberate practice]]
+Useful to keep in mind when aiming for [[mastery]]. But, it must not be time wasted, you have to implement corrective feedback as part of deliberate practice

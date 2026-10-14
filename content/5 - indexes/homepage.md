@@ -20,5 +20,3 @@
 - [[systems design]]
 ## Reading:
 - [[Books I've Read]]
-## Still Lost? Start Here:
-- [[Social Media Addiction as a Byproduct of Consciousness Projection]]

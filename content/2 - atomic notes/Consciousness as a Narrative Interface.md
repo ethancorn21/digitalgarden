@@ -20,7 +20,5 @@ It seems to me that consciousness is a narrative device that assigns meaning to 
 ---
 ## Reference
 
-[[Split Brain Experiment]]
 [[Severing the Corpus Callosum and System 1]]
-[[Free Will as the Unfolding of Causal Links]]
 [[Unconscious Processing]]

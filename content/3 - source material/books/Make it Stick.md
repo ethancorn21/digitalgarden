@@ -6,20 +6,14 @@ finish: 2025-9-26
 The way we think about learning is wrong, learning should involve active involvement and be hard to do. The trick is to avoid methods that give you a false illusion of learning like rereading, highlighting, and cramming. Forcing yourself to recall information, put topics into your own words, try to solve problems before learning how, and being involved with several different topics at the same time, these are all forms of something called active learning. Active learning maybe be harder and may seem less effective than traditionally held learning methods but they allow for better long term retention of the information.
 
 ### Key takeaways:
-[[testing effect]]
 [[spaced repetition]]
-[[elaboration]]
-[[generation effect]]
-[[interleaving]]
 supporting:
-[[reflection]]
-[[calibration]]
 [[abstraction]]
 ### notes & annotations
 7
 >"your intellectual ability lies to a surprising extent within your own control. Understanding that this is so enables you to see failure as a badge of effort and a source of useful information...when learning is hard, you're doing important work...striving and setbacks...are essential if you are to surpass your current level of performance toward true expertise"
 
-There's a reason so many experts and so many successful people will say to get comfortable with failure. Failure should be taken as gracefully as breathing. Of course that doesn't mean it should be as comfortable as breathing. But expect failure, it should be reflected on just as much as winning. If you are failing it means you are doing something that you can learn from. [[deliberate practice]], requires you to fail. Requires you to go just beyond your comfort zone, most probably failing in the process.
+There's a reason so many experts and so many successful people will say to get comfortable with failure. Failure should be taken as gracefully as breathing. Of course that doesn't mean it should be as comfortable as breathing. But expect failure, it should be reflected on just as much as winning. If you are failing it means you are doing something that you can learn from. deliberate practice, requires you to fail. Requires you to go just beyond your comfort zone, most probably failing in the process.
 
 9
 >"when learning is hard, it's strong and lasts longer."
@@ -28,7 +22,7 @@ It's easy to quit hard learning and revert to easy learning. The learning that m
 
 ch.2 summary
 
-You must retrieve knowledge if you wish for it to stick, preferably spaced out (Anki flashcards). Quizzing yourself forces you to retrieve knowledge. Putting the knowledge into your own words utilizes the [[generation effect]], working with information by creating your own interpretations and explanations are better remembered than passively accepting information. Essentially active learning > passive learning.
+You must retrieve knowledge if you wish for it to stick, preferably spaced out (Anki flashcards). Quizzing yourself forces you to retrieve knowledge. Putting the knowledge into your own words utilizes the generation effect, working with information by creating your own interpretations and explanations are better remembered than passively accepting information. Essentially active learning > passive learning.
 
 55
 >recall and recognition require 'factual knowledge', considered to be a lower level of learning that 'conceptual knowledge'. Conceptual knowledge requires an understanding of the interrelationships of the basic elements within a larger structure that enable them to function together."
@@ -43,12 +37,12 @@ So in other words, practice how you play. When in life do we ever do things perf
 59
 >"daily reflection, as a form of spaced retrieval practice, is probably just as critical in the real-world application...as quizzing and testing are in building competencies"
 
-Ok so, you can't just flashcard your way to mastery. You have to [[reflection |reflect]] on what: 1) went well 2) could be improved 3) to do it next time. To me, this is the essence of the feedback part of [[deliberate practice]], it acts a course corrective measure. Sometimes feedback comes in the form of rigid feedback such as test grades or performance feedback, but a lot of the time it will have to be self imposed.
+Ok so, you can't just flashcard your way to mastery. You have to reflect on what: 1) went well 2) could be improved 3) to do it next time. To me, this is the essence of the feedback part of deliberate practice, it acts a course corrective measure. Sometimes feedback comes in the form of rigid feedback such as test grades or performance feedback, but a lot of the time it will have to be self imposed.
 
 65
->"[[interleaving]] and [[variating practice| variation]] helps learners reach beyond memorization to higher levels of conceptual learning and application"
+>"interleaving and variation helps learners reach beyond memorization to higher levels of conceptual learning and application"
 
-When practicing, mix practice in with problems from different topics / fields that you are also wishing to practice (what about stickiness of the topic and context switching?). When reading for new information, read multiple books at the same time. You can better draw connections between each book and it makes you recall when you learned last time you read it. So interleaving acts as [[variating practice]] and also [[spaced repetition]].
+When practicing, mix practice in with problems from different topics / fields that you are also wishing to practice (what about stickiness of the topic and context switching?). When reading for new information, read multiple books at the same time. You can better draw connections between each book and it makes you recall when you learned last time you read it. So interleaving acts as variating practice and also [[spaced repetition]].
 
 76
 >There's virtually no limit to how much learning we can remember as long as we relate it to wait we already know. In fact, because new learning depends on prior learning, the more we learn, the more possible connections we create for further learning"
@@ -78,21 +72,21 @@ How do you go about recognizing competence and expertise in others? Can we measu
 [[On making ourselves the moral compass |I wrote a few months ago]], that in the absence of a higher power, whether religious or spiritual. The mind becomes the decider of what is moral and right. The problem is that the human moral compass can be reasoned with, bargained with. Someone who (consciously or unconsciously) places themselves at the top of the moral control hierarchy, will and can say that they would never do a certain thing. But then, when the reward for doing a certain thing becomes greater than the shame of doing it, the moral compass begins to be reasoned with. The ego begins to shift more towards the id than the superego. Look at anyone who has murdered someone. You think they generally say to themselves, "you know what I recognize the very real possibility that I could be tempted into taking someones life". **NO!** fuck no they don't. Everyone thinks they won't until they do.
 
 115
->"the [[curse of knowledge]] is our tendency to underestimate how long it will take another person to learn something new or perform a task that we have already master...The curse-of-knowledge effect is close kin to [[hindsight bias]]."
+>"the curse of knowledge is our tendency to underestimate how long it will take another person to learn something new or perform a task that we have already master...The curse-of-knowledge effect is close kin to hindsight bias."
 
 As you become more knowledgeable, teaching becomes harder because you mental models with which you process become more complex and automatic.
-If you've ever had a world renowned expert in their field try to teach you, then you know their expertise does not make them a good teacher. Actually its often times the worst teachers are most knowledgeable about the subject. I find that other students explain concepts much better. Provided that person actually know what they are talking about. Take the [[Feynman Technique]], it asserts that the mark of true understanding is simplicity. But what if your understanding is so great that you no longer understand what simplicity is? A very real problem in education. If you wish to become a great purveyor of information, then this is the ultimate problem to keep in mind.
+If you've ever had a world renowned expert in their field try to teach you, then you know their expertise does not make them a good teacher. Actually its often times the worst teachers are most knowledgeable about the subject. I find that other students explain concepts much better. Provided that person actually know what they are talking about. Take the Feynman Technique, it asserts that the mark of true understanding is simplicity. But what if your understanding is so great that you no longer understand what simplicity is? A very real problem in education. If you wish to become a great purveyor of information, then this is the ultimate problem to keep in mind.
 
 117
->"humans are predisposed to assume that others share their beliefs, a process called the [[false consensus effect]]. "
+>"humans are predisposed to assume that others share their beliefs, a process called the false consensus effect. "
 
 This reminds in [[The Origin of Consciousness in the Breakdown of the Bicameral Mind]], when Jaynes write that humans like to attribute consciousness to pets and animals and things of that sort because thats all we have ever known and all we can ever imagine. Its hard for us to picture just exactly how anyone can arrive at a point that we have known as true forever. 
 
 121
->"[[Dunning-Kruger effect]]...incompetent people overestimate their own competence and, failing to sense a mismatch between their performance and what is desirable, see no need to try to improve."
+>"Dunning-Kruger effect...incompetent people overestimate their own competence and, failing to sense a mismatch between their performance and what is desirable, see no need to try to improve."
 
 Incompetent people do not know just how incompetent they are because they do not know what true competence looks like.
-It sucks because unearned confidence is easy to have and hard to earn, and so we have a world full of people believing they are the shit and failing to not see so. I think that by implementing the feedback part of [[deliberate practice]] into every facet of my life, I can calibrate the yard stick with which I measure my own abilities, ensuring that I leave no confidence unearned from a lack of competence.
+It sucks because unearned confidence is easy to have and hard to earn, and so we have a world full of people believing they are the shit and failing to not see so. I think that by implementing the feedback part of deliberate practice into every facet of my life, I can calibrate the yard stick with which I measure my own abilities, ensuring that I leave no confidence unearned from a lack of competence.
 
 133
 >"rich people were probably no smarter than he was, they just had knowledge he lacked."
@@ -101,7 +95,7 @@ Yes look to successful people to learn how to be successful. Truly successful pe
 Look to happy people to learn how to be happy. Look to smart people to learn how to be smart. That's really all there is to it.
 
 146
->"[[Fluid intelligence]] is the ability to reason, see relationships, think abstractly, and hold information in mind while working on a problem; [[crystallized intelligence]] is one's accumulated knowledge of the world and the procedures or mental models one has developed from past learning and experience."
+>"Fluid intelligence is the ability to reason, see relationships, think abstractly, and hold information in mind while working on a problem; crystallized intelligence is one's accumulated knowledge of the world and the procedures or mental models one has developed from past learning and experience."
 
 I wonder if the world changers of the world, people that were able to see and solve problems in a way that nobody else has even considered, are higher in one over the other. Interesting if science could give an exact answer.
 

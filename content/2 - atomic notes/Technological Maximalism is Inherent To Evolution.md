@@ -16,6 +16,5 @@ History repeats itself. With the uncertainty that is perpetuated by artificial i
 ---
 ## see also:
 
-[[Financial and Technological Leverage]]
 
-The best way to survive technological evolution is to [[Focus on Code Maintainability and Portability]]
+The best way to survive technological evolution is to Focus on Code Maintainability and Portability

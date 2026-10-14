@@ -17,4 +17,3 @@ Even your Obsidian notes follow this principle. Atomic notes that can be reorgan
 ## See also:
 
 The architecture of DOOM source code which allows it to run on anything.
-[[Focus on Code Maintainability and Portability]]

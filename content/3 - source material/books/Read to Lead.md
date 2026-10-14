@@ -30,7 +30,7 @@ Love this line. During crisis, cream rises to the top. The very nature of crisis
 38
 >"cognitive closure is a way of saying that we tend to avoid ambiguity and prefer to make definitive decisions, which can lead to poor decision making"
 
-Kahneman talks about this in ch.7 of [[Thinking, Fast and Slow]], [[system 1]]  jumps to conclusions to fill gaps about ambiguity. System 1, though it jumps to conclusions will never question if its jump is valid because system 1 does not deal with doubt and correctness.
+Kahneman talks about this in ch.7 of [[Thinking, Fast and Slow]], system 1  jumps to conclusions to fill gaps about ambiguity. System 1, though it jumps to conclusions will never question if its jump is valid because system 1 does not deal with doubt and correctness.
 
 53
 >"If you were the average English speaking person living in the seventeenth century, and you picked up today's edition of the *New York Times*, you would read more information in one issue than you would come across in your lifetime."
@@ -50,7 +50,7 @@ Yes obviously smart people read books, but its more than that. Smart people are 
 93
 >"Employ your time in improving yourself by other men's writings so that you shall come easily by what others have labored hard for" - Socrates
 
-Human advancement looks like this. exploring the frontier -> explorers of the frontier pass on knowledge-> settling the frontier -> -> frontier moves forward -> old frontier becomes intermediate topic -> repeat into eternity ([[settling the frontier and human advancement]]). So if humankind advancement looks like that, why cant the individual man replicate the same process within himself? Let the experts tell you what they discovered on the frontier, so that you don't waste time charting already known territory, you can keep pushing on, settling new frontiers for yourself. With the experiences of the new frontier in mind, then you can go back and iterate on your old charting of already known territory and see if its still acceptable to you.
+Human advancement looks like this. exploring the frontier -> explorers of the frontier pass on knowledge-> settling the frontier -> -> frontier moves forward -> old frontier becomes intermediate topic -> repeat into eternity. So if humankind advancement looks like that, why cant the individual man replicate the same process within himself? Let the experts tell you what they discovered on the frontier, so that you don't waste time charting already known territory, you can keep pushing on, settling new frontiers for yourself. With the experiences of the new frontier in mind, then you can go back and iterate on your old charting of already known territory and see if its still acceptable to you.
 
 161
 >"We are what we repeatedly do. Excellence then, is not an act, but a habit." - Will Durant

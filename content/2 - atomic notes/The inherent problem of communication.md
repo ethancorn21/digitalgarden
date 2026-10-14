@@ -10,7 +10,3 @@ Thoughts are formless intangible concepts created by unknown mechanisms in the b
 Until a more efficient technology that allows us to bridge the translation layer and keep communication between people as thoughts, we will be stuck with inefficient communication.
 
 ---
-## Reference:
-[[Attempts to Prevent Communication Scramble]]
-[[Remedying the Inherent Problem with Communication]]
-[[Object Oriented Communication In the Future]]

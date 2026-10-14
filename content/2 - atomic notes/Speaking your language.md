@@ -13,6 +13,5 @@ So, the question is, how can I draw out people to speak in the language they *pr
 
 ## Reference
 [[The inherent problem of communication]]
-People will be more open to speak in the language they prefer if you [[Acknowledge People's Ideas]]
+People will be more open to speak in the language they prefer if you Acknowledge People's Ideas
 
-Maybe dumbing things down is good? here is why: [[simple words means intelligent]]

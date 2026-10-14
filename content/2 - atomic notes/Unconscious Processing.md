@@ -20,4 +20,3 @@ The key is to partake in activities that allow your mind to disengage from what'
 [[How To Take Smart Notes]], pg.118
 
 perfect for:
-[[zettelkasten]]

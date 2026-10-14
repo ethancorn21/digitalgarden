@@ -6,4 +6,4 @@ How the notes system for this project will function:
 - the goal is to have notes that connect back to the master note which showcase thinking and system design. 
 - Will be sometimes coherent but probably not
 
-2.17.26 - I implemented environmental variable in which we will store our password and usernames. see: [[(dot)env Library In Python]] and [[(dot)env and (dot)gitignore files]].
+2.17.26 - I implemented environmental variable in which we will store our password and usernames.

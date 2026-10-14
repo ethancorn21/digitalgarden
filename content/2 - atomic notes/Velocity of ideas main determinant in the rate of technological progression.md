@@ -15,4 +15,3 @@ Look at the business model of LLM companies. They allow free tiers, which allow 
 
 Similar idea but with communication : [[Communication networks as the foundation for proliferation of ideas]]
 
-Aristotle's golden mean : [[Aristotle's Golden Mean]]

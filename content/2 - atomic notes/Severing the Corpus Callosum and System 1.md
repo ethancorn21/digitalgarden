@@ -11,8 +11,6 @@ Takeaway : We strive for understanding rather than truth in understanding
 
 ---
 #### Reference
-[[Split Brain Experiment]]
 [[1 - rough notes/Consciousness as a Narrative Interface]]
-[[Free Will Thought Experiment]]
 
-### *MERGE WITH [[Split Brain Experiment]]*
+### *MERGE WITH Split Brain Experiment*

@@ -6,7 +6,4 @@ If all we have in life stems from energy directed at something over time. Then y
 
 ---
 ## see also:
-[[All You Have In Life is Time and Energy]]
-[[Actuate Potential Energy]]
-[[flow state]] and [[2 - atomic notes/deep work|deep work]]
 [[simplify]]

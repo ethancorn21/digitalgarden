@@ -12,7 +12,5 @@ Mastery is effortless efficiency. It sounds simple when distilled down. But, ima
 Mastery is achieved through obsession over years. The majority of people will live their lives not mastering a single thing. Mastery takes grit to persevere the unenjoyable for years, to arrive at the paradise of being informed. A perspective that nobody else quite sees or understands. 
 To master something, you have to be a little insane and strictly disciplined.
 ## Reference
-[[life long learner]]
-[[obsession = consistent effort]]
 
-Achieved through the [[10,000 hour rule]], [[corrective feedback]], and [[deliberate practice]]
+Achieved through the [[10,000 hour rule]], corrective feedback, and deliberate practice

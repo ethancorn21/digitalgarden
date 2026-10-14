@@ -16,8 +16,4 @@ In your research of deathbed confessions and regrets, has anyone ever said that 
 Family, friends, loved ones, community. How much of what you do is in pursuit of those predisposed goals set by your ancestors survival? Is it realistic or even necessary to try and push back against it?
 
 ---
-## see also:
 
-[[Lonely Apes]]
-[[Social Intelligence Hypothesis]]
-[[The Human Condition is Social Condition]]

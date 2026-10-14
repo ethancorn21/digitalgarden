@@ -30,18 +30,14 @@ determined by Comparative advantage and opportunity cost which equal a mutually 
 5) Quick Comparative advantage
 	- For Output questions:
 		-cross multiple produced goods
-		-higher one has the comparative advantage.![[Screenshot 2025-10-16 at 9.53.14 PM.png]]
+		-higher one has the comparative advantage.
 		- US has comparative advantage in cars, China in planes
 	- For Input Questions
-		- Flip it around, lower number wins![[Screenshot 2025-10-16 at 9.54.49 PM.png]]
+		- Flip it around, lower number wins
 ### quiz
-![[Screenshot 2025-10-16 at 9.29.49 PM.png|200]]
 D
-![[Screenshot 2025-10-16 at 9.18.12 PM.png|200]]
 D
-![[Screenshot 2025-10-16 at 9.18.33 PM.png|200]]
 B
-![[Screenshot 2025-10-16 at 9.18.51 PM.png|200]]
 D
 
 [[macroeconomics]]

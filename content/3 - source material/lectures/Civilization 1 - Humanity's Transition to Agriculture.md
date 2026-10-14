@@ -33,7 +33,7 @@ Humans, animals, trees all seen as equal back then. Pillars of Gobekli Tepe seen
 
 ### Jericho:
 Built by hunter gatherers who were sedentary. Meaning they moved around, but still stayed in the same area. They had domesticated crops, but chose to not do agriculture at scale.
-Cult of the Skull - worshipped ancestors. Took skulls, kept in houses, worshipped it. [[ancestor worship]].  Dead ancestor = connection to spirit world. Their method of scientific discovery. Their understanding of the world, beliefs, intelligence just as sophisticated as us today.
+Cult of the Skull - worshipped ancestors. Took skulls, kept in houses, worshipped it. ancestor worship.  Dead ancestor = connection to spirit world. Their method of scientific discovery. Their understanding of the world, beliefs, intelligence just as sophisticated as us today.
 Tower of Jericho - religious structure, that covered the village in darkness at specific time of the year. Making village dark = collapsing space between village and space, 'the outer world'. By making village dark it was like magic, if can perform magic, religion = correct.
 
 ### Catal Huyuk: 

@@ -12,7 +12,7 @@ Life comes from the womb. Birth as an act of higher power. Death is put back int
 
 Cave is a portal to another world. Animals eaten, souls sent to spirt world. Need to summon back animal souls. So, paint animals on walls of cave. Cave = womb. So, rebirth of animal soul. Cycles. Each animal and person has a part to play. We eat animals to maintain the cycle. Same with life and death. We play our parts. 
 
-[[animism]] - all things has a life essence, a soul. we all come from one source of life. The soul is permanent, it can't be destroyed, as such death is no big deal. Often includes a  spirit world. There is an order to the universe, we have a part to play to maintain the harmony of the universe. 
+animism - all things has a life essence, a soul. we all come from one source of life. The soul is permanent, it can't be destroyed, as such death is no big deal. Often includes a  spirit world. There is an order to the universe, we have a part to play to maintain the harmony of the universe.
 First religions.
 
 ---

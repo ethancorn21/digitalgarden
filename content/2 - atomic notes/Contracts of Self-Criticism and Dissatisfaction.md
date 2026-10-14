@@ -28,8 +28,5 @@ Perhaps the most destructive contracts are those that combine the two. The desir
 We agree to the conditions of our self-contracts, only aware of the potential gain, but blissfully unaware of pieces of ourselves we are losing.
 
 ---
-## see also:
 
-Our self contracts are never ending. A constant state of perpetual desire that consumes us and never allows us to be happy: [[Ever Moving Goal Post Of Satisfaction]]
 
-My self-contracts are almost always born from emotional turmoil: [[Sublimation and Compensatory Controls]]

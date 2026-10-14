@@ -13,7 +13,4 @@ So then are we just reactive beings, locked into how we will act because the pas
 
 ---
 #### Reference
-[[Free Will Thought Experiment]]
-[[Free Will as the Unfolding of Causal Links]]
-[[Causal Closure of the Physical]]
 Perhaps we don't notice our absence of free will because : [[Consciousness as a Narrative Interface]]

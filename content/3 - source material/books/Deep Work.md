@@ -2,10 +2,6 @@ author: Cal Newport
 start: 2025-08-24
 finish: 2025-09-10
 
-### Key Takeaways:
-[[The Deep Work Hypothesis]]
-[[2 - atomic notes/deep work|deep work]]
-[[deliberate practice]]
 ### Summary:
 We live in an information economy. That means specialized knowledge is needed to ensure our world runs. Yet, at the same time, because of a number of factors: social media, interconnectedness, and distraction, people who can learn and produce specialized things are becoming increasingly rare. So, as specialized knowledge is becoming needed, the people who can do these things are becoming rarer, meaning that those that can learn and apply specialized knowledge are the winners of the new economy. To become one of the rare individuals who is a winner in todays economy, it requires intense, undistracted focus on a specific skill. Deep work is essentially a framework for accomplishing this state of focus.
 
@@ -14,7 +10,7 @@ We live in an information economy. That means specialized knowledge is needed to
 3
 >"deep work: professional activities performed in a state of distraction-free concentration that push your cognitive capabilities to their limit. These efforts create new value, improve your skill, and are hard to replicate."
 
-The keywords are "push your cognitive capabilities to their limit". Every [[2 - atomic notes/deep work|deep work]] session is a workout for your attention and ability to concentrate, which will only hypertrophy ever more as you continually reach your limit.
+The keywords are "push your cognitive capabilities to their limit". Every deep work session is a workout for your attention and ability to concentrate, which will only hypertrophy ever more as you continually reach your limit.
 
 >"Jung built a tower out of stone in the woods to promote deep work in his professional life"
 
@@ -38,7 +34,7 @@ Not only to quickly learn complicated things, but to be able to recall and apply
 14
 >"The Deep Work Hypothesis: The ability to perform deep work is becoming increasingly *rare* at exactly the same time is is becoming increasingly *valuable* in our economy. As a consequence, the few who cultivate this skill, and then make it the core of their working life will thrive."
 
-You know, since the time I read this book and kept [[The Deep Work Hypothesis]] in the back of my mind, I have become exponentially more valuable from not only a professional standpoint, but a personal one as well. Deep work, to me, goes beyond just "work hard durrr", its a philosophy of life: to sit down and think about what you are doing. To stop the reactive lifestyle that so many of us live and to be deliberate in where we choose to place our energy. 
+You know, since the time I read this book and kept The Deep Work Hypothesis in the back of my mind, I have become exponentially more valuable from not only a professional standpoint, but a personal one as well. Deep work, to me, goes beyond just "work hard durrr", its a philosophy of life: to sit down and think about what you are doing. To stop the reactive lifestyle that so many of us live and to be deliberate in where we choose to place our energy.
 
 25
 >"One the talent market is made universally accessible, those at the peak of the market thrive while the rest suffer"
@@ -57,7 +53,7 @@ yeah this is definitely something that is inherent to masters. By mastering some
 35
 >"What deliberate practice actually requires...(1) your attention is focused tightly on a specific skill you're trying to improve or an idea you're trying to master; (2) you receive feedback so you can correct your approach to keep your attention exactly where it's most productive"
 
-It's interesting that Newport utilizes so many effective learning techniques, whether he learned it from someone else or his own experimentation, many of the things he talks about are also talked about it [[Make it Stick]]. For example, the [[corrective feedback]] method, which acts as a course corrective measure. It forces you to acknowledge, "ok am I doing things the right way, the most efficient way". Its easy with school, because everything is graded but in the real world, the only one to grade you is you and your boss, and they are not going to tell you "oh wow, good job buddy, you want a cookie, yeah you would like that wouldn't you little guy".  No, its expected of you to do a good job, to rise to meet the occasion. So what ways can you implement feedback into your own life independent of the strict grading of school? I think I can use goals (things that need to get down now or eventually), self quizzing (pausing to ask myself: what did I just read, what are they trying to say), and growth in all aspects of my being (personally, professionally, emotionally, physically, financially, etc.) as an indicator of effective actions.
+It's interesting that Newport utilizes so many effective learning techniques, whether he learned it from someone else or his own experimentation, many of the things he talks about are also talked about it [[Make it Stick]]. For example, the corrective feedback method, which acts as a course corrective measure. It forces you to acknowledge, "ok am I doing things the right way, the most efficient way". Its easy with school, because everything is graded but in the real world, the only one to grade you is you and your boss, and they are not going to tell you "oh wow, good job buddy, you want a cookie, yeah you would like that wouldn't you little guy".  No, its expected of you to do a good job, to rise to meet the occasion. So what ways can you implement feedback into your own life independent of the strict grading of school? I think I can use goals (things that need to get down now or eventually), self quizzing (pausing to ask myself: what did I just read, what are they trying to say), and growth in all aspects of my being (personally, professionally, emotionally, physically, financially, etc.) as an indicator of effective actions.
 
 67
 >"We were, he noted, no longer discussing the trade-offs surround new technologies, balancing the new efficiencies against the new problems introduced. If it's high-tech, we began to instead assume, then it's good. Case close. He called such a culture a *[[technopoly]]*"

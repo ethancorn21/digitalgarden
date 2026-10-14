@@ -25,9 +25,7 @@ All of this is to say, use Claude Code or any LLM in the CLI. Get good with it. 
 ---
 ## see also:
 
-A greater understanding of the limitations of LLM in human adapted daily work allows us to better understand AI : [[Roadblocks For Mechanistic Consciousness]]
 
 Great use case of AI. Explaining newly encountered complex systems, like a new codebase for example [[Complex Systems Needs to Be Designed For the Lowest Base Denominator]]
 
-Building and refining architecture skills before age of agents : [[Moving Away From Execution-centric Organization In the Age of AI]]
 

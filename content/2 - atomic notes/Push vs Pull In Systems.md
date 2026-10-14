@@ -15,9 +15,6 @@ JIT uses a pull rather than a forceful push. Helps make what is needed only when
 ---
 ## see also:
 
-[[Why JIT is Faster Than Traditional Manufacturing]]
-[[Kanban]]
 
-Trees are capable of achieving something that is impossible for humans to do with our current capabilities with a pull system: [[Capillary Action in Trees]]
 
 Taichii Ohno - [[Fathers of Quality Management]]

@@ -11,8 +11,7 @@ Where else in history have we attributed consciousness to something? How did it 
 
 ---
 #### Reference
-Attribution of consciousness idea from [[The Origin of Consciousness in the Breakdown of the Bicameral Mind]]. [[false consensus effect]]
+Attribution of consciousness idea from [[The Origin of Consciousness in the Breakdown of the Bicameral Mind]].
 
-While not consciousness, [[animism]] is similar. Attributing spirit to everything.
+While not consciousness, animism is similar. Attributing spirit to everything.
 
-[[Attribution of Consciousness and The False Consensus Effect]]

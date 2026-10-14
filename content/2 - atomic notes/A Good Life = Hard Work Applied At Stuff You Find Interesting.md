@@ -22,10 +22,6 @@ Doing the hard thing, allowing yourself to focus solely on your goal, allows you
 
 In [[3 - source material/books/Deep Work|Deep Work]], Newport mentions a study that people who experience flow state regularly report higher life satisfactions.
 
-Aligns with idea that satisfaction is more permanent than happiness: [[Ever Moving Goal Post Of Satisfaction]]
 
-more on the heroes journey that you will face: [[Valley of Despair and the Heroes Journey]]
 
-[[Common Themes of Self Actualization]]
 
-[[Hedonic Pleasure Treadmill]]

@@ -25,7 +25,7 @@ product line breadth - number of different product lines a company creates
 
 too much product breadth = [[cannibalize]]
 
-[[brand equity]] - how valuable a brand is
+brand equity - how valuable a brand is
 made up of:
 1) brand awareness
 2) perceived value

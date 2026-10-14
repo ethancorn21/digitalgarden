@@ -16,5 +16,3 @@ So then, as a natural next step, will we, as language evolves, move towards a la
 
 More on speed of idea proliferation: [[Velocity of ideas main determinant in the rate of technological progression]]
 
-[[All Communication is Strategy]]
-[[Object Oriented Communication In the Future]]

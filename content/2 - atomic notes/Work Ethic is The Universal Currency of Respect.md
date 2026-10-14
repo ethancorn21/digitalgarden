@@ -17,5 +17,4 @@ The ability to work hard and complete difficult tasks will always be respected. 
 Sourced from:
 [[Advice for 20 year olds - Alex Hormozi]]
 
-More work = more [[shots on target]]
-[[Your work volume has to be insane]]
+More work = more shots on target

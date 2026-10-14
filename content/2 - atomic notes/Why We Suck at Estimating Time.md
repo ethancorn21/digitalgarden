@@ -24,4 +24,3 @@ When you are given or are giving a time estimation, take your initial time and d
 
 Sourced from [[Thinking, Fast and Slow]]
 
-[[We Suck At Estimating Time and Effort]]

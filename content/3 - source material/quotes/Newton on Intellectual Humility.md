@@ -13,7 +13,4 @@ Intellectual humility. One of the greatest minds that has ever existed, which mi
 How easy would it have been for Newton to say, "suck deez, I'm the best, the rest of you are simpletons". I mean, did he probably say this in his head? Of course, but outwardly to the world, he projected humility and that is how he will be known for millennia.
 
 ---
-## see also:
 
-[[Reaffirm Intellectual Ego]]
-[[Do Not Hurt Peoples Intellectual Ego]]

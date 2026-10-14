@@ -15,7 +15,6 @@ The mind will expand and from that new expanse will come even more expansion if 
 ---
 ## see also:
 
-similar to a [[Hermeneutic|hermeneutic loop]].
-dilation comes from [[Plagued By Curiosity|curiosity]]
+similar to a hermeneutic loop.
+dilation comes from curiosity
 
-Expanding past the shackled state of the mind's potential: [[Limit of Knowledge Is The Limit of Potential]]

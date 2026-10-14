@@ -26,7 +26,7 @@ Its hard to focus on one thing. How skilled you are = how valuable you are.
 If the facts about you are not compelling, change the facts. Become a new truth.
 You will be rewarded for determination, determination > intelligence
 
-reminds me of [[deliberate practice]].
+reminds me of deliberate practice.
 ## - Stop networking
 ### focus on the work, networking is a secondary
 beginning is the exploration phase, than the exploitation phase comes later. Exploration phase involves finding what you are good at, what you are naturally better at. Then exploitation is the cutting of fat and hard focusing on your specialization. Taste then exploit.
@@ -76,7 +76,7 @@ Learn to be obsessive. To be extraordinary, you have to be extraordinary.
 
 ## - Obsession is the price of entry
 ### consistent effort is the bare minimum
-[[obsession = consistent effort]]. Most people will go through their lives never truly trying.
+obsession = consistent effort. Most people will go through their lives never truly trying.
 
 Typical hobbies are for typical people. Don't worry about doing what typically considered fun.
 
@@ -91,13 +91,12 @@ Obsessed people don't think themselves obsessed. They see everyone else as plain
 ## - Accept boredom
 ### the path to the top is lonely, boring, and painful
 To achieve something you have to accept boredom or pain. The bigger the goal the more of both. Consistency never looks impressive in the moment, only in the end.
-It's very hard to lose if you show up everyday. ([[The Law of Accumulation]])
+It's very hard to lose if you show up everyday.
 
 ## - Accept sacrifice
 ### What are you willing to give up in pursuit of your goal?
 What are the things you currently have that you are willing to trade for what you want?
 over lived / under skilled 30 year old or under lived / over skilled 30 year old? Your choice, what do you want to be?
-[[All You Have In Life is Time and Energy|Everything you spend your time on rather than working on your goal, you are deeming more important than your goal.]]
 In a year, are you even going to remember what you are wasting your time on? We have plenty of time, we just waste the time we have.
 
 ## - Final Remarks, key takeaway

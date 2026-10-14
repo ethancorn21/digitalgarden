@@ -21,4 +21,3 @@ source:
 touched upon in :
 [[Read to Lead]]
 minimize by being a :
-[[life long learner]]

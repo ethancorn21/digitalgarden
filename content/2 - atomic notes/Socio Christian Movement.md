@@ -24,4 +24,3 @@ The dangers of not having a high order moral framework: [[On making ourselves th
 
 What causes movements to become dangerously zealous over time:[[Purity Spiral]]
 
-[[Degradation of Religious Institutions]]

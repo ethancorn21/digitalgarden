@@ -20,8 +20,5 @@ The only solution based counterpoint I have heard for this perspective involves 
 Balancing purity spirals and moral hedonism is tricky. Solution?
 
 ---
-## Reference
 
-We will trade away abstract concepts in exchange for a perceived concrete absolute : [[Autonomy and Security]]
 
-Your animal nature and the fight to wrest control of it : [[Man, The Thinking Animal]]

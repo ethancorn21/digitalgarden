@@ -8,7 +8,7 @@ the recalling of learned information over an increasing interval of time that is
 
 When consolidating information into long term memory, memory traces (your brain's way of seeing new information) are strengthened. Your brain finds a space for the new memory and connects it with other memories. Spaced repetition forces you to repeat memory consolidation, making durable long lasting knowledge that can be easily recalled.
 
-information becomes exponentially harder to recall over time (see [[forgetting curve]]). But if information is recalled right before the point of forgetting (when it feels rusty), the retrievability of the memory becomes stronger.
+information becomes exponentially harder to recall over time. But if information is recalled right before the point of forgetting (when it feels rusty), the retrievability of the memory becomes stronger.
 
 It helps to think of spaced repetition as a ladder made up of time. Every time information is successfully recalled, the information moves up a rung and the interval with which it will be recalled is increased. If the information is not successfully recalled, it falls down the ladder to very bottom, starting over again.
 Space Repetition Software (SRS) exists online, I personally use Anki.
@@ -24,7 +24,6 @@ can be paired with:
 
 helpful for:
 [[process]]
-[[deliberate practice]]
 [[mastery]]
 
 

@@ -72,4 +72,3 @@ Multiple segmentation methods:
 	- benefits, lifestyle
 
 
-[[STP in relation to Charlie Munger's Investment Philosophy]]

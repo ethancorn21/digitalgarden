@@ -14,7 +14,4 @@ Stone mason work with massive blocks of dense stone to fulfill grand architectur
 Our thoughts should be building our brain to an ideal that we strive toward. Constant implementation of a self referential loop that continually actualizes latent potential into momentum towards a higher state of being.
 
 ---
-## Reference
 
-[[Actuate Potential Energy]]
-[[Hermeneutic]]

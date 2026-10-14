@@ -17,7 +17,5 @@ tags: [[thinking traps]], [[mindful consumption]]
 #### Reference
 [[The Defining Decade]], pg.43
 
-[[Ever Moving Goal Post Of Satisfaction]]
-[[Hedonic Pleasure Treadmill]]
 
 bad at estimation example: [[Why We Suck at Estimating Time]]

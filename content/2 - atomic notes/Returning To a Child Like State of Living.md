@@ -17,7 +17,6 @@ You must purposefully allow yourself to maintain and cultivate your inner child.
 ---
 ## see also:
 
-Importance of new purposeful and impactful stimulus : [[New Experiences Make Life Feel Longer]]
 
 Part of achieving [[mastery]] in anything, is retaining that pressure to perform which is there when you are new to anything. That pressure keeps your mind open to new possibilities and ways of doing things. A childlike curiosity enables us to resist ruts and rhythms.
 

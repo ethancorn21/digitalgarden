@@ -1,11 +1,9 @@
 Law of Demand - inverse relationship between price and quantity demanded
 Substitution effect - When price for product goes down or up, people will move toward or away from product
 
-[[income effect]]:
 Lower price = will buy more than before
 Higher price = will buy less than before
 
-[[Law of diminishing marginal utility]]
  can be thought of as a law of decreasing additional satisfaction
 as you consume more of a product the satisfaction decreases with each new consumption.
 
