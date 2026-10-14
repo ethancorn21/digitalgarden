@@ -253,6 +253,7 @@ a.wl:hover, a.xl:hover { color: var(--survey); }
   .rd-side { position: static; order: 2; }
 }
 @media (max-width: 819px) {
+  .fig > svg { min-width: 0; } /* phones see the whole block, smaller, instead of a cropped one */
   .plate { padding: 18px 14px 16px; }
   .ph div { font-size: 10.5px; }
   .rbody { font-size: 18px; }
