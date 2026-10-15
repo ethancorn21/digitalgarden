@@ -12,7 +12,7 @@ npx tsx strata/build.ts . --out /tmp/site --date 2026-11-01   # elsewhere, or as
 npx wrangler dev                   # serve public/ locally with the real Workers asset rules
 ```
 
-In the pipeline, `scripts/lib/03-build.sh` runs it when `SITE_ENGINE=strata`. The default is still `quartz`.
+In the pipeline, `scripts/lib/03-build.sh` runs it by default. `SITE_ENGINE=quartz` builds the old Quartz site instead (rollback).
 
 ## What it reads
 

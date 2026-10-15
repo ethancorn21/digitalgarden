@@ -1,5 +1,5 @@
 #!/bin/bash
-# 03-build.sh — build Quartz static site
+# 03-build.sh — build the static site
 # Standalone: scripts/lib/03-build.sh [REPO_DIR]
 
 set -o pipefail
@@ -9,9 +9,9 @@ REPO_DIR="${1:-$(cd "$(dirname "$0")/../.." && pwd)}"
 
 log() { echo "[$(date +'%Y-%m-%d %H:%M:%S')] $*"; }
 
-# SITE_ENGINE picks the generator: quartz (default) or strata (strata/build.ts, the block-diagram site).
+# SITE_ENGINE picks the generator: strata (default; strata/build.ts, the block-diagram site) or quartz.
 # Both write public/, which 04-deploy.sh ships unchanged.
-SITE_ENGINE="${SITE_ENGINE:-quartz}"
+SITE_ENGINE="${SITE_ENGINE:-strata}"
 
 log "Building site ($SITE_ENGINE)"
 cd "$REPO_DIR" || exit 1
