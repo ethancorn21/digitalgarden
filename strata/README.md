@@ -20,8 +20,8 @@ In the pipeline, `scripts/lib/03-build.sh` runs it when `SITE_ENGINE=strata`. Th
 links to unpublished notes are already scrubbed. Status is read with the gate's own `statusOf`. Images embedded
 with `![[file]]` (Excalidraw embeds resolve to their exported `.svg`) are copied to `public/att/`.
 
-- **Levels:** one per month from the first dated note to the build month. Empty months still get a thin level,
-  so a new level appears each month with no code change. Undated notes form the basement.
+- **Levels:** one per month that has at least one dated note; months with none get no level. Undated notes form
+  the basement. The month is named on the level's tick label at the right, not on the slab.
 - **Tints:** `strata/topics.json`. A note takes the least common principal tag it carries.
 - **Relief:** a note stands off its level by its link count (open view).
 - **Addresses:** notes are `/#note-<slug>`, with Quartz's slug. `_redirects` sends old Quartz note URLs to

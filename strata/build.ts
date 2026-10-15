@@ -124,19 +124,10 @@ const dated = parsed
   .map((p) => p.date)
   .filter((d): d is string => !!d)
   .sort()
-const firstMonth = (dated[0] ?? built).slice(0, 7)
-const lastMonth = [built.slice(0, 7), (dated.at(-1) ?? built).slice(0, 7)].sort().at(-1)!
-const months: string[] = []
-for (let [y, m] = firstMonth.split("-").map(Number); ; ) {
-  const key = `${y}-${String(m).padStart(2, "0")}`
-  months.push(key)
-  if (key >= lastMonth) break
-  m++
-  if (m > 12) {
-    m = 1
-    y++
-  }
-}
+// one level per month that has notes; months with none get no level. With no dated notes, the build month
+// stands in so the block still has a level above the basement.
+const months: string[] = [...new Set(dated.map((d) => d.slice(0, 7)))]
+if (!months.length) months.push(built.slice(0, 7))
 
 // ---------- topics ----------
 

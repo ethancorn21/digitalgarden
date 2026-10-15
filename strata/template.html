@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap">
 <style>
 html{box-sizing:border-box}img{max-width:100%}[hidden]{display:none!important}
-/* Layout: two survey plates on a desk, built to the USGS Block Diagram language. Plate 1 is a stepped block, one level per month of writing, with an EXPLANATION column on the right. Plate 2 is one note with a cross section of its links. Cream paper only, by design. */
+/* Layout: two survey plates on a desk, built to the USGS Block Diagram language. Plate 1 is a stepped block, one level per month of writing, with a KEY column on the right. Plate 2 is one note with a cross section of its links. Cream paper only, by design. */
 :root {
   --bd-paper: #F8EAD2;
   --bd-paper-2: #E8DCB8;
@@ -64,9 +64,6 @@ a { color: inherit; }
   border: 1px solid var(--bd-ink);
   box-shadow: 4px 6px 0 rgba(46, 36, 29, .22);
 }
-.ph { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 14px; }
-.ph div { font: 400 12.5px/1.5 var(--bd-title); letter-spacing: .1em; text-transform: uppercase; text-align: center; }
-.ph .ph-r { font-weight: 700; }
 
 .h4 { margin: 0 0 8px; font: 600 12px/1.2 var(--bd-label); letter-spacing: .18em; text-transform: uppercase; }
 .cap {
@@ -108,12 +105,11 @@ svg .tile, svg circle.dot { fill: var(--c); }
 .sa { stroke-width: 1.3; }
 .sb { stroke-width: .85; stroke-dasharray: 2.2 1.4; }
 .su { stroke-width: .45; stroke-opacity: .55; }
-.tile:hover { stroke: var(--accent); stroke-width: 1.9; stroke-dasharray: none; stroke-opacity: 1; }
+.tile:hover, .tile.hl { stroke: var(--accent); stroke-width: 1.9; stroke-dasharray: none; stroke-opacity: 1; }
 .tile.dim { opacity: .14; }
 .has-fx [data-l]:not(.fx) { opacity: .5; }
 .has-fx .tile.dim:not(.fx) { opacity: .1; }
 [data-l], .co { transition: opacity .15s ease; }
-.lvl { font-weight: 600; font-size: 8px; letter-spacing: .12em; pointer-events: none; }
 .lvn { font-weight: 500; font-size: 7.6px; letter-spacing: .12em; pointer-events: none; }
 .code { font-weight: 700; font-size: 7.2px; letter-spacing: .02em; pointer-events: none; paint-order: stroke; stroke: var(--bd-paper); stroke-width: 2px; stroke-linejoin: round; }
 .hubl { font-weight: 700; font-size: 8.6px; letter-spacing: .04em; paint-order: stroke; stroke: var(--bd-paper); stroke-width: 2.6px; stroke-linejoin: round; pointer-events: none; }
@@ -135,7 +131,7 @@ svg .tile, svg circle.dot { fill: var(--c); }
 .lh { font-weight: 600; font-size: 10.5px; letter-spacing: .18em; }
 .empty { font: italic 12.5px var(--bd-title); fill: var(--bd-ink-2); }
 
-/* EXPLANATION legend */
+/* KEY legend */
 .expl { min-width: 0; }
 .expl h3 { margin: 0 0 12px; text-align: center; font: 400 15px/1.2 var(--bd-title); letter-spacing: .2em; }
 .grp { display: grid; grid-template-columns: minmax(0, 1fr) 20px; gap: 0 8px; margin-bottom: 9px; }
@@ -157,7 +153,7 @@ svg .tile, svg circle.dot { fill: var(--c); }
 .sw svg { display: block; width: 100%; height: 100%; }
 .nm { font: 400 13px/1.25 var(--bd-title); min-width: 0; }
 .nm b { display: block; font-weight: 700; }
-.nm em { display: block; font-style: italic; font-size: 12px; color: var(--bd-ink-2); line-height: 1.3; }
+.nm em { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; font-style: italic; font-size: 12px; color: var(--bd-ink-2); line-height: 1.3; }
 .ct { font: 600 12.5px var(--bd-label); font-variant-numeric: tabular-nums; }
 .sep { border-top: 1px solid var(--bd-ink); margin: 12px 0 10px; }
 .sw.dash { border-style: dashed; background: var(--bd-paper); }
@@ -252,10 +248,12 @@ a.wl:hover, a.xl:hover { color: var(--survey); }
   .rd { grid-template-columns: minmax(0, 1fr); }
   .rd-side { position: static; order: 2; }
 }
+@media (min-width: 820px) {
+  .fig > svg { max-height: calc(100vh - 220px); } /* the open stack and its controls fit the window together */
+}
 @media (max-width: 819px) {
   .fig > svg { min-width: 0; } /* phones see the whole block, smaller, instead of a cropped one */
   .plate { padding: 18px 14px 16px; }
-  .ph div { font-size: 10.5px; }
   .rbody { font-size: 18px; }
   .rconn .cols { grid-template-columns: minmax(0, 1fr); }
 }
@@ -267,7 +265,7 @@ a.wl:hover, a.xl:hover { color: var(--survey); }
 .figwrap { min-width: 0; }
 .ctl {
   display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px;
-  padding: 0 0 10px; margin-bottom: 10px; border-bottom: 1px solid var(--bd-ink);
+  padding: 10px 0 0; margin-top: 10px; border-top: 1px solid var(--bd-ink);
 }
 .tbtn {
   font: 600 11.5px/1 var(--bd-label); letter-spacing: .16em; text-transform: uppercase;
@@ -276,12 +274,10 @@ a.wl:hover, a.xl:hover { color: var(--survey); }
 }
 .tbtn:hover { background: var(--bd-ink); color: var(--bd-paper); }
 .tbtn[aria-pressed="true"] { background: var(--bd-ink); color: var(--bd-paper); }
+.tbtn:disabled, .tbtn:disabled:hover { background: transparent; color: var(--bd-ink-2); border-style: dashed; opacity: .45; cursor: default; }
 .rng { display: flex; align-items: center; gap: 8px; font: 500 10.5px/1 var(--bd-label); letter-spacing: .14em; text-transform: uppercase; color: var(--bd-ink-2); }
 .rng input { width: 150px; accent-color: var(--bd-ink); }
-.ctl .hint { margin-left: auto; font: italic 12.5px/1.3 var(--bd-title); color: var(--bd-ink-2); }
 
-#trace-strip { min-height: 64px; margin-bottom: 8px; }
-.tr-rest { margin: 0; font: italic 13px/1.5 var(--bd-title); color: var(--bd-ink-2); max-width: 62ch; }
 .tr-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
 .tr-head .eyebrow { margin: 0; color: var(--survey); }
 .tr-t { font: 700 15px/1.25 var(--bd-title); letter-spacing: .04em; text-decoration: none; text-transform: uppercase; min-width: 0; }
@@ -363,11 +359,20 @@ svg.tracing .hub { opacity: .35; }
 .pv .list button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 .pv .lone { margin: 0; font: italic 13px/1.5 var(--bd-title); color: var(--bd-ink-2); }
 
-/* phone: the open block zooms onto one level; this bar steps through them */
-.lvnav { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; }
-.lvnav[hidden] { display: none; }
-.lvnav .tbtn { min-height: 44px; padding: 0 12px; flex: none; }
-.lvnav .lvname { flex: 1; min-width: 0; text-align: center; font: 600 12px/1.2 var(--bd-label); letter-spacing: .16em; text-transform: uppercase; }
+/* phone: the open block zooms onto one level. The drawing itself is the control: drag up or down
+   to move through the months, pinch in for the whole stack. The rail is the borehole log beside it */
+svg.cam { touch-action: none; }
+.lvtag { position: absolute; left: 0; top: 4px; z-index: 3; pointer-events: none; font: 700 13px/1.2 var(--bd-label); letter-spacing: .16em; text-transform: uppercase; }
+.lvtag small { display: block; margin-top: 3px; font: 500 10px/1.2 var(--bd-label); letter-spacing: .14em; color: var(--bd-ink-2); }
+.lvtag[hidden], .rail[hidden] { display: none; }
+.rail { position: absolute; right: 0; top: 0; z-index: 3; display: flex; flex-direction: column; width: 40px;
+  background: var(--bd-paper); border-left: 1.5px solid var(--bd-ink); }
+.rail button { all: unset; box-sizing: border-box; flex: 1 1 0; min-height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer;
+  font: 600 10px/1 var(--bd-label); letter-spacing: .08em; text-transform: uppercase; color: var(--bd-ink-2); border-bottom: 1px dotted var(--bd-ink-2); }
+.rail button:last-child { border-bottom: 0; }
+.rail button:disabled { color: color-mix(in srgb, var(--bd-ink-2) 40%, transparent); cursor: default; }
+.rail button[aria-current="true"] { background: var(--bd-ink); color: var(--bd-paper); }
+.rail button.all { border-bottom: 1.5px solid var(--bd-ink); font-size: 9.5px; }
 
 @media (max-width: 819px) {
   .pv { left: 0; right: 0; bottom: 0; width: auto; max-height: 52vh; border-width: 1.5px 0 0; box-shadow: 0 -3px 0 var(--bd-ink);
@@ -375,18 +380,80 @@ svg.tracing .hub { opacity: .35; }
   @keyframes pvup { from { transform: translateY(100%); } to { transform: none; } }
   body.pv-on { padding-bottom: 52vh; }
 }
+svg.whole .band.pin { stroke: none; }
+/* the open month's notes: numbered like their tiles, so the drawing and the list read together */
+.lvnotes { margin: 12px 0 0; }
+.lvnotes .rh { margin-bottom: 6px; }
+.lvnotes ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--bd-ink); }
+.lvnotes li { border-bottom: 1px dotted var(--bd-ink-2); break-inside: avoid; }
+.lvnotes button { all: unset; box-sizing: border-box; width: 100%; display: grid; grid-template-columns: 24px 12px minmax(0, 1fr) auto 10px; gap: 9px; align-items: center; padding: 7px 2px; font: 400 14px/1.3 var(--bd-title); cursor: pointer; }
+.lvnotes .no { font: 700 11px/18px var(--bd-label); text-align: center; border: 1px solid var(--bd-ink); background: var(--bd-paper); }
+.lvnotes i { width: 12px; height: 12px; border: 1px solid var(--bd-ink); display: block; background: var(--c); }
+.lvnotes small { font: 500 11px var(--bd-label); letter-spacing: .08em; color: var(--bd-ink-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.lvnotes button::after { content: "\203A"; font: 400 18px/1 var(--bd-title); color: var(--bd-ink-2); }
+.lvnotes button:hover span, .lvnotes button:focus-visible span, .lvnotes button.hl span { color: var(--accent); text-decoration: underline; }
+.lvnotes button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.lvnotes button[aria-current="true"] { background: var(--bd-paper-2); }
+.lvnotes button[aria-current="true"] .no { background: var(--bd-ink); color: var(--bd-paper); }
+.lvnotes .none { margin: 0; padding: 8px 2px; font: italic 13px/1.5 var(--bd-title); color: var(--bd-ink-2); }
+@media (min-width: 820px) { .lvnotes ol { columns: 2; column-gap: 28px; } }
+.num { font-weight: 700; font-size: 10px; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: var(--bd-paper); stroke-width: 2.6px; stroke-linejoin: round; }
+/* phone: the open month's notes as labels on the drawing, over a deck of cards, one per note */
+.deck { margin: 12px -14px 0; }
+.deck-row { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 2px 14px 14px; scroll-padding-inline: 14px; scrollbar-width: none; overscroll-behavior-x: contain; }
+.deck-row::-webkit-scrollbar { display: none; }
+.card { flex: 0 0 84%; scroll-snap-align: start; display: flex; flex-direction: column; gap: 8px; min-height: 260px;
+  background: var(--bd-paper); border: 1.5px solid var(--bd-ink); box-shadow: 4px 4px 0 var(--bd-ink); padding: 14px 16px 16px; }
+.card .ey { display: flex; align-items: center; gap: 8px; font: 600 10.5px/1.2 var(--bd-label); letter-spacing: .14em; text-transform: uppercase; color: var(--bd-ink-2); }
+.card .ey i { width: 14px; height: 14px; border: 1px solid var(--bd-ink); background: var(--c); flex: none; }
+.card h3 { margin: 0; font: 700 19px/1.25 var(--bd-title); letter-spacing: .01em; }
+.card p { margin: 0; font: 400 14.5px/1.5 var(--bd-title); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 5; overflow: hidden; }
+.card p.none { font-style: italic; color: var(--bd-ink-2); }
+.card .ey b { margin-left: auto; color: var(--bd-ink); font-variant-numeric: tabular-nums; }
+.card .lk { margin-top: auto; display: flex; flex-wrap: wrap; gap: 6px; }
+.card .lk button { all: unset; cursor: pointer; font: 500 11.5px/1.2 var(--bd-label); letter-spacing: .04em; border-bottom: 1.5px solid var(--survey); padding: 3px 0; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.card p + .go { margin-top: auto; }
+.card .go { display: block; text-align: center; text-decoration: none; padding: 12px 10px 11px; font: 600 12px/1 var(--bd-label); letter-spacing: .18em; text-transform: uppercase; background: var(--bd-ink); color: var(--bd-paper); }
+.fig { position: relative; }
+.callouts { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; padding: 2px 0 4px; position: relative; z-index: 1; }
+.callouts ol { list-style: none; margin: 0; padding: 0; display: grid; align-content: start; }
+.callouts .cl { padding-left: 26px; } .callouts .cr { padding-right: 26px; }
+.callouts .cr button { text-align: right; }
+.callouts button { all: unset; box-sizing: border-box; width: 100%; cursor: pointer; display: block; padding: 6px 0; font: 400 13px/1.25 var(--bd-title); }
+.callouts button span { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.callouts button i { display: inline-block; width: 8px; height: 8px; border: 1px solid var(--bd-ink); background: var(--c); margin-right: 5px; vertical-align: 1px; }
+.callouts button[aria-current="true"] { font-weight: 700; }
+/* leaders: ink, not red, so they never read as links; the live one is heavier and haloed in paper to stay legible over the tiles */
+.leaders { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; z-index: 4; }
+.leaders path { fill: none; stroke: var(--bd-ink-2); stroke-width: .7; stroke-dasharray: 2 2.5; opacity: .7; }
+.leaders circle { fill: var(--bd-ink-2); opacity: .7; }
+.leaders path.halo { stroke: var(--bd-paper); stroke-width: 5; stroke-dasharray: none; opacity: .9; stroke-linejoin: round; }
+.leaders path.hl { stroke: var(--bd-ink); stroke-width: 1.8; stroke-dasharray: none; opacity: 1; stroke-linejoin: round; }
+.leaders circle.hl { fill: var(--bd-ink); stroke: var(--bd-paper); stroke-width: 1.5; opacity: 1; }
+
+/* key: open beside the block on desktop, folded under it on phones */
+.keyd > summary { list-style: none; cursor: pointer; }
+.keyd > summary::-webkit-details-marker { display: none; }
+.keyd > summary h3::after { content: ""; }
+@media (max-width: 979px) {
+  .keyd > summary { border-top: 1px solid var(--bd-ink); border-bottom: 1px solid var(--bd-ink); padding: 12px 0 11px; margin-bottom: 12px; }
+  .keyd > summary h3 { margin: 0; text-align: left; display: flex; justify-content: space-between; }
+  .keyd > summary h3::after { content: "+"; font: 400 20px/.8 var(--bd-title); }
+  .keyd[open] > summary h3::after { content: "\2212"; }
+}
+
 /* touch: every control at least a fingertip tall */
 @media (pointer: coarse) {
   .tbtn { min-height: 44px; padding: 0 14px; }
   .rng input { height: 32px; }
   .list a { padding: 11px 2px; font-size: 14.5px; }
   .pv .list button { padding: 11px 2px; font-size: 14.5px; }
+  .lvnotes button { padding: 11px 2px; font-size: 15px; }
   .q input { min-height: 44px; font-size: 16px; }
   .q button { min-width: 44px; min-height: 44px; font-size: 18px; }
   .tab { padding-top: 12px; padding-bottom: 12px; }
 }
 @media (max-width: 640px) {
-  .ctl .hint { margin-left: 0; flex-basis: 100%; }
   .rng input { width: 120px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -409,27 +476,17 @@ svg.tracing .hub { opacity: .35; }
   </nav>
 
   <article class="plate" id="plate1" aria-labelledby="cap1">
-    <header class="ph">
-      <div>Ethan Corn<br>Digital Commonplace</div>
-      <div class="ph-r">Notebook Paper <span class="yr"></span><br>Plate 1</div>
-    </header>
     <div class="p1">
       <div class="figwrap">
+        <div class="fig" id="fig"></div>
+        <div class="lvnotes" id="lvnotes" hidden></div>
+        <div class="deck" id="deck" hidden></div>
         <div class="ctl" role="group" aria-label="Block controls">
           <button type="button" class="tbtn" id="openb" aria-pressed="true">Close the strata</button>
           <label class="rng" for="openr">Closed <input id="openr" type="range" min="0" max="100" value="100" aria-label="How far the strata are opened"> Open</label>
-          <span class="hint">Every month is one slab. Open them into a stack of layers, then hover one to slide it out.</span>
         </div>
-        <div class="lvnav" id="lvnav" hidden>
-          <button type="button" class="tbtn" id="lvold" aria-label="Older level">&lsaquo; Older</button>
-          <span class="lvname" id="lvname"></span>
-          <button type="button" class="tbtn" id="lvnew" aria-label="Newer level">Newer &rsaquo;</button>
-          <button type="button" class="tbtn" id="lvall" aria-pressed="false">Whole</button>
-        </div>
-        <div id="trace-strip"></div>
-        <div class="fig" id="fig"></div>
       </div>
-      <aside class="expl" aria-label="Explanation" id="expl1"></aside>
+      <aside class="expl" aria-label="Key" id="expl1"></aside>
     </div>
     <div class="below">
       <section class="abs">
@@ -458,10 +515,6 @@ svg.tracing .hub { opacity: .35; }
   </article>
 
   <article class="plate" id="plate2" hidden aria-label="Reading view">
-    <header class="ph">
-      <div>Ethan Corn<br>Digital Commonplace</div>
-      <div class="ph-r" id="ph2r">Notebook Paper<br>Note</div>
-    </header>
     <div class="rd" id="p2"></div>
     <p class="credit" style="margin-top:30px">Notes by Ethan Corn. Plate compiled <span class="built"></span>.</p>
     <footer class="pf"><span>Ethanlawcorn.com</span><span>Drawn from the vault &mdash; Notebook Paper <span class="yr"></span></span></footer>
@@ -531,18 +584,21 @@ var spread = function (items, min, lo, hi) {
 var blockState = { pinned: (function () { for (var L = LV.length - 1; L > 0; L--) if (LV[L].idx.length) return L; return LV.length - 1; })(), q: '' };
 var svg1, tip, fig, inkG, webG, driftG, traceG, OUTL;
 var GEO = {};
-var GAP = 56, PMAX = 30, HOP_MS = 420, TO = 5;
+var GAP = 44, PMAX = 30, HOP_MS = 420, TO = 5;
 var RM = false;
 try { RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
 /* HOVER: a real hovering pointer (mouse, trackpad). Touch fires pointerover/move/leave inside one tap, so
    every hover path is off without it. CAM: a narrow screen, where the open block zooms onto one level. */
 var HOVER = true, CAM = false, CAMZ = 0, CAMOUT = false;
+/* how the open month's notes are shown: phones label the tiles and deal a card per note (mesh),
+   wider screens list them beside numbered tiles (list) */
+var PM = function () { return CAM ? 'mesh' : 'list'; };
 function modes() {
   try { HOVER = window.matchMedia('(hover: hover) and (pointer: fine)').matches; CAM = window.matchMedia('(max-width: 819px)').matches; } catch (e) {}
 }
 modes();
 var anim = { e: RM ? 0 : 1, from: 0, to: 0, t0: 0, dur: 0, raf: 0, last: 0 };
-var SLAB = [], WEB = [], DRIFT = [], INK = null, TR = null, TILE = [], HUBEL = [], CODEL = [];
+var SLAB = [], WEB = [], DRIFT = [], INK = null, TR = null, TILE = [], HUBEL = [], CODEL = [], NUM = [], NUMEL = [];
 var SXR = [], REL = [], SX = [], SL = { hover: -1, timer: 0, at: null, userPin: false }, SLIDE = 0;
 var ease = function (x) { return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
 var clamp = function (x) { return x < 0 ? 0 : x > 1 ? 1 : x; };
@@ -577,16 +633,23 @@ function buildBlock() {
   SLIDE = Wo + 18;
 
   /* each tile's rectangle in both layouts */
+  /* open grid: notes stand by link count, so the tallest take the back cells and the flattest the front, and
+     no note hides behind a taller one. The month's list (and the numbers on the tiles) use the same order. */
   LV.forEach(function (l, L) {
-    var n = l.idx.length, rows = Math.ceil(n / GN), r0 = Math.floor((GN - rows) / 2);
+    var n = l.idx.length, rows = Math.ceil(n / GN), r0 = Math.floor((GN - rows) / 2), cells = [];
+    for (var k = 0; k < n; k++) {
+      var rk = (k / GN) | 0, inRow = Math.min(GN, n - rk * GN), oc = (k % GN) + (GN - inRow) / 2, orow = r0 + rk;
+      var o = { x0: MX + oc * CO + 2, x1: MX + (oc + 1) * CO - 2, y1: YO + Wo - LABO - orow * CO - 2 };
+      o.y0 = o.y1 - CO + 4;
+      cells.push(o);
+    }
+    cells.sort(function (p, q) { return (p.x0 + p.y0) - (q.x0 + q.y0); });
+    l.list = l.idx.slice().sort(function (p, q) { return deg(q) - deg(p) || N[p].n.localeCompare(N[q].n); });
     l.idx.forEach(function (ni, k) {
       var col = k % COLS, row = (k / COLS) | 0;
       var c = { x0: col * CELL + 1, x1: (col + 1) * CELL - 1, y1: l.yf - LAB - row * CELL - 1 };
       c.y0 = c.y1 - CELL + 2;
-      var rk = (k / GN) | 0, inRow = Math.min(GN, n - rk * GN), oc = (k % GN) + (GN - inRow) / 2, orow = r0 + rk;
-      var o = { x0: MX + oc * CO + 2, x1: MX + (oc + 1) * CO - 2, y1: YO + Wo - LABO - orow * CO - 2 };
-      o.y0 = o.y1 - CO + 4;
-      TILE[ni] = { L: L, c: c, o: o };
+      TILE[ni] = { L: L, c: c, o: cells[l.list.indexOf(ni)] };
     });
   });
 
@@ -598,14 +661,15 @@ function buildBlock() {
     s += '<polygon class="face fr" data-l="' + L + '"/>' + (L === 0 ? '<polygon class="pat pr0" data-l="0" style="fill:url(#p-stip-r)"/>' : '');
     s += '<polygon class="face ft" data-l="' + L + '"/>';
     s += '<polygon class="band' + (L === blockState.pinned ? ' pin' : '') + '" data-b="' + L + '"/>';
+    /* the slab's ink edge goes under its notes, or its back edge would cut across the tall prisms */
+    s += '<polygon class="souter"/>';
     /* each note is a small prism: back to front in the open grid, so raised ones overlap correctly */
     l.idx.slice().sort(function (p, q) { var A = TILE[p].o, B = TILE[q].o; return (A.x0 + A.y0) - (B.x0 + B.y0); }).forEach(function (ni) {
       s += '<g class="tg ' + tileCls(ni) + '" data-l="' + L + '"><polygon class="pr"/><polygon class="pf"/>' +
         '<polygon class="tile ' + tileCls(ni) + ' s' + N[ni].s + '" data-i="' + ni + '"/></g>';
     });
-    var nm = L === 0 ? 'Basement' : l.name;
-    s += '<text class="lvl" data-l="' + L + '">' + nm.toUpperCase() + '</text>' +
-      '<text class="lvn" data-l="' + L + '" text-anchor="end">' + l.idx.length + (L === 0 ? ' UNDATED' : l.idx.length === 1 ? ' NOTE' : ' NOTES') + '</text>';
+    /* the month name is on the level's tick label, so the slab carries only its count */
+    s += '<text class="lvn" data-l="' + L + '" text-anchor="end">' + l.idx.length + (L === 0 ? ' UNDATED' : l.idx.length === 1 ? ' NOTE' : ' NOTES') + '</text>';
     var a = 0;
     while (a < l.idx.length) {
       var b = a, pp = N[l.idx[a]].p;
@@ -619,9 +683,9 @@ function buildBlock() {
       if (N[h].m !== L) return;
       s += '<g class="hub" pointer-events="none" data-h="' + h + '"><rect class="hubb" x="-3.4" y="-3.4" width="6.8" height="6.8"/>' +
         '<path class="hubx" d="M-3.4 -3.4l6.8 6.8M3.4 -3.4l-6.8 6.8"/>' +
-        '<text class="hubl" x="5.5" y="-4.5">' + hubCode(h) + '</text></g>';
+        '<text class="hubl" x="6" y="-6">' + hubCode(h) + '</text></g>';
     });
-    s += '<polygon class="souter"/>';
+    l.list.forEach(function (ni, k) { NUM[ni] = k + 1; s += '<text class="num" data-n="' + ni + '">' + (k + 1) + '</text>'; });
     slabs += '<g class="slab" data-s="' + L + '">' + s + '</g>';
   }
 
@@ -636,13 +700,6 @@ function buildBlock() {
   LV.forEach(function (l) { ticks += '<path class="tk" data-t="' + l.L + '"/><text class="tkl" data-l="' + l.L + '">' + (l.L ? l.key : 'BASEMENT') + '</text>'; });
   ticks += '<text class="sc" id="lvlhd">LEVEL</text>';
 
-  var o = [VW - 190, VH - 92];
-  var triad = '<g id="triad">' +
-    '<path class="arrow" d="M' + o[0] + ' ' + o[1] + 'V' + (o[1] - 56) + 'M' + o[0] + ' ' + o[1] + 'L' + (o[0] + 88 * C).toFixed(1) + ' ' + (o[1] + 88 * S).toFixed(1) + 'M' + o[0] + ' ' + o[1] + 'L' + (o[0] - 44 * C).toFixed(1) + ' ' + (o[1] + 44 * S).toFixed(1) + '"/>' +
-    '<path class="arrow" d="M' + (o[0] - 4) + ' ' + (o[1] - 25) + 'h8M' + (o[0] - 4) + ' ' + (o[1] - 50) + 'h8"/>' +
-    '<text class="sc" x="' + (o[0] + 8) + '" y="' + (o[1] - 47) + '">100 NOTES</text>' +
-    '<text class="sc" x="' + (o[0] + 88 * C + 6).toFixed(1) + '" y="' + (o[1] + 88 * S + 3).toFixed(1) + '">8 TILES</text>' +
-    '<text class="sc" text-anchor="end" x="' + (o[0] - 44 * C - 6).toFixed(1) + '" y="' + (o[1] + 44 * S + 3).toFixed(1) + '">4 ROWS</text></g>';
   var ar = [96, 240], ax2 = ar[0] + 150 * C, ay2 = ar[1] - 75;
   var arrow = '<g id="oldnew"><path class="arrow" d="M' + ar[0] + ' ' + ar[1] + 'L' + ax2.toFixed(1) + ' ' + ay2.toFixed(1) +
     'M' + (ax2 - 9).toFixed(1) + ' ' + (ay2 + 1.2).toFixed(1) + 'L' + ax2.toFixed(1) + ' ' + ay2.toFixed(1) + 'L' + (ax2 - 4.4).toFixed(1) + ' ' + (ay2 + 8.2).toFixed(1) + '"/>' +
@@ -650,12 +707,14 @@ function buildBlock() {
     '<text class="sc" transform="translate(' + (ax2 - 22).toFixed(1) + ' ' + (ay2 - 8).toFixed(1) + ')">NEWER</text></g>';
 
   fig.innerHTML = '<svg id="block" viewBox="0 0 ' + VW + ' ' + VH + '" role="img" aria-label="Isometric block diagram of ' + N.length + ' notes in ' + NL + ' levels, one level per month. It can be opened into an aligned stack of layers.">' +
-    slabs + outline + '<g id="drift"></g><g id="web"></g><g id="trace"></g><g id="ink"></g>' + ticks + triad + arrow + '</svg><div class="tip" id="tip" hidden></div>';
+    slabs + outline + '<g id="drift"></g><g id="web"></g><g id="trace"></g><g id="ink"></g>' + ticks + arrow + '</svg><div class="tip" id="tip" hidden></div>' +
+    '<div class="lvtag" id="lvtag" hidden></div><nav class="rail" id="rail" aria-label="Months" hidden></nav>' +
+    '<div class="callouts" id="callouts" hidden></div><svg class="leaders" id="leaders" aria-hidden="true"></svg>';
   svg1 = $('#block'); tip = $('#tip'); inkG = $('#ink'); webG = $('#web'); driftG = $('#drift'); traceG = $('#trace'); OUTL = $('#outl');
   SLAB = [].slice.call(svg1.querySelectorAll('.slab')).map(function (g) {
     var q = function (c) { return g.querySelector(c); };
     return { g: g, fw: q('.fw'), fr: q('.fr'), ft: q('.ft'), pw: q('.pw'), pr: q('.pr0'), band: q('.band'), step: q('.stepl'),
-      lvl: q('.lvl'), lvn: q('.lvn'), ghost: q('.ghost'), out: q('.souter') };
+      lvn: q('.lvn'), ghost: q('.ghost'), out: q('.souter') };
   });
   svg1.querySelectorAll('.tile').forEach(function (t) {
     var T = TILE[+t.getAttribute('data-i')], g = t.parentNode;
@@ -663,6 +722,7 @@ function buildBlock() {
   });
   HUBEL = [].slice.call(svg1.querySelectorAll('.hub')).map(function (g) { return { g: g, i: +g.getAttribute('data-h') }; });
   CODEL = [].slice.call(svg1.querySelectorAll('.code')).map(function (t) { return { t: t, i: +t.getAttribute('data-c') }; });
+  NUMEL = [].slice.call(svg1.querySelectorAll('.num')).map(function (t) { return { t: t, i: +t.getAttribute('data-n') }; });
 
   /* every linked pair once, as red ink (shown when open); hub links as drift (shown when closed) */
   var seen = {}, ws = '', ds = '';
@@ -699,7 +759,7 @@ function rect(i) {
   return { x0: lerp(t.c.x0, t.o.x0, a) + g.dx, x1: lerp(t.c.x1, t.o.x1, a) + g.dx, y0: lerp(t.c.y0, t.o.y0, a) + g.dy, y1: lerp(t.c.y1, t.o.y1, a) + g.dy, z: g.z1 };
 }
 /* height off the level: relief by link count, plus a lift for the clicked note and its direct links.
-   Max 24 + 16 = 40 stays under GAP, so nothing pokes into the plate above. */
+   Max 24 + 16 = 40 stays under GAP (44), so nothing pokes into the plate above. */
 function pillarH(i, now) {
   var h = REL[i];
   if (TR && TR.hop[i] >= 0) { var k = TR.hop[i], r = RM ? 1 : ease(clamp((now - TR.t0 - k * TR.ms) / 520)); h += (k ? 6 : 16) * r; }
@@ -739,9 +799,10 @@ function render(now) {
     var st = '', so = 1 - clamp(a * 3);
     if (so > 0) for (var j = L + 1; j < NL; j++) { var yj = Math.min(LV[j].yf, y); st += 'M' + pts([P(x, yj, z0)]) + 'L' + pts([P(x, yj, z1)]); }
     sl.step.setAttribute('d', st); sl.step.style.opacity = so;
-    var lp = P(xl + 5, g.laby, z1), rp = P(x - 5, g.laby, z1);
-    sl.lvl.setAttribute('transform', 'translate(' + lp[0].toFixed(1) + ' ' + lp[1].toFixed(1) + ') rotate(30)');
+    var rp = P(x - 5, g.laby, z1);
     sl.lvn.setAttribute('transform', 'translate(' + rp[0].toFixed(1) + ' ' + rp[1].toFixed(1) + ') rotate(30)');
+    /* on the phone camera only the framed level keeps its count; the ones peeking in would be cut by the edge */
+    sl.lvn.style.opacity = L === blockState.pinned ? '' : 1 - ease(CAMZ);
     l.idx.forEach(function (i) {
       var r = rect(i), T = TILE[i], H = pillarH(i, now), zt = z1 + H;
       T.el.setAttribute('points', quad(P, [[r.x0, r.y0, zt], [r.x1, r.y0, zt], [r.x1, r.y1, zt], [r.x0, r.y1, zt]]));
@@ -753,14 +814,45 @@ function render(now) {
     });
     minY = Math.min(minY, P(0, y0, z1)[1]);
   });
-  HUBEL.forEach(function (h) { var p = pos(h.i, now); h.g.setAttribute('transform', 'translate(' + p[0].toFixed(1) + ' ' + p[1].toFixed(1) + ')'); });
-  CODEL.forEach(function (c) { var p = pos(c.i, now); c.t.setAttribute('x', p[0].toFixed(1)); c.t.setAttribute('y', (p[1] + 2.5).toFixed(1)); });
+  /* the open month's tiles carry their list number; its hub marks and topic codes step aside for them */
+  var nv = (CAM && CAMOUT) || PM() !== 'list' ? 0 : clamp((s - .5) * 2), PL = blockState.pinned;
+  HUBEL.forEach(function (h) { var p = pos(h.i, now); h.g.setAttribute('transform', 'translate(' + p[0].toFixed(1) + ' ' + p[1].toFixed(1) + ')'); h.g.style.opacity = N[h.i].m === PL ? 1 - nv : ''; });
+  CODEL.forEach(function (c) { var p = pos(c.i, now); c.t.setAttribute('x', p[0].toFixed(1)); c.t.setAttribute('y', (p[1] + 2.5).toFixed(1)); c.t.style.opacity = N[c.i].m === PL ? 1 - nv : ''; });
+  NUMEL.forEach(function (c) {
+    if (N[c.i].m !== PL || !nv) { if (c.on !== false) { c.t.style.display = 'none'; c.on = false; } return; }
+    if (c.on !== true) { c.t.style.display = ''; c.on = true; }
+    var p = pos(c.i, now); c.t.setAttribute('x', p[0].toFixed(1)); c.t.setAttribute('y', (p[1] + 3.5).toFixed(1)); c.t.style.opacity = TR && TR.hop[c.i] < 0 ? nv * .2 : nv;
+  });
   /* room for a slid-out layer is reserved by s alone, so hovering never rescales the figure */
   var top = Math.min(0, minY - 40), far = GEO.YO + GEO.Wo + SLIDE * s;
   var mR = Math.max.apply(null, SXR), farx = GEO.Wo + SLIDE * mR * s;
   var left = Math.min(0, P(0, far, 0)[0] - 16), bot = Math.max(GEO.VH, P(GEO.Wo, far, 0)[1] + 16, P(farx, GEO.YO * a + GEO.Wo, 0)[1] + 16);
   var right = Math.max(GEO.VW, P(farx, GEO.YO * a, 0)[0] + 150);
+  /* ticks follow their level's back-right edge, then spread so labels never collide */
+  var ex = Math.max(P(Math.max(GEO.W, GEO.Wo), 0, 0)[0], P(farx, GEO.YO * a, 0)[0] + 10);
+  var items = LV.map(function (l) { var g = G[l.L]; return { L: l.L, x: P(g.xR, g.y0, 0)[0], y: P(g.xR, g.y0, (g.z0 + g.z1) / 2)[1] }; });
+  var hi = Math.max(GEO.OY + GEO.W * S, Math.max.apply(null, items.map(function (it) { return it.y; })) + 10);
+  spread(items, 9.6, top + 50, hi);
+  items.forEach(function (it) {
+    svg1.querySelector('[data-t="' + it.L + '"]').setAttribute('d', 'M' + it.x.toFixed(1) + ' ' + it.y.toFixed(1) + 'L' + (ex + 5).toFixed(1) + ' ' + it.y.toFixed(1) + 'l14 ' + (it.ly - it.y).toFixed(1) + 'h6');
+    var tx = svg1.querySelector('.tkl[data-l="' + it.L + '"]');
+    tx.setAttribute('x', (ex + 29).toFixed(1)); tx.setAttribute('y', (it.ly + 2.9).toFixed(1));
+  });
+  var hd = $('#lvlhd'); hd.setAttribute('x', (ex + 29).toFixed(1)); hd.setAttribute('y', (items[0].ly - 14).toFixed(1));
   var vb = [left, top, right - left, bot - top];
+  /* phone: frame the slabs and their level labels only; the right margin kept on desktop would
+     leave the stack a small drawing in a big empty box */
+  if (CAM) {
+    var bx = [ex + 29 + 44], by = [items[0].ly - 24];
+    items.forEach(function (it) { by.push(it.ly + 4); });
+    LV.forEach(function (l, L) {
+      var g = G[L];
+      [[g.x0, g.y0, g.z1 + 44 * s], [g.xR, g.y0, g.z1 + 44 * s], [g.xR, g.y1, g.z0], [g.x0, g.y1, g.z0], [g.xR, g.y0, g.z0]]
+        .forEach(function (q) { var p = P(q[0], q[1], q[2]); bx.push(p[0]); by.push(p[1]); });
+    });
+    var bx0 = Math.min.apply(null, bx) - 8, by0 = Math.min.apply(null, by) - 8;
+    vb = [bx0, by0, Math.max.apply(null, bx) + 8 - bx0, Math.max.apply(null, by) + 8 - by0];
+  }
   /* phone camera: frame the focused level (it is slid out of the stack) at a fixed aspect, so the svg's
      height holds still under the thumb once zoomed */
   if (CAMZ > .001) {
@@ -775,21 +867,12 @@ function render(now) {
   }
   svg1.setAttribute('viewBox', vb.map(function (v) { return v.toFixed(1); }).join(' '));
   OUTL.style.opacity = 1 - clamp(a * 3);
-  $('#triad').style.opacity = 1 - mR;
-  $('#oldnew').style.opacity = 1 - a;
+  $('#oldnew').style.opacity = CAM ? 0 : 1 - a;
   svg1.classList.toggle('open', anim.e > .5);
+  svg1.classList.toggle('whole', CAM && CAMOUT);
+  if (PM() === 'mesh') drawLeaders();
+  if (CAM) sizeRail();
 
-  /* ticks follow their level's back-right edge, then spread so labels never collide */
-  var ex = Math.max(P(Math.max(GEO.W, GEO.Wo), 0, 0)[0], P(farx, GEO.YO * a, 0)[0] + 10);
-  var items = LV.map(function (l) { var g = G[l.L]; return { L: l.L, x: P(g.xR, g.y0, 0)[0], y: P(g.xR, g.y0, (g.z0 + g.z1) / 2)[1] }; });
-  var hi = Math.max(GEO.OY + GEO.W * S, Math.max.apply(null, items.map(function (it) { return it.y; })) + 10);
-  spread(items, 9.6, top + 50, hi);
-  items.forEach(function (it) {
-    svg1.querySelector('[data-t="' + it.L + '"]').setAttribute('d', 'M' + it.x.toFixed(1) + ' ' + it.y.toFixed(1) + 'L' + (ex + 5).toFixed(1) + ' ' + it.y.toFixed(1) + 'l14 ' + (it.ly - it.y).toFixed(1) + 'h6');
-    var tx = svg1.querySelector('.tkl[data-l="' + it.L + '"]');
-    tx.setAttribute('x', (ex + 29).toFixed(1)); tx.setAttribute('y', (it.ly + 2.9).toFixed(1));
-  });
-  var hd = $('#lvlhd'); hd.setAttribute('x', (ex + 29).toFixed(1)); hd.setAttribute('y', (items[0].ly - 14).toFixed(1));
 
   webG.style.display = 'none';
   driftG.style.opacity = 1 - s;
@@ -804,7 +887,7 @@ function render(now) {
 /* the drawer: the pinned level's gap opens wide enough to read its whole plate */
 /* the drawer: the hovered layer (or the clicked one) slides forward out of the stack */
 function slideTarget() {
-  if (CAM && anim.e > .5) return blockState.pinned;
+  if (CAM && anim.e > .5) return CAMOUT ? -1 : blockState.pinned;
   return SL.hover >= 0 ? SL.hover : TR ? N[TR.src].m : SL.userPin ? blockState.pinned : -1;
 }
 function wantSlide(L, x, y) {
@@ -876,7 +959,7 @@ function drawInk(i, now) {
 function showInk(i) {
   INK = i == null ? null : i;
   svg1.classList.toggle('inking', INK != null);
-  if (INK == null) inkG.innerHTML = ''; else drawInk(INK, performance.now());
+  if (INK == null) inkG.innerHTML = ''; else if (G.length) drawInk(INK, performance.now());
 }
 
 /* ---------- trace: a ripple through the link graph, hop by hop ---------- */
@@ -926,12 +1009,6 @@ function clearTrace(quiet) {
   TILE.forEach(function (T) { T.g.classList.remove('lit'); T.el.classList.remove('src'); T.g.style.removeProperty('--d'); });
   if (!quiet) { renderTrace(); kick(); }
 }
-function restHint() {
-  return HOVER ?
-    'Notes stand off their level by how many links they have. Hover a layer to slide it out; click a note to preview it and draw its links. With the strata open, the levels it links to slide out to the right.' :
-    CAM ? 'Step through the months with Older and Newer, or tap a level that peeks into view. Tap a note to preview it.' :
-    'Tap a level to slide it out of the stack, then tap a note to preview it and draw its links.';
-}
 function excerpt(n) {
   if (!n.b) return '';
   var d = document.createElement('div'), out = '';
@@ -944,7 +1021,7 @@ function excerpt(n) {
   return out.length > 300 ? out.slice(0, 300).replace(/\s+\S*$/, '') + '…' : out;
 }
 function renderTrace() {
-  $('#trace-strip').innerHTML = '<p class="tr-rest">' + restHint() + '</p>';
+  renderLvNotes();
   var pv = $('#pv');
   if (!TR) { pv.hidden = true; pv.innerHTML = ''; document.body.classList.remove('pv-on'); return; }
   var i = TR.src, n = N[i], L = n.m;
@@ -984,18 +1061,160 @@ function pinLevel(L, user) {
   syncNav();
   kick();
 }
+function newest() { return filled(NL, -1); }
 function filled(L, step) {
   for (var k = L + step; k >= 0 && k < NL; k += step) if (LV[k].idx.length) return k;
   return -1;
 }
+var LVN_KEY = '';
+function renderLvNotes() {
+  var box = $('#lvnotes'), L = blockState.pinned, l = LV[L];
+  renderProto();
+  box.hidden = !((anim.dur ? anim.to : anim.e) > .5) || (CAM && CAMOUT) || PM() !== 'list';
+  var key = L + '|' + (TR ? TR.src : '') + '|' + CAM;
+  if (key === LVN_KEY) return;
+  LVN_KEY = key;
+  box.innerHTML = (CAM ? '' : '<div class="rh"><h4 class="h4">' + (L ? l.name : 'Basement') + '</h4><small>' +
+      l.idx.length + (l.idx.length === 1 ? ' note' : ' notes') + '</small></div>') +
+    (l.idx.length ? '<ol>' + l.list.map(function (i) {
+      var d = deg(i);
+      return '<li><button type="button" data-i="' + i + '"' + (TR && TR.src === i ? ' aria-current="true"' : '') + '><b class="no">' + NUM[i] + '</b><i class="' + tileCls(i) + '"></i><span>' +
+        esc(N[i].n) + '</span><small>' + d + (d === 1 ? ' link' : ' links') + '</small></button></li>';
+    }).join('') + '</ol>' : '<p class="none">No notes this month.</p>');
+}
+var PROTO_KEY = '', DECK_I = -1;
+function shown() { return CAM && !CAMOUT && (anim.dur ? anim.to : anim.e) > .5; }
+function renderProto() {
+  var m = PM(), L = blockState.pinned, l = LV[L], on = shown();
+  var deck = $('#deck'), co = $('#callouts');
+  deck.hidden = co.hidden = !(m === 'mesh' && on);
+  if (co.hidden) $('#leaders').innerHTML = '';
+  var key = m + '|' + L + '|' + on;
+  if (key === PROTO_KEY) return;
+  var pk = PROTO_KEY.split('|'), sameLevel = pk[0] === m && pk[1] === String(L) && pk[2] === String(on);
+  PROTO_KEY = key;
+  if (!on) { if (INK != null && m === 'mesh') showInk(null); return; }
+  if (m === 'mesh' && !sameLevel) {
+    /* left column takes the tiles on the left half of the slab, right column the rest; each top to bottom */
+    var sx = function (i) { var o = TILE[i].o; return o.x0 - o.y0; }, sy = function (i) { var o = TILE[i].o; return o.x0 + o.y0; };
+    var byx = l.list.slice().sort(function (p, q) { return sx(p) - sx(q); }), h = Math.ceil(byx.length / 2);
+    var col = function (ids, cls) {
+      return '<ol class="' + cls + '">' + ids.sort(function (p, q) { return sy(p) - sy(q); }).map(function (i) {
+        return '<li><button type="button" data-i="' + i + '"><span><i class="' + tileCls(i) + '"></i>' + esc(N[i].n) + '</span></button></li>';
+      }).join('') + '</ol>';
+    };
+    co.innerHTML = col(byx.slice(0, h), 'cl') + col(byx.slice(h), 'cr');
+    deck.innerHTML = '<div class="deck-row" id="deckrow">' +
+      l.list.map(function (i, k) {
+        var n = N[i], d = deg(i), ex = excerpt(n), nb = n.o.concat(IN[i]).filter(function (j, k, a) { return j !== i && a.indexOf(j) === k; });
+        return '<article class="card" data-i="' + i + '"><div class="ey"><i class="' + tileCls(i) + '"></i>' + TOPIC[n.p].name + ' &middot; ' + d + (d === 1 ? ' link' : ' links') +
+          '<b>' + (k + 1) + ' / ' + l.list.length + '</b></div>' +
+          '<h3>' + esc(n.n) + '</h3><p' + (ex ? '>' + esc(ex) : ' class="none">A title and links so far, with no prose yet.') + '</p>' +
+          (nb.length ? '<div class="lk">' + nb.slice(0, 4).map(function (j) { return '<button type="button" data-j="' + j + '">' + esc(trunc(N[j].n, 34)) + '</button>'; }).join('') + '</div>' : '') +
+          '<a class="go" href="#note-' + n.k + '">Read the note &rarr;</a></article>';
+      }).join('') + '</div>';
+    DECK_I = -1;
+    var row = $('#deckrow');
+    row.addEventListener('scroll', function () { if (!row._raf) row._raf = requestAnimationFrame(function () { row._raf = 0; deckSync(); }); }, { passive: true });
+    deck.querySelectorAll('.lk button').forEach(function (b) { b.addEventListener('click', function () { var j = +b.getAttribute('data-j'); CAMOUT = false; pinLevel(N[j].m, true); setTimeout(function () { deckTo(j, false); }, 30); }); });
+    deckSync();
+  }
+  markCo();
+}
+/* the label that answers to the card on screen */
+function markCo() {
+  var cur = INK;
+  $('#callouts').querySelectorAll('button').forEach(function (b) { b.toggleAttribute('aria-current', cur != null && cur === +b.getAttribute('data-i')); });
+  if (PM() === 'mesh') drawLeaders();
+}
+function deckSync() {
+  var row = $('#deckrow');
+  if (!row || !row.children.length) return;
+  var w = row.children[0].getBoundingClientRect().width + 12, k = Math.max(0, Math.min(row.children.length - 1, Math.round(row.scrollLeft / w)));
+  if (k === DECK_I) return;
+  DECK_I = k;
+  [].forEach.call(row.children, function (c, j) { c.classList.toggle('on', j === k); });
+  var i = +row.children[k].getAttribute('data-i');
+  TILE.forEach(function (T) { if (T && T.el) T.el.classList.toggle('hl', T === TILE[i]); });
+  showInk(i); markCo(); kick();
+}
+function deckTo(i, smooth) {
+  var row = $('#deckrow'), c = row && row.querySelector('.card[data-i="' + i + '"]');
+  if (c) row.scrollTo({ left: c.offsetLeft - 14, behavior: smooth && !RM ? 'smooth' : 'auto' });
+}
+function drawLeaders() {
+  var co = $('#callouts'), lead = $('#leaders');
+  if (co.hidden || CAMZ < .98) { lead.innerHTML = ''; return; }
+  var fr = fig.getBoundingClientRect(), sb = svg1.getBoundingClientRect(), rail = $('#rail'), out = '', hot = '';
+  var rx = rail && !rail.hidden ? rail.getBoundingClientRect().left - fr.left - 6 : fr.width - 6;
+  var hlI = INK;
+  ['cl', 'cr'].forEach(function (side) {
+    var bs = co.querySelectorAll('.' + side + ' button');
+    [].forEach.call(bs, function (b, k) {
+      var i = +b.getAttribute('data-i'), T = TILE[i]; if (!T || !T.el) return;
+      var tr = T.el.getBoundingClientRect(), br = b.getBoundingClientRect();
+      var tx = tr.left + tr.width / 2 - fr.left, ty = tr.top + tr.height / 2 - fr.top;
+      var by = br.top + br.height / 2 - fr.top, ky = sb.bottom - fr.top + 4 + k * 3;
+      var d = side === 'cl'
+        ? 'M' + (br.left - fr.left - 3).toFixed(1) + ' ' + by.toFixed(1) + 'H' + (6 + k * 4) + 'V' + ky.toFixed(1)
+        : 'M' + (br.right - fr.left + 3).toFixed(1) + ' ' + by.toFixed(1) + 'H' + (fr.width - 6 - k * 4).toFixed(1) + 'V' + ky.toFixed(1) + 'H' + Math.min(rx - k * 4, fr.width - 6 - k * 4).toFixed(1);
+      d += 'L' + tx.toFixed(1) + ' ' + ty.toFixed(1);
+      if (hlI === i) hot = '<path class="halo" d="' + d + '"/><path class="hl" d="' + d + '"/><circle class="hl" r="3" cx="' + tx.toFixed(1) + '" cy="' + ty.toFixed(1) + '"/>';
+      else out += '<path d="' + d + '"/><circle r="1.8" cx="' + tx.toFixed(1) + '" cy="' + ty.toFixed(1) + '"/>';
+    });
+  });
+  lead.innerHTML = out + hot; /* the live leader is drawn last, over the rest */
+}
+function markRow(i) {
+  $('#lvnotes').querySelectorAll('button.hl').forEach(function (b) { b.classList.remove('hl'); });
+  var b = i == null ? null : $('#lvnotes').querySelector('button[data-i="' + i + '"]');
+  if (b) b.classList.add('hl');
+}
+/* phone month order, top to bottom of the rail: the whole stack, then newest to oldest */
+function railSeq() {
+  var q = [-1];
+  for (var k = NL - 1; k >= 0; k--) if (LV[k].idx.length) q.push(k);
+  return q;
+}
+function goStep(dir) {
+  var q = railSeq(), at = q.indexOf(CAMOUT ? -1 : blockState.pinned), k = q[Math.max(0, Math.min(q.length - 1, at + dir))];
+  if (k === (CAMOUT ? -1 : blockState.pinned)) return false;
+  goLevel(k);
+  return true;
+}
+function goLevel(k) {
+  if (TR) clearTrace();
+  if (k < 0) { CAMOUT = true; syncNav(); kick(); return; }
+  CAMOUT = false; pinLevel(k, true);
+}
+var RAIL_KEY = '';
 function syncNav() {
-  var nav = $('#lvnav');
-  if (!nav) return;
-  nav.hidden = !(CAM && (anim.dur ? anim.to : anim.e) > .5);
-  var L = blockState.pinned;
-  $('#lvname').textContent = (L ? LV[L].name : 'Basement');
-  $('#lvold').disabled = filled(L, -1) < 0; $('#lvnew').disabled = filled(L, 1) < 0;
-  $('#lvall').setAttribute('aria-pressed', CAMOUT ? 'true' : 'false');
+  renderLvNotes();
+  var rail = $('#rail'), tag = $('#lvtag');
+  if (!rail) return;
+  var on = CAM && (anim.dur ? anim.to : anim.e) > .5, L = blockState.pinned, whole = CAMOUT;
+  svg1.classList.toggle('cam', on);
+  tag.hidden = !on;
+  /* the whole stack labels its own levels, and a tap on one goes in; the rail is for inside a month */
+  rail.hidden = !on || whole;
+  if (!on) return;
+  var q = railSeq(), cur = whole ? -1 : L;
+  tag.innerHTML = (whole ? 'All ' + q.filter(function (k) { return k > 0; }).length + ' months' : (L ? LV[L].name : 'Basement')) +
+    '<small>' + (whole ? 'Tap a month, or drag up' : 'Drag &#8597; for other months') + '</small>';
+  var key = q.join(',') + '|' + cur;
+  if (key !== RAIL_KEY) {
+    RAIL_KEY = key;
+    rail.innerHTML = q.map(function (k) {
+      return '<button type="button" data-k="' + k + '"' + (k < 0 ? ' class="all"' : '') + (k === cur ? ' aria-current="true"' : '') +
+        ' aria-label="' + (k < 0 ? 'Whole stack' : k ? LV[k].name : 'Basement') + '">' + (k < 0 ? 'All' : k ? MN[+LV[k].key.slice(5) - 1].slice(0, 3) : 'Base') + '</button>';
+    }).join('');
+  }
+  sizeRail();
+}
+/* the rail stands beside the drawing only, not the labels under it */
+function sizeRail() {
+  var rail = $('#rail');
+  if (rail && !rail.hidden) rail.style.height = svg1.getBoundingClientRect().height + 'px';
 }
 function matches(i, q) {
   var n = N[i];
@@ -1032,6 +1251,46 @@ function nearTile(x, y) {
 function tileOf(t) {
   return t && t.classList && t.classList.contains('tile') ? +t.getAttribute('data-i') : null;
 }
+/* phone, open: one finger dragged up the drawing goes down into older months, dragged down comes
+   back up to newer ones and, past the newest, out to the whole stack. Two fingers pinched together
+   also show the whole stack; spread apart over a month, they go into it */
+var DRAG = { y: 0, acc: 0, pinch: 0, moved: false, quiet: 0 }, STEP_PX = 54;
+function wireGestures() {
+  var live = function () { return CAM && (anim.dur ? anim.to : anim.e) > .5; };
+  var dist = function (t) { return Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY); };
+  svg1.addEventListener('touchstart', function (e) {
+    if (!live()) return;
+    if (e.touches.length === 2) { DRAG.pinch = dist(e.touches); DRAG.done = false; return; }
+    DRAG.y = e.touches[0].clientY; DRAG.acc = 0; DRAG.moved = false; DRAG.pinch = 0;
+  }, { passive: true });
+  svg1.addEventListener('touchmove', function (e) {
+    if (!live()) return;
+    e.preventDefault();
+    if (e.touches.length === 2 && DRAG.pinch) {
+      if (DRAG.done) return;
+      var r = dist(e.touches) / DRAG.pinch;
+      if (r < .72 && !CAMOUT) { DRAG.done = true; goLevel(-1); }
+      else if (r > 1.35 && CAMOUT) {
+        DRAG.done = true;
+        var mx = (e.touches[0].clientX + e.touches[1].clientX) / 2, my = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+        var el = document.elementFromPoint(mx, my), lv = el && el.closest ? el.closest('[data-l]') : null, k = lv ? +lv.getAttribute('data-l') : newest();
+        goLevel(LV[k].idx.length ? k : newest());
+      }
+      DRAG.quiet = Date.now() + 400;
+      return;
+    }
+    if (e.touches.length !== 1 || DRAG.pinch) return;
+    var y = e.touches[0].clientY;
+    DRAG.acc += DRAG.y - y; DRAG.y = y;
+    if (Math.abs(DRAG.acc) > 8) DRAG.moved = true;
+    while (Math.abs(DRAG.acc) >= STEP_PX) {
+      var dir = DRAG.acc > 0 ? 1 : -1;
+      DRAG.acc -= dir * STEP_PX;
+      if (!goStep(dir)) { DRAG.acc = 0; break; }
+    }
+  }, { passive: false });
+  svg1.addEventListener('touchend', function (e) { if (DRAG.moved || DRAG.pinch) DRAG.quiet = Date.now() + 400; if (!e.touches.length) DRAG.pinch = 0; });
+}
 function wireBlock() {
   svg1.addEventListener('pointerover', function (e) {
     if (!HOVER) return;
@@ -1053,7 +1312,7 @@ function wireBlock() {
     var ti = tileOf(e.target);
     if (ti != null) {
       var n = N[ti];
-      if (INK !== ti) showInk(ti);
+      if (INK !== ti) { showInk(ti); markRow(ti); }
       tip.innerHTML = '<b>' + esc(n.n) + '</b><span>' + (n.d ? dFmt(n.d) : 'Undated') + ' &middot; ' +
         ({ a: 'adult', b: 'baby', u: 'status not stated' })[n.s] + ' &middot; ' + TOPIC[n.p].name +
         (TR && TR.hop[ti] > 0 ? ' &middot; hop ' + TR.hop[ti] : '') + '</span>';
@@ -1062,10 +1321,11 @@ function wireBlock() {
       var x = e.clientX - r.left + fig.scrollLeft + 14, y = e.clientY - r.top + 16;
       if (x + 270 > fig.scrollLeft + r.width) x = e.clientX - r.left + fig.scrollLeft - 270;
       tip.style.left = Math.max(4, x) + 'px'; tip.style.top = y + 'px';
-    } else { tip.hidden = true; if (INK != null) showInk(null); }
+    } else { tip.hidden = true; if (INK != null) { showInk(null); markRow(null); } }
   });
   svg1.addEventListener('click', function (e) {
     var ti = tileOf(e.target), lv0 = e.target.closest ? e.target.closest('[data-l]') : null;
+    if (Date.now() < DRAG.quiet) return; /* the tap a drag or pinch ends on is not a tap */
     /* phone, closed: the block is an overview. A tap opens it onto the level under the thumb */
     if (CAM && anim.e < .5 && anim.to < .5) {
       CAMOUT = false;
@@ -1073,10 +1333,11 @@ function wireBlock() {
       openTo(1); return;
     }
     /* a tap on another level brings that level forward; a tap near a note on this one hits it */
-    if (CAM && lv0 && +lv0.getAttribute('data-l') !== blockState.pinned && (ti == null || CAMOUT)) {
+    if (CAM && lv0 && (CAMOUT || (+lv0.getAttribute('data-l') !== blockState.pinned && ti == null))) {
       CAMOUT = false; pinLevel(+lv0.getAttribute('data-l'), true); if (TR) clearTrace(); return;
     }
     if (ti == null && !HOVER && anim.e > .5) ti = nearTile(e.clientX, e.clientY);
+    if (ti != null && PM() === 'mesh' && N[ti].m === blockState.pinned) { deckTo(ti, true); return; }
     if (ti != null) {
       if (TR && TR.src === ti) { go('#note-' + N[ti].k); return; }
       startTrace(ti); return;
@@ -1090,9 +1351,22 @@ function wireBlock() {
   $('#prev').addEventListener('click', function () { $('#q').value = ''; blockState.q = ''; applySearch(); pinLevel(Math.max(0, blockState.pinned - 1), true); });
   $('#next').addEventListener('click', function () { $('#q').value = ''; blockState.q = ''; applySearch(); pinLevel(Math.min(NL - 1, blockState.pinned + 1), true); });
   $('#openb').addEventListener('click', function () { openTo(anim.to > .5 || (anim.dur === 0 && anim.e > .5) ? 0 : 1); });
-  $('#lvold').addEventListener('click', function () { var k = filled(blockState.pinned, -1); if (k >= 0) { CAMOUT = false; if (TR) clearTrace(); pinLevel(k, true); } });
-  $('#lvnew').addEventListener('click', function () { var k = filled(blockState.pinned, 1); if (k >= 0) { CAMOUT = false; if (TR) clearTrace(); pinLevel(k, true); } });
-  $('#lvall').addEventListener('click', function () { CAMOUT = !CAMOUT; syncNav(); kick(); });
+  $('#rail').addEventListener('click', function (e) { var b = e.target.closest('button[data-k]'); if (b) goLevel(+b.getAttribute('data-k')); });
+  wireGestures();
+  $('#callouts').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-i]'); if (!b) return;
+    deckTo(+b.getAttribute('data-i'), true);
+  });
+  window.addEventListener('resize', function () { sizeRail(); if (PM() === 'mesh') drawLeaders(); });
+  var lvn = $('#lvnotes'), rowOf = function (e) { var b = e.target.closest ? e.target.closest('button[data-i]') : null; return b ? +b.getAttribute('data-i') : null; };
+  lvn.addEventListener('click', function (e) { var i = rowOf(e); if (i != null) { CAMOUT = false; startTrace(i); } });
+  lvn.addEventListener('pointerover', function (e) {
+    if (!HOVER) return;
+    var i = rowOf(e);
+    TILE.forEach(function (T) { if (T && T.el) T.el.classList.toggle('hl', i != null && T === TILE[i]); });
+    showInk(i);
+  });
+  lvn.addEventListener('pointerleave', function () { if (!HOVER) return; TILE.forEach(function (T) { if (T && T.el) T.el.classList.remove('hl'); }); showInk(null); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && TR) clearTrace(); });
   try {
     ['(hover: hover) and (pointer: fine)', '(max-width: 819px)'].forEach(function (q) {
@@ -1111,7 +1385,7 @@ function wireBlock() {
 
 /* ---------- explanation legend ---------- */
 function formRow(p) {
-  var t = TOPIC[p], ex = t.ex.length ? 'e.g. ' + trunc(t.ex[0], 28) : '';
+  var t = TOPIC[p], ex = t.ex.length ? 'e.g. ' + t.ex[0] : '';
   var desc = t.kind === 'none' ? 'No tag at all' : t.kind === 'other' ? 'Tags outside the principal ones' : ex;
   return '<li class="row"><span class="sw g' + t.g + '">' + t.code + '</span><span class="nm"><b>' + t.name + '</b><em>' + esc(desc) + '</em></span><span class="ct">' + tcount[p] + '</span></li>';
 }
@@ -1131,7 +1405,7 @@ function legend1() {
   var pilSw = '<svg viewBox="0 0 50 22" aria-hidden="true"><path d="M10 19h30" stroke="var(--bd-ink)" stroke-width=".7"/><path d="M20 6l5-3 5 3v11l-5 3-5-3z" fill="var(--bd-ore)" stroke="var(--bd-ink)" stroke-width=".7"/><path d="M25 9v11M20 6l5 3 5-3" fill="none" stroke="var(--bd-ink)" stroke-width=".7"/><path d="M25 9l5-3v11l-5 3z" fill="color-mix(in srgb, var(--bd-ore) 84%, var(--bd-ink))" stroke="var(--bd-ink)" stroke-width=".7"/><path d="M20 6l5 3v11l-5-3z" fill="color-mix(in srgb, var(--bd-ore) 70%, var(--bd-ink))" stroke="var(--bd-ink)" stroke-width=".7"/></svg>';
   var PR = { n: 0, x: 0 }, pseen = {};
   N.forEach(function (n, i) { n.o.forEach(function (j) { var k = Math.min(i, j) + '-' + Math.max(i, j); if (i === j || pseen[k]) return; pseen[k] = 1; PR.n++; if (N[j].m !== n.m) PR.x++; }); });
-  $('#expl1').innerHTML = '<h3>EXPLANATION</h3>' +
+  $('#expl1').innerHTML = '<details class="keyd"' + (CAM ? '' : ' open') + '><summary><h3>KEY</h3></summary>' +
     LEGEND_GROUPS() +
     '<ol class="plain">' + TOPIC.map(function (t, p) { return t.kind && tcount[p] ? formRow(p) : ''; }).join('') + '</ol>' +
     '<div class="sep"></div><ul class="plain" style="list-style:none;padding:0;margin:0">' +
@@ -1147,7 +1421,7 @@ function legend1() {
     '<li class="row nc"><span class="sw open">' + openSw + '</span><span class="nm"><b>Open strata</b><em>Each month slid back onto one square and lifted off the one below. Hover a layer to slide it out</em></span></li>' +
     '<li class="row nc"><span class="sw ink tr"><svg viewBox="0 0 50 22" aria-hidden="true"><circle cx="14" cy="11" r="5" stroke-width="1.6"/><circle cx="36" cy="11" r="3"/></svg></span><span class="nm"><b>Link ring</b><em>A note linked to the one you clicked</em></span></li>' +
     '<li class="row nc"><span class="sw pillar">' + pilSw + '</span><span class="nm"><b>Relief</b><em>A note raised by its link count. A clicked note rises further</em></span></li>' +
-    '</ul>';
+    '</ul></details>';
   $('#abstract').innerHTML =
     '<p>This commonplace notebook holds ' + N.length + ' atomic notes joined by ' + nLinks + ' links. Each level of the block is one month of writing, oldest at the base, and each tile is one note.</p>' +
     '<p>The ' + LV[0].idx.length + ' notes that carry no date form the basement. Tiles are tinted by the most specific of eight principal tags and run from the front of each floor to the back, grouped by tag. Hover a tile to see its links in red ink.</p>' +
@@ -1251,12 +1525,11 @@ function showRead(i) {
     '<h1 class="rtitle">' + esc(n.n) + '</h1>' +
     '<p class="nmeta">' + (n.d ? 'Written ' + dFmt(n.d) : 'Undated') + ' &middot; ' + n.w + ' words &middot; ' + stTxt.toLowerCase() + '</p>' +
     '<div class="rbody' + dc + '">' + html + '</div>' + conn + nav + '</article>' +
-    '<aside class="rd-side expl" aria-label="Explanation"><h3>EXPLANATION</h3><ol class="plain">' + tagRows + '</ol><div class="sep"></div><ul class="plain">' +
+    '<aside class="rd-side expl" aria-label="Key"><h3>KEY</h3><ol class="plain">' + tagRows + '</ol><div class="sep"></div><ul class="plain">' +
     '<li class="row nc">' + stSw + '<span class="nm"><b>' + stTxt + '</b><em>' + ({ a: 'Solid contact, the ore', b: 'Dashed contact', u: 'Hairline contact' })[n.s] + '</em></span></li>' +
     '<li class="row nc"><span class="sw"><svg viewBox="0 0 50 22" preserveAspectRatio="none" aria-hidden="true"><rect width="50" height="22" fill="var(--bd-plum)"/>' + (L === 0 ? '<rect width="50" height="22" style="fill:url(#p-stip-r)"/>' : '') + '</svg></span>' +
     '<span class="nm"><b>' + (L ? LV[L].name : 'Basement') + ' level</b><em>' + LV[L].idx.length + ' notes, this is number ' + (pos + 1) + ' on its floor</em></span></li></ul>' +
     '<dl class="stat"><dt>Links to</dt><dd>' + out.length + '</dd><dt>Linked from</dt><dd>' + back.length + '</dd><dt>Words</dt><dd>' + n.w + '</dd></dl></aside>';
-  $('#ph2r').innerHTML = 'Notebook Paper ' + D.built.slice(0, 4) + '<br>Note ' + (i + 1);
   $('#tab2').setAttribute('href', '#note-' + N[i].k);
 }
 
@@ -1320,12 +1593,12 @@ wireBlock();
 renderRead(blockState.pinned);
 renderTrace();
 syncControls(anim.e);
-if (!HOVER) $('.ctl .hint').textContent = CAM ? 'Every month is one slab. Tap the block to open it into a stack of layers.' : 'Every month is one slab. Open them into a stack of layers, then tap one to slide it out.';
 render(performance.now());
 /* old Quartz note addresses redirect to /?n=<slug> */
 try { var qn = new URLSearchParams(location.search).get('n'); if (qn) history.replaceState(null, '', '/#note-' + encodeURIComponent(qn)); } catch (e) {}
 route();
-if (CAM && !TR) { CAMOUT = true; syncNav(); setTimeout(function () { CAMOUT = false; syncNav(); kick(); }, RM ? 0 : 900); }
+/* phones land on the whole stack, every month at once; a tap on a level or Older steps into one */
+if (CAM && !TR) { CAMOUT = true; syncNav(); kick(); }
 else if (!RM && !TR) setTimeout(function () { if (!anim.dur && anim.e === 1 && !TR) openTo(0, 3400); }, 700);
 })();
 </script>
