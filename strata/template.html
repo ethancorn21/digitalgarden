@@ -70,11 +70,6 @@ a { color: inherit; }
   margin: 20px 0 2px; text-align: center; text-wrap: balance;
   font: 700 clamp(15px, 2vw, 21px)/1.3 var(--bd-title); letter-spacing: .08em; text-transform: uppercase;
 }
-.credit { margin: 0; text-align: center; font: italic 12.5px/1.4 var(--bd-title); color: var(--bd-ink-2); }
-.pf {
-  display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 10px;
-  font: 500 10.5px/1.4 var(--bd-label); letter-spacing: .14em; text-transform: uppercase; color: var(--bd-ink-2);
-}
 
 /* plate 1 grid */
 .p1 { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 20px 28px; align-items: start; }
@@ -160,7 +155,7 @@ svg .tile, svg circle.dot { fill: var(--c); }
 .sw.hair { border-color: rgba(46, 36, 29, .5); background: var(--bd-paper); }
 
 /* below the figure */
-.below { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 32px; margin-top: 18px; }
+.below { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 32px; margin-top: 18px; }
 .below > section { min-width: 0; }
 .below p { margin: 0 0 8px; font-size: 13px; line-height: 1.5; }
 .q { display: flex; gap: 8px; margin-bottom: 10px; }
@@ -489,10 +484,6 @@ svg.whole .band.pin { stroke: none; }
       <aside class="expl" aria-label="Key" id="expl1"></aside>
     </div>
     <div class="below">
-      <section class="abs">
-        <h4 class="h4">Abstract</h4>
-        <div id="abstract"></div>
-      </section>
       <section class="read" aria-live="polite">
         <h4 class="h4">Locate and read</h4>
         <form class="q" id="qform" role="search">
@@ -510,14 +501,10 @@ svg.whole .band.pin { stroke: none; }
     </div>
     <aside class="pv" id="pv" hidden aria-live="polite" aria-label="Note preview"></aside>
     <h2 class="cap" id="cap1">Isometric block diagram of the atomic notes, <span id="caprange"></span><span id="capx"></span></h2>
-    <p class="credit">Notes by Ethan Corn. Plate compiled <span class="built"></span>.</p>
-    <footer class="pf"><span>Ethanlawcorn.com</span><span>Drawn from the vault &mdash; Notebook Paper <span class="yr"></span></span></footer>
   </article>
 
   <article class="plate" id="plate2" hidden aria-label="Reading view">
     <div class="rd" id="p2"></div>
-    <p class="credit" style="margin-top:30px">Notes by Ethan Corn. Plate compiled <span class="built"></span>.</p>
-    <footer class="pf"><span>Ethanlawcorn.com</span><span>Drawn from the vault &mdash; Notebook Paper <span class="yr"></span></span></footer>
   </article>
 </div>
 
@@ -546,7 +533,6 @@ LV.forEach(function (l) { l.idx.sort(function (a, b) { return N[a].p - N[b].p ||
 var IN = N.map(function () { return []; });
 N.forEach(function (n, i) { n.o.forEach(function (j) { IN[j].push(i); }); });
 var deg = function (i) { return N[i].o.length + IN[i].length; };
-var nLinks = N.reduce(function (a, n) { return a + n.o.length; }, 0);
 var cnt = { a: 0, b: 0, u: 0 };
 N.forEach(function (n) { cnt[n.s]++; });
 var tcount = TOPIC.map(function (_, p) { return N.filter(function (n) { return n.p === p; }).length; });
@@ -1253,18 +1239,19 @@ function tileOf(t) {
 }
 /* phone, open: one finger dragged up the drawing goes down into older months, dragged down comes
    back up to newer ones and, past the newest, out to the whole stack. Two fingers pinched together
-   also show the whole stack; spread apart over a month, they go into it */
-var DRAG = { y: 0, acc: 0, pinch: 0, moved: false, quiet: 0 }, STEP_PX = 54;
+   also show the whole stack; spread apart over a month, they go into it.
+   INTRO: on landing, a drag anywhere on the page (not only on the drawing) drives the strata, so the
+   first scroll shows they move. It lets go once that first drag has left the whole stack */
+var DRAG = { y: 0, acc: 0, pinch: 0, moved: false, quiet: 0 }, STEP_PX = 54, INTRO = false;
 function wireGestures() {
   var live = function () { return CAM && (anim.dur ? anim.to : anim.e) > .5; };
   var dist = function (t) { return Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY); };
-  svg1.addEventListener('touchstart', function (e) {
-    if (!live()) return;
+  var intro = function () { return INTRO && live() && CAMOUT && !$('#plate1').hidden; };
+  function start(e) {
     if (e.touches.length === 2) { DRAG.pinch = dist(e.touches); DRAG.done = false; return; }
     DRAG.y = e.touches[0].clientY; DRAG.acc = 0; DRAG.moved = false; DRAG.pinch = 0;
-  }, { passive: true });
-  svg1.addEventListener('touchmove', function (e) {
-    if (!live()) return;
+  }
+  function move(e) {
     e.preventDefault();
     if (e.touches.length === 2 && DRAG.pinch) {
       if (DRAG.done) return;
@@ -1288,8 +1275,19 @@ function wireGestures() {
       DRAG.acc -= dir * STEP_PX;
       if (!goStep(dir)) { DRAG.acc = 0; break; }
     }
-  }, { passive: false });
-  svg1.addEventListener('touchend', function (e) { if (DRAG.moved || DRAG.pinch) DRAG.quiet = Date.now() + 400; if (!e.touches.length) DRAG.pinch = 0; });
+  }
+  function end(e) {
+    if (DRAG.moved || DRAG.pinch) DRAG.quiet = Date.now() + 400;
+    if (!e.touches.length) { DRAG.pinch = 0; if (!CAMOUT) INTRO = false; }
+  }
+  /* while INTRO holds, the document takes every touch, the drawing's included; after, only the drawing */
+  var mine = function () { return INTRO = intro(); };
+  document.addEventListener('touchstart', function (e) { if (mine()) start(e); }, { passive: true });
+  document.addEventListener('touchmove', function (e) { if (INTRO && live()) move(e); }, { passive: false });
+  document.addEventListener('touchend', function (e) { if (INTRO) end(e); });
+  svg1.addEventListener('touchstart', function (e) { if (!INTRO && live()) start(e); }, { passive: true });
+  svg1.addEventListener('touchmove', function (e) { if (!INTRO && live()) move(e); }, { passive: false });
+  svg1.addEventListener('touchend', function (e) { if (!INTRO) end(e); });
 }
 function wireBlock() {
   svg1.addEventListener('pointerover', function (e) {
@@ -1403,8 +1401,6 @@ function legend1() {
   var drift = '<svg viewBox="0 0 50 22" aria-hidden="true"><path d="M2 16L48 6" stroke="var(--bd-ink)" stroke-width=".8" stroke-opacity=".6" fill="none"/></svg>';
   var openSw = '<svg viewBox="0 0 50 22" aria-hidden="true"><path d="M4 16h30l8-4H12z" fill="var(--bd-lilac)" stroke="var(--bd-ink)" stroke-width=".7"/><path d="M4 16v3h30v-3M34 19l8-4v-3" fill="var(--bd-plum)" stroke="var(--bd-ink)" stroke-width=".7"/><path d="M4 7h30l8-4H12z" fill="var(--bd-lilac)" stroke="var(--bd-ink)" stroke-width=".7"/><path d="M4 7v3h30v-3M34 10l8-4v-3" fill="var(--bd-plum)" stroke="var(--bd-ink)" stroke-width=".7"/></svg>';
   var pilSw = '<svg viewBox="0 0 50 22" aria-hidden="true"><path d="M10 19h30" stroke="var(--bd-ink)" stroke-width=".7"/><path d="M20 6l5-3 5 3v11l-5 3-5-3z" fill="var(--bd-ore)" stroke="var(--bd-ink)" stroke-width=".7"/><path d="M25 9v11M20 6l5 3 5-3" fill="none" stroke="var(--bd-ink)" stroke-width=".7"/><path d="M25 9l5-3v11l-5 3z" fill="color-mix(in srgb, var(--bd-ore) 84%, var(--bd-ink))" stroke="var(--bd-ink)" stroke-width=".7"/><path d="M20 6l5 3v11l-5-3z" fill="color-mix(in srgb, var(--bd-ore) 70%, var(--bd-ink))" stroke="var(--bd-ink)" stroke-width=".7"/></svg>';
-  var PR = { n: 0, x: 0 }, pseen = {};
-  N.forEach(function (n, i) { n.o.forEach(function (j) { var k = Math.min(i, j) + '-' + Math.max(i, j); if (i === j || pseen[k]) return; pseen[k] = 1; PR.n++; if (N[j].m !== n.m) PR.x++; }); });
   $('#expl1').innerHTML = '<details class="keyd"' + (CAM ? '' : ' open') + '><summary><h3>KEY</h3></summary>' +
     LEGEND_GROUPS() +
     '<ol class="plain">' + TOPIC.map(function (t, p) { return t.kind && tcount[p] ? formRow(p) : ''; }).join('') + '</ol>' +
@@ -1422,10 +1418,6 @@ function legend1() {
     '<li class="row nc"><span class="sw ink tr"><svg viewBox="0 0 50 22" aria-hidden="true"><circle cx="14" cy="11" r="5" stroke-width="1.6"/><circle cx="36" cy="11" r="3"/></svg></span><span class="nm"><b>Link ring</b><em>A note linked to the one you clicked</em></span></li>' +
     '<li class="row nc"><span class="sw pillar">' + pilSw + '</span><span class="nm"><b>Relief</b><em>A note raised by its link count. A clicked note rises further</em></span></li>' +
     '</ul></details>';
-  $('#abstract').innerHTML =
-    '<p>This commonplace notebook holds ' + N.length + ' atomic notes joined by ' + nLinks + ' links. Each level of the block is one month of writing, oldest at the base, and each tile is one note.</p>' +
-    '<p>The ' + LV[0].idx.length + ' notes that carry no date form the basement. Tiles are tinted by the most specific of eight principal tags and run from the front of each floor to the back, grouped by tag. Hover a tile to see its links in red ink.</p>' +
-    '<p>Open the strata and the months slide back into one square column and lift apart like the layers of a network. Hover a layer to slide it out of the stack, then hover a note to see its links in red ink; click a layer to keep it out. ' + PR.x + ' of the ' + PR.n + ' linked pairs join notes written in different months. Each note stands off its level by how many links it has. Click one to raise it and draw its direct links; the levels it links to slide out to the right.</p>';
   $('#abbr').innerHTML = HUBS.map(function (h) {
     return '<dt>' + hubCode(h) + '</dt><dd><a href="#note-' + N[h].k + '">' + esc(trunc(N[h].n, 46)) + '</a></dd>';
   }).join('');
@@ -1581,8 +1573,6 @@ document.addEventListener('click', function (e) {
 
 fig = $('#fig');
 legend1();
-document.querySelectorAll('.yr').forEach(function (e) { e.textContent = D.built.slice(0, 4); });
-document.querySelectorAll('.built').forEach(function (e) { e.textContent = MN[+D.built.slice(5, 7) - 1] + ' ' + D.built.slice(0, 4); });
 $('#caprange').textContent = mName(MON[0]) + ' to ' + mName(MON[MON.length - 1]);
 if (D.allAdult) {
   var ar = [].slice.call(document.querySelectorAll('#expl1 .nm b')).filter(function (b) { return b.textContent === 'Adult note'; })[0];
@@ -1598,7 +1588,7 @@ render(performance.now());
 try { var qn = new URLSearchParams(location.search).get('n'); if (qn) history.replaceState(null, '', '/#note-' + encodeURIComponent(qn)); } catch (e) {}
 route();
 /* phones land on the whole stack, every month at once; a tap on a level or Older steps into one */
-if (CAM && !TR) { CAMOUT = true; syncNav(); kick(); }
+if (CAM && !TR) { CAMOUT = true; INTRO = true; syncNav(); kick(); }
 else if (!RM && !TR) setTimeout(function () { if (!anim.dur && anim.e === 1 && !TR) openTo(0, 3400); }, 700);
 })();
 </script>
