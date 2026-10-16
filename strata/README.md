@@ -27,6 +27,16 @@ with `![[file]]` (Excalidraw embeds resolve to their exported `.svg`) are copied
 - **Addresses:** notes are `/#note-<slug>`, with Quartz's slug. `_redirects` sends old Quartz note URLs to
   `/?n=<slug>` and old tag, index and source pages to `/`.
 
+## Hub and dev kit
+
+- **Hub:** a bare `/` opens on the hub, a full-screen layer over the block page: a WebGL plasma core inside a
+  4D wireframe shell (Hopf fibres). Each option bends the shell into that site's drawing, then goes there:
+  Notes (the isometric block, dissolving into this page), Ancient Works (contours, then resurface.ethanlawcorn.com),
+  Projects (a blueprint gear, then GitHub). Any hash or `?n=` skips the hub, so note links and redirects are
+  unchanged. Hub words are marked `HUB COPY` in `template.html`. With no WebGL, a CSS orb stands in.
+- **Dev kit:** on localhost, or any host with `?dev=1` (sticky; `?dev=0` turns it off). Presets, a picker per
+  colour token, hub knobs, Pick (click the page to find its tokens) and Export CSS. Edits stay in that browser.
+
 ## Files
 
 - `template.html`: the page (styles, markup, drawing code). Data goes in at `/*__STRATA_DATA__*/null`.
