@@ -2133,6 +2133,8 @@ hub.querySelectorAll('.hub-opts button').forEach(function (b) {
 });
 document.addEventListener('keydown', function (e) {
   if (!ON || GO || e.metaKey || e.ctrlKey || e.altKey) return;
+  /* typing in the dev kit (a hex like #1B1030) must not pick an option */
+  if (e.target.closest && e.target.closest('input, textarea, select, .dk')) return;
   var k = '123'.indexOf(e.key);
   if (k > -1) { e.preventDefault(); choose(k); }
 });
@@ -2152,6 +2154,8 @@ window.addEventListener('devkit', function () { readTokens(); if (ON) { layout()
 
 if (!initGL()) fallback();
 if (root.classList.contains('hub-on')) { ON = true; layout(); kick(); }
+/* the options' height sets where the orb sits; measure again once the real fonts are in */
+try { document.fonts.ready.then(function () { if (ON) layout(); }); } catch (e) {}
 })();
 </script>
 <script>
