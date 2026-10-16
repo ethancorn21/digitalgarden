@@ -29,11 +29,16 @@ with `![[file]]` (Excalidraw embeds resolve to their exported `.svg`) are copied
 
 ## Hub and dev kit
 
-- **Hub:** a bare `/` opens on the hub, a full-screen layer over the block page: a WebGL plasma core inside a
-  4D wireframe shell (Hopf fibres). Each option bends the shell into that site's drawing, then goes there:
-  Notes (the isometric block, dissolving into this page), Ancient Works (contours, then resurface.ethanlawcorn.com),
-  Projects (a blueprint gear, then GitHub). Any hash or `?n=` skips the hub, so note links and redirects are
-  unchanged. Hub words are marked `HUB COPY` in `template.html`. With no WebGL, a CSS orb stands in.
+- **Hub:** a bare `/` opens on the hub, a full-screen layer over the block page, ink on paper: a glass lens of
+  numbered ink cells (WebGL; cells squish from the pointer and take a destination's colours while its option is
+  hovered) inside a tesseract turning through 4D, drawn as hairlines with brush ink painting along its edges, over
+  drafting guides and a tick ring that swells toward the pointer. Choosing an option blooms radial brush strokes and
+  bends every edge into that site's drawing: Notes lands face for face on this page's real block (`STRATA.faces()`),
+  then the block fades in under it; Ancient Works becomes survey contours and goes to Resurface with
+  `?via=hub&b=x,y,w,h&v=W,H`, where `web/arrive.js` (ancient-works repo) redraws the same frame and fades into the
+  map; Projects becomes a blueprint gear, then GitHub (no arrival there). Keep `tContours` in step with
+  `arrive.js`. Any hash or `?n=` skips the hub. Hub words are marked `HUB COPY`. With no WebGL the cells are drawn
+  flat on the 2D canvas. On localhost, Ancient Works goes to a local Resurface preview on :8788.
 - **Dev kit:** on localhost, or any host with `?dev=1` (sticky; `?dev=0` turns it off). Presets, a picker per
   colour token, hub knobs, Pick (click the page to find its tokens) and Export CSS. Edits stay in that browser.
 

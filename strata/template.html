@@ -52,25 +52,29 @@ html{box-sizing:border-box}img{max-width:100%}[hidden]{display:none!important}
   --emb-bg: #FFFFFF;
   --shadow: color-mix(in srgb, var(--bd-ink) 22%, transparent);
   --hair: color-mix(in srgb, var(--bd-ink) 50%, transparent);
-  /* the hub: a dark field, a plasma core and a 4D wireframe shell */
-  --hub-void: #07070C;
-  --hub-void-2: #17132A;
-  --hub-line: #9ED9DB;
-  --hub-core-a: #1B1030;
-  --hub-core-b: #926386;
-  --hub-rim: #F4B4C0;
-  --hub-text: #EFE8F2;
-  --hub-dim: #8F88A3;
+  /* the hub: ink on paper. void = ground at the edges, void-2 = ground at the centre, line = wireframe and
+     brush ink, core-a = lens cell ink, core-b = lens gaps and numbers, rim = the lens rim */
+  --hub-void: #ECEAE3;
+  --hub-void-2: #FAF9F5;
+  --hub-line: #18181B;
+  --hub-core-a: #111113;
+  --hub-core-b: #F6F5F1;
+  --hub-rim: #7FD6E6;
+  --hub-text: #141416;
+  --hub-dim: #77736B;
   /* what the shell turns into: Resurface's survey sheet, and a blueprint */
   --rs-paper: #F3EDDC;
   --rs-ink: #CE2E4E;
+  --rs-ochre: #F2C48D;
+  --rs-deep: #8A1230;
   --bp-ground: #1D4F91;
   --bp-line: #EAF2FA;
+  --bp-sky: #8FD3FF;
   /* hub knobs (the dev kit moves these) */
   --hub-orb: .12;
   --hub-spin: 1;
   --hub-pulse: 1;
-  --hub-glow: 1;
+  --hub-ink: 1;
   --hub-morph: 1700;
   --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
   --bd-title: "Old Standard TT", "Century Schoolbook", Georgia, serif;
@@ -502,8 +506,11 @@ svg.whole .band.pin { stroke: none; }
 
 /* ---------- hub: the front door. A plasma core in a 4D wireframe shell; each option bends the shell into
    that site's drawing (notes: the isometric block, Resurface: survey contours, projects: a blueprint) ---------- */
-.hub { display: none; position: fixed; inset: 0; z-index: 50; overflow: hidden; color: var(--hub-text);
-  background: radial-gradient(120% 90% at 50% 36%, var(--hub-void-2) 0%, var(--hub-void) 64%); }
+.hub { display: none; position: fixed; inset: 0; z-index: 50; overflow: hidden; color: var(--hub-text); }
+/* the ground: paper with a lighter centre and a fine grain. Its own layer, so Notes can clear it to the page */
+.hub-bg { position: absolute; inset: 0; background: radial-gradient(110% 85% at 50% 36%, var(--hub-void-2) 0%, var(--hub-void) 70%); }
+.hub-bg::after { content: ""; position: absolute; inset: 0; opacity: .07; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"); }
 html.hub-on .hub { display: block; animation: hubin .5s ease-out both; }
 html.hub-on body { overflow: hidden; }
 @keyframes hubin { from { opacity: 0; } to { opacity: 1; } }
@@ -527,22 +534,21 @@ html.hub-on body { overflow: hidden; }
 .hub-opts button { all: unset; box-sizing: border-box; cursor: pointer; position: relative; text-align: left;
   display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 3px 12px; padding: 13px 15px 14px;
   border: 1px solid color-mix(in srgb, var(--hub-line) 32%, transparent);
-  background: color-mix(in srgb, var(--hub-void) 62%, transparent); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  background: color-mix(in srgb, var(--hub-void-2) 72%, transparent); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
   transition: border-color .2s ease, background .2s ease; }
 /* registration corners: drafting marks on a glass panel */
 .hub-opts button::before, .hub-opts button::after { content: ""; position: absolute; width: 9px; height: 9px; border: 0 solid var(--hub-line); }
 .hub-opts button::before { left: -1px; top: -1px; border-width: 1.5px 0 0 1.5px; }
 .hub-opts button::after { right: -1px; bottom: -1px; border-width: 0 1.5px 1.5px 0; }
-.hub-opts i { grid-row: span 2; font: 500 10.5px/1.75 var(--mono); font-style: normal; color: var(--hub-line); }
+.hub-opts i { grid-row: span 2; font: 500 10.5px/1.75 var(--mono); font-style: normal; color: var(--hub-dim); }
 .hub-opts b { font: 600 13px/1.3 var(--bd-label); letter-spacing: .2em; text-transform: uppercase; }
 .hub-opts span { font: 400 13px/1.35 var(--bd-title); color: var(--hub-dim); }
-.hub-opts button:hover, .hub-opts button:focus-visible { border-color: var(--hub-line); background: color-mix(in srgb, var(--hub-line) 11%, var(--hub-void)); }
+.hub-opts button:hover, .hub-opts button:focus-visible { border-color: var(--hub-line); background: var(--hub-line); color: var(--hub-void-2); }
+.hub-opts button:hover span, .hub-opts button:focus-visible span, .hub-opts button:hover i, .hub-opts button:focus-visible i { color: color-mix(in srgb, var(--hub-void-2) 72%, transparent); }
+.hub-opts button:hover::before, .hub-opts button:hover::after, .hub-opts button:focus-visible::before, .hub-opts button:focus-visible::after { border-color: var(--hub-rim); }
 .hub-opts button:focus-visible { outline: 1px solid var(--hub-line); outline-offset: 3px; }
 .hub.go .hub-ui, .hub.go .hub-hud { opacity: 0; transform: translateY(8px); pointer-events: none; }
 .hub.out { opacity: 0; transition: opacity .5s ease; pointer-events: none; }
-.hub-fb { position: absolute; border-radius: 50%; pointer-events: none; display: none;
-  background: radial-gradient(circle at 38% 34%, var(--hub-rim), var(--hub-core-b) 42%, var(--hub-core-a) 72%);
-  box-shadow: 0 0 80px color-mix(in srgb, var(--hub-line) 40%, transparent); }
 .tab.home b { color: var(--survey); }
 @media (max-width: 819px) {
   .hub-opts { grid-template-columns: minmax(0, 1fr); max-width: 440px; gap: 8px; }
@@ -595,9 +601,9 @@ html.dk-picking, html.dk-picking * { cursor: crosshair !important; }
 </defs></svg>
 
 <div class="hub" id="hub" role="dialog" aria-label="ethanlawcorn.com">
+  <div class="hub-bg" id="hubbg" aria-hidden="true"></div>
   <div class="hub-paper" id="hubpaper" aria-hidden="true"></div>
   <canvas id="hubgl" aria-hidden="true"></canvas>
-  <div class="hub-fb" id="hubfb" aria-hidden="true"></div>
   <canvas id="hub2d" aria-hidden="true"></canvas>
   <div class="hub-hud tl" aria-hidden="true"><b>ethanlawcorn.com</b>Index 00 / choose a survey</div>
   <div class="hub-hud tr" aria-hidden="true"><b>S&sup3; &rarr; R&sup3; / Hopf</b><span id="hubro">&theta; 0.000 &phi; 0.000 &psi; 0.000</span></div>
@@ -1747,7 +1753,23 @@ function underHub() {
   if (CAM) { CAMOUT = true; syncNav(); kick(); }
   else if (!TR) { anim.dur = 0; anim.e = 0; syncControls(0); render(performance.now()); }
 }
-window.STRATA = { hub: underHub, reveal: landPhone, fig: function () { return fig.getBoundingClientRect(); } };
+/* the hub's Notes morph lands on these: every slab face in screen px, in paint order */
+function faces() {
+  var out = [], FILL = { fr: '--bd-plum', fw: '--bd-mauve', ft: '--bd-lilac' };
+  [].slice.call(svg1.querySelectorAll('.slab')).forEach(function (g) {
+    ['fw', 'fr', 'ft'].forEach(function (c) {
+      var el = g.querySelector('.' + c), m = el && el.getScreenCTM(), pl = el && el.points;
+      if (!m || !pl || pl.numberOfItems < 3) return;
+      var poly = [];
+      for (var i = 0; i < pl.numberOfItems; i++) { var p = pl.getItem(i); poly.push([m.a * p.x + m.c * p.y + m.e, m.b * p.x + m.d * p.y + m.f]); }
+      out.push({ poly: poly, fill: FILL[c] });
+    });
+  });
+  return out;
+}
+/* hidden while the hub's lines land on it, then faded in under them */
+function hold(on) { svg1.style.transition = on ? 'none' : 'opacity .6s ease'; svg1.style.opacity = on ? '0' : ''; }
+window.STRATA = { hub: underHub, reveal: landPhone, faces: faces, hold: hold, fig: function () { return fig.getBoundingClientRect(); } };
 if (document.documentElement.classList.contains('hub-on')) underHub();
 else if (CAM && !TR) landPhone();
 else if (!RM && !TR) setTimeout(function () { if (!anim.dur && anim.e === 1 && !TR) openTo(0, 3400); }, 700);
@@ -1755,11 +1777,15 @@ else if (!RM && !TR) setTimeout(function () { if (!anim.dur && anim.e === 1 && !
 </script>
 <script>
 /* ---------- hub ----------
-   Core: a WebGL fragment shader. The ball is solved per pixel (no raymarch), its silhouette wobbles, and
-   its surface is domain-warped 3D noise with time as the fourth axis; a fresnel rim carries the iridescence.
-   Shell: 18 Hopf fibres (great circles of S3), rotated in three 4D planes and projected to the screen,
-   drawn on a 2D canvas so lines can be thick and glow. Every fibre and every target stroke has the same
-   96 points, so a morph is plain per-point interpolation: shell -> the chosen site's drawing. */
+   Ink on paper with bursts of colour. Three layers:
+   - construction: tangent guides, a tick ring whose ticks swell toward the pointer, a star mark (drafting)
+   - core: a glass lens over numbered ink cells (WebGL). Cells squish away from the pointer, breathe, and flip
+     to a destination's colours while one of its options is hovered. Fringes split R/G/B at the rim.
+   - shell: a tesseract turning through 4D, drawn as hairlines, with brush ink painting along its edges.
+   Choosing an option blooms radial brush strokes, then bends every shell edge into that site's drawing: the
+   real block on this page (Notes), Resurface's contours (handed on to resurface.ethanlawcorn.com, which
+   redraws the same frame and fades into its map), or a blueprint gear (GitHub). All shell and target strokes
+   are polylines of P points, so a morph is per-point interpolation; surplus strokes fade out. */
 (function () {
 'use strict';
 var root = document.documentElement, hub = document.getElementById('hub');
@@ -1767,12 +1793,15 @@ if (!hub) return;
 var RM = false;
 try { RM = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
 var c2 = document.getElementById('hub2d'), cx = c2.getContext('2d'), glc = document.getElementById('hubgl');
-var paper = document.getElementById('hubpaper'), fb = document.getElementById('hubfb'), ro = document.getElementById('hubro');
-var DEST = [null, 'https://resurface.ethanlawcorn.com/', 'https://github.com/ethancorn21'];
-var TAU = Math.PI * 2, K = 18, P = 96;
+var bg = document.getElementById('hubbg'), paper = document.getElementById('hubpaper'), ro = document.getElementById('hubro');
+var LOCAL = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+/* on localhost, Ancient Works goes to the local Resurface preview so the arrival can be checked before it ships */
+var DEST = [null, LOCAL ? 'http://127.0.0.1:8788/' : 'https://resurface.ethanlawcorn.com/', 'https://github.com/ethancorn21'];
+var TAU = Math.PI * 2, P = 96, NS = 22;
 var clamp = function (x) { return x < 0 ? 0 : x > 1 ? 1 : x; };
 var lerp = function (a, b, t) { return a + (b - a) * t; };
 var ease = function (x) { return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+var hash = function (n) { var x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
 
 /* tokens: read from CSS, re-read when the dev kit changes them */
 var TOK = {}, KN = {};
@@ -1781,88 +1810,96 @@ function rgb(c) {
   if ((m = c.match(/^#([0-9a-f]{6})$/i))) { var n = parseInt(m[1], 16); return [(n >> 16) / 255, (n >> 8 & 255) / 255, (n & 255) / 255]; }
   if ((m = c.match(/^#([0-9a-f]{3})$/i))) return m[1].split('').map(function (h) { return parseInt(h + h, 16) / 255; });
   if ((m = c.match(/rgba?\(([^)]+)\)/))) { var q = m[1].split(/[\s,\/]+/).map(parseFloat); return [q[0] / 255, q[1] / 255, q[2] / 255]; }
-  return [1, 1, 1];
+  return [.5, .5, .5];
 }
 var css = function (a, al) { return 'rgba(' + Math.round(a[0] * 255) + ',' + Math.round(a[1] * 255) + ',' + Math.round(a[2] * 255) + ',' + al.toFixed(3) + ')'; };
 var mix = function (a, b, t) { return [lerp(a[0], b[0], t), lerp(a[1], b[1], t), lerp(a[2], b[2], t)]; };
+/* each destination's colours, for the cells while its option is hovered */
+var VIVID = [['--bd-blue', '--bd-pink', '--bd-cyan', '--bd-ore'], ['--rs-ink', '--rs-ochre', '--rs-deep', '--bd-cyan'], ['--bp-ground', '--bp-sky', '--bp-line', '--bd-ore']];
 function readTokens() {
   var cs = getComputedStyle(root);
-  ['--hub-line', '--hub-core-a', '--hub-core-b', '--hub-rim', '--hub-dim', '--bd-ink', '--bd-plum', '--bd-mauve', '--bd-lilac', '--rs-ink', '--bp-line']
+  ['--hub-line', '--hub-core-a', '--hub-core-b', '--hub-rim', '--hub-dim', '--hub-text', '--bd-ink', '--bd-plum', '--bd-mauve', '--bd-lilac',
+   '--bd-blue', '--bd-pink', '--bd-cyan', '--bd-ore', '--rs-ink', '--rs-ochre', '--rs-deep', '--bp-ground', '--bp-sky', '--bp-line']
     .forEach(function (k) { TOK[k] = rgb(cs.getPropertyValue(k)); });
-  ['--hub-orb', '--hub-spin', '--hub-pulse', '--hub-glow', '--hub-morph'].forEach(function (k) { KN[k] = parseFloat(cs.getPropertyValue(k)) || 0; });
+  ['--hub-orb', '--hub-spin', '--hub-pulse', '--hub-ink', '--hub-morph'].forEach(function (k) { KN[k] = parseFloat(cs.getPropertyValue(k)) || 0; });
 }
 readTokens();
 
 /* ---- layout ---- */
-var W = 0, H = 0, D2 = 1, DG = 1, CX = 0, CY = 0, R = 100, PHONE = false;
+var W = 0, H = 0, D2 = 1, DG = 1, CX = 0, CY = 0, R = 100, PHONE = false, RING = 2.5;
 function layout() {
   W = hub.clientWidth; H = hub.clientHeight; PHONE = W < 820;
   D2 = Math.min(window.devicePixelRatio || 1, 2);
-  DG = Math.min(window.devicePixelRatio || 1, PHONE ? 1 : 1.5);
+  DG = Math.min(window.devicePixelRatio || 1, PHONE ? 1.25 : 1.5);
   c2.width = Math.round(W * D2); c2.height = Math.round(H * D2);
   glc.width = Math.round(W * DG); glc.height = Math.round(H * DG);
   var ui = hub.querySelector('.hub-ui').getBoundingClientRect(), top = 54, bot = ui.top - 16;
   CX = W / 2; CY = Math.max(top + 40, (top + bot) / 2);
-  /* the protractor ring is 2.4 R; keep it clear of the HUD and the options */
-  R = Math.max(30, Math.min(Math.min(W, H) * KN['--hub-orb'], (bot - top) / 2 / 2.5, W / 2 / 2.6));
-  fb.style.left = (CX - R) + 'px'; fb.style.top = (CY - R) + 'px'; fb.style.width = fb.style.height = 2 * R + 'px';
+  /* the tick ring is RING R (tighter on phones, where width is what limits the lens); keep it clear of the HUD and the options */
+  RING = PHONE ? 2.05 : 2.5;
+  R = Math.max(30, Math.min(Math.min(W, H) * KN['--hub-orb'] * (PHONE ? 1.3 : 1), (bot - top) / 2 / (RING + .12), W / 2 / (RING + .25)));
   TG.length = 0;
 }
+
+/* ---- seeds: the lens cells, laid out as a sunflower, in lens units (radius 1) ---- */
+var SEED = [], NUMS = [];
+/* distinct cell numbers, 0-45 shuffled */
+for (var n0 = 0; n0 < 46; n0++) NUMS.push(n0);
+NUMS.sort(function (a, b) { return hash(a + 31) - hash(b + 31); });
+for (var i0 = 0; i0 < NS; i0++) {
+  var r0 = .95 * Math.sqrt((i0 + .5) / NS), a0 = i0 * 2.39996;
+  SEED.push({ hx: r0 * Math.cos(a0), hy: r0 * Math.sin(a0), x: 0, y: 0, rad: .17 + .13 * hash(i0) + .08 * (1 - r0), n: NUMS[i0] });
+}
+var SU = new Float32Array(NS * 3);
+/* the lens: a sample at screen radius d (lens units) reads the cell field at d * g(d); the centre is magnified */
+var lensG = function (d) { return .68 + .32 * d * d; };
+function lensInv(r) { var d = r; for (var k = 0; k < 6; k++) { var f = .68 * d + .32 * d * d * d - r, df = .68 + .96 * d * d; d -= f / df; } return d; }
 
 /* ---- WebGL core ---- */
 var gl = null, U = {};
 var FS = [
 '#ifdef GL_FRAGMENT_PRECISION_HIGH', 'precision highp float;', '#else', 'precision mediump float;', '#endif',
-'uniform vec2 uC; uniform vec2 uM; uniform float uR, uT, uPulse, uFade, uGlow, uNear;',
-'uniform vec3 uA, uB, uD;',
-'vec3 m289(vec3 x){return x-floor(x*(1./289.))*289.;}',
-'vec4 m289(vec4 x){return x-floor(x*(1./289.))*289.;}',
-'vec4 perm(vec4 x){return m289(((x*34.)+1.)*x);}',
-'vec4 tis(vec4 r){return 1.79284291400159-.85373472095314*r;}',
-'float sn(vec3 v){',
-' const vec2 C=vec2(1./6.,1./3.); const vec4 D=vec4(0.,.5,1.,2.);',
-' vec3 i=floor(v+dot(v,C.yyy)); vec3 x0=v-i+dot(i,C.xxx);',
-' vec3 g=step(x0.yzx,x0.xyz); vec3 l=1.-g; vec3 i1=min(g.xyz,l.zxy); vec3 i2=max(g.xyz,l.zxy);',
-' vec3 x1=x0-i1+C.xxx; vec3 x2=x0-i2+C.yyy; vec3 x3=x0-D.yyy;',
-' i=m289(i);',
-' vec4 p=perm(perm(perm(i.z+vec4(0.,i1.z,i2.z,1.))+i.y+vec4(0.,i1.y,i2.y,1.))+i.x+vec4(0.,i1.x,i2.x,1.));',
-' float n_=.142857142857; vec3 ns=n_*D.wyz-D.xzx;',
-' vec4 j=p-49.*floor(p*ns.z*ns.z); vec4 x_=floor(j*ns.z); vec4 y_=floor(j-7.*x_);',
-' vec4 x=x_*ns.x+ns.yyyy; vec4 y=y_*ns.x+ns.yyyy; vec4 h=1.-abs(x)-abs(y);',
-' vec4 b0=vec4(x.xy,y.xy); vec4 b1=vec4(x.zw,y.zw);',
-' vec4 s0=floor(b0)*2.+1.; vec4 s1=floor(b1)*2.+1.; vec4 sh=-step(h,vec4(0.));',
-' vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy; vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;',
-' vec3 p0=vec3(a0.xy,h.x); vec3 p1=vec3(a0.zw,h.y); vec3 p2=vec3(a1.xy,h.z); vec3 p3=vec3(a1.zw,h.w);',
-' vec4 nm=tis(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3))); p0*=nm.x; p1*=nm.y; p2*=nm.z; p3*=nm.w;',
-' vec4 m=max(.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.); m=m*m;',
-' return 42.*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));',
+'#define NS ' + NS,
+'uniform vec2 uC; uniform float uR, uT, uFade, uViv, uPulse;',
+'uniform vec3 uS[NS]; uniform vec3 uInk, uGap, uRim, uV0, uV1, uV2, uV3;',
+'vec3 vcol(int i){ int k=i-4*(i/4); if(k==0) return uV0; if(k==1) return uV1; if(k==2) return uV2; return uV3; }',
+/* ink coverage of the cell field at q, and the nearest cell (id, its 0..1 depth for shading) */
+'float field(vec2 q, out float id, out float dep, out vec2 dir){',
+' float f1=1e3, f2=1e3, r1=1.; id=0.; dir=vec2(0.);',
+' for(int i=0;i<NS;i++){ vec2 d=q-uS[i].xy; float l=length(d)/uS[i].z;',
+'  if(l<f1){ f2=f1; f1=l; id=float(i); r1=uS[i].z; dir=d/uS[i].z; } else if(l<f2){ f2=l; } }',
+' dep=clamp(f1,0.,1.);',
+' float aa=2.2/(uR*r1);',
+' float round_=smoothstep(1.+aa,1.-aa,f1);',
+' float gap=smoothstep(.07,.07+aa*3.,f2-f1);',
+' return round_*gap;',
 '}',
-'float fbm(vec3 p){ float s=0., a=.5; for(int i=0;i<4;i++){ s+=a*sn(p); p=p*2.03+vec3(1.7,9.2,3.1); a*=.5; } return s; }',
 'void main(){',
-' vec2 uv=(gl_FragCoord.xy-uC)/uR; float d=length(uv); float an=atan(uv.y,uv.x);',
-' vec2 m=(uM-uC)/uR; float ml=length(m);',
-' float rr=1.+.032*sin(3.*an+uT*.9)+.022*sin(5.*an-uT*1.3)+.012*sin(9.*an+uT*2.1);',
-' rr*=1.+.022*uGlow*sin(uT*2.4)*uNear+.03*uPulse;',
-' if(ml>.001) rr+=.07*uNear*pow(max(0.,dot(uv/max(d,.001),m/ml)),6.);',
-' vec3 col=vec3(0.); float a=0.;',
-' float aa=1.6/uR;',
-' if(d<rr+aa){',
-'  float z=sqrt(max(rr*rr-d*d,0.)); vec3 n=normalize(vec3(uv,z));',
-'  float t=uT*.22; vec3 q=n*1.9+vec3(t,-t*.7,t*.4);',
-'  vec3 w=vec3(fbm(q+vec3(0.,0.,t)),fbm(q+vec3(5.2,1.3,-t)),fbm(q+vec3(-3.1,7.7,t*.6)));',
-'  float pl=fbm(q+1.6*w);',
-'  float fr=pow(1.-n.z,2.2);',
-'  col=mix(uA,uB,smoothstep(-.45,.55,pl+.25*w.x));',
-'  col+=uD*pow(max(0.,pl+.15),3.)*1.4;',
-'  col+=(.5+.5*cos(6.2832*(fr*1.1+pl*.5+uT*.04+vec3(0.,.33,.67))))*fr*.55;',
-'  col+=uD*fr*.9;',
-'  col*=.85+.3*n.z;',
-'  a=smoothstep(rr+aa,rr-aa,d);',
+' vec2 uv=(gl_FragCoord.xy-uC)/uR; float d=length(uv);',
+' float R=1.+.012*sin(uT*1.7)+.03*uPulse;',
+' float dn=d/R; float aa=1.5/uR;',
+' vec4 o=vec4(0.);',
+' float sh=exp(-max(d-R*.98,0.)*7.)*.16*(1.-smoothstep(R-.02,R+.02,d)*0.)*step(R,d);',
+' o=vec4(uInk*sh, sh);',
+' if(dn<1.+aa){',
+'  float g=.68+.32*dn*dn; vec2 q=uv/R*g;',
+'  float ca=.022*dn*dn*dn;',
+'  float id, dep, idg, depg, idb, depb; vec2 dir, dirg, dirb;',
+'  float mr=field(q*(1.+ca),id,dep,dir); float mg=field(q,idg,depg,dirg); float mb=field(q*(1.-ca),idb,depb,dirb);',
+'  vec3 cv=vcol(int(idg+.5));',
+'  float lit=clamp(.55+.6*dot(normalize(dirg+vec2(1e-4)),vec2(-.6,.75))*depg,0.,1.);',
+'  vec3 viv=cv*(.62+.55*(1.-depg))+lit*.22;',
+'  vec3 ink=mix(uInk,viv,uViv);',
+'  vec3 col=vec3(mix(uGap.r,ink.r,mr),mix(uGap.g,ink.g,mg),mix(uGap.b,ink.b,mb));',
+/* glass: a soft highlight top left, a darker hairline rim with a coloured fringe */
+'  float hl=smoothstep(.95,.55,length(uv/R-vec2(-.38,.42)))*.10; col+=hl;',
+'  float rim=smoothstep(.955,.985,dn)*(1.-smoothstep(.985,1.,dn));',
+'  col=mix(col,uRim,rim*.85);',
+'  float edge=smoothstep(1.+aa,1.-aa,dn);',
+'  col=mix(col,uInk,smoothstep(.992,1.,dn)*.9);',
+'  o=vec4(col*edge,edge)+o*(1.-edge);',
 ' }',
-' float g=exp(-max(d-rr,0.)*4.2)*(.32+.25*uNear+.4*uPulse)*uGlow*(1.-a);',
-' vec3 o=col*a+uD*g;',
-' float al=clamp(a+g,0.,1.);',
-' gl_FragColor=vec4(o*uFade,al*uFade);',
+' gl_FragColor=o*uFade;',
 '}'].join('\n');
 function initGL() {
   try { gl = glc.getContext('webgl', { premultipliedAlpha: true, antialias: false, alpha: true }); } catch (e) { gl = null; }
@@ -1880,51 +1917,118 @@ function initGL() {
   var b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
   var loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-  ['uC', 'uM', 'uR', 'uT', 'uPulse', 'uFade', 'uGlow', 'uNear', 'uA', 'uB', 'uD'].forEach(function (k) { U[k] = gl.getUniformLocation(pr, k); });
-  glc.addEventListener('webglcontextlost', function (e) { e.preventDefault(); gl = null; fallback(); });
+  ['uC', 'uR', 'uT', 'uFade', 'uViv', 'uPulse', 'uS', 'uInk', 'uGap', 'uRim', 'uV0', 'uV1', 'uV2', 'uV3'].forEach(function (k) { U[k] = gl.getUniformLocation(pr, k); });
+  glc.addEventListener('webglcontextlost', function (e) { e.preventDefault(); gl = null; glc.style.display = 'none'; });
   return true;
 }
-function fallback() { glc.style.display = 'none'; fb.style.display = 'block'; }
-function drawGL(t, fade, pulse, near) {
-  if (!gl) { fb.style.opacity = fade; fb.style.transform = 'scale(' + (1 + .03 * pulse) + ')'; return; }
+function drawGL(t, fade, viv, vk) {
+  if (!gl) return;
   gl.viewport(0, 0, glc.width, glc.height);
   gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
   if (fade <= .001) return;
-  gl.uniform2f(U.uC, CX * DG, (H - CY) * DG);
-  gl.uniform2f(U.uM, PX * DG, (H - PY) * DG);
-  gl.uniform1f(U.uR, R * DG * (.35 + .65 * fade));
-  gl.uniform1f(U.uT, t); gl.uniform1f(U.uPulse, pulse); gl.uniform1f(U.uFade, fade);
-  gl.uniform1f(U.uGlow, KN['--hub-glow']); gl.uniform1f(U.uNear, near);
-  gl.uniform3fv(U.uA, TOK['--hub-core-a']); gl.uniform3fv(U.uB, TOK['--hub-core-b']); gl.uniform3fv(U.uD, TOK['--hub-rim']);
+  var rr = R * (.4 + .6 * fade);
+  gl.uniform2f(U.uC, CX * DG, (H - CY) * DG); gl.uniform1f(U.uR, rr * DG);
+  gl.uniform1f(U.uT, t); gl.uniform1f(U.uFade, fade); gl.uniform1f(U.uViv, viv); gl.uniform1f(U.uPulse, PULSE * KN['--hub-pulse']);
+  gl.uniform3fv(U.uS, SU);
+  gl.uniform3fv(U.uInk, TOK['--hub-core-a']); gl.uniform3fv(U.uGap, TOK['--hub-core-b']); gl.uniform3fv(U.uRim, TOK['--hub-rim']);
+  var V = VIVID[vk];
+  gl.uniform3fv(U.uV0, TOK[V[0]]); gl.uniform3fv(U.uV1, TOK[V[1]]); gl.uniform3fv(U.uV2, TOK[V[2]]); gl.uniform3fv(U.uV3, TOK[V[3]]);
   gl.drawArrays(gl.TRIANGLES, 0, 3);
 }
-
-/* ---- the shell: Hopf fibres ---- */
-var FIB = [];
-[.42, .8, 1.14].forEach(function (eta, b) { for (var j = 0; j < 6; j++) FIB.push([eta, j * TAU / 6 + b * .52]); });
-var SX = [], SZ = new Float32Array(K);
-for (var k0 = 0; k0 < K; k0++) SX.push(new Float32Array(P * 2));
-function shell(A, B, C, Y) {
-  var cA = Math.cos(A), sA = Math.sin(A), cB = Math.cos(B), sB = Math.sin(B), cC = Math.cos(C), sC = Math.sin(C), cY = Math.cos(Y), sY = Math.sin(Y);
-  var cT = Math.cos(.42), sT = Math.sin(.42), sc = R * 2.05; /* the shell wraps the core, it does not sit on it */
-  for (var k = 0; k < K; k++) {
-    var se = Math.sin(FIB[k][0]), ce = Math.cos(FIB[k][0]), dl = FIB[k][1], o = SX[k], zs = 0;
-    for (var p = 0; p < P; p++) {
-      var th = p / P * TAU;
-      var x = se * Math.cos(th + dl), y = se * Math.sin(th + dl), z = ce * Math.cos(th), w = ce * Math.sin(th);
-      var x1 = x * cA - w * sA, w1 = x * sA + w * cA;          /* xw plane */
-      var y1 = y * cB - z * sB, z1 = y * sB + z * cB;          /* yz plane */
-      var z2 = z1 * cC - w1 * sC, w2 = z1 * sC + w1 * cC;      /* zw plane */
-      var s = 1 / (1.9 - w2), X = x1 * s, Yy = y1 * s, Z = z2 * s; /* 4D -> 3D perspective */
-      var X2 = X * cY + Z * sY, Z2 = -X * sY + Z * cY;          /* 3D yaw, then tilt */
-      var Y2 = Yy * cT - Z2 * sT, Z3 = Yy * sT + Z2 * cT;
-      o[2 * p] = CX + X2 * sc; o[2 * p + 1] = CY + Y2 * sc; zs += Z3;
-    }
-    SZ[k] = zs / P;
-  }
+/* no WebGL: the same cells as flat ink discs in the lens, on the 2D canvas */
+function drawCells2D(fade) {
+  if (gl || fade <= .001) return;
+  var rr = R * (.4 + .6 * fade);
+  cx.save(); cx.globalAlpha = fade;
+  cx.beginPath(); cx.arc(CX, CY, rr, 0, TAU); cx.fillStyle = css(TOK['--hub-core-b'], 1); cx.fill(); cx.clip();
+  cx.fillStyle = css(TOK['--hub-core-a'], 1);
+  /* each disc stops short of its nearest neighbour, as the shader's gaps do */
+  var P2 = SEED.map(function (s) { return seedScreen(s, rr); });
+  SEED.forEach(function (s, i) {
+    var nn = 1e9; P2.forEach(function (q, j) { if (j !== i) nn = Math.min(nn, Math.hypot(q[0] - P2[i][0], q[1] - P2[i][1])); });
+    cx.beginPath(); cx.arc(P2[i][0], P2[i][1], Math.min(s.rad * rr / lensG(Math.hypot(s.x, s.y)), nn * .44), 0, TAU); cx.fill();
+  });
+  cx.restore();
+  cx.beginPath(); cx.arc(CX, CY, rr, 0, TAU); cx.lineWidth = 1.2; cx.strokeStyle = css(TOK['--hub-core-a'], fade); cx.stroke();
+}
+function seedScreen(s, rr) {
+  var r = Math.hypot(s.x, s.y), d = r > 1e-4 ? lensInv(r) : 0, k = r > 1e-4 ? d / r : 1 / .68;
+  return [CX + s.x * k * rr, CY - s.y * k * rr, d];
 }
 
-/* ---- targets: K strokes of P points each, in screen px ---- */
+/* ---- the shell: a tesseract, rotated in three 4D planes ---- */
+var V4 = [], EDGES = [];
+for (var v = 0; v < 16; v++) V4.push([v & 1 ? 1 : -1, v & 2 ? 1 : -1, v & 4 ? 1 : -1, v & 8 ? 1 : -1]);
+for (var a = 0; a < 16; a++) for (var bb = 0; bb < 4; bb++) { var c = a ^ (1 << bb); if (c > a) EDGES.push([a, c]); }
+var NE = EDGES.length, PV = [], PZ = new Float32Array(16);
+function shellVerts(A, B, C, Y, sc) {
+  var cA = Math.cos(A), sA = Math.sin(A), cB = Math.cos(B), sB = Math.sin(B), cC = Math.cos(C), sC = Math.sin(C), cY = Math.cos(Y), sY = Math.sin(Y);
+  var cT = Math.cos(.38), sT = Math.sin(.38);
+  for (var i = 0; i < 16; i++) {
+    var x = V4[i][0] * .5, y = V4[i][1] * .5, z = V4[i][2] * .5, w = V4[i][3] * .5;
+    var x1 = x * cA - w * sA, w1 = x * sA + w * cA;
+    var y1 = y * cB - z * sB, z1 = y * sB + z * cB;
+    var z2 = z1 * cC - w1 * sC, w2 = z1 * sC + w1 * cC;
+    var s = 1 / (1.6 - w2), X = x1 * s, Yy = y1 * s, Z = z2 * s;
+    var X2 = X * cY + Z * sY, Z2 = -X * sY + Z * cY;
+    var Y2 = Yy * cT - Z2 * sT, Z3 = Yy * sT + Z2 * cT;
+    PV[i] = [CX + X2 * sc, CY + Y2 * sc]; PZ[i] = Z3 + w2 * .5;
+  }
+}
+var SX = [], SZ = [];
+function shellStrokes(K) {
+  while (SX.length < K) SX.push(new Float32Array(P * 2));
+  for (var k = 0; k < K; k++) {
+    var e = EDGES[k % NE], A = PV[e[0]], B = PV[e[1]], o = SX[k];
+    for (var p = 0; p < P; p++) { var t = p / (P - 1); o[2 * p] = lerp(A[0], B[0], t); o[2 * p + 1] = lerp(A[1], B[1], t); }
+    SZ[k] = (PZ[e[0]] + PZ[e[1]]) / 2;
+  }
+}
+/* brush ink: each edge is painted now and then, a tapered stroke laid beside it that grows along it and dries off */
+var BR = EDGES.map(function (e, k) { return { per: 5 + 6 * hash(k + 3), ph: hash(k + 11) * 9, side: hash(k + 5) > .5 ? 1 : -1, w: .55 + .7 * hash(k + 17) }; });
+function brush(pts, i0, i1, wmax, side, col, al) {
+  if (i1 - i0 < 2 || al <= .01) return;
+  var L = [], R2 = [];
+  for (var p = i0; p <= i1; p++) {
+    var pa = Math.max(i0, p - 1), pb = Math.min(i1, p + 1);
+    var dx = pts[2 * pb] - pts[2 * pa], dy = pts[2 * pb + 1] - pts[2 * pa + 1], l = Math.hypot(dx, dy) || 1, nx = -dy / l, ny = dx / l;
+    var s = (p - i0) / (i1 - i0), w = wmax * Math.pow(Math.sin(Math.PI * s), .55) * (.85 + .15 * Math.sin(p * 1.7));
+    var off = side * (wmax * .55 + 2);
+    var x = pts[2 * p] + nx * off, y = pts[2 * p + 1] + ny * off;
+    L.push([x + nx * w / 2, y + ny * w / 2]); R2.push([x - nx * w / 2, y - ny * w / 2]);
+  }
+  cx.beginPath(); cx.moveTo(L[0][0], L[0][1]);
+  for (var j = 1; j < L.length; j++) cx.lineTo(L[j][0], L[j][1]);
+  for (j = R2.length - 1; j >= 0; j--) cx.lineTo(R2[j][0], R2[j][1]);
+  cx.closePath(); cx.fillStyle = css(col, al * .72); cx.fill();
+  /* bristles: two dry lines through the stroke */
+  cx.lineWidth = .6; cx.strokeStyle = css(col, al * .5);
+  for (var bq = 0; bq < 2; bq++) {
+    cx.beginPath();
+    for (j = 0; j < L.length; j++) { var f = .25 + .5 * bq, x2 = lerp(L[j][0], R2[j][0], f), y2 = lerp(L[j][1], R2[j][1], f); if (j) cx.lineTo(x2, y2); else cx.moveTo(x2, y2); }
+    cx.stroke();
+  }
+}
+/* the radial bloom: ink strokes thrown out from the centre on a press or a choice */
+var BLOOM = null;
+function bloom(now, n, reach, al) {
+  BLOOM = { t0: now, s: [], reach: reach, al: al };
+  for (var i = 0; i < n; i++) BLOOM.s.push({ a: hash(i + now % 97) * TAU, l: .5 + .9 * hash(i * 3.1 + 1), w: .4 + hash(i * 7.3 + 2), d: hash(i * 1.9 + 4) * 140 });
+}
+function drawBloom(now, col) {
+  if (!BLOOM) return;
+  var el = now - BLOOM.t0;
+  if (el > 1300) { BLOOM = null; return; }
+  BLOOM.s.forEach(function (s) {
+    var t = clamp((el - s.d) / 380), f = 1 - clamp((el - s.d - 420) / 600);
+    if (t <= 0 || f <= 0) return;
+    var r0 = R * .35, r1 = R * (1 + BLOOM.reach * s.l * ease(t)), wm = R * .06 * s.w, pts = new Float32Array(24);
+    for (var p = 0; p < 12; p++) { var r = lerp(r0, r1, p / 11); pts[2 * p] = CX + Math.cos(s.a) * r; pts[2 * p + 1] = CY + Math.sin(s.a) * r; }
+    brush(pts, 0, 11, wm, 0, col, BLOOM.al * f);
+  });
+}
+
+/* ---- targets: strokes of P points each, in screen px ---- */
 function resample(poly, closed) {
   var pts = closed ? poly.concat([poly[0]]) : poly, L = [0];
   for (var i = 1; i < pts.length; i++) L.push(L[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
@@ -1938,7 +2042,6 @@ function resample(poly, closed) {
   return out;
 }
 function circle(x, y, r, n) { var a = []; for (var i = 0; i < (n || 48); i++) { var t = i / (n || 48) * TAU; a.push([x + r * Math.cos(t), y + r * Math.sin(t)]); } return a; }
-/* fit strokes drawn in model units into a box, keeping aspect */
 function fit(strokes, box) {
   var x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
   strokes.forEach(function (s) { s.poly.forEach(function (q) { x0 = Math.min(x0, q[0]); x1 = Math.max(x1, q[0]); y0 = Math.min(y0, q[1]); y1 = Math.max(y1, q[1]); }); });
@@ -1948,28 +2051,17 @@ function fit(strokes, box) {
   });
 }
 function centreBox(f) { var s = Math.min(W, H) * f; return { x: CX - s, y: CY - s * .8, w: 2 * s, h: 1.6 * s }; }
-/* 0 notes: the closed stepped block, six slabs, three faces each, painted bottom slab first */
+var BOX = [];
+/* 0 notes: the block on this page, face for face, so the hand-off is a dissolve onto the real drawing */
 function tNotes() {
-  var C = Math.sqrt(3) / 2, S = .5, Wd = 10, h = 1.15, st = [];
-  var Pj = function (x, y, z) { return [(x - y) * C, (x + y) * S - z]; };
-  for (var i = 0; i < 6; i++) {
-    var D = Wd - i * 1.35, z0 = i * h, z1 = z0 + h;
-    st.push({ poly: [Pj(0, D, z0), Pj(Wd, D, z0), Pj(Wd, D, z1), Pj(0, D, z1)], closed: true, fill: '--bd-plum' });
-    st.push({ poly: [Pj(Wd, 0, z0), Pj(Wd, D, z0), Pj(Wd, D, z1), Pj(Wd, 0, z1)], closed: true, fill: '--bd-mauve' });
-    st.push({ poly: [Pj(0, 0, z1), Pj(Wd, 0, z1), Pj(Wd, D, z1), Pj(0, D, z1)], closed: true, fill: '--bd-lilac', w: 1.5 });
-  }
-  var box = centreBox(.3);
-  try {
-    var r = window.STRATA && window.STRATA.fig();
-    /* land where the real block sits, so the hand-off to the page is a dissolve, not a jump */
-    if (r && r.width > 40 && r.height > 40 && r.top < H) box = PHONE ? { x: r.left + r.width * .05, y: Math.max(r.top, 0) + r.height * .08, w: r.width * .9, h: Math.min(r.height, H - r.top) * .84 }
-      : { x: r.left + r.width * .11, y: Math.max(r.top, 0) + r.height * .26, w: r.width * .6, h: Math.min(r.height, H - r.top) * .56 };
-  } catch (e) {}
-  return fit(st, box);
+  var F = [];
+  try { F = window.STRATA.faces(); } catch (e) {}
+  if (!F.length) return tGear();
+  return F.map(function (f) { return { pts: resample(f.poly, true), closed: true, w: 1, fill: f.fill }; });
 }
-/* 1 Resurface: nested survey contours of a raised earthwork, every fifth an index contour */
+/* 1 Resurface: nested survey contours. KEEP IN STEP with ancient-works web/arrive.js, which redraws this frame */
 function tContours() {
-  var st = [];
+  var st = [], K = 18;
   for (var k = 0; k < K; k++) {
     var r0 = .1 + .9 * k / (K - 1), poly = [];
     for (var i = 0; i < 90; i++) {
@@ -1979,7 +2071,8 @@ function tContours() {
     }
     st.push({ poly: poly, closed: true, w: k % 5 === 4 ? 2.1 : .95 });
   }
-  return fit(st, centreBox(.36));
+  BOX[1] = centreBox(.36);
+  return fit(st, BOX[1]);
 }
 /* 2 projects: a spur gear in front and side view, with centre lines and one dimension */
 function tGear() {
@@ -2007,7 +2100,8 @@ var TG = [], MAKE = [tNotes, tContours, tGear], INK = ['--bd-ink', '--rs-ink', '
 function target(k) { if (!TG[k]) TG[k] = MAKE[k](); return TG[k]; }
 
 /* ---- state ---- */
-var PX = -1e4, PY = -1e4, SM = { x: 0, y: 0 }, NEAR = 0, PULSE = 0, HOV = -1, LAST = 0, MH = 0, GO = null, raf = 0, T0 = performance.now(), prev = 0, ON = false;
+var PX = -1e4, PY = -1e4, SM = { x: 0, y: 0 }, NEAR = 0, PULSE = 0, HOV = -1, LAST = 0, MH = 0, VIV = 0, VK = 0;
+var GO = null, raf = 0, T0 = performance.now(), prev = 0, ON = false;
 function proximity() { var d = Math.hypot(PX - CX, PY - CY) / R; return clamp(1.5 - d / 3.2); }
 
 function frame(now) {
@@ -2018,65 +2112,103 @@ function frame(now) {
   var kf = 1 - Math.exp(-dt / 220);
   SM.x += (clamp((PX - CX) / W + .5) - .5 - SM.x) * kf; SM.y += (clamp((PY - CY) / H + .5) - .5 - SM.y) * kf;
   NEAR += (proximity() - NEAR) * kf;
-  PULSE *= Math.exp(-dt / 600);
-  var ph = 1 + .5 * Math.sin(t * 2.4) * KN['--hub-pulse'];
+  PULSE *= Math.exp(-dt / 500);
   MH += ((HOV >= 0 ? .17 : 0) - MH) * (1 - Math.exp(-dt / 200));
+  VIV += ((HOV >= 0 || GO ? 1 : 0) - VIV) * (1 - Math.exp(-dt / 160));
+  if (HOV >= 0) VK = HOV; else if (GO) VK = GO.k;
   var dur = Math.max(300, KN['--hub-morph']), pr = 0, m, tg = GO ? GO.k : HOV >= 0 ? HOV : LAST;
-  if (GO) { pr = clamp((now - GO.t0) / dur); m = Math.max(MH, ease(clamp((pr - .06) / .82))); } else m = MH;
-  var fade = GO ? 1 - ease(clamp(pr / .55)) : 1, pop = GO ? ease(clamp((pr - .28) / .5)) : 0;
-  paper.style.opacity = pop.toFixed(3);
+  if (GO) { pr = clamp((now - GO.t0) / dur); m = Math.max(MH, ease(clamp((pr - .12) / .78))); } else m = MH;
+  /* Notes clears the ground late, once the lines are near the block, so the page never shows under a scribble */
+  var fade = GO ? 1 - ease(clamp(pr / .5)) : 1, pop = GO ? ease(clamp((pr - (GO.k === 0 ? .5 : .28)) / (GO.k === 0 ? .42 : .5))) : 0;
+  /* Notes lands on the page itself: the hub's ground clears to show it; the others take their own paper */
+  if (GO && GO.k === 0) { bg.style.opacity = (1 - pop).toFixed(3); paper.style.opacity = 0; }
+  else { bg.style.opacity = 1; paper.style.opacity = pop.toFixed(3); }
 
-  var A = t * .21 + SM.x * 1.1, B = t * .13 + SM.y * 1.1, Cc = t * .083, Y = t * .05 + SM.x * .4;
-  shell(A, B, Cc, Y);
-  drawGL(t, fade, PULSE * KN['--hub-pulse'], NEAR);
+  /* cells: drift, squish away from the pointer (lens units), swell on a press */
+  var rr = R * (.4 + .6 * fade), px = (PX - CX) / rr, py = -(PY - CY) / rr, rot = t * .05;
+  var pq = Math.hypot(px, py), pk = pq > 1e-4 ? (.68 * pq + .32 * pq * pq * pq) / pq : 1; px *= pk; py *= pk;
+  SEED.forEach(function (s, i) {
+    var c = Math.cos(rot), sn = Math.sin(rot), hx = s.hx * c - s.hy * sn, hy = s.hx * sn + s.hy * c;
+    var x = hx + .045 * Math.sin(t * .7 + i * 1.3), y = hy + .045 * Math.cos(t * .6 + i * 1.7);
+    var dx = x - px, dy = y - py, dd = dx * dx + dy * dy, f = .16 * Math.exp(-dd / .09) * clamp(NEAR * 1.5);
+    x += dx * f / Math.sqrt(dd + 1e-3) * .6; y += dy * f / Math.sqrt(dd + 1e-3) * .6;
+    var e = 1 + .08 * PULSE * KN['--hub-pulse']; x *= e; y *= e;
+    s.x = x; s.y = y; SU[3 * i] = x; SU[3 * i + 1] = y; SU[3 * i + 2] = s.rad * (1 + .05 * Math.sin(t * 1.3 + i));
+  });
+  drawGL(t, fade, VIV * (1 - pop), VK);
+
+  var A = t * .19 + SM.x * 1.2, B = t * .11 + SM.y * 1.2, Cc = t * .071, Y = t * .045 + SM.x * .4;
+  shellVerts(A, B, Cc, Y, R * 2.15);
+  var T = m > .001 ? target(tg) : null, K = Math.max(NE, T ? T.length : 0);
+  shellStrokes(K);
 
   cx.setTransform(D2, 0, 0, D2, 0, 0); cx.clearRect(0, 0, W, H);
-  /* the drafting layer that never leaves the future one: a protractor ring and crosshair */
-  var ra = (1 - m) * .5, dim = TOK['--hub-dim'];
+  cx.globalCompositeOperation = 'source-over'; cx.lineJoin = 'round'; cx.lineCap = 'round';
+  var dim = TOK['--hub-dim'], lineC = TOK['--hub-line'], ra = (1 - m) * (1 - pop);
+  drawCells2D(fade);
+  /* construction: tangent guides, the tick ring that swells toward the pointer, a star at one node */
   if (ra > .01) {
-    cx.globalCompositeOperation = 'source-over'; cx.lineWidth = 1; cx.strokeStyle = css(dim, ra);
-    var rr = R * 2.4, rot = Cc;
-    cx.beginPath(); cx.arc(CX, CY, rr, 0, TAU); cx.stroke();
+    cx.lineWidth = 1; cx.strokeStyle = css(dim, .32 * ra); cx.setLineDash([3, 5]);
     cx.beginPath();
-    for (var i = 0; i < 120; i++) {
-      var a = i / 120 * TAU + rot, l = i % 10 === 0 ? 9 : i % 5 === 0 ? 5 : 2.5;
-      cx.moveTo(CX + Math.cos(a) * rr, CY + Math.sin(a) * rr); cx.lineTo(CX + Math.cos(a) * (rr + l), CY + Math.sin(a) * (rr + l));
+    [CX - R, CX + R].forEach(function (x) { cx.moveTo(x, 0); cx.lineTo(x, H); });
+    [CY - R, CY + R].forEach(function (y) { cx.moveTo(0, y); cx.lineTo(W, y); });
+    cx.stroke(); cx.setLineDash([]);
+    var rg = R * RING, pa = Math.atan2(PY - CY, PX - CX), sw = clamp(NEAR * 1.4);
+    cx.strokeStyle = css(dim, .5 * ra); cx.beginPath(); cx.arc(CX, CY, rg, 0, TAU); cx.stroke();
+    cx.beginPath();
+    for (var i = 0; i < 144; i++) {
+      var an = i / 144 * TAU, da = Math.atan2(Math.sin(an - pa), Math.cos(an - pa));
+      var l = (i % 12 === 0 ? 8 : i % 6 === 0 ? 5 : 2.5) + 15 * sw * Math.exp(-da * da / .03);
+      cx.moveTo(CX + Math.cos(an) * rg, CY + Math.sin(an) * rg); cx.lineTo(CX + Math.cos(an) * (rg + l), CY + Math.sin(an) * (rg + l));
     }
     cx.stroke();
-    cx.setLineDash([2, 4]); cx.beginPath();
-    var ri = R * 2.15;
-    cx.moveTo(CX - rr - 26, CY); cx.lineTo(CX - ri, CY); cx.moveTo(CX + ri, CY); cx.lineTo(CX + rr + 26, CY);
-    cx.moveTo(CX, CY - rr - 22); cx.lineTo(CX, CY - ri); cx.moveTo(CX, CY + ri); cx.lineTo(CX, CY + rr + 22);
-    cx.stroke(); cx.setLineDash([]);
-    cx.fillStyle = css(dim, ra * 1.4); cx.font = '500 9.5px "IBM Plex Mono", ui-monospace, monospace'; cx.textAlign = 'center'; cx.textBaseline = 'middle';
-    for (var q = 0; q < 8; q++) { var aq = q / 8 * TAU + rot; cx.fillText(String(q * 45).padStart(3, '0'), CX + Math.cos(aq) * (rr + 20), CY + Math.sin(aq) * (rr + 20)); }
+    cx.fillStyle = css(dim, .9 * ra); cx.font = '500 9.5px "IBM Plex Mono", ui-monospace, monospace'; cx.textAlign = 'center'; cx.textBaseline = 'middle';
+    for (var q = 0; q < 8; q++) { var aq = q / 8 * TAU; cx.fillText(String(q * 45).padStart(3, '0'), CX + Math.cos(aq) * (rg + 24), CY + Math.sin(aq) * (rg + 24)); }
+    var sx = CX - R, sy = CY - R, ss = 7;
+    cx.fillStyle = css(lineC, .75 * ra); cx.beginPath();
+    cx.moveTo(sx, sy - ss); cx.quadraticCurveTo(sx, sy, sx + ss, sy); cx.quadraticCurveTo(sx, sy, sx, sy + ss); cx.quadraticCurveTo(sx, sy, sx - ss, sy); cx.quadraticCurveTo(sx, sy, sx, sy - ss);
+    cx.fill();
   }
-  var T = m > .001 ? target(tg) : null, glow = pop < .35;
-  var ink = mix(TOK['--hub-line'], TOK[INK[tg]], ease(clamp((m - .3) / .6)));
-  var fillA = tg === 0 ? clamp((m - .72) / .25) : 0;
-  var zmin = 1e9, zmax = -1e9;
+  /* cell numbers, in the gap colour, over the ink cells */
+  if (fade > .05) {
+    cx.textAlign = 'center'; cx.textBaseline = 'middle';
+    SEED.forEach(function (s) {
+      var p = seedScreen(s, rr); if (p[2] > .9) return;
+      var fs = Math.max(8, s.rad * rr * .55 * (1.15 - p[2] * .5));
+      cx.font = '500 ' + fs.toFixed(1) + 'px "Archivo Narrow", "Helvetica Neue", Arial, sans-serif';
+      cx.fillStyle = css(mix(TOK['--hub-core-b'], [1, 1, 1], VIV * .6), fade * (.9 - .5 * p[2]));
+      cx.fillText(String(s.n), p[0], p[1]);
+    });
+  }
+  /* the shell, bending into the chosen drawing */
+  var ink = mix(lineC, TOK[INK[tg]], ease(clamp((m - .3) / .6)));
+  var fillA = tg === 0 ? clamp((m - .72) / .25) : 0, zmin = 1e9, zmax = -1e9;
   for (var k = 0; k < K; k++) { zmin = Math.min(zmin, SZ[k]); zmax = Math.max(zmax, SZ[k]); }
-  cx.lineJoin = 'round'; cx.lineCap = 'round';
+  var BUF = frame.buf || (frame.buf = new Float32Array(P * 2));
   for (k = 0; k < K; k++) {
-    var S = SX[k], Tk = T ? T[k] : null, depth = .3 + .7 * (SZ[k] - zmin) / ((zmax - zmin) || 1), al = lerp(depth, 1, m);
-    cx.beginPath();
+    var S = SX[k], Tk = T ? T[k] : null, depth = .35 + .65 * (SZ[k] - zmin) / ((zmax - zmin) || 1);
+    var al = Tk ? lerp(depth, 1, m) : depth * (T ? 1 - m : 1);
+    if (k >= NE && !Tk) continue;
+    if (al <= .005) continue;
     for (var p = 0; p < P; p++) {
-      var x = Tk ? lerp(S[2 * p], Tk.pts[2 * p], m) : S[2 * p], y = Tk ? lerp(S[2 * p + 1], Tk.pts[2 * p + 1], m) : S[2 * p + 1];
-      if (p) cx.lineTo(x, y); else cx.moveTo(x, y);
+      BUF[2 * p] = Tk ? lerp(S[2 * p], Tk.pts[2 * p], m) : S[2 * p];
+      BUF[2 * p + 1] = Tk ? lerp(S[2 * p + 1], Tk.pts[2 * p + 1], m) : S[2 * p + 1];
     }
-    if (!Tk || m < .5 || Tk.closed) cx.closePath();
-    if (fillA > 0 && Tk && Tk.fill) { cx.globalCompositeOperation = 'source-over'; cx.fillStyle = css(TOK[Tk.fill], fillA); cx.fill(); }
-    var lw = Tk ? lerp(1.1, Tk.w, m) : 1.1;
-    if (glow) {
-      cx.globalCompositeOperation = 'lighter';
-      cx.strokeStyle = css(ink, .1 * al * KN['--hub-glow'] * (.7 + .3 * ph)); cx.lineWidth = lw + 3.5; cx.stroke();
-      cx.strokeStyle = css(ink, Math.min(1, .62 * al * (.8 + .2 * ph) + .3 * PULSE)); cx.lineWidth = lw; cx.stroke();
-    } else {
-      cx.globalCompositeOperation = 'source-over';
-      cx.strokeStyle = css(ink, Math.min(1, al)); cx.lineWidth = lw; cx.stroke();
+    cx.beginPath();
+    for (p = 0; p < P; p++) { if (p) cx.lineTo(BUF[2 * p], BUF[2 * p + 1]); else cx.moveTo(BUF[0], BUF[1]); }
+    if (Tk && m > .5 && Tk.closed) cx.closePath();
+    if (fillA > 0 && Tk && Tk.fill) { cx.fillStyle = css(TOK[Tk.fill], fillA); cx.fill(); }
+    cx.lineWidth = Tk ? lerp(.8, Tk.w, m) : .8;
+    cx.strokeStyle = css(ink, Math.min(1, al * (Tk ? lerp(.7, 1, m) : .7)));
+    cx.stroke();
+    /* brush ink on the edge, fading as the morph takes over */
+    if (k < NE && m < .6) {
+      var b = BR[k], ph = ((t + b.ph) % b.per) / b.per, grow = clamp(ph / .22), dry = 1 - clamp((ph - .45) / .3);
+      var wm = R * .085 * b.w * KN['--hub-ink'] * (.7 + .3 * depth);
+      if (dry > 0) brush(BUF, Math.round((P - 1) * .08), Math.round((P - 1) * (.08 + .84 * grow)), wm, b.side, lineC, dry * (1 - m / .6) * (.45 + .55 * depth));
     }
   }
-  cx.globalCompositeOperation = 'source-over';
+  drawBloom(now, lineC);
   if (ro && (!frame.ro || now - frame.ro > 100)) {
     frame.ro = now;
     var f = function (v) { v = ((v % TAU) + TAU) % TAU; return v.toFixed(3); };
@@ -2092,8 +2224,10 @@ function choose(k) {
   if (GO) return;
   LAST = k; TG.length = 0;
   paper.className = 'hub-paper' + (PAPER[k] ? ' ' + PAPER[k] : '');
+  if (k === 0) try { window.STRATA.hold(true); } catch (e) {}
   if (RM) { GO = { k: k, t0: -1e9 }; finish(k); return; }
-  GO = { k: k, t0: performance.now() }; PULSE = 1;
+  var now = performance.now();
+  GO = { k: k, t0: now }; PULSE = 1; bloom(now, 30, .75, .55);
   hub.classList.add('go');
   kick();
 }
@@ -2101,12 +2235,20 @@ function finish(k) {
   if (k === 0) {
     /* a real hash change, so the page's router shows plate 1 even if a note was open under the hub */
     try { location.hash = '#plate-1'; } catch (e) {}
-    try { window.STRATA.reveal(); } catch (e) {}
+    try { window.STRATA.reveal(); window.STRATA.hold(false); } catch (e) {}
     hub.classList.add('out');
-    setTimeout(function () { hide(); }, RM ? 0 : 520);
-  } else setTimeout(function () { location.assign(DEST[k]); }, RM ? 0 : 160);
+    setTimeout(function () { hide(); }, RM ? 0 : 620);
+  } else {
+    var url = DEST[k];
+    /* Resurface redraws the last frame and fades into its map: tell it where the contours were */
+    if (k === 1 && BOX[1]) url += '?via=hub&b=' + [BOX[1].x, BOX[1].y, BOX[1].w, BOX[1].h].map(Math.round).join(',') + '&v=' + W + ',' + H;
+    setTimeout(function () { location.assign(url); }, RM ? 0 : 60);
+  }
 }
-function reset() { GO = null; HOV = -1; MH = 0; PULSE = 0; prev = 0; hub.classList.remove('go', 'out'); paper.style.opacity = 0; }
+function reset() {
+  GO = null; HOV = -1; MH = 0; PULSE = 0; VIV = 0; prev = 0; BLOOM = null;
+  hub.classList.remove('go', 'out'); paper.style.opacity = 0; bg.style.opacity = 1;
+}
 function show() {
   reset();
   root.classList.add('hub-on'); ON = true;
@@ -2120,7 +2262,7 @@ hub.addEventListener('pointermove', function (e) { PX = e.clientX; PY = e.client
 hub.addEventListener('pointerleave', function () { PX = PY = -1e4; });
 hub.addEventListener('pointerdown', function (e) {
   PX = e.clientX; PY = e.clientY;
-  if (!e.target.closest('button') && Math.hypot(PX - CX, PY - CY) < R * 2.1) PULSE = 1;
+  if (!e.target.closest('button') && Math.hypot(PX - CX, PY - CY) < R * 2.3 && !GO) { PULSE = 1; bloom(performance.now(), 26, 1.1, .7); }
   kick();
 });
 hub.querySelectorAll('.hub-opts button').forEach(function (b) {
@@ -2152,7 +2294,7 @@ if (home) home.addEventListener('click', function (e) {
 });
 window.addEventListener('devkit', function () { readTokens(); if (ON) { layout(); kick(); } });
 
-if (!initGL()) fallback();
+if (!initGL()) glc.style.display = 'none';
 if (root.classList.contains('hub-on')) { ON = true; layout(); kick(); }
 /* the options' height sets where the orb sits; measure again once the real fonts are in */
 try { document.fonts.ready.then(function () { if (ON) layout(); }); } catch (e) {}
@@ -2175,10 +2317,10 @@ var GROUPS = [
   ['Block faces', ['--bd-plum', '--bd-mauve', '--bd-lilac']],
   ['Topic tints', ['--bd-blue', '--bd-pink', '--bd-cyan', '--bd-greylilac', '--bd-ore']],
   ['Hub', ['--hub-void', '--hub-void-2', '--hub-line', '--hub-core-a', '--hub-core-b', '--hub-rim', '--hub-text', '--hub-dim']],
-  ['Morph targets', ['--rs-paper', '--rs-ink', '--bp-ground', '--bp-line', '--emb-bg']]
+  ['Morph targets', ['--rs-paper', '--rs-ink', '--rs-ochre', '--rs-deep', '--bp-ground', '--bp-line', '--bp-sky', '--emb-bg']]
 ];
 var KNOBS = [['--hub-orb', 'Orb size', .05, .2, .005], ['--hub-spin', 'Spin', 0, 3, .05], ['--hub-pulse', 'Pulse', 0, 3, .05],
-  ['--hub-glow', 'Glow', 0, 3, .05], ['--hub-morph', 'Morph ms', 400, 4000, 50]];
+  ['--hub-ink', 'Brush ink', 0, 3, .05], ['--hub-morph', 'Morph ms', 400, 4000, 50]];
 var TOKS = [].concat.apply([], GROUPS.map(function (g) { return g[1]; }));
 var ALL = TOKS.concat(KNOBS.map(function (k) { return k[0]; }));
 var PRESETS = {
@@ -2187,17 +2329,17 @@ var PRESETS = {
     '--desk': '#132A44', '--bd-paper': '#21476F', '--bd-paper-2': '#1A3A5C', '--bd-tab': '#2A5279', '--bd-ink': '#EAF2F8', '--bd-ink-2': '#A8C1D6', '--survey': '#FF6F5E',
     '--bd-plum': '#173352', '--bd-mauve': '#2C5A86', '--bd-lilac': '#3E6F9F',
     '--bd-blue': '#8FC1E3', '--bd-pink': '#F0C8A2', '--bd-cyan': '#C2ECF0', '--bd-greylilac': '#7F9DBB', '--bd-ore': '#FFB347',
-    '--hub-void': '#030A16', '--hub-void-2': '#0C2140', '--hub-line': '#8FD3FF', '--hub-core-a': '#071B36', '--hub-core-b': '#2C6FB3', '--hub-rim': '#C2ECF0', '--hub-text': '#EAF2F8', '--hub-dim': '#7F9DBB' } },
+    '--hub-void': '#0F2C4E', '--hub-void-2': '#1D4F91', '--hub-line': '#EAF2F8', '--hub-core-a': '#0B1E36', '--hub-core-b': '#DCEBF7', '--hub-rim': '#8FD3FF', '--hub-text': '#EAF2F8', '--hub-dim': '#8FB0CC' } },
   Night: { scheme: 'dark', v: {
     '--desk': '#0B0A11', '--bd-paper': '#16151F', '--bd-paper-2': '#201E2C', '--bd-tab': '#24212F', '--bd-ink': '#ECE7F5', '--bd-ink-2': '#A39DB8', '--survey': '#FF3D6E',
     '--bd-plum': '#2B2142', '--bd-mauve': '#3F2F5E', '--bd-lilac': '#554277',
     '--bd-blue': '#5CC8FF', '--bd-pink': '#FF7EB6', '--bd-cyan': '#6FFFE9', '--bd-greylilac': '#9D8CFF', '--bd-ore': '#FFB020',
-    '--hub-void': '#040308', '--hub-void-2': '#1A0E2E', '--hub-line': '#6FFFE9', '--hub-core-a': '#12072A', '--hub-core-b': '#6A2BD9', '--hub-rim': '#FF7EB6', '--hub-text': '#ECE7F5', '--hub-dim': '#8C86A0' } },
+    '--hub-void': '#07070C', '--hub-void-2': '#17132A', '--hub-line': '#CFE9F0', '--hub-core-a': '#0B0B10', '--hub-core-b': '#EDEAF5', '--hub-rim': '#FF7EB6', '--hub-text': '#ECE7F5', '--hub-dim': '#8C86A0' } },
   Vellum: { scheme: '', v: {
     '--desk': '#C3C9B5', '--bd-paper': '#EEF0E6', '--bd-paper-2': '#DCE2D1', '--bd-tab': '#D5DBC9', '--bd-ink': '#22302A', '--bd-ink-2': '#56655C', '--survey': '#D9481C',
     '--bd-plum': '#4E6B5E', '--bd-mauve': '#92B09F', '--bd-lilac': '#C9D9CC',
     '--bd-blue': '#7FA7C9', '--bd-pink': '#E6A57E', '--bd-cyan': '#A8D8C8', '--bd-greylilac': '#A3A89A', '--bd-ore': '#E8732C',
-    '--hub-void': '#0A0F0C', '--hub-void-2': '#13241C', '--hub-line': '#B6F2C8', '--hub-core-a': '#0B2018', '--hub-core-b': '#3E8F66', '--hub-rim': '#E8732C', '--hub-text': '#EEF0E6', '--hub-dim': '#8FA096' } }
+    '--hub-void': '#E4E8DC', '--hub-void-2': '#F5F7F0', '--hub-line': '#22302A', '--hub-core-a': '#1C2A23', '--hub-core-b': '#F4F6EF', '--hub-rim': '#E8732C', '--hub-text': '#22302A', '--hub-dim': '#6F7D73' } }
 };
 /* the stylesheet's own values, read with the overrides lifted for a moment */
 var DEF = {}, cs = getComputedStyle(root);
