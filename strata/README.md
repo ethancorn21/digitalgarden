@@ -1,6 +1,6 @@
 # Garden Strata
 
-The block-diagram site for ethanlawcorn.com: every atomic note is a tile, every calendar month a level of an
+The block-diagram site for writing.ethanlawcorn.com: every atomic note is a tile, every calendar month a level of an
 isometric block in the USGS Block Diagram style. The levels open into an aligned stack. Hover a layer to slide
 it out; hover a note for its links; click a note to raise it and slide its linked levels out to the right.
 

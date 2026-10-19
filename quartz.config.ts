@@ -14,7 +14,7 @@ const config: QuartzConfig = {
     enablePopovers: true,
     analytics: null,
     locale: "en-US",
-    baseUrl: "ethanlawcorn.com",
+    baseUrl: "writing.ethanlawcorn.com",
     ignorePatterns: ["private", "templates", ".obsidian", "1 - rough notes", "6 - templates", "8 - miscellaneous"],
     defaultDateType: "created",
     theme: {

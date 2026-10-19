@@ -13,7 +13,6 @@
     "nodejs_compat"
   ],
   "routes": [
-    { "pattern": "ethanlawcorn.com", "custom_domain": true },
-    { "pattern": "www.ethanlawcorn.com", "custom_domain": true }
+    { "pattern": "writing.ethanlawcorn.com", "custom_domain": true }
   ]
 }
