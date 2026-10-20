@@ -46,7 +46,15 @@ const NAME = "Ethan Law Corn"
 const INTRO =
   "Hi, these are from my notes which are automatically published. Most of my views will be wrong, so hit me and let me know why."
 const SIGN = "E"
-const ELSEWHERE = `<div class="elsewhere"><a href="https://github.com/ethancorn21">GitHub</a><a href="https://open.spotify.com/user/ethancorn-us">Spotify</a></div>`
+// where to find Ethan, as words (never the bare address); on the index they sit under his note, which asks readers to write
+const LINKS: [string, string][] = [
+  ["Homepage", "https://ethanlawcorn.com"],
+  ["GitHub", "https://github.com/ethancorn21"],
+  ["LinkedIn", "https://www.linkedin.com/in/ethancorn/"],
+  ["Email", "mailto:ethancorn82@gmail.com"],
+  ["Spotify", "https://open.spotify.com/user/ethancorn-us"],
+]
+const ELSEWHERE = `<div class="elsewhere">${LINKS.map(([t, u]) => `<a href="${u}">${t}</a>`).join(" ")}</div>`
 const MONTHS = [
   "January",
   "February",
@@ -574,7 +582,7 @@ fs.writeFileSync(
     head: LEGACY_JS,
     body:
       `<div class="col index"><script>${HERO_JS}</script><noscript>${heroes[0].html}</noscript>` +
-      `<section class="intro letter"><h1 class="vh">${NAME}</h1><p>${esc(INTRO)}</p><p class="sign">— ${SIGN}</p></section>${toc}${ELSEWHERE}</div>${FOOT()}`,
+      `<section class="intro letter"><h1 class="vh">${NAME}</h1><p>${esc(INTRO)}</p><p class="sign">— ${SIGN}</p>${ELSEWHERE}</section>${toc}</div>${FOOT()}`,
   }),
 )
 

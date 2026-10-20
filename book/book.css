@@ -140,6 +140,8 @@ a:hover {
 /* the index opens with a short signed note in the title face */
 .letter {
   gap: 12px;
+}
+.letter p {
   font-family: var(--title-font);
   font-size: 1.45em;
   font-weight: 500;
@@ -147,6 +149,11 @@ a:hover {
 }
 .letter .sign {
   font-style: italic;
+}
+.letter .elsewhere {
+  margin-top: 12px;
+  padding-top: 0;
+  border-top: 0;
 }
 .vh {
   position: absolute;
@@ -392,10 +399,11 @@ html.md .body ol {
 }
 
 /* ---------- foot ---------- */
+/* words joined by spaces, so a phone breaks the row into two even lines instead of leaving one link alone */
 .elsewhere {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 24px;
+  word-spacing: 1.1em;
+  line-height: 2;
+  text-wrap: balance;
   padding-top: 24px;
   border-top: 1px solid var(--rule);
   font-size: 0.85em;
