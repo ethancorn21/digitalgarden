@@ -1,0 +1,412 @@
+/* Book: one serif column, ink on paper, nothing but type (canvas "Garden, plain", direction A).
+   Every colour and face is a token on :root, so the dev kit (--dev builds only) reaches all of it. No dark mode:
+   Ethan 2026-10-19, the garden is ink on paper only. */
+:root {
+  --bg: #fdfcfa;
+  --ink: #1c1b19;
+  --muted: #68655f;
+  --rule: #e4e1db;
+  --line: #b9b5ad;
+  --serif: Literata, Georgia, "Times New Roman", serif;
+  --display: "Cormorant Garamond", Garamond, "Times New Roman", serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  /* faces: Cormorant for titles and labels, Literata for reading */
+  --body-font: var(--serif);
+  --title-font: var(--display);
+  --title-weight: 600;
+  --title-index: clamp(2em, 8vw, 2.6em);
+  --title-note: clamp(2em, 8vw, 2.7em);
+  --label-font: var(--display);
+  --label-size: 1.1em;
+  --label-style: italic;
+  --label-caps: normal;
+  --label-spacing: 0;
+  --caption-size: 0.95em;
+  --fs: 20px;
+  --measure: 33em;
+  /* the parade footer draws its outlines in the page's ink on the page's ground */
+  --ground: var(--bg);
+  --parade-px: 2;
+  color-scheme: only light;
+}
+@media (max-width: 699px) {
+  :root {
+    --parade-px: 1.5;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body-font);
+  font-size: calc(var(--fs) * var(--body-scale, 1));
+  line-height: 1.65;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+}
+a {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-color: var(--line);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+a:hover {
+  text-decoration-color: currentColor;
+}
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.col {
+  width: 100%;
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 clamp(16px, 5vw, 32px);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.title {
+  margin: 0;
+  font-family: var(--title-font);
+  font-weight: var(--title-weight);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.label {
+  margin: 0;
+  font-family: var(--label-font);
+  font-size: var(--label-size);
+  font-style: var(--label-style);
+  font-variant-caps: var(--label-caps);
+  letter-spacing: var(--label-spacing);
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+/* ---------- index ---------- */
+.index {
+  padding-top: 64px;
+  gap: 72px;
+}
+.index .title {
+  font-size: var(--title-index);
+}
+.hero {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.hero img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.hero figcaption {
+  font-family: var(--label-font);
+  font-size: var(--caption-size);
+  line-height: 1.4;
+  color: var(--muted);
+}
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.intro p {
+  margin: 0;
+  text-wrap: pretty;
+}
+.toc {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  line-height: 1.45;
+}
+.toc section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.toc ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.toc a {
+  text-decoration-color: transparent;
+}
+.toc a:hover {
+  text-decoration-color: currentColor;
+}
+
+/* ---------- note ---------- */
+.note {
+  padding-top: 40px;
+  gap: 64px;
+}
+.bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.85em;
+}
+.bar a,
+.bar button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--muted);
+}
+.bar button {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+.bar button:hover {
+  text-decoration-color: currentColor;
+}
+.bar button[hidden] {
+  display: none;
+}
+article {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.note .title {
+  font-size: var(--title-note);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+}
+.meta {
+  margin: 0;
+  font-size: 0.85em;
+  color: var(--muted);
+}
+.body {
+  text-wrap: pretty;
+  hanging-punctuation: first;
+  overflow-wrap: break-word;
+}
+.body > * {
+  margin: 0 0 1.1em;
+}
+.body > :last-child {
+  margin-bottom: 0;
+}
+.body h2,
+.body h3 {
+  font-family: var(--title-font);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+.body h2 {
+  font-size: 1.5em;
+  line-height: 1.2;
+  margin: 1.4em 0 0.45em;
+}
+.body h3 {
+  font-size: 1.25em;
+  line-height: 1.25;
+  margin: 1.4em 0 0.4em;
+}
+.body h4,
+.body h5,
+.body h6,
+.body .label {
+  margin: 1.6em 0 0.3em;
+  font-family: var(--label-font);
+  font-size: var(--label-size);
+  font-style: var(--label-style);
+  font-variant-caps: var(--label-caps);
+  letter-spacing: var(--label-spacing);
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.body > :first-child {
+  margin-top: 0;
+}
+.body hr {
+  width: 4em;
+  margin: 2.4em 0;
+  border: 0;
+  border-top: 1px solid var(--rule);
+}
+.body ul,
+.body ol {
+  padding-left: 1.3em;
+}
+.body li {
+  margin: 0.3em 0;
+}
+.body li > p {
+  margin: 0 0 0.6em;
+}
+.body blockquote {
+  margin-left: 0;
+  padding-left: 1em;
+  border-left: 1px solid var(--rule);
+}
+.body code {
+  font-family: var(--mono);
+  font-size: 0.8em;
+}
+.body pre {
+  font-family: var(--mono);
+  font-size: 0.8em;
+  line-height: 1.55;
+  white-space: pre;
+  overflow-x: auto;
+}
+.body pre code {
+  font-size: 1em;
+}
+.body figure {
+  margin: 2em 0;
+}
+.body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.body .table {
+  overflow-x: auto;
+}
+.body table {
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+.body th,
+.body td {
+  padding: 0.3em 0.8em 0.3em 0;
+  border-bottom: 1px solid var(--rule);
+  text-align: left;
+  vertical-align: top;
+}
+.backlinks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.backlinks ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ---------- show markdown: the marks the note was written with, faint, in mono ---------- */
+.mk {
+  display: none;
+  font-family: var(--mono);
+  font-size: 0.8em;
+  font-weight: 400;
+  font-style: normal;
+  font-variant-caps: normal;
+  letter-spacing: 0;
+  color: var(--muted);
+}
+html.md .mk {
+  display: inline;
+}
+html.md .mk-block {
+  display: block;
+}
+html.md .body hr {
+  display: none;
+}
+html.md .body ul,
+html.md .body ol {
+  list-style: none;
+  padding-left: 0;
+}
+.title .mk {
+  font-size: 0.6em;
+}
+.meta .mk,
+.label .mk {
+  font-size: 0.85em;
+}
+
+/* ---------- foot ---------- */
+.elsewhere {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+  font-size: 0.85em;
+  color: var(--muted);
+}
+.parade-foot {
+  display: block;
+  overflow: hidden;
+  padding: 72px 0 24px;
+}
+html:not(.js) .parade-foot {
+  display: none;
+}
+
+.lost {
+  padding-top: 40px;
+  gap: 48px;
+}
+.lost .title {
+  font-size: var(--title-note);
+}
+.lost p {
+  margin: 0;
+}
+
+@media print {
+  .bar,
+  .elsewhere,
+  .parade-foot {
+    display: none;
+  }
+  body {
+    font-size: 12pt;
+  }
+  .col {
+    max-width: none;
+    padding: 0;
+  }
+}
