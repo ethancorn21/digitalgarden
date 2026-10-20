@@ -1,6 +1,6 @@
 // book/dev.ts: the tuning kit. Only `build.ts --dev` ships it; live builds never do. On with ?dev=1 or on localhost.
-// One colour input per token, text size, the four face settings from the canvas, parade size, the hero pin on the
-// index. "Copy CSS" puts the current tokens on the clipboard as a :root block to paste back.
+// One colour input per token, text size, the four face settings from the canvas, parade size, and on the index the
+// room kept under the hero on the first screen and the hero pin. "Copy CSS" puts the current tokens on the clipboard as a :root block to paste back.
 
 const root = document.documentElement
 const qs = new URLSearchParams(location.search)
@@ -97,7 +97,8 @@ if (on) {
       .map((f) => `<option${f === state.face ? " selected" : ""}>${f}</option>`)
       .join("")}</select></label>` +
     (document.querySelector(".index")
-      ? `<div class="row">hero: ${["random", ...HEROES].map((h) => `<a href="?dev=1${h === "random" ? "" : "&hero=" + h}">${h}</a>`).join(" ")}</div>`
+      ? knob("--hero-room", 0, 500, 10, "px") +
+        `<div class="row">hero: ${["random", ...HEROES].map((h) => `<a href="?dev=1${h === "random" ? "" : "&hero=" + h}">${h}</a>`).join(" ")}</div>`
       : "") +
     `<div class="row"><button type="button" data-copy>Copy CSS</button><button type="button" data-reset>Reset</button></div>`
   document.body.appendChild(kit)
@@ -120,6 +121,7 @@ if (on) {
       ...Object.fromEntries(COLOURS.map((k) => [k, val(k)])),
       "--fs": val("--fs"),
       "--parade-px": val("--parade-px"),
+      "--hero-room": val("--hero-room"),
       ...state.tokens,
     }
     const css = `/* face: ${state.face} */\n:root {\n${Object.entries(all)

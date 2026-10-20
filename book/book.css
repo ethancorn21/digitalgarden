@@ -27,6 +27,9 @@
   /* the parade footer draws its outlines in the page's ink on the page's ground */
   --ground: var(--bg);
   --parade-px: 2;
+  /* the first screen keeps this much room under the hero, so the opening words always show and the page reads
+     as one to scroll (a hero that ends at the fold looks like the whole page) */
+  --hero-room: 260px;
   color-scheme: only light;
 }
 @media (max-width: 699px) {
@@ -111,7 +114,9 @@ a:hover {
   font-size: var(--title-index);
 }
 .hero {
-  margin: 0;
+  /* --ar (width / height) comes with each picture */
+  width: min(100%, calc(max(260px, 100svh - var(--hero-room)) * var(--ar, 0.75)));
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -131,6 +136,25 @@ a:hover {
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+/* the index opens with a short signed note in the title face */
+.letter {
+  gap: 12px;
+  font-family: var(--title-font);
+  font-size: 1.45em;
+  font-weight: 500;
+  line-height: 1.32;
+}
+.letter .sign {
+  font-style: italic;
+}
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 .intro p {
   margin: 0;
@@ -302,6 +326,7 @@ article {
 }
 .body img {
   display: block;
+  margin: 0 auto;
   max-width: 100%;
   height: auto;
 }

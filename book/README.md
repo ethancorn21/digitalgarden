@@ -3,7 +3,8 @@
 The site for writing.ethanlawcorn.com: one serif column, ink on paper, nothing but type. Direction A of the
 "Garden, plain" canvas (https://claude.ai/artifact/JFiqe8wS9JuTdhduCiztm9), picked by Ethan on 2026-10-19.
 
-- **Index** (`/`): a hero picture, the intro, every note by month (newest first, undated last), GitHub and Spotify.
+- **Index** (`/`): a hero picture, a short signed note from Ethan, every note by month (newest first, undated last),
+  GitHub and Spotify.
 - **Note** (`/<slug>`): Index top left, Show markdown top right, the title, a meta line (date · minutes to read · tags),
   the note, the notes that link to it.
 - **Footer:** the pixel parade (an alien, a robot, a philosopher and a hacker beat a dragon). The 404 page plays its
@@ -26,15 +27,19 @@ script, CSS and inline scripts are minified with no comments.
 
 `content/2 - atomic notes/*.md` after the publish gate has run. As a second lock, a note whose status is not `#adult`
 is skipped. The file name is the title. A link to a note that is not published stays as plain words. Images
-embedded with `![[file]]` are copied to `public/att/`, and anything wider than 1400 px is scaled down to it.
+embedded with `![[file]]` are copied to `public/att/`, and anything wider than 1400 px is scaled down to it. Pictures
+are centred in the column.
 
 - **Show markdown:** the marks a note was written with (`#`, `*`, `[[ ]]`, `---`) are in the page as hidden spans,
   shown faint in mono when the reader turns it on. The choice carries to the next note.
 - **Hero:** `hero/heroes.json`, Ethan's five picks from the canvas (2026-10-20): Dürer S4, Dou D2, Wright of Derby
   D2, Piranesi S4, Koninck D2. A small inline script draws one at random per visit, never the same twice in a row;
-  `?hero=<key>` pins one. With JavaScript off, the Dürer shows. The renders come from
+  `?hero=<key>` pins one. With JavaScript off, the Dürer shows. The picture is never taller than the screen minus
+  `--hero-room`, so the first screen always shows the start of the note under it (a hero that ends at the fold reads
+  as the whole page); it is centred and narrower when that cap applies. The renders come from
   `~/code/projects/artifacts/garden-hero` (`halftone.py`); all five pictures are public domain.
-- **Intro:** `INTRO` in `build.ts`, Ethan's words from `content/index.md` until he rewrites them.
+- **Intro:** `INTRO` and `SIGN` in `build.ts`, Ethan's words (2026-10-20), set in the title face and signed. The page
+  keeps a visually hidden `<h1>` with his name for screen readers.
 - **Addresses:** notes are `/<slug>`, the file name in lower case with dashes. `_redirects` sends old Quartz note
   URLs (`/2---atomic-notes/<Slug>`) to the note and other old Quartz pages to `/`. Garden Strata's `/?n=<slug>` and
   `/#note-<slug>` are sent on by a script on the index.

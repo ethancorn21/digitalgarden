@@ -42,9 +42,10 @@ const HERE = import.meta.dirname
 
 const SITE = "https://writing.ethanlawcorn.com"
 const NAME = "Ethan Law Corn"
-// Ethan's to rewrite ("the intro will need to be refined"); his words from content/index.md until then
+// Ethan's words (2026-10-20), set as a short signed letter under the hero
 const INTRO =
-  "This is a digital commonplace notebook, a place to note down and work with ideas I find interesting. Every note is connected with every other note in some way because the mind better retains new ideas when they are connected to existing ones; this is called elaborative encoding."
+  "Hi, these are from my notes which are automatically published. Most of my views will be wrong, so hit me and let me know why."
+const SIGN = "E"
 const ELSEWHERE = `<div class="elsewhere"><a href="https://github.com/ethancorn21">GitHub</a><a href="https://open.spotify.com/user/ethancorn-us">Spotify</a></div>`
 const MONTHS = [
   "January",
@@ -522,7 +523,7 @@ const heroes = (
   const alt = `${h.artist}, ${h.work}, redrawn as a grid of ${h.kind}`
   return {
     k: h.key,
-    html: `<figure class="hero"><img src="${url}" alt="${esc(alt)}" width="${h.w}" height="${h.h}" fetchpriority="high"><figcaption>${esc(h.artist)}, <em>${esc(h.work)}</em>, ${esc(h.year)}</figcaption></figure>`,
+    html: `<figure class="hero" style="--ar:${(h.w / h.h).toFixed(4)}"><img src="${url}" alt="${esc(alt)}" width="${h.w}" height="${h.h}" fetchpriority="high"><figcaption>${esc(h.artist)}, <em>${esc(h.work)}</em>, ${esc(h.year)}</figcaption></figure>`,
   }
 })
 if (!heroes.length) fail("no hero pictures in book/hero/heroes.json")
@@ -573,7 +574,7 @@ fs.writeFileSync(
     head: LEGACY_JS,
     body:
       `<div class="col index"><script>${HERO_JS}</script><noscript>${heroes[0].html}</noscript>` +
-      `<section class="intro"><h1 class="title">Hey, I’m Ethan</h1><p>${esc(INTRO)}</p></section>${toc}${ELSEWHERE}</div>${FOOT()}`,
+      `<section class="intro letter"><h1 class="vh">${NAME}</h1><p>${esc(INTRO)}</p><p class="sign">— ${SIGN}</p></section>${toc}${ELSEWHERE}</div>${FOOT()}`,
   }),
 )
 
