@@ -33,12 +33,16 @@ are centred in the column.
 
 - **Show markdown:** the marks a note was written with (`#`, `*`, `[[ ]]`, `---`) are in the page as hidden spans,
   shown faint in mono when the reader turns it on. The choice carries to the next note.
-- **Hero:** `hero/heroes.json`, Ethan's five picks from the canvas (2026-10-20): Dürer S4, Dou D2, Wright of Derby
-  D2, Piranesi S4, Koninck D2. A small inline script draws one at random per visit, never the same twice in a row;
-  `?hero=<key>` pins one. With JavaScript off, the Dürer shows. The picture is never taller than the screen minus
-  `--hero-room`, so the first screen always shows the start of the note under it (a hero that ends at the fold reads
-  as the whole page); it is centred and narrower when that cap applies. The renders come from
-  `~/code/projects/artifacts/garden-hero` (`halftone.py`); all five pictures are public domain.
+- **Hero:** `hero/heroes.json`. Since 2026-10-21 it holds one picture, Ethan's pick: Saint Teresa's vision of the
+  laptop, Pieter van Schuppen's engraving after Rubens (about 1650; Metropolitan Museum, CC0) with the dove replaced
+  by a laptop on a cloud, in D2 dots (made on the "Garden footer" canvas, https://claude.ai/artifact/EEGuko4RpVG1A1yvPTFqAP;
+  sources and script in `~/code/projects/artifacts/garden-footer/teresa`). His five earlier picks (Dürer S4, Dou D2,
+  Wright of Derby D2, Piranesi S4, Koninck D2) are still in `hero/`: list them in `heroes.json` again and the inline
+  script draws one at random per visit, never the same twice in a row; `?hero=<key>` pins one. With JavaScript off,
+  the first in the list shows. The picture is never taller than the screen minus `--hero-room`, so the first screen
+  always shows the start of the note under it (a hero that ends at the fold reads as the whole page); it is centred and
+  narrower when that cap applies. The renders come from `halftone.py` in `~/code/projects/artifacts/garden-hero`; all
+  the pictures are public domain.
 - **Intro:** `INTRO` and `SIGN` in `build.ts`, Ethan's words (2026-10-20), set in the title face and signed. The page
   keeps a visually hidden `<h1>` with his name for screen readers.
 - **Addresses:** notes are `/<slug>`, the file name in lower case with dashes. `_redirects` sends old Quartz note
@@ -53,7 +57,7 @@ are centred in the column.
 - `parade/`: the parade, copied from `~/code/projects/artifacts/parade` (commit ef529fc).
 - `fonts/`, `fonts.css`: Literata, Cormorant Garamond and JetBrains Mono, latin subsets from Google Fonts, under the SIL
   Open Font License (`fonts/OFL-*.txt`).
-- `hero/`: the five pictures as lossless WebP, and `heroes.json`.
+- `hero/`: the hero pictures as lossless WebP, and `heroes.json` (the ones in use).
 - `icon/`: the tab icon, copied to the site root. `mark.svg` is the signed E: Cormorant Garamond Italic at weight 700,
   ink on a paper tile, Ethan's pick (B) on the "Garden tab icon" canvas
   (https://claude.ai/artifact/MC4evTyPD8LJAuwprbsb4H), 2026-10-20. `mark-64.png` (browsers without SVG icons) and

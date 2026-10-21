@@ -510,7 +510,7 @@ function shell(o: {
 const FOOT = (script = "fight") =>
   `<footer class="parade-foot" data-parade="${script}" aria-hidden="true"></footer>`
 
-// ---------- index: a hero drawn at random from Ethan's five, the intro, every note by month ----------
+// ---------- index: the hero (one drawn at random when heroes.json lists several), the intro, every note by month ----------
 
 const heroes = (
   JSON.parse(fs.readFileSync(path.join(HERE, "hero", "heroes.json"), "utf8")) as {

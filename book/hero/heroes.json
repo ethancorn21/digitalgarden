@@ -1,52 +1,12 @@
 [
   {
-    "key": "durer",
-    "file": "durer.webp",
+    "key": "teresa",
+    "file": "teresa.webp",
     "w": 1320,
-    "h": 1720,
-    "artist": "Albrecht Dürer",
-    "work": "Saint Jerome in His Study",
-    "year": "1514",
-    "kind": "one-bit pixels"
-  },
-  {
-    "key": "dou",
-    "file": "dou.webp",
-    "w": 1320,
-    "h": 1960,
-    "artist": "Gerrit Dou",
-    "work": "Astronomer by Candlelight",
-    "year": "late 1650s",
-    "kind": "halftone dots"
-  },
-  {
-    "key": "wright",
-    "file": "wright.webp",
-    "w": 1320,
-    "h": 1709,
-    "artist": "Joseph Wright of Derby",
-    "work": "The Alchemist Discovering Phosphorus",
-    "year": "1771",
-    "kind": "halftone dots"
-  },
-  {
-    "key": "piranesi",
-    "file": "piranesi.webp",
-    "w": 1320,
-    "h": 1745,
-    "artist": "Giovanni Battista Piranesi",
-    "work": "The Round Tower (Carceri, plate III)",
-    "year": "1761",
-    "kind": "one-bit pixels"
-  },
-  {
-    "key": "koninck",
-    "file": "koninck.webp",
-    "w": 1320,
-    "h": 1716,
-    "artist": "Salomon Koninck",
-    "work": "A Philosopher",
-    "year": "1635",
+    "h": 1577,
+    "artist": "After Pieter van Schuppen after Rubens",
+    "work": "Saint Teresa’s Vision of the Laptop",
+    "year": "c. 1650",
     "kind": "halftone dots"
   }
 ]
