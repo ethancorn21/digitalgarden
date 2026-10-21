@@ -190,7 +190,13 @@ a:hover {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.75em;
+}
+/* a faint rule between titles in the same month: space alone still let neighbours run together (Ethan 2026-10-21) */
+.toc li {
+  padding: 0.5em 0;
+}
+.toc li + li {
+  border-top: 1px solid var(--rule);
 }
 .toc a {
   text-decoration-color: transparent;
