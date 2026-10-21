@@ -46,7 +46,7 @@ const NAME = "Ethan Law Corn"
 const INTRO =
   "Hi, these are from my notes which are automatically published. Most of my views will be wrong, so hit me and let me know why."
 const SIGN = "E"
-// where to find Ethan, as words (never the bare address); on the index they sit under his note, which asks readers to write
+// where to find Ethan, as words (never the bare address); only on the index, under his note, which asks readers to write
 const LINKS: [string, string][] = [
   ["Homepage", "https://ethanlawcorn.com"],
   ["GitHub", "https://github.com/ethancorn21"],
@@ -69,7 +69,6 @@ const MONTHS = [
   "November",
   "December",
 ]
-const WPM = 230
 
 const fail = (msg: string): never => {
   console.error(`[book] ERROR ${msg}`)
@@ -81,7 +80,8 @@ if (!fs.existsSync(NOTES_DIR)) fail(`no notes folder at ${NOTES_DIR}`)
 
 // ---------- parse ----------
 
-// Vault notes have no YAML. Header lines (date, status, tags) run until a blank line or a --- rule.
+// Vault notes have no YAML. Header lines (date, status, tags) run until a blank line or a --- rule. Only the date is
+// used: the tags lead nowhere on this site (Ethan 2026-10-20 cut them from the meta line).
 function parseNote(file: string) {
   const raw = fs.readFileSync(path.join(NOTES_DIR, file), "utf8").replace(/\r\n/g, "\n")
   const lines = raw.split("\n")
@@ -89,7 +89,6 @@ function parseNote(file: string) {
   while (i < lines.length && lines[i].trim() === "") i++ // some notes start with a blank line
   let date: string | null = null
   let time = ""
-  const tags: string[] = []
   for (; i < lines.length; i++) {
     const l = lines[i].trim()
     if (l === "" || /^-{3,}$/.test(l)) break
@@ -98,15 +97,12 @@ function parseNote(file: string) {
       date = dm[1]
       time = (dm[2] ?? "").padStart(5, "0")
     }
-    if (/^tags:/i.test(l)) for (const t of l.matchAll(/\[\[([^\]|#]+)/g)) tags.push(t[1].trim())
   }
   // skip the separator and blank lines, then an optional "# Title" (the file name is the title)
   while (i < lines.length && (lines[i].trim() === "" || /^-{3,}$/.test(lines[i].trim()))) i++
   if (i < lines.length && /^#(\s|$)/.test(lines[i])) i++
   const body = lines.slice(i).join("\n").replace(/^\s+/, "").replace(/\s+$/, "")
-  const seen = new Set<string>()
-  const uniq = tags.filter((t) => !seen.has(t.toLowerCase()) && seen.add(t.toLowerCase()))
-  return { raw, date, time, tags: uniq, body }
+  return { raw, date, time, body }
 }
 
 const files = fs
@@ -394,7 +390,6 @@ function render(body: string, self: number) {
   return {
     html: blocks(tree.children!, ctx),
     out: [...ctx.out],
-    words: plain(tree).split(/\s+/).filter(Boolean).length,
     lead: firstPara ? smart(plain(firstPara).replace(/\s+/g, " ").trim()) : "",
   }
 }
@@ -591,9 +586,9 @@ fs.writeFileSync(
 // ---------- note pages ----------
 
 for (const [i, n] of notes.entries()) {
-  const mins = Math.max(1, Math.ceil(n.words / WPM))
-  const tags = n.tags.map((t) => `${mk("[[")}${esc(t)}${mk("]]")}`).join(", ")
-  const meta = [n.date ? day(n.date) : "", `${mins} min read`, tags].filter(Boolean).join(" · ")
+  // the meta line is the date alone: reading time was 1 or 2 minutes on every note, and the tags led nowhere (Ethan
+  // 2026-10-20). No links row and no parade under a note either; Ethan is making a different footer for notes
+  const meta = n.date ? `<p class="meta">${day(n.date)}</p>` : ""
   const back = linkedFrom[i].length
     ? `<section class="backlinks"><h2 class="label">Linked from</h2><ul>${linkedFrom[i].map((j) => `<li><a href="/${notes[j].slug}">${esc(notes[j].name)}</a></li>`).join("")}</ul></section>`
     : ""
@@ -607,8 +602,8 @@ for (const [i, n] of notes.entries()) {
       type: "article",
       body:
         `<div class="col note"><header class="bar"><a href="/">Index</a><button type="button" data-md hidden aria-pressed="false">Show markdown</button></header>` +
-        `<article><header class="head"><h1 class="title">${mk("# ")}${esc(n.name)}</h1><p class="meta">${meta}</p></header>` +
-        `<div class="body">${n.html}</div>${back}</article>${ELSEWHERE}</div>${FOOT()}`,
+        `<article><header class="head"><h1 class="title">${mk("# ")}${esc(n.name)}</h1>${meta}</header>` +
+        `<div class="body">${n.html}</div>${back}</article></div>`,
     }),
   )
 }
@@ -621,7 +616,7 @@ fs.writeFileSync(
     title: `Not found · ${NAME}`,
     desc: "No note lives at this address.",
     body:
-      `<div class="col lost"><header class="bar"><a href="/">Index</a></header><section class="intro"><h1 class="title">Not here</h1>` +
+      `<div class="col lost"><section class="intro"><h1 class="title">Not here</h1>` +
       `<p>No note lives at this address. Every note is listed on the <a href="/">index</a>.</p></section></div>${FOOT("lost")}`,
   }),
 )

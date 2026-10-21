@@ -3,12 +3,13 @@
 The site for writing.ethanlawcorn.com: one serif column, ink on paper, nothing but type. Direction A of the
 "Garden, plain" canvas (https://claude.ai/artifact/JFiqe8wS9JuTdhduCiztm9), picked by Ethan on 2026-10-19.
 
-- **Index** (`/`): a hero picture, a short signed note from Ethan, every note by month (newest first, undated last),
-  GitHub and Spotify.
-- **Note** (`/<slug>`): Index top left, Show markdown top right, the title, a meta line (date · minutes to read · tags),
-  the note, the notes that link to it.
-- **Footer:** the pixel parade (an alien, a robot, a philosopher and a hacker beat a dragon). The 404 page plays its
-  dragon 404 instead. It starts when it scrolls into view and holds one frame under reduced motion.
+- **Index** (`/`): a hero picture, a short signed note from Ethan with his links under it, every note by month (newest
+  first, undated last).
+- **Note** (`/<slug>`): Index top left, Show markdown top right, the title, the date, the note, the notes that link to
+  it. Nothing under it for now: Ethan cut the reading time (1 or 2 minutes on every note), the tags (they led nowhere)
+  and the links row and parade under notes on 2026-10-20; he is making a different footer for notes.
+- **Footer** (index and 404 only): the pixel parade (an alien, a robot, a philosopher and a hacker beat a dragon). The
+  404 page plays its dragon 404 instead. It starts when it scrolls into view and holds one frame under reduced motion.
 - No dark mode. Ethan, 2026-10-19: the garden is ink on paper only.
 
 ## Build

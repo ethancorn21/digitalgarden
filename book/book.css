@@ -150,11 +150,6 @@ a:hover {
 .letter .sign {
   font-style: italic;
 }
-.letter .elsewhere {
-  margin-top: 12px;
-  padding-top: 0;
-  border-top: 0;
-}
 .vh {
   position: absolute;
   width: 1px;
@@ -196,6 +191,7 @@ a:hover {
 /* ---------- note ---------- */
 .note {
   padding-top: 40px;
+  padding-bottom: 96px;
   gap: 64px;
 }
 .bar {
@@ -393,19 +389,18 @@ html.md .body ol {
 .title .mk {
   font-size: 0.6em;
 }
-.meta .mk,
 .label .mk {
   font-size: 0.85em;
 }
 
 /* ---------- foot ---------- */
-/* words joined by spaces, so a phone breaks the row into two even lines instead of leaving one link alone */
+/* the links under the index's note: words joined by spaces, so a phone breaks the row into two even lines instead of
+   leaving one link alone */
 .elsewhere {
+  margin-top: 12px;
   word-spacing: 1.1em;
   line-height: 2;
   text-wrap: balance;
-  padding-top: 24px;
-  border-top: 1px solid var(--rule);
   font-size: 0.85em;
   color: var(--muted);
 }
@@ -418,8 +413,9 @@ html:not(.js) .parade-foot {
   display: none;
 }
 
+/* no bar here (the sentence links the index), so the title starts where a note's does: 40px + the bar's 44px + 64px */
 .lost {
-  padding-top: 40px;
+  padding-top: 148px;
   gap: 48px;
 }
 .lost .title {
