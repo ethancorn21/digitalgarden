@@ -504,7 +504,9 @@ function shell(o: {
   return (
     `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">` +
     `<title>${esc(o.title)}</title><meta name="description" content="${esc(o.desc)}"><meta name="color-scheme" content="only light">` +
-    `<meta name="theme-color" content="#FDFCFA"><link rel="icon" href="/icon.png">${og}${PRELOAD}<style>${CSS}</style>` +
+    `<meta name="theme-color" content="#FDFCFA"><link rel="icon" href="/mark-64.png" sizes="64x64">` +
+    `<link rel="icon" href="/mark.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png">` +
+    `${og}${PRELOAD}<style>${CSS}</style>` +
     `<script>${HEAD_JS}${o.head ?? ""}</script></head><body>${o.body}<script src="${JS}" defer></script>` +
     (DEV_JS ? `<script src="${DEV_JS}" defer></script>` : "") +
     `</body></html>\n`
@@ -658,8 +660,8 @@ for (const [file] of attachments) {
     fs.copyFileSync(from, to)
   }
 }
-const icon = path.join(REPO, "quartz", "static", "icon.png")
-if (fs.existsSync(icon)) fs.copyFileSync(icon, path.join(OUT, "icon.png"))
+// tab icon: the signed E (book/icon/), served from the site root
+for (const f of fs.readdirSync(path.join(HERE, "icon"))) fs.copyFileSync(path.join(HERE, "icon", f), path.join(OUT, f))
 
 // old Quartz addresses: notes go to their page, everything else to the index
 const redirects = [

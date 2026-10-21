@@ -53,3 +53,7 @@ are centred in the column.
 - `fonts/`, `fonts.css`: Literata, Cormorant Garamond and JetBrains Mono, latin subsets from Google Fonts, under the SIL
   Open Font License (`fonts/OFL-*.txt`).
 - `hero/`: the five pictures as lossless WebP, and `heroes.json`.
+- `icon/`: the tab icon, copied to the site root. `mark.svg` is the signed E: Cormorant Garamond Italic at weight 700,
+  ink on a paper tile, Ethan's pick (B) on the "Garden tab icon" canvas
+  (https://claude.ai/artifact/MC4evTyPD8LJAuwprbsb4H), 2026-10-20. `mark-64.png` (browsers without SVG icons) and
+  `apple-touch-icon.png` (180 px, full bleed, iOS rounds it) are rendered from it with sharp.
