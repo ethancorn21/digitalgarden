@@ -42,7 +42,8 @@ are centred in the column.
   the first in the list shows. The picture is never taller than the screen minus `--hero-room`, so the first screen
   always shows the start of the note under it (a hero that ends at the fold reads as the whole page); it is centred and
   narrower when that cap applies. The renders come from `halftone.py` in `~/code/projects/artifacts/garden-hero`; all
-  the pictures are public domain.
+  the pictures are public domain. Each shows a caption crediting it unless its entry has `"caption": false`; Teresa's
+  has none since 2026-10-21 (Ethan asked; the credit stays in the alt text).
 - **Intro:** `INTRO` and `SIGN` in `build.ts`, Ethan's words (2026-10-20), set in the title face and signed. The page
   keeps a visually hidden `<h1>` with his name for screen readers.
 - **Addresses:** notes are `/<slug>`, the file name in lower case with dashes. `_redirects` sends old Quartz note

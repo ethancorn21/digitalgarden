@@ -522,13 +522,14 @@ const heroes = (
     work: string
     year: string
     kind: string
+    caption?: boolean
   }[]
 ).map((h) => {
   const url = emit(`assets/hero/${h.file}`, fs.readFileSync(path.join(HERE, "hero", h.file)))
   const alt = `${h.artist}, ${h.work}, redrawn as a grid of ${h.kind}`
   return {
     k: h.key,
-    html: `<figure class="hero" style="--ar:${(h.w / h.h).toFixed(4)}"><img src="${url}" alt="${esc(alt)}" width="${h.w}" height="${h.h}" fetchpriority="high"><figcaption>${esc(h.artist)}, <em>${esc(h.work)}</em>, ${esc(h.year)}</figcaption></figure>`,
+    html: `<figure class="hero" style="--ar:${(h.w / h.h).toFixed(4)}"><img src="${url}" alt="${esc(alt)}" width="${h.w}" height="${h.h}" fetchpriority="high">${h.caption === false ? "" : `<figcaption>${esc(h.artist)}, <em>${esc(h.work)}</em>, ${esc(h.year)}</figcaption>`}</figure>`,
   }
 })
 if (!heroes.length) fail("no hero pictures in book/hero/heroes.json")

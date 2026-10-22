@@ -7,6 +7,7 @@
     "artist": "After Pieter van Schuppen after Rubens",
     "work": "Saint Teresa’s Vision of the Laptop",
     "year": "c. 1650",
-    "kind": "halftone dots"
+    "kind": "halftone dots",
+    "caption": false
   }
 ]
