@@ -12,5 +12,3 @@ The idea of causal chains of cause and effect since the beginning of the univers
 So then are we just reactive beings, locked into how we will act because the past? What are the arguments against predeterminism (not from a Christian perspective)?
 
 ---
-#### Reference
-Perhaps we don't notice our absence of free will because : [[Consciousness as a Narrative Interface]]

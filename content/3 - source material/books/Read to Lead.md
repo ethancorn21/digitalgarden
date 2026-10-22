@@ -5,7 +5,7 @@ finish: 2025-10-09
 
 If you wish to push beyond the frontier of what you are currently capable of, you must read and learn. Reading and learning is the highest ROI activity you can do right now. 
 ### Key takeaways:
-reading reduces [[knowledge debt]] which is an anchor to an progress you make. The goal is to reduce this knowledge however you can, most ROI option is books.
+reading reduces knowledge debt which is an anchor to an progress you make. The goal is to reduce this knowledge however you can, most ROI option is books.
 ### notes & annotations
 12
 >"As President Harry S. Truman said, 'Not all readers are leaders, but all leaders are readers'"
@@ -40,7 +40,7 @@ Holy shit. One must imagine how well our ape brains are doing with this massive 
 68
 >"When I have a little money, I buy books; and if I have any left, I buy food and clothes." - Erasmus
 
-in the video titled, "[[Advice for 20 year olds - Alex Hormozi|Advice for 20 year olds]]", Alex Hormozi talks a bit about closing the reducing your [[knowledge debt]] by all means. In other words, what you don't know but should. So you must be willing to lose money, comfort, ego, etc. to reduce what you don't know but should. It seems to me that Erasmus worked along the same basis. 
+in the video titled, "[[Advice for 20 year olds - Alex Hormozi|Advice for 20 year olds]]", Alex Hormozi talks a bit about closing the reducing your knowledge debt by all means. In other words, what you don't know but should. So you must be willing to lose money, comfort, ego, etc. to reduce what you don't know but should. It seems to me that Erasmus worked along the same basis.
 
 79
 >"If we encounter a man of rare intellect, we should ask him what books he reads" - Ralph Waldo Emerson

@@ -18,4 +18,3 @@ tags: [[thinking traps]], [[mindful consumption]]
 [[The Defining Decade]], pg.43
 
 
-bad at estimation example: [[Why We Suck at Estimating Time]]

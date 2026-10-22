@@ -13,4 +13,4 @@ Mastery is achieved through obsession over years. The majority of people will li
 To master something, you have to be a little insane and strictly disciplined.
 ## Reference
 
-Achieved through the [[10,000 hour rule]], corrective feedback, and deliberate practice
+Achieved through the 10,000 hour rule, corrective feedback, and deliberate practice

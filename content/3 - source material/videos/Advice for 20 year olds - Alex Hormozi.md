@@ -49,7 +49,7 @@ So few decisions are irreversible. Time spent waiting for decision = time spent 
 
 ## - Pay off your debt
 ### minimize what you don't know but should at all cost
-The biggest debt is [[knowledge debt]], the cost of what you don't know but should. The knowledge that pushes you toward you goal faster. Can never be paid off if you don't learn. Learning stems from failure. Be willing to lose money, time, judgements from others, hits to the ego, all in exchange to learn.
+The biggest debt is knowledge debt, the cost of what you don't know but should. The knowledge that pushes you toward you goal faster. Can never be paid off if you don't learn. Learning stems from failure. Be willing to lose money, time, judgements from others, hits to the ego, all in exchange to learn.
 You have to learn how to lose before you can learn how to win.
 
 ## - Know the price of inaction

@@ -17,4 +17,4 @@ But what is all of this but an appeal to a inner entity acted upon by an outside
 ## Reference
 
 
-When zealousness is worshipped, [[Purity Spiral]] ensues.
+When zealousness is worshipped, Purity Spiral ensues.

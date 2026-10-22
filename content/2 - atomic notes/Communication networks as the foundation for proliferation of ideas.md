@@ -12,7 +12,5 @@ Factors that influence efficiency of conveying information can include how much 
 So then, as a natural next step, will we, as language evolves, move towards a larger language that requires fewer words to convey more meaning?
 
 ---
-## Reference
 
-More on speed of idea proliferation: [[Velocity of ideas main determinant in the rate of technological progression]]
 
