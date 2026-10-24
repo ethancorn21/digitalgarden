@@ -1,0 +1,17 @@
+[
+  {
+    "key": "hollar",
+    "file": "hollar.json",
+    "alt": "London in 1647 across the bottom of the page, Old St Paul's among the roofs and beside it a tower crane lifting a bundle of steel (after Wenceslaus Hollar, Long View of London from Bankside, 1647)"
+  },
+  {
+    "key": "visscher",
+    "file": "visscher.json",
+    "alt": "Amsterdam from the water in 1611 across the bottom of the page, ships at anchor, and among them a speedboat towing a parasail high over the city (after Claes Jansz. Visscher, Profile of Amsterdam from the IJ, 1611)"
+  },
+  {
+    "key": "utrecht",
+    "file": "utrecht.json",
+    "alt": "Utrecht from the fields in 1648 across the bottom of the page, the Dom tower over the town, spires and windmills, cows on the pasture; across the pasture runs a modern railway under its overhead wires, and now and then a high-speed train passes, one way and then the other (after Herman Saftleven, Utrecht from the east, 1648)"
+  }
+]

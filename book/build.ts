@@ -8,7 +8,7 @@
 //   --dev ships the tuning kit (book/dev.ts). Live builds never pass it; they are minified, with no comments.
 //
 // Every note is its own static page at /<slug>, rendered here, so it reads with JavaScript off. The script only
-// adds the markdown toggle and the pixel parade in the footer; the index picks its hero with a tiny inline script.
+// adds the markdown toggle and the strip in the footer; the index picks its hero with a tiny inline script.
 
 import fs from "node:fs"
 import path from "node:path"
@@ -453,11 +453,7 @@ const minify = async (code: string, loader: "css" | "js") =>
     })
   ).code.trim()
 const CSS = await minify(
-  [
-    fontsCss,
-    fs.readFileSync(path.join(HERE, "book.css"), "utf8"),
-    fs.readFileSync(path.join(HERE, "parade", "parade.css"), "utf8"),
-  ].join("\n"),
+  [fontsCss, fs.readFileSync(path.join(HERE, "book.css"), "utf8")].join("\n"),
   "css",
 )
 async function bundle(entry: string, name: string) {
@@ -507,8 +503,21 @@ function shell(o: {
     `</body></html>\n`
   )
 }
-const FOOT = (script = "fight") =>
-  `<footer class="parade-foot" data-parade="${script}" aria-hidden="true"></footer>`
+// the footer, an old print the width of the page with one modern thing in it that moves (book/strips): the script
+// draws one of strips.json at random and fetches only its print
+const strips = (
+  JSON.parse(fs.readFileSync(path.join(HERE, "strips", "strips.json"), "utf8")) as {
+    key: string
+    file: string
+    alt: string
+  }[]
+).map((s) => ({
+  k: s.key,
+  url: emit(`assets/strips/${s.file}`, fs.readFileSync(path.join(HERE, "strips", s.file))),
+  alt: s.alt,
+}))
+if (!strips.length) fail("no strips in book/strips/strips.json")
+const FOOT = `<footer class="strip-foot" data-strips="${esc(JSON.stringify(strips))}"><canvas role="img"></canvas></footer>`
 
 // ---------- index: the hero (one drawn at random when heroes.json lists several), the intro, every note by month ----------
 
@@ -580,7 +589,7 @@ fs.writeFileSync(
     head: LEGACY_JS,
     body:
       `<div class="col index"><script>${HERO_JS}</script><noscript>${heroes[0].html}</noscript>` +
-      `<section class="intro letter"><h1 class="vh">${NAME}</h1><p>${esc(INTRO)}</p><p class="sign">— ${SIGN}</p>${ELSEWHERE}</section>${toc}</div>${FOOT()}`,
+      `<section class="intro letter"><h1 class="vh">${NAME}</h1><p>${esc(INTRO)}</p><p class="sign">— ${SIGN}</p>${ELSEWHERE}</section>${toc}</div>${FOOT}`,
   }),
 )
 
@@ -588,7 +597,7 @@ fs.writeFileSync(
 
 for (const [i, n] of notes.entries()) {
   // the meta line is the date alone: reading time was 1 or 2 minutes on every note, and the tags led nowhere (Ethan
-  // 2026-10-20). No links row and no parade under a note either; Ethan is making a different footer for notes
+  // 2026-10-20). No links row and no footer strip under a note either; Ethan is making a different footer for notes
   const meta = n.date ? `<p class="meta">${day(n.date)}</p>` : ""
   const back = linkedFrom[i].length
     ? `<section class="backlinks"><h2 class="label">Linked from</h2><ul>${linkedFrom[i].map((j) => `<li><a href="/${notes[j].slug}">${esc(notes[j].name)}</a></li>`).join("")}</ul></section>`
@@ -618,7 +627,7 @@ fs.writeFileSync(
     desc: "No note lives at this address.",
     body:
       `<div class="col lost"><section class="intro"><h1 class="title">Not here</h1>` +
-      `<p>No note lives at this address. Every note is listed on the <a href="/">index</a>.</p></section></div>${FOOT("lost")}`,
+      `<p>No note lives at this address. Every note is listed on the <a href="/">index</a>.</p></section></div>${FOOT}`,
   }),
 )
 // photos come straight from the vault (one is 17 MB at 5872 px); anything wider than twice the column is scaled down
@@ -657,7 +666,8 @@ for (const [file] of attachments) {
   }
 }
 // tab icon: the signed E (book/icon/), served from the site root
-for (const f of fs.readdirSync(path.join(HERE, "icon"))) fs.copyFileSync(path.join(HERE, "icon", f), path.join(OUT, f))
+for (const f of fs.readdirSync(path.join(HERE, "icon")))
+  fs.copyFileSync(path.join(HERE, "icon", f), path.join(OUT, f))
 
 // old Quartz addresses: notes go to their page, everything else to the index
 const redirects = [
@@ -683,5 +693,5 @@ fs.writeFileSync(
 
 log(
   `${notes.length} notes, ${notes.reduce((a, n) => a + n.out.length, 0)} links, ${groups.size} months, ${attachments.size} images, ` +
-    `${heroes.length} heroes${DEV ? ", dev kit" : ""} -> ${OUT}`,
+    `${heroes.length} heroes, ${strips.length} strips${DEV ? ", dev kit" : ""} -> ${OUT}`,
 )

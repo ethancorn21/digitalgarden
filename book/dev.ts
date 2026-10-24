@@ -1,6 +1,7 @@
 // book/dev.ts: the tuning kit. Only `build.ts --dev` ships it; live builds never do. On with ?dev=1 or on localhost.
-// One colour input per token, text size, the four face settings from the canvas, parade size, and on the index the
-// room kept under the hero on the first screen and the hero pin. "Copy CSS" puts the current tokens on the clipboard as a :root block to paste back.
+// One colour input per token, text size, the four face settings from the canvas, on the index the room kept under the
+// hero on the first screen and the hero pin, and the footer strip's pin. "Copy CSS" puts the current tokens on the
+// clipboard as a :root block to paste back.
 
 const root = document.documentElement
 const qs = new URLSearchParams(location.search)
@@ -56,6 +57,7 @@ const FACES: Record<string, Record<string, string>> = {
   },
 }
 const HEROES = ["durer", "dou", "wright", "piranesi", "koninck"]
+const STRIPS = ["hollar", "visscher", "utrecht"]
 
 type State = { tokens: Record<string, string>; face: string }
 let state: State = { tokens: {}, face: "Cormorant titles + labels" }
@@ -92,13 +94,15 @@ if (on) {
       (k) => `<label>${k}<input type="color" data-k="${k}" value="${val(k)}"></label>`,
     ).join("") +
     knob("--fs", 15, 24, 1, "px") +
-    knob("--parade-px", 1, 3, 0.25, "") +
     `<label>face<select data-face>${Object.keys(FACES)
       .map((f) => `<option${f === state.face ? " selected" : ""}>${f}</option>`)
       .join("")}</select></label>` +
     (document.querySelector(".index")
       ? knob("--hero-room", 0, 500, 10, "px") +
         `<div class="row">hero: ${["random", ...HEROES].map((h) => `<a href="?dev=1${h === "random" ? "" : "&hero=" + h}">${h}</a>`).join(" ")}</div>`
+      : "") +
+    (document.querySelector("[data-strips]")
+      ? `<div class="row">strip: ${["random", ...STRIPS].map((k) => `<a href="?dev=1${k === "random" ? "" : "&strip=" + k}">${k}</a>`).join(" ")}</div>`
       : "") +
     `<div class="row"><button type="button" data-copy>Copy CSS</button><button type="button" data-reset>Reset</button></div>`
   document.body.appendChild(kit)
@@ -120,7 +124,6 @@ if (on) {
       ...FACES[state.face],
       ...Object.fromEntries(COLOURS.map((k) => [k, val(k)])),
       "--fs": val("--fs"),
-      "--parade-px": val("--parade-px"),
       "--hero-room": val("--hero-room"),
       ...state.tokens,
     }

@@ -24,18 +24,10 @@
   --caption-size: 0.95em;
   --fs: 20px;
   --measure: 33em;
-  /* the parade footer draws its outlines in the page's ink on the page's ground */
-  --ground: var(--bg);
-  --parade-px: 2;
   /* the first screen keeps this much room under the hero, so the opening words always show and the page reads
      as one to scroll (a hero that ends at the fold looks like the whole page) */
   --hero-room: 260px;
   color-scheme: only light;
-}
-@media (max-width: 699px) {
-  :root {
-    --parade-px: 1.5;
-  }
 }
 
 *,
@@ -431,13 +423,18 @@ html.md .body ol {
   font-size: 0.85em;
   color: var(--muted);
 }
-.parade-foot {
-  display: block;
-  overflow: hidden;
-  /* close under the last note title, so the page ends on the parade, not on a band of paper (Ethan 2026-10-21) */
-  padding: 40px 0 calc(20px + env(safe-area-inset-bottom, 0px));
+/* the footer: a strip of an old print the full width of the page and flush with its bottom (book/strips), close
+   under the last note title so the page ends on the print, not on a band of paper (Ethan 2026-10-21). Its sky is
+   paper, so the gap above it reads larger than it is. 217.8px = the strips' 66 rows of 3.3px cells */
+.strip-foot {
+  padding: 40px 0 env(safe-area-inset-bottom, 0px);
 }
-html:not(.js) .parade-foot {
+.strip-foot canvas {
+  display: block;
+  width: 100%;
+  height: 217.8px;
+}
+html:not(.js) .strip-foot {
   display: none;
 }
 
@@ -458,7 +455,7 @@ html:not(.js) .parade-foot {
 @media print {
   .bar,
   .elsewhere,
-  .parade-foot {
+  .strip-foot {
     display: none;
   }
   body {

@@ -1,7 +1,7 @@
 // book/client.ts: the page's one script (bundled and minified by build.ts). The markdown toggle on note pages and
-// the pixel parade in the footer. The hero is picked by a small inline script in the index itself, so it never flashes.
+// the strip in the footer. The hero is picked by a small inline script in the index itself, so it never flashes.
 
-import { createParade } from "./parade/parade.js"
+import { mountStrip } from "./strips/strips.js"
 
 const root = document.documentElement
 
@@ -24,5 +24,37 @@ if (toggle) {
   })
 }
 
-for (const host of document.querySelectorAll<HTMLElement>("[data-parade]"))
-  createParade(host, { script: host.dataset.parade })
+// the footer: one strip at random, never the same twice in a row; ?strip=<key> pins one, ?t=<seconds> holds a moment.
+// Its print is fetched when the footer comes near, so a reader who never scrolls there never loads it.
+const foot = document.querySelector<HTMLElement>("[data-strips]")
+if (foot) {
+  const all = JSON.parse(foot.dataset.strips!) as { k: string; url: string; alt: string }[]
+  const q = new URLSearchParams(location.search)
+  let i = all.findIndex((s) => s.k === q.get("strip"))
+  if (i < 0) {
+    let prev = ""
+    try {
+      prev = localStorage.getItem("strip") ?? ""
+    } catch {}
+    const left = all.filter((s) => s.k !== prev)
+    i = all.indexOf(left[Math.floor(Math.random() * left.length)] ?? all[0])
+    try {
+      localStorage.setItem("strip", all[i].k)
+    } catch {}
+  }
+  const s = all[i]
+  const cv = foot.querySelector("canvas")!
+  cv.setAttribute("aria-label", s.alt)
+  const t = q.has("t") ? Number(q.get("t")) : undefined
+  new IntersectionObserver(
+    (es, ob) => {
+      if (!es.some((e) => e.isIntersecting)) return
+      ob.disconnect()
+      fetch(s.url)
+        .then((r) => r.json())
+        .then((d) => mountStrip(cv, d, { t }))
+        .catch(() => (foot.hidden = true))
+    },
+    { rootMargin: "600px 0px" },
+  ).observe(foot)
+}
