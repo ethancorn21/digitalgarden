@@ -46,15 +46,14 @@ const NAME = "Ethan Law Corn"
 const INTRO =
   "Hi, these are from my notes which are automatically published. Most of my views will be wrong, so hit me and let me know why."
 const SIGN = "E"
-// where to find Ethan, as words (never the bare address); only on the index, under his note, which asks readers to write
-const LINKS: [string, string][] = [
-  ["Homepage", "https://ethanlawcorn.com"],
-  ["GitHub", "https://github.com/ethancorn21"],
-  ["LinkedIn", "https://www.linkedin.com/in/ethancorn/"],
-  ["Email", "mailto:ethancorn82@gmail.com"],
-  ["Spotify", "https://open.spotify.com/user/ethancorn-us"],
-]
-const ELSEWHERE = `<div class="elsewhere">${LINKS.map(([t, u]) => `<a href="${u}">${t}</a>`).join(" ")}</div>`
+// the way back to ethanlawcorn.com: an arrow and Home at the top left of the index, where a note has Index, so the way
+// up sits in the same place on every page. Ethan 2026-10-25: GitHub, LinkedIn, Email and Spotify went (the home page
+// has them), "Homepage" became a back arrow, and it moved out from under his note, where it broke the run from the
+// note into the list. The arrow is drawn: the self-hosted subsets have no U+2190, so a typed one would come from a
+// system font
+const HOME_BAR =
+  `<header class="bar"><a class="back" href="https://ethanlawcorn.com">` +
+  `<svg viewBox="0 0 16 10" aria-hidden="true"><path d="M15.5 5H1M5.5.5 1 5l4.5 4.5"/></svg>Home</a></header>`
 const MONTHS = [
   "January",
   "February",
@@ -595,8 +594,8 @@ fs.writeFileSync(
     url: "/",
     head: LEGACY_JS,
     body:
-      `<div class="col index"><script>${HERO_JS}</script><noscript>${heroes[0].html}</noscript>` +
-      `<section class="intro letter"><h1 class="vh">${NAME}</h1><p>${esc(INTRO)}</p><p class="sign">— ${SIGN}</p>${ELSEWHERE}</section>${toc}</div>${FOOT}`,
+      `<div class="col index">${HOME_BAR}<script>${HERO_JS}</script><noscript>${heroes[0].html}</noscript>` +
+      `<section class="intro letter"><h1 class="vh">${NAME}</h1><p>${esc(INTRO)}</p><p class="sign">— ${SIGN}</p></section>${toc}</div>${FOOT}`,
   }),
 )
 

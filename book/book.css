@@ -25,8 +25,9 @@
   --fs: 20px;
   --measure: 33em;
   /* the first screen keeps this much room under the hero, so the opening words always show and the page reads
-     as one to scroll (a hero that ends at the fold looks like the whole page) */
-  --hero-room: 260px;
+     as one to scroll (a hero that ends at the fold looks like the whole page); 300 since the index has the bar over
+     the hero (2026-10-25) */
+  --hero-room: 300px;
   color-scheme: only light;
 }
 
@@ -99,8 +100,11 @@ a:hover {
 
 /* ---------- index ---------- */
 .index {
-  /* on a phone the picture starts about a gutter from the top, not under a band of empty paper (Ethan 2026-10-21) */
-  padding-top: clamp(20px, 6vw, 64px);
+  /* the bar with the way home sits where a note's Index does, and the picture close under it (Ethan 2026-10-25) */
+  padding-top: 40px;
+}
+.index .hero {
+  margin-top: clamp(8px, 2vw, 16px);
 }
 .index .title {
   font-size: var(--title-index);
@@ -427,13 +431,16 @@ html.md .body ol {
 /* ---------- foot ---------- */
 /* the links under the index's note: words joined by spaces, so a phone breaks the row into two even lines instead of
    leaving one link alone */
-.elsewhere {
-  margin-top: 12px;
-  word-spacing: 1.1em;
-  line-height: 2;
-  text-wrap: balance;
-  font-size: 0.85em;
-  color: var(--muted);
+.back svg {
+  width: 1.15em;
+  height: 0.72em;
+  margin-right: 0.45em;
+  vertical-align: 0.02em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 /* the footer: a strip of an old print the full width of the page and flush with its bottom (book/strips), close
    under the last note title so the page ends on the print, not on a band of paper (Ethan 2026-10-21). Its sky is
@@ -466,7 +473,6 @@ html:not(.js) .strip-foot {
 
 @media print {
   .bar,
-  .elsewhere,
   .strip-foot {
     display: none;
   }

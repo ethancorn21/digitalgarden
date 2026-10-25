@@ -3,7 +3,7 @@
 The site for writing.ethanlawcorn.com: one serif column, ink on paper, nothing but type. Direction A of the
 "Garden, plain" canvas (https://claude.ai/artifact/JFiqe8wS9JuTdhduCiztm9), picked by Ethan on 2026-10-19.
 
-- **Index** (`/`): a hero picture, a short signed note from Ethan with his links under it, every note by month (newest
+- **Index** (`/`): a hero picture, a short signed note from Ethan (a back arrow to ethanlawcorn.com sits top left, where a note has Index; his other links are on the home page, 2026-10-25), every note by month (newest
   first, undated last).
 - **Note** (`/<slug>`): Index top left, Show markdown top right, the title, the date, the note, the notes that link to
   it. Nothing under it for now: Ethan cut the reading time (1 or 2 minutes on every note), the tags (they led nowhere)
