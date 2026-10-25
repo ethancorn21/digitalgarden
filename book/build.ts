@@ -42,9 +42,10 @@ const HERE = import.meta.dirname
 
 const SITE = "https://writing.ethanlawcorn.com"
 const NAME = "Ethan Law Corn"
-// Ethan's words (2026-10-20), set as a short signed letter under the hero
+// Ethan's words (2026-10-25), set as a short signed letter under the hero: Hi on its own line, and "here" mails him (the
+// Email link left the index that day, and this is the line that asks readers to write)
 const INTRO =
-  "Hi, these are from my notes which are automatically published. Most of my views will be wrong, so hit me and let me know why."
+  'Hi<br>These are automatically published from my notes. A&nbsp;lot of what I say will be wrong, so hit me up <a href="mailto:ethancorn82@gmail.com">here</a> and let me know why.'
 const SIGN = "E"
 // the way back to ethanlawcorn.com: an arrow and Home at the top left of the index, where a note has Index, so the way
 // up sits in the same place on every page. Ethan 2026-10-25: GitHub, LinkedIn, Email and Spotify went (the home page
@@ -595,7 +596,7 @@ fs.writeFileSync(
     head: LEGACY_JS,
     body:
       `<div class="col index">${HOME_BAR}<script>${HERO_JS}</script><noscript>${heroes[0].html}</noscript>` +
-      `<section class="intro letter"><h1 class="vh">${NAME}</h1><p>${esc(INTRO)}</p><p class="sign">— ${SIGN}</p></section>${toc}</div>${FOOT}`,
+      `<section class="intro letter"><h1 class="vh">${NAME}</h1><p>${INTRO}</p><p class="sign">— ${SIGN}</p></section>${toc}</div>${FOOT}`,
   }),
 )
 

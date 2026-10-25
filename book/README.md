@@ -54,7 +54,7 @@ are centred in the column.
   narrower when that cap applies. The renders come from `halftone.py` in `~/code/projects/artifacts/garden-hero`; all
   the pictures are public domain. Each shows a caption crediting it unless its entry has `"caption": false`; Teresa's
   has none since 2026-10-21 (Ethan asked; the credit stays in the alt text).
-- **Intro:** `INTRO` and `SIGN` in `build.ts`, Ethan's words (2026-10-20), set in the title face and signed. The page
+- **Intro:** `INTRO` (HTML: "Hi", a line break, his note, and "here" mailing him) and `SIGN` in `build.ts`, Ethan's words (2026-10-25), set in the title face and signed. The page
   keeps a visually hidden `<h1>` with his name for screen readers.
 - **Addresses:** notes are `/<slug>`, the file name in lower case with dashes. `_redirects` sends old Quartz note
   URLs (`/2---atomic-notes/<Slug>`) to the note and other old Quartz pages to `/`. Garden Strata's `/?n=<slug>` and
