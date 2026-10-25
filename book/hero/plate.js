@@ -63,6 +63,8 @@ function Stream(seed, width) {
 
 function Plate(data) {
   const lum = b64u8(data.lum), light = b64u8(data.light)
+  // how much of each cell lies in front of the screen (his fist over its lower right corner), 0..255
+  const occ = data.occ ? b64u8(data.occ) : null
   const lut = new Float32Array(256)
   for (let i = 0; i < 256; i++) lut[i] = 1 - Math.pow(Math.min(1, Math.max(0, (i - data.lo) / (data.hi - data.lo))), data.gam)
   // the still part never changes: the print with the laptop's light on it, through the curve
@@ -103,7 +105,8 @@ function Plate(data) {
     const C = Math.min(cols, data.cols), R = Math.min(g.rows, data.rows)
     for (let j = 0; j < R; j++)
       for (let i = 0; i < C; i++) buf[j * cols + i] = Math.round(base[j * data.cols + i] * 255)
-    // the cells under the screen, averaged 4 x 4 with the print where they are only partly on it
+    // the cells under the screen, averaged 4 x 4 with the print where they are only partly on it; where his arm lies
+    // over the screen the print stays, so the stream runs behind it
     const SS = 4
     const i0 = Math.max(0, Math.floor(bb[0] / p)), i1 = Math.min(C - 1, Math.floor(bb[2] / p))
     const j0 = Math.max(0, Math.floor(bb[1] / p)), j1 = Math.min(R - 1, Math.floor(bb[3] / p))
@@ -116,7 +119,8 @@ function Plate(data) {
             const [u, v] = inv((i + (a + 0.5) / SS) * p, (j + (b + 0.5) / SS) * p)
             sum += u >= 0 && u <= 1 && v >= 0 && v <= 1 ? screenInk(u, v) : base[k]
           }
-        buf[j * cols + i] = Math.round(Math.min(1, sum / (SS * SS)) * 255)
+        const o = occ ? occ[k] / 255 : 0
+        buf[j * cols + i] = Math.round((Math.min(1, sum / (SS * SS)) * (1 - o) + base[k] * o) * 255)
       }
   }
   return { step, paint }
