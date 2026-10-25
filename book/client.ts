@@ -1,9 +1,30 @@
-// book/client.ts: the page's one script (bundled and minified by build.ts). The markdown toggle on note pages and
-// the strip in the footer. The hero is picked by a small inline script in the index itself, so it never flashes.
+// book/client.ts: the page's one script (bundled and minified by build.ts). The markdown toggle on note pages, a hero
+// that moves, and the strip in the footer. The hero is picked by a small inline script in the index itself, so it
+// never flashes.
 
+import { mountPlate } from "./hero/plate.js"
 import { mountStrip } from "./strips/strips.js"
 
 const root = document.documentElement
+const q = new URLSearchParams(location.search)
+const still = matchMedia("(prefers-reduced-motion: reduce)").matches
+
+// a plate hero: its img is the frame at data-t, and the canvas over it runs on from that moment. Under reduced motion
+// the img stays; ?t=<seconds> holds that moment instead.
+const plate = document.querySelector<HTMLCanvasElement>(".hero canvas[data-plate]")
+if (plate && !still) {
+  const fig = plate.parentElement!
+  fetch(plate.dataset.plate!)
+    .then((r) => r.json())
+    .then((d) =>
+      mountPlate(plate, d, {
+        t: q.has("t") ? Number(q.get("t")) : Number(plate.dataset.t),
+        hold: q.has("t"),
+        ready: () => fig.classList.add("live"),
+      }),
+    )
+    .catch(() => {})
+}
 
 const toggle = document.querySelector<HTMLButtonElement>("[data-md]")
 if (toggle) {
@@ -29,7 +50,6 @@ if (toggle) {
 const foot = document.querySelector<HTMLElement>("[data-strips]")
 if (foot) {
   const all = JSON.parse(foot.dataset.strips!) as { k: string; url: string; alt: string }[]
-  const q = new URLSearchParams(location.search)
   let i = all.findIndex((s) => s.k === q.get("strip"))
   if (i < 0) {
     let prev = ""

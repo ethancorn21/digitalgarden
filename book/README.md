@@ -33,8 +33,18 @@ are centred in the column.
 
 - **Show markdown:** the marks a note was written with (`#`, `*`, `[[ ]]`, `---`) are in the page as hidden spans,
   shown faint in mono when the reader turns it on. The choice carries to the next note.
-- **Hero:** `hero/heroes.json`. Since 2026-10-21 it holds one picture, Ethan's pick: Saint Teresa's vision of the
-  laptop, Pieter van Schuppen's engraving after Rubens (about 1650; Metropolitan Museum, CC0) with the dove replaced
+- **Hero:** `hero/heroes.json`. Since 2026-10-24 it holds one picture that moves: Goya's Capricho 43, The Sleep of
+  Reason Produces Monsters (1799; Metropolitan Museum, CC0), with an open laptop beside the sleeper streaming an
+  agent's output (plate K on the "Garden footer" canvas, https://claude.ai/artifact/EEGuko4RpVG1A1yvPTFqAP; the bake is
+  in `~/code/projects/artifacts/garden-footer/keep/goya-sleep-of-reason`). An entry with `plate` (the baked JSON) and
+  `t` gets a canvas over its img: `goya.webp` is the plate's frame at `t`, drawn by the same code, so the canvas takes
+  over from that moment with no visible swap, then streams on (`hero/plate.js`, on the strips' dot screen). The grid
+  is fixed (181 cells across) and stretched to the column. Under reduced motion or without WebGL the img stays;
+  `?t=<seconds>` holds a moment. `goya.json`'s `h` is cut to 126 rows (the rows under the desk's edge were specks of
+  the inscription and read as a stray dotted line). To remake the img after changing the plate, draw the canvas at
+  660 CSS px and 2x at `t` and save its pixels as lossless WebP. Before that it was Saint Teresa's vision of the
+  laptop (`teresa.webp`, 2026-10-21 to 2026-10-24), which is now the home page's picture at ethanlawcorn.com, so the
+  garden took another. Teresa: Pieter van Schuppen's engraving after Rubens (about 1650; Metropolitan Museum, CC0) with the dove replaced
   by a laptop on a cloud, in D2 dots (made on the "Garden footer" canvas, https://claude.ai/artifact/EEGuko4RpVG1A1yvPTFqAP;
   sources and script in `~/code/projects/artifacts/garden-footer/teresa`). His five earlier picks (Dürer S4, Dou D2,
   Wright of Derby D2, Piranesi S4, Koninck D2) are still in `hero/`: list them in `heroes.json` again and the inline

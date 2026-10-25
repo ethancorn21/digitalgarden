@@ -56,7 +56,7 @@ const FACES: Record<string, Record<string, string>> = {
     "--body-scale": "1.15",
   },
 }
-const HEROES = ["durer", "dou", "wright", "piranesi", "koninck"]
+const HEROES = ["goya"]
 const STRIPS = ["hollar", "visscher", "utrecht"]
 
 type State = { tokens: Record<string, string>; face: string }

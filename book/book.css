@@ -112,11 +112,23 @@ a:hover {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  position: relative;
 }
 .hero img {
   display: block;
   width: 100%;
   height: auto;
+}
+/* a plate's canvas lies over its img and takes over once it has drawn; the img stays (transparent) for its alt text */
+.hero canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  aspect-ratio: var(--ar);
+}
+.hero.live img {
+  opacity: 0;
 }
 .hero figcaption {
   text-align: center;

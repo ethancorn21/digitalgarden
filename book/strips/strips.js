@@ -20,13 +20,14 @@ const segDist = (x, y, ax, ay, bx, by) => {
 const easeIO = (x) => (x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x))
 
 // the dot screen: a tone per cell (0 paper, 255 ink) in g.buf, drawn as one dot per cell. Without WebGL the 2D canvas
-// draws the same dots, too slowly to animate, so the strip then holds one frame.
-function Screen(cv) {
+// draws the same dots, too slowly to animate, so the strip then holds one frame. o.size ([w, h] in px at the 3.3 px
+// pitch) fixes the grid and stretches it to the canvas, as the hero does at any column width; o.dpr caps the backing.
+export function Screen(cv, o = {}) {
   const g = { buf: new Uint8Array(0), cols: 0, rows: 0, p: PITCH, W: 0, H: 0, dpr: 1, gl: false }
   const fit = () => {
-    const dpr = Math.min(2, window.devicePixelRatio || 1)
-    g.W = cv.clientWidth; g.H = cv.clientHeight
-    cv.width = Math.round(g.W * dpr); cv.height = Math.round(g.H * dpr)
+    const dpr = Math.min(o.dpr || 2, window.devicePixelRatio || 1)
+    cv.width = Math.round(cv.clientWidth * dpr); cv.height = Math.round(cv.clientHeight * dpr)
+    g.W = o.size ? o.size[0] : cv.clientWidth; g.H = o.size ? o.size[1] : cv.clientHeight
     g.cols = Math.ceil(g.W / g.p); g.rows = Math.ceil(g.H / g.p)
     g.buf = new Uint8Array(g.cols * g.rows)
     g.dpr = cv.width / (g.W || 1)

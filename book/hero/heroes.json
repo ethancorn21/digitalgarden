@@ -1,13 +1,16 @@
 [
   {
-    "key": "teresa",
-    "file": "teresa.webp",
+    "key": "goya",
+    "file": "goya.webp",
     "w": 1320,
-    "h": 1577,
-    "artist": "After Pieter van Schuppen after Rubens",
-    "work": "Saint Teresa’s Vision of the Laptop",
-    "year": "c. 1650",
+    "h": 920,
+    "artist": "After Francisco Goya",
+    "work": "The Sleep of Reason Produces Monsters",
+    "year": "1799",
     "kind": "halftone dots",
+    "alt": "Goya’s etching of a man asleep at his desk, owls and bats rising behind him, and beside his head an open laptop still printing text (after Francisco Goya, The Sleep of Reason Produces Monsters, 1799, redrawn in halftone dots)",
+    "plate": "goya.json",
+    "t": 30,
     "caption": false
   }
 ]
