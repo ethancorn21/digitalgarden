@@ -531,14 +531,21 @@ const heroes = (
     work: string
     year: string
     kind: string
+    alt?: string
     caption?: boolean
+    // a plate (book/hero/plate.js) moves: the img is its frame at t seconds, and a canvas over it runs on from there
+    plate?: string
+    t?: number
   }[]
 ).map((h) => {
   const url = emit(`assets/hero/${h.file}`, fs.readFileSync(path.join(HERE, "hero", h.file)))
-  const alt = `${h.artist}, ${h.work}, redrawn as a grid of ${h.kind}`
+  const alt = h.alt ?? `${h.artist}, ${h.work}, redrawn as a grid of ${h.kind}`
+  const plate = h.plate
+    ? `<canvas data-plate="${emit(`assets/hero/${h.plate}`, fs.readFileSync(path.join(HERE, "hero", h.plate)))}" data-t="${h.t ?? 0}" aria-hidden="true"></canvas>`
+    : ""
   return {
     k: h.key,
-    html: `<figure class="hero" style="--ar:${(h.w / h.h).toFixed(4)}"><img src="${url}" alt="${esc(alt)}" width="${h.w}" height="${h.h}" fetchpriority="high">${h.caption === false ? "" : `<figcaption>${esc(h.artist)}, <em>${esc(h.work)}</em>, ${esc(h.year)}</figcaption>`}</figure>`,
+    html: `<figure class="hero" style="--ar:${(h.w / h.h).toFixed(4)}"><img src="${url}" alt="${esc(alt)}" width="${h.w}" height="${h.h}" fetchpriority="high">${plate}${h.caption === false ? "" : `<figcaption>${esc(h.artist)}, <em>${esc(h.work)}</em>, ${esc(h.year)}</figcaption>`}</figure>`,
   }
 })
 if (!heroes.length) fail("no hero pictures in book/hero/heroes.json")
@@ -597,7 +604,8 @@ fs.writeFileSync(
 
 for (const [i, n] of notes.entries()) {
   // the meta line is the date alone: reading time was 1 or 2 minutes on every note, and the tags led nowhere (Ethan
-  // 2026-10-20). No links row and no footer strip under a note either; Ethan is making a different footer for notes
+  // 2026-10-20). No links row under a note either. The strip closes a note as it does the index (Ethan 2026-10-24: a
+  // note with no ending felt wrong)
   const meta = n.date ? `<p class="meta">${day(n.date)}</p>` : ""
   const back = linkedFrom[i].length
     ? `<section class="backlinks"><h2 class="label">Linked from</h2><ul>${linkedFrom[i].map((j) => `<li><a href="/${notes[j].slug}">${esc(notes[j].name)}</a></li>`).join("")}</ul></section>`
@@ -613,7 +621,7 @@ for (const [i, n] of notes.entries()) {
       body:
         `<div class="col note"><header class="bar"><a href="/">Index</a><button type="button" data-md hidden aria-pressed="false">Show markdown</button></header>` +
         `<article><header class="head"><h1 class="title">${mk("# ")}${esc(n.name)}</h1>${meta}</header>` +
-        `<div class="body">${n.html}</div>${back}</article></div>`,
+        `<div class="body">${n.html}</div>${back}</article></div>${FOOT}`,
     }),
   )
 }
