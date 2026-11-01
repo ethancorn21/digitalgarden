@@ -43,7 +43,8 @@ const HERE = import.meta.dirname
 const SITE = "https://writing.ethanlawcorn.com"
 const NAME = "Ethan Law Corn"
 // Ethan's words (2026-10-25), set as a short signed letter under the hero: Hi on its own line, and "here" mails him (the
-// Email link left the index that day, and this is the line that asks readers to write)
+// Email link left the index that day, and this is the line that asks readers to write). Since 2026-11-01 it is one
+// paragraph in the body face, signed "- E" on its last line, so Hi, the note and the sign-off share one spacing
 const INTRO =
   'Hi<br>These are automatically published from my notes. A&nbsp;lot of what I say will be wrong, so hit me up <a href="mailto:ethancorn82@gmail.com">here</a> and let me know why.'
 const SIGN = "E"
@@ -55,20 +56,6 @@ const SIGN = "E"
 const HOME_BAR =
   `<header class="bar"><a class="back" href="https://ethanlawcorn.com">` +
   `<svg viewBox="0 0 16 10" aria-hidden="true"><path d="M15.5 5H1M5.5.5 1 5l4.5 4.5"/></svg>Home</a></header>`
-const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-]
 
 const fail = (msg: string): never => {
   console.error(`[book] ERROR ${msg}`)
@@ -409,7 +396,12 @@ const linkedFrom = notes.map((_, i) =>
     .sort((a, b) => notes[a].name.localeCompare(notes[b].name)),
 )
 
-const day = (d: string) => `${+d.slice(8, 10)} ${MONTHS[+d.slice(5, 7) - 1]} ${d.slice(0, 4)}`
+// a file's size as Apache's listing prints it (apr_strfsize): bytes under 973, then K to one place below 10
+const size = (b: number) => {
+  if (b < 973) return String(b)
+  const k = b / 1024
+  return k < 9.95 ? `${k.toFixed(1)}K` : `${Math.round(k)}K`
+}
 const describe = (s: string) => (s.length <= 160 ? s : s.slice(0, 157).replace(/\s+\S*$/, "") + "…")
 
 // ---------- assets: content-hashed names under /assets, cached for a year ----------
@@ -519,7 +511,7 @@ const strips = (
 if (!strips.length) fail("no strips in book/strips/strips.json")
 const FOOT = `<footer class="strip-foot" data-strips="${esc(JSON.stringify(strips))}"><canvas role="img"></canvas></footer>`
 
-// ---------- index: the hero (one drawn at random when heroes.json lists several), the intro, every note by month ----------
+// ---------- index: the hero (one drawn at random when heroes.json lists several), the intro, every note as a file ----------
 
 const heroes = (
   JSON.parse(fs.readFileSync(path.join(HERE, "hero", "heroes.json"), "utf8")) as {
@@ -567,26 +559,30 @@ if(!s)return;const m=${json(legacy)};location.replace("/"+(m[s]||s.normalize("NF
   "js",
 )
 
-const groups = new Map<string, typeof notes>()
+// the notes as an Apache directory listing (Ethan 2026-10-31, after Rich Sutton's incompleteideas.net/IncIdeas): each
+// note is its file, "<Title>.md", with its date and size under sortable heads, newest first. No heading and no Parent
+// Directory: these are files, not folders. The script cuts a name too long for its line with ..> as Apache does, so
+// every row is one line, and sorts on the heads; without it a long name ends in an ellipsis
 const order = [...notes].sort(
   (a, b) =>
     ((b.date ?? "") + b.time).localeCompare((a.date ?? "") + a.time) ||
     a.name.localeCompare(b.name),
 )
-for (const n of order) {
-  const label = n.date ? `${MONTHS[+n.date.slice(5, 7) - 1]} ${n.date.slice(0, 4)}` : "Undated"
-  if (!groups.has(label)) groups.set(label, [])
-  groups.get(label)!.push(n)
-}
-const toc =
-  `<nav class="toc" aria-label="All notes">` +
-  [...groups]
-    .map(
-      ([label, list]) =>
-        `<section><h2 class="label">${label}</h2><ul>${list.map((n) => `<li><a href="/${n.slug}">${esc(n.name)}</a></li>`).join("")}</ul></section>`,
-    )
+const head = (c: string, label: string, cl: string) =>
+  `<th class="${cl}"><a href="#" data-c="${c}">${label}</a></th>`
+const dir =
+  `<table class="dir" aria-label="All notes"><thead><tr>${head("N", "Name", "n")}${head("M", "Last modified", "m")}${head("S", "Size", "z")}</tr></thead><tbody>` +
+  order
+    .map((n) => {
+      const bytes = Buffer.byteLength(n.raw)
+      return (
+        `<tr data-n="${esc(n.name)}" data-m="${n.date ? n.date + n.time : ""}" data-s="${bytes}">` +
+        `<td class="n"><a href="/${n.slug}" data-f="${esc(n.file)}" title="${esc(n.file)}">${esc(n.file)}</a></td>` +
+        `<td class="m">${n.date ?? "-"}</td><td class="z">${size(bytes)}</td></tr>`
+      )
+    })
     .join("") +
-  `</nav>`
+  `</tbody></table>`
 fs.writeFileSync(
   path.join(OUT, "index.html"),
   shell({
@@ -596,17 +592,17 @@ fs.writeFileSync(
     head: LEGACY_JS,
     body:
       `<div class="col index">${HOME_BAR}<script>${HERO_JS}</script><noscript>${heroes[0].html}</noscript>` +
-      `<section class="intro letter"><h1 class="vh">${NAME}</h1><p>${INTRO}</p><p class="sign">— ${SIGN}</p></section>${toc}</div>${FOOT}`,
+      `<section class="intro letter"><h1 class="vh">${NAME}</h1><p>${INTRO}<br>- ${SIGN}</p></section>${dir}</div>${FOOT}`,
   }),
 )
 
 // ---------- note pages ----------
 
 for (const [i, n] of notes.entries()) {
-  // the meta line is the date alone: reading time was 1 or 2 minutes on every note, and the tags led nowhere (Ethan
-  // 2026-10-20). No links row under a note either. The strip closes a note as it does the index (Ethan 2026-10-24: a
-  // note with no ending felt wrong)
-  const meta = n.date ? `<p class="meta">${day(n.date)}</p>` : ""
+  // the meta line is the file's date and size as the index lists them, in mono (2026-11-01); reading time was 1 or 2
+  // minutes on every note, and the tags led nowhere (Ethan 2026-10-20). No links row under a note either. The strip
+  // closes a note as it does the index (Ethan 2026-10-24: a note with no ending felt wrong)
+  const meta = `<p class="meta">${n.date ?? "undated"} · ${size(Buffer.byteLength(n.raw))}</p>`
   const back = linkedFrom[i].length
     ? `<section class="backlinks"><h2 class="label">Linked from</h2><ul>${linkedFrom[i].map((j) => `<li><a href="/${notes[j].slug}">${esc(notes[j].name)}</a></li>`).join("")}</ul></section>`
     : ""
@@ -700,6 +696,6 @@ fs.writeFileSync(
 )
 
 log(
-  `${notes.length} notes, ${notes.reduce((a, n) => a + n.out.length, 0)} links, ${groups.size} months, ${attachments.size} images, ` +
+  `${notes.length} notes, ${notes.reduce((a, n) => a + n.out.length, 0)} links, ${attachments.size} images, ` +
     `${heroes.length} heroes, ${strips.length} strips${DEV ? ", dev kit" : ""} -> ${OUT}`,
 )

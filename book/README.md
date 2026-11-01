@@ -3,9 +3,14 @@
 The site for writing.ethanlawcorn.com: one serif column, ink on paper, nothing but type. Direction A of the
 "Garden, plain" canvas (https://claude.ai/artifact/JFiqe8wS9JuTdhduCiztm9), picked by Ethan on 2026-10-19.
 
-- **Index** (`/`): a hero picture, a short signed note from Ethan (a back arrow to ethanlawcorn.com sits top left, where a note has Index; his other links are on the home page, 2026-10-25), every note by month (newest
-  first, undated last).
-- **Note** (`/<slug>`): Index top left, Show markdown top right, the title, the date, the note, the notes that link to
+- **Index** (`/`): a hero picture, a short signed note from Ethan (a back arrow to ethanlawcorn.com sits top left, where a note has Index; his other links are on the home page, 2026-10-25), then every note as an Apache
+  directory listing (since 2026-11-01, after Rich Sutton's incompleteideas.net/IncIdeas): `<Title>.md`, its date and
+  its size (Apache's K), under Name / Last modified / Size heads that sort (newest first to start). Each name is one
+  underlined line; the script cuts a long one with `..>` and spreads it so every `..>` ends on one vertical line.
+  Dates and sizes start at their head's left edge. No heading and no Parent Directory (files, not folders). Phones
+  set the note and the listing at 17px and drop the Size column. The mockup rounds are in
+  `~/code/projects/design/writing-listing`.
+- **Note** (`/<slug>`): Index top left, Show markdown top right, the title, the date and size in mono (as the index lists them), the note, the notes that link to
   it. Nothing under it for now: Ethan cut the reading time (1 or 2 minutes on every note), the tags (they led nowhere)
   and the links row and footer under notes on 2026-10-20; he is making a different footer for notes.
 - **Footer** (index and 404 only): a strip of an old print the full width of the page, flush with its bottom, with one
@@ -54,7 +59,7 @@ are centred in the column.
   narrower when that cap applies. The renders come from `halftone.py` in `~/code/projects/artifacts/garden-hero`; all
   the pictures are public domain. Each shows a caption crediting it unless its entry has `"caption": false`; Teresa's
   has none since 2026-10-21 (Ethan asked; the credit stays in the alt text).
-- **Intro:** `INTRO` (HTML: "Hi", a line break, his note, and "here" mailing him) and `SIGN` in `build.ts`, Ethan's words (2026-10-25), set in the title face and signed. The page
+- **Intro:** `INTRO` (HTML: "Hi", a line break, his note, and "here" mailing him) and `SIGN` in `build.ts`, Ethan's words (2026-10-25), set as one paragraph in the body face and signed `- E` on its last line (2026-11-01). The page
   keeps a visually hidden `<h1>` with his name for screen readers.
 - **Addresses:** notes are `/<slug>`, the file name in lower case with dashes. `_redirects` sends old Quartz note
   URLs (`/2---atomic-notes/<Slug>`) to the note and other old Quartz pages to `/`. Garden Strata's `/?n=<slug>` and
