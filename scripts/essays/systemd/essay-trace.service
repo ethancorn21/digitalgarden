@@ -1,7 +1,0 @@
-[Unit]
-Description=Trace published essays back to their notes (digitalgarden scripts/essays/trace.py)
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/python3 -B %h/code/projects/digitalgarden/scripts/essays/trace.py %h/vault-mirror %h/.local/share/essay-trace/out --judge
-Nice=10

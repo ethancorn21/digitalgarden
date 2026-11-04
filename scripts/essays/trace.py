@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """trace.py: trace each published essay back to the notes its words came from.
 
-Runs on the dev box against a mirror of the raw vault (the Mac rsyncs it over Tailscale), so it sees private notes
+Runs on the dev box against a mirror of the raw vault, started over ssh by the Mac's nightly upload right after it
+rsyncs the vault over (scripts/mac/vault-mirror.sh), so it sees private notes
 and the links the publish gate later scrubs. For every essay whose header says `status: #adult` it writes
 OUT/<essay>.json: the borrowed phrases of the essay, the note each came from, and two generations of what those
 notes drew on. Private notes appear by title only: no text, no date, no links. Essays that are not #adult get no

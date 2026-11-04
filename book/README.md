@@ -34,9 +34,11 @@ round 7).
 
 Every essay is traced back to the notes its words came from, automatically:
 
-1. The Mac's `scripts/mac/vault-mirror.sh` (launchd, every 15 min) copies the `.md` files of `9 - essays` and folders 2-5 to the dev box (never `1 - rough notes`)
-   over Tailscale and brings back the provenance files. It only moves files.
-2. On the dev box, `scripts/essays/trace.py` (systemd user timer, `scripts/essays/systemd/`) traces each `#adult`
+1. Once a night, inside the Mac's upload (`local-upload.sh` runs `scripts/mac/vault-mirror.sh`; no schedule of its
+   own): if `9 - essays` holds an `#adult` essay, the `.md` files of folders 2-5 and 9 go to the dev box over
+   Tailscale (never `1 - rough notes`), the tracer runs there over ssh, and the provenance comes back. With no
+   published essay the step does nothing. If the dev box is away, the last provenance is uploaded.
+2. On the dev box, `scripts/essays/trace.py` traces each `#adult`
    essay against the raw vault: verbatim runs, word overlap, then the AI box's `main` model as a judge (thinking off;
    answers cached in `~/.cache/essay-trace/judge`). It writes `<essay>.json`: the borrowed phrases, the note each came
    from, and two generations of what those notes drew on. A private note is a title only (no text, date or links).

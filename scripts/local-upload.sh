@@ -55,7 +55,11 @@ for folder in "${SYNC_FOLDERS[@]}"; do
   fi
 done
 
-# Essay provenance: written on the dev box by scripts/essays/trace.py, pulled here by scripts/mac/vault-mirror.sh.
+# Essays: traced now, on the dev box (scripts/mac/vault-mirror.sh does nothing when no essay is published). Best
+# effort: if the dev box is away, the last provenance goes up and the essays still publish.
+if ! bash "$(cd "$(dirname "$0")" && pwd)/mac/vault-mirror.sh"; then
+  log "[WARN] essay tracing skipped; uploading the last provenance"
+fi
 # Uploaded as it is; Fargate's gate drops any for an unpublished essay and reduces unpublished notes to a title.
 PROVENANCE="$HOME/Library/Application Support/digitalgarden/provenance"
 if [ -d "$PROVENANCE" ]; then
