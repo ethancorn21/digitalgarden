@@ -1,9 +1,27 @@
 // book/client.ts: the page's one script (bundled and minified by build.ts). The markdown toggle on note pages, a hero
-// that moves, the index's listing (names cut to one line, sortable heads), and the strip in the footer. The hero is picked by a small inline script in the index itself, so it
-// never flashes.
+// that moves, the index's listing (names cut to one line, sortable heads), the strip in the footer, and the type
+// printed (press.mjs). The hero is picked by a small inline script in the index itself, so it never flashes.
 
 import { mountPlate } from "./hero/plate.js"
+import { run as press } from "./press.mjs"
 import { mountStrip } from "./strips/strips.js"
+
+// the type, printed (Ethan 2026-11-04, from the sketch in design/home-r5: "dark press looks the best. The ink bleed is
+// awesome. Implement it across the home page and the writing site"): press.mjs sets each block's letters again on a
+// canvas over it, each letter its own piece of type, the ink spreading along the paper's fibres at the edges. The text
+// stays under it (clear), so it is still selected, searched and read aloud; a block that fails stays as it was. Set
+// again whenever the letters move: the fonts, a resize, the listing cut or sorted, the markdown shown
+const PRINTED = "h1,h2,h3,h4,h5,h6,p,li,figcaption,.meta,.label,.bar > a,.bar > button,.dir th,.dir td"
+let pressT = 0
+const reprint = () => {
+  clearTimeout(pressT)
+  pressT = window.setTimeout(() => {
+    const col = document.querySelector(".col")
+    if (col) press(col, "press", PRINTED)
+  }, 150)
+}
+document.fonts?.ready.then(reprint)
+addEventListener("resize", reprint)
 
 const root = document.documentElement
 const q = new URLSearchParams(location.search)
@@ -95,6 +113,7 @@ if (dir) {
         return up ? d : -d
       })
       body.append(...fixed, ...rows)
+      reprint()
     }),
   )
 }
@@ -103,6 +122,7 @@ const toggle = document.querySelector<HTMLButtonElement>("[data-md]")
 if (toggle) {
   const set = (on: boolean) => {
     root.classList.toggle("md", on)
+    toggle.classList.remove("pressed") // its printed words go with the old text
     toggle.textContent = on ? "Hide markdown" : "Show markdown"
     toggle.setAttribute("aria-pressed", String(on))
   }
@@ -111,6 +131,7 @@ if (toggle) {
   toggle.addEventListener("click", () => {
     const on = !root.classList.contains("md")
     set(on)
+    reprint()
     // the reader's choice follows them to the next note
     try {
       localStorage.setItem("md", on ? "1" : "0")

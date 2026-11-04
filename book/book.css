@@ -725,5 +725,23 @@ html:not(.js) .strip-foot {
   .nl.fresh {
     animation: none;
     opacity: 1;
+/* the type, printed (client.ts, press.mjs): the canvas over a block carries its letters; the text under it is clear,
+   still there to select, search and read aloud. Paper printing gets the browser's own text */
+.pressed,
+.pressed *:not(canvas) {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent;
+}
+.pressed ::selection {
+  background: rgba(120, 110, 90, 0.25);
+}
+@media print {
+  .press-ink {
+    display: none;
+  }
+  .pressed,
+  .pressed *:not(canvas) {
+    color: inherit !important;
+    -webkit-text-fill-color: currentColor;
   }
 }

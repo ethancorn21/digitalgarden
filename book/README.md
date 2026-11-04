@@ -16,6 +16,14 @@ The site for writing.ethanlawcorn.com: one serif column, ink on paper, nothing b
 - **Footer** (index and 404 only): a strip of an old print the full width of the page, flush with its bottom, with one
   modern thing in it that moves, drawn as dots like the hero (see Strips). It replaced the pixel parade on 2026-10-24.
 - No dark mode. Ethan, 2026-10-19: the garden is ink on paper only.
+- **The type is printed** (2026-11-04, from the sketch in `~/code/projects/design/home-r5`, the home page has it too):
+  `press.mjs` sets each block's letters again on a canvas over it, at the places the browser laid them, each letter its
+  own piece of type (a fraction of a pixel off the line, a hair of tilt, its own ink), the ink spreading along the
+  paper's fibres at the edges only and never into a letter. No noise inside the letters (a flecked round "made the
+  screen look dirt"). The text stays under the canvas, clear: selection, search, copy and screen readers get the real
+  text, printing on paper gets the browser's own. It is set again when the letters move (fonts, resize, the listing
+  cut or sorted, the markdown shown). WebGL2 inks it; without it the same in plain JS. The same file is the home's
+  (`neo-hero/site/e/press.mjs`): change both.
 
 ## Essays
 
