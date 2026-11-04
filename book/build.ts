@@ -436,7 +436,8 @@ const essays = essayFiles
     }
     // mark each borrowed phrase where it stands, searching on from the last one; whitespace may differ (the tracer
     // joined the paragraph's lines)
-    let body = rewriteEmbeds(e.body, e.name)
+    // Obsidian comments (%% ... %%) never reach the page: they hold Ethan's link fixes for the tracer
+    let body = rewriteEmbeds(e.body.replace(/%%[\s\S]*?%%/g, "").trim(), e.name)
     const spans: { node: string; kind: string }[] = []
     let at = 0
     for (const sp of prov?.spans ?? []) {

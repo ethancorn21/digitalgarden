@@ -156,8 +156,37 @@ def load_vault(root):
     return nodes
 
 
+COMMENT = re.compile(r"%%(.*?)%%", re.S)
+QUOTED = r'["\u201c](.+?)["\u201d]'
+TITLE = r"\[\[([^\]|#]+)(?:[#|][^\]]*)?\]\]"
+QUOTES = str.maketrans("\u201c\u201d\u2018\u2019", "\"\"''")   # one character for one, so positions hold
+
+
+def read_overrides(body):
+    """Ethan's own fixes, written in the essay inside an Obsidian comment (%% ... %%, hidden when he reads it):
+
+         not [[Note]]                 never link this note anywhere in the essay
+         not "a phrase"               unlink this phrase, whatever note it went to
+         "a phrase" -> [[Note]]       link this phrase to this note, whatever the tracer found
+
+    One per line, a list bullet in front is fine. Applied after tracing, so they always win.
+    """
+    o = {"not_notes": set(), "not_phrases": [], "force": []}
+    for block in COMMENT.findall(body):
+        for line in block.splitlines():
+            l = re.sub(r"^\s*[-*+]\s*", "", line).strip()
+            if m := re.fullmatch(r"not:?\s*" + TITLE, l, re.I):
+                o["not_notes"].add(m[1].strip().lower())
+            elif m := re.fullmatch(r"not:?\s*" + QUOTED, l, re.I):
+                o["not_phrases"].append(m[1])
+            elif m := re.fullmatch(QUOTED + r"\s*(?:->|\u2192|=>)\s*" + TITLE, l):
+                o["force"].append((m[1], m[2].strip()))
+    return o
+
+
 def read_essay(path):
     head, date, body = split_header(open(path, encoding="utf-8").read())
+    overrides, body = read_overrides(body), COMMENT.sub("", body)
     title, paras = None, []
     for block in re.split(r"\n\s*\n", body):
         b = re.sub(r"^\s*---\s*$", "", block, flags=re.M).strip()
@@ -171,7 +200,63 @@ def read_essay(path):
             title = b[2:].strip()
         elif not b.startswith("#"):
             paras.append(" ".join(b.split()))
-    return {"title": title or os.path.basename(path)[:-3], "date": iso(date), "paragraphs": paras}
+    return {"title": title or os.path.basename(path)[:-3], "date": iso(date), "paragraphs": paras,
+            "overrides": overrides}
+
+
+def _find(para, phrase):
+    """Where a phrase stands in a paragraph; case, quote style and spacing do not matter."""
+    words = [re.escape(w) for w in phrase.translate(QUOTES).lower().split()]
+    m = re.search(r"\s+".join(words), para.translate(QUOTES).lower()) if words else None
+    return (m.start(), m.end()) if m else None
+
+
+def _carve(spans, para, s, e):
+    """The spans with [s, e) cut out of them; a piece left with fewer than 3 words goes."""
+    out = []
+    for sp in spans:
+        if sp["end"] <= s or sp["start"] >= e:
+            out.append(sp)
+            continue
+        for a, b in ((sp["start"], s), (e, sp["end"])):
+            seg = para[a:b] if b > a else ""
+            a2, b2 = a + len(seg) - len(seg.lstrip(" ,;:")), b - (len(seg) - len(seg.rstrip(" ,;:")))
+            if b > a and len(WORD.findall(para[a2:b2])) >= 3:
+                out.append({**sp, "start": a2, "end": b2})
+    return out
+
+
+def apply_overrides(out, o, nodes):
+    """Ethan's fixes (read_overrides) over what the tracer found. A fix that matches nothing is reported, not guessed."""
+    if not o or not (o["not_notes"] or o["not_phrases"] or o["force"]):
+        return out
+    titles = {k.lower(): k for k in nodes}
+    hit = set()
+    for p in out:
+        para, spans = p["text"], p["spans"]
+        spans = [sp for sp in spans if sp["node"].lower() not in o["not_notes"]]
+        for phrase in o["not_phrases"]:
+            if at := _find(para, phrase):
+                spans, _ = _carve(spans, para, *at), hit.add(("not", phrase))
+        for phrase, title in o["force"]:
+            at, node = _find(para, phrase), titles.get(title.lower())
+            if at and node:
+                spans = _carve(spans, para, *at) + [{"start": at[0], "end": at[1], "node": node, "kind": "p",
+                                                      "score": 9, "match": None}]
+                hit.add(("force", phrase))
+        spans.sort(key=lambda sp: sp["start"])
+        for sp in spans:
+            sp["text"] = para[sp["start"]:sp["end"]]
+        p["spans"] = spans
+    for phrase in o["not_phrases"]:
+        if ("not", phrase) not in hit:
+            print(f'fix not applied: "{phrase}" is not in the essay', file=sys.stderr)
+    for phrase, title in o["force"]:
+        if title.lower() not in titles:
+            print(f"fix not applied: no note called [[{title}]]", file=sys.stderr)
+        elif ("force", phrase) not in hit:
+            print(f'fix not applied: "{phrase}" is not in the essay', file=sys.stderr)
+    return out
 
 
 def clauses(para):
@@ -358,6 +443,7 @@ def trace(essay, nodes, judge=False, cache_dir=".judge-cache"):
             sp["text"] = para[sp["start"]:sp["end"]]
         out.append({"text": para, "spans": spans})
 
+    out = apply_overrides(out, essay.get("overrides"), nodes)
     used = {sp["node"] for p in out for sp in p["spans"]}
     # the whole ancestry, so a reader can keep clicking back; a private note is a dead end: its links stay hidden
     keep, edge = set(used), set(used)

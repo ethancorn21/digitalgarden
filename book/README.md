@@ -44,6 +44,19 @@ Every essay is traced back to the notes its words came from, automatically:
    from, and two generations of what those notes drew on. A private note is a title only (no text, date or links).
    Golden test: `trace.py --gold golden/nobody-hears-anybody.md golden/nobody-hears-anybody.gold.json VAULT --judge`
    (precision 0.83, recall 0.90 on 2026-11-04).
+   **Fixing a wrong link yourself:** in the essay, inside an Obsidian comment (hidden when reading; `[[` autocompletes
+   note names), one fix per line; they are applied after tracing, so they always win, and the page never shows them:
+
+   ```
+   %%
+   not [[Some Note]]                     never link this note anywhere in the essay
+   not "a phrase from the essay"         unlink that phrase (only those words; quote a whole sentence to unlink it)
+   "a phrase from the essay" -> [[Note]] link that phrase to that note
+   %%
+   ```
+
+   A fix that matches nothing (a phrase not in the essay, a note name that does not exist) is not guessed at: the
+   tracer prints `fix not applied: ...` in the nightly upload's log.
 3. `local-upload.sh` uploads them to `s3://.../_provenance/` with the notes; Fargate's gate (`publish-gate.ts`) drops a
    file whose essay is not published and makes any note that is not a published note or source material a private
    stub, whatever the file says.
