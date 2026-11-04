@@ -15,7 +15,12 @@ The site for writing.ethanlawcorn.com: one serif column, ink on paper, nothing b
   and the links row and footer under notes on 2026-10-20; he is making a different footer for notes.
 - **Footer** (index and 404 only): a strip of an old print the full width of the page, flush with its bottom, with one
   modern thing in it that moves, drawn as dots like the hero (see Strips). It replaced the pixel parade on 2026-10-24.
-- No dark mode. Ethan, 2026-10-19: the garden is ink on paper only.
+- **Dark mode** (2026-11-04, Ethan: "the same dark mode changes" as the home; until then ink on paper only): the
+  home's colours (tan ink `#e6e1d6` on `#211f1c`), the system's choice unless the moon (top right of every bar) picked
+  the other. The choice is a cookie for all of ethanlawcorn.com, kept only while it differs from the system's. The
+  dots go light: the hero glows (each dot sized by the light there, gamma 3, so only the laptop shines; its still is
+  `hero/goya-dark.webp`, baked by `hero/bake-dark.mjs` from plate.js itself), the strips are chalk on the dark (the
+  same tone in light ink, so their sky and ends still fade into the page). `darkreader-lock` keeps Dark Reader off.
 - **The type is printed** (2026-11-04, from the sketch in `~/code/projects/design/home-r5`, the home page has it too):
   `press.mjs` sets each block's letters again on a canvas over it, at the places the browser laid them, each letter its
   own piece of type (a fraction of a pixel off the line, a hair of tilt, its own ink), the ink spreading along the

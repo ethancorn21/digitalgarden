@@ -1,6 +1,6 @@
 // book/client.ts: the page's one script (bundled and minified by build.ts). The markdown toggle on note pages, a hero
-// that moves, the index's listing (names cut to one line, sortable heads), the strip in the footer, and the type
-// printed (press.mjs). The hero is picked by a small inline script in the index itself, so it never flashes.
+// that moves, the index's listing (names cut to one line, sortable heads), the strip in the footer, the type printed
+// (press.mjs), and the light/dark moon. The hero is picked by a small inline script in the index itself, so it never flashes.
 
 import { mountPlate } from "./hero/plate.js"
 import { run as press } from "./press.mjs"
@@ -11,7 +11,8 @@ import { mountStrip } from "./strips/strips.js"
 // canvas over it, each letter its own piece of type, the ink spreading along the paper's fibres at the edges. The text
 // stays under it (clear), so it is still selected, searched and read aloud; a block that fails stays as it was. Set
 // again whenever the letters move: the fonts, a resize, the listing cut or sorted, the markdown shown
-const PRINTED = "h1,h2,h3,h4,h5,h6,p,li,figcaption,.meta,.label,.bar > a,.bar > button,.dir th,.dir td"
+const PRINTED =
+  "h1,h2,h3,h4,h5,h6,p,li,figcaption,.meta,.label,.bar > a,.bar > button:not(.mode),.dir th,.dir td"
 let pressT = 0
 const reprint = () => {
   clearTimeout(pressT)
@@ -26,6 +27,53 @@ addEventListener("resize", reprint)
 const root = document.documentElement
 const q = new URLSearchParams(location.search)
 const still = matchMedia("(prefers-reduced-motion: reduce)").matches
+
+// light or dark (the head script set data-theme before the first paint): the moon switches it, and the choice is kept
+// only while it differs from the system's, so a reader who switches back follows the system again. Kept in a cookie
+// for all of ethanlawcorn.com, so the home and the writing agree. While the page is open it follows the system (dark at
+// sunset) unless chosen. Everything drawn in ink (the type, the hero, the strip) draws again on "themechange"
+const sys = matchMedia("(prefers-color-scheme: dark)")
+const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')
+const hero = document.querySelector<HTMLImageElement>(".hero img[data-dark]")
+const showTheme = () => {
+  const dark = root.dataset.theme === "dark"
+  if (themeColor) themeColor.content = getComputedStyle(root).getPropertyValue("--bg").trim()
+  if (hero) hero.src = (dark ? hero.dataset.dark : hero.dataset.light)!
+  document.querySelectorAll(".bar .mode").forEach((b) =>
+    b.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode"),
+  )
+}
+const setTheme = (t: string) => {
+  if (t === root.dataset.theme) return
+  root.dataset.theme = t
+  showTheme()
+  dispatchEvent(new Event("themechange"))
+}
+const keep = (t: string | null) => {
+  const dom = /(^|\.)ethanlawcorn\.com$/.test(location.hostname) ? "; domain=ethanlawcorn.com" : ""
+  document.cookie = t
+    ? `theme=${t}; path=/${dom}; max-age=31536000; samesite=lax${location.protocol === "https:" ? "; secure" : ""}`
+    : `theme=; path=/${dom}; max-age=0`
+  try {
+    localStorage.removeItem("theme")
+  } catch {}
+}
+const chosen = () => /(?:^|; )theme=(dark|light)/.test(document.cookie)
+document.querySelectorAll(".bar .mode").forEach((b) =>
+  b.addEventListener("click", () => {
+    const t = root.dataset.theme === "dark" ? "light" : "dark"
+    keep(t === (sys.matches ? "dark" : "light") ? null : t)
+    setTheme(t)
+  }),
+)
+sys.addEventListener("change", () => {
+  if (!chosen() && !q.has("theme")) setTheme(sys.matches ? "dark" : "light")
+})
+showTheme()
+addEventListener("themechange", () => {
+  const col = document.querySelector(".col")
+  if (col) press(col, "press", PRINTED)
+})
 
 // a plate hero: its img is the frame at data-t, and the canvas over it runs on from that moment. Under reduced motion
 // the img stays; ?t=<seconds> holds that moment instead.

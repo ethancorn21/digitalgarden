@@ -8,6 +8,14 @@
 
 const PITCH = 3.3
 const INK = [28, 27, 25] // --ink, #1c1b19
+// dark mode (the page's data-theme, Ethan 2026-11-04: "the same dark mode changes" as the home): the dots go light ink
+// on the dark ground. glow, as the home's picture: each dot sized by the light there, so the print is lit from inside;
+// neg: the same tone in light ink, the print's lines in chalk on the dark (paper stays dark, so a strip's ends and sky
+// still fade into the page). The hero glows, at gamma 3 (the Goya is mostly paper: at the home's 2 it was a bright
+// block, and only the laptop should shine); the strips take neg (glow lit their whole sky)
+const INK_DARK = [230, 225, 214] // the dark --ink, #e6e1d6
+const isDark = () => document.documentElement.dataset.theme === 'dark'
+const tone = (t, mode, gam) => (mode === 'glow' ? Math.pow(1 - t, gam) : t)
 
 const b64u8 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0))
 const hash1 = (n) => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x) }
@@ -41,11 +49,12 @@ export function Screen(cv, o = {}) {
       const { p, cols, rows, buf } = g
       c.setTransform(g.dpr, 0, 0, g.dpr, 0, 0)
       c.clearRect(0, 0, g.W, g.H)
-      c.fillStyle = `rgb(${INK})`
+      const dark = isDark() && o.dark
+      c.fillStyle = `rgb(${dark ? INK_DARK : INK})`
       c.beginPath()
       for (let j = 0; j < rows; j++)
         for (let i = 0; i < cols; i++) {
-          const t = buf[j * cols + i] / 255
+          const t = dark ? tone(buf[j * cols + i] / 255, o.dark, o.gam || 2) : buf[j * cols + i] / 255
           if (t < 0.04) continue
           const r = Math.sqrt(t / Math.PI) * p, x = (i + 0.5) * p, y = (j + 0.5) * p
           c.moveTo(x + r, y); c.arc(x, y, r, 0, 2 * Math.PI)
@@ -60,13 +69,13 @@ export function Screen(cv, o = {}) {
   gl.attachShader(pr, sh(gl.VERTEX_SHADER, 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}'))
   // each pixel takes the darkest of the dots of its cell and the eight round it (a dark dot spills past its cell)
   gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, `precision highp float;
-uniform sampler2D T;uniform vec2 G;uniform float P,H;uniform vec3 K;
+uniform sampler2D T;uniform vec2 G;uniform float P,H,D;uniform vec3 K;
 void main(){
   vec2 q=vec2(gl_FragCoord.x,H-gl_FragCoord.y)/P;vec2 c0=floor(q);float v=0.;
   for(int j=-1;j<=1;j++)for(int i=-1;i<=1;i++){
     vec2 c=c0+vec2(float(i),float(j));
     if(c.x<0.||c.y<0.||c.x>=G.x||c.y>=G.y)continue;
-    float t=texture2D(T,(c+.5)/G).r;if(t<.04)continue;
+    float t=texture2D(T,(c+.5)/G).r;if(D>0.)t=pow(1.-t,D);if(t<.04)continue;
     v=max(v,clamp((sqrt(t/3.14159265)-length(q-c-.5))*P+.5,0.,1.));
   }
   gl_FragColor=vec4(K*v,v);
@@ -91,7 +100,9 @@ void main(){
     gl.uniform2f(U('G'), g.cols, g.rows)
     gl.uniform1f(U('P'), g.p * g.dpr)
     gl.uniform1f(U('H'), cv.height)
-    gl.uniform3f(U('K'), INK[0] / 255, INK[1] / 255, INK[2] / 255)
+    const dark = isDark() && o.dark, K = dark ? INK_DARK : INK
+    gl.uniform1f(U('D'), dark && o.dark === 'glow' ? o.gam || 2 : 0)
+    gl.uniform3f(U('K'), K[0] / 255, K[1] / 255, K[2] / 255)
     gl.clearColor(0, 0, 0, 0)
     gl.clear(gl.COLOR_BUFFER_BIT)
     gl.drawArrays(gl.TRIANGLES, 0, 3)
@@ -440,7 +451,7 @@ function Strip(data) {
 // the thing starts its loop when the reader first gets there. Under reduced motion, or without WebGL, the canvas holds
 // the thing's still frame; o.t (seconds) holds that moment instead.
 export function mountStrip(cv, data, o = {}) {
-  const g = Screen(cv), s = Strip(data)
+  const g = Screen(cv, { dark: o.dark ?? 'neg' }), s = Strip(data)
   g.p = data.pitch || PITCH
   const fixed = o.t != null || !g.gl || matchMedia('(prefers-reduced-motion: reduce)').matches
   let t = 0, last = 0, raf = 0, seen = false
@@ -457,6 +468,7 @@ export function mountStrip(cv, data, o = {}) {
     if (!go && raf) { cancelAnimationFrame(raf); raf = 0 }
   }
   new ResizeObserver(() => { g.size(); frame(fixed ? o.t ?? s.still(g) : t) }).observe(cv)
+  addEventListener('themechange', () => frame(fixed ? o.t ?? s.still(g) : t))
   new IntersectionObserver(([e]) => { seen = e.isIntersecting; run() }).observe(cv)
   document.addEventListener('visibilitychange', run)
 }

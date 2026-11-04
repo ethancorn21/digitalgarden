@@ -130,7 +130,7 @@ function Plate(data) {
 // runs while the hero is on screen and the tab is showing, and a frame is drawn only when the screen's text changes.
 // o.hold keeps that one frame (?t= on the page); o.ready() is called once the canvas shows the picture.
 export function mountPlate(cv, data, o = {}) {
-  const g = Screen(cv, { size: [data.w, data.h], dpr: 3 })
+  const g = Screen(cv, { size: [data.w, data.h], dpr: 3, dark: o.dark ?? 'glow', gam: o.gam ?? 3 })
   if (!g.gl) return
   const s = Plate(data)
   let t = o.t || 0, last = 0, raf = 0, seen = true, shown = '', drawn = false
@@ -154,6 +154,7 @@ export function mountPlate(cv, data, o = {}) {
     if (!go && raf) { cancelAnimationFrame(raf); raf = 0 }
   }
   new ResizeObserver(() => { g.size(); frame(true) }).observe(cv)
+  addEventListener('themechange', () => frame(true))
   new IntersectionObserver(([e]) => { seen = e.isIntersecting; run() }).observe(cv)
   document.addEventListener('visibilitychange', run)
 }

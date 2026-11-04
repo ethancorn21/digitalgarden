@@ -10,6 +10,7 @@
     "kind": "halftone dots",
     "alt": "Goya’s etching of a man asleep at his desk, owls and bats rising behind him, and beside his head an open laptop still printing text (after Francisco Goya, The Sleep of Reason Produces Monsters, 1799, redrawn in halftone dots)",
     "plate": "goya.json",
+    "dark": "goya-dark.webp",
     "t": 30,
     "caption": false
   }

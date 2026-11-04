@@ -57,9 +57,11 @@ const SIGN = "E"
 // has them), "Homepage" became a back arrow, and it moved out from under his note, where it broke the run from the
 // note into the list. The arrow is drawn: the self-hosted subsets have no U+2190, so a typed one would come from a
 // system font
+// the light/dark toggle, last in every bar (top right), as the home's moon (Ethan 2026-11-04); client.ts runs it
+const MODE = `<button class="mode" type="button" aria-label="Switch to dark mode"><span class="moon"></span></button>`
 const HOME_BAR =
   `<header class="bar"><a class="back" href="https://ethanlawcorn.com">` +
-  `<svg viewBox="0 0 16 10" aria-hidden="true"><path d="M15.5 5H1M5.5.5 1 5l4.5 4.5"/></svg>Home</a></header>`
+  `<svg viewBox="0 0 16 10" aria-hidden="true"><path d="M15.5 5H1M5.5.5 1 5l4.5 4.5"/></svg>Home</a>${MODE}</header>`
 
 const fail = (msg: string): never => {
   console.error(`[book] ERROR ${msg}`)
@@ -542,8 +544,14 @@ const DEV_JS = DEV ? await bundle("dev.ts", "dev") : ""
 const ESSAY_JS = essays.length ? await bundle("essay.ts", "essay") : ""
 
 // html: the class "js" shows what only works with the script; "md" is the reader's markdown toggle, kept across notes
+// the theme, set before the first paint: the system's, unless the reader chose the other with the moon (a cookie for
+// all of ethanlawcorn.com, so the home and the writing agree; the home's older localStorage choice still counts there).
+// ?theme= forces one. client.ts keeps theme-color with it and follows the system while the page is open
 const HEAD_JS = await minify(
-  `const r=document.documentElement;r.classList.add("js");try{if(localStorage.getItem("md")==="1")r.classList.add("md")}catch(e){}`,
+  `const r=document.documentElement;r.classList.add("js");try{if(localStorage.getItem("md")==="1")r.classList.add("md")}catch(e){}
+let k=(/(?:^|; )theme=(dark|light)/.exec(document.cookie)||[])[1];try{k=k||localStorage.getItem("theme")}catch(e){}
+r.dataset.theme=(new URLSearchParams(location.search).get("theme")||k||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"))==="dark"?"dark":"light";
+if(r.dataset.theme==="dark")document.querySelector('meta[name="theme-color"]').content="#211f1c"`,
   "js",
 )
 const json = (v: unknown) => JSON.stringify(v).replace(/</g, "\\u003c")
@@ -564,8 +572,8 @@ function shell(o: {
     : ""
   return (
     `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">` +
-    `<title>${esc(o.title)}</title><meta name="description" content="${esc(o.desc)}"><meta name="color-scheme" content="only light">` +
-    `<meta name="theme-color" content="#FDFCFA"><link rel="icon" href="/mark-64.png" sizes="64x64">` +
+    `<title>${esc(o.title)}</title><meta name="description" content="${esc(o.desc)}"><meta name="color-scheme" content="light dark">` +
+    `<meta name="darkreader-lock"><meta name="theme-color" content="#fdfcfa"><link rel="icon" href="/mark-64.png" sizes="64x64">` +
     `<link rel="icon" href="/mark.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png">` +
     `${og}${PRELOAD}<style>${CSS}</style>` +
     `<script>${HEAD_JS}${o.head ?? ""}</script></head><body>${o.body}<script src="${JS}" defer></script>` +
@@ -607,25 +615,30 @@ const heroes = (
     // a plate (book/hero/plate.js) moves: the img is its frame at t seconds, and a canvas over it runs on from there
     plate?: string
     t?: number
+    // the dark mode's still (light dots on clear, bake-dark.mjs), shown when the page is dark
+    dark?: string
   }[]
 ).map((h) => {
   const url = emit(`assets/hero/${h.file}`, fs.readFileSync(path.join(HERE, "hero", h.file)))
+  const dark = h.dark ? emit(`assets/hero/${h.dark}`, fs.readFileSync(path.join(HERE, "hero", h.dark))) : ""
   const alt = h.alt ?? `${h.artist}, ${h.work}, redrawn as a grid of ${h.kind}`
   const plate = h.plate
     ? `<canvas data-plate="${emit(`assets/hero/${h.plate}`, fs.readFileSync(path.join(HERE, "hero", h.plate)))}" data-t="${h.t ?? 0}" aria-hidden="true"></canvas>`
     : ""
   return {
     k: h.key,
-    html: `<figure class="hero" style="--ar:${(h.w / h.h).toFixed(4)}"><img src="${url}" alt="${esc(alt)}" width="${h.w}" height="${h.h}" fetchpriority="high">${plate}${h.caption === false ? "" : `<figcaption>${esc(h.artist)}, <em>${esc(h.work)}</em>, ${esc(h.year)}</figcaption>`}</figure>`,
+    u: url,
+    d: dark,
+    html: `<figure class="hero" style="--ar:${(h.w / h.h).toFixed(4)}"><img src="${url}"${dark ? ` data-light="${url}" data-dark="${dark}"` : ""} alt="${esc(alt)}" width="${h.w}" height="${h.h}" fetchpriority="high">${plate}${h.caption === false ? "" : `<figcaption>${esc(h.artist)}, <em>${esc(h.work)}</em>, ${esc(h.year)}</figcaption>`}</figure>`,
   }
 })
 if (!heroes.length) fail("no hero pictures in book/hero/heroes.json")
-// ?hero=<key> pins one; otherwise a random one, never the same twice in a row
+// ?hero=<key> pins one; otherwise a random one, never the same twice in a row. A dark page gets the dark still
 const HERO_JS = await minify(
   `(()=>{const H=${json(heroes)},n=H.length;let i=H.findIndex(h=>h.k===new URLSearchParams(location.search).get("hero"));
 if(i<0){let p=-1;try{const v=localStorage.getItem("hero");if(v!==null)p=+v}catch(e){}
 const skip=p>=0&&p<n&&n>1;i=Math.floor(Math.random()*(skip?n-1:n));if(skip&&i>=p)i++;try{localStorage.setItem("hero",String(i))}catch(e){}}
-document.currentScript.insertAdjacentHTML("beforebegin",H[i].html)})()`,
+const h=H[i];document.currentScript.insertAdjacentHTML("beforebegin",document.documentElement.dataset.theme==="dark"&&h.d?h.html.replace(h.u,h.d):h.html)})()`,
   "js",
 )
 // Garden Strata's addresses (/?n=<slug>, /#note-<slug>) land on the note's page
@@ -702,7 +715,7 @@ for (const [i, n] of notes.entries()) {
       url: `/${n.slug}`,
       type: "article",
       body:
-        `<div class="col note"><header class="bar"><a href="/">Index</a><button type="button" data-md hidden aria-pressed="false">Show markdown</button></header>` +
+        `<div class="col note"><header class="bar"><a href="/">Index</a><button type="button" data-md hidden aria-pressed="false">Show markdown</button>${MODE}</header>` +
         `<article><header class="head"><h1 class="title">${mk("# ")}${esc(n.name)}</h1>${meta}</header>` +
         `<div class="body">${n.html}</div>${back}</article></div>${FOOT}`,
     }),
@@ -732,7 +745,7 @@ for (const e of essays) {
       type: "article",
       script: ESSAY_JS,
       body:
-        `<div class="col note essay"><header class="bar"><a href="/essays/">Essays</a><button type="button" data-md hidden aria-pressed="false">Show markdown</button></header>` +
+        `<div class="col note essay"><header class="bar"><a href="/essays/">Essays</a><button type="button" data-md hidden aria-pressed="false">Show markdown</button>${MODE}</header>` +
         `<article><header class="head"><h1 class="title">${mk("# ")}${esc(e.name)}</h1>${meta}</header>` +
         `<div class="trace"><div class="body">${e.html}</div>${drawn}</div></article></div>` +
         `<script type="application/json" id="trace-data">${json(data)}</script>${FOOT}`,
@@ -759,7 +772,7 @@ if (essays.length) {
       desc: `Essays by ${NAME}, each traced back to the notes it grew from.`,
       url: "/essays/",
       body:
-        `<div class="col index essays-index"><header class="bar"><a href="/">Index</a></header>` +
+        `<div class="col index essays-index"><header class="bar"><a href="/">Index</a>${MODE}</header>` +
         `<h1 class="vh">Essays</h1><table class="dir" aria-label="All essays"><thead><tr>${head("N", "Name", "n")}${head("M", "Last modified", "m")}${head("S", "Size", "z")}</tr></thead><tbody>` +
         `<tr class="sub up" data-n="" data-m="" data-s="-1"><td class="n"><a href="/" data-f="Parent Directory" title="Parent Directory">Parent Directory</a></td><td class="m"></td><td class="z">-</td></tr>` +
         `${rows}</tbody></table></div>${FOOT}`,
