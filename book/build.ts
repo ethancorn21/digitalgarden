@@ -37,6 +37,10 @@ const REPO = path.resolve(args[0] ?? path.join(import.meta.dirname, ".."))
 const CONTENT = path.join(REPO, "content")
 const NOTES_DIR = path.join(CONTENT, "2 - atomic notes")
 const ATTACH_DIR = path.join(CONTENT, "7 - attachments")
+// essays: gated like notes (only #adult ones reach here), each with the provenance the tracer wrote and the publish
+// gate cleaned (scripts/essays/trace.py, scripts/lib/publish-gate.ts)
+const ESSAYS_DIR = path.join(CONTENT, "9 - essays")
+const PROV_DIR = path.join(CONTENT, "_provenance")
 const OUT = path.resolve(OUT_ARG ?? path.join(REPO, "public"))
 const HERE = import.meta.dirname
 
@@ -69,8 +73,8 @@ if (!fs.existsSync(NOTES_DIR)) fail(`no notes folder at ${NOTES_DIR}`)
 
 // Vault notes have no YAML. Header lines (date, status, tags) run until a blank line or a --- rule. Only the date is
 // used: the tags lead nowhere on this site (Ethan 2026-10-20 cut them from the meta line).
-function parseNote(file: string) {
-  const raw = fs.readFileSync(path.join(NOTES_DIR, file), "utf8").replace(/\r\n/g, "\n")
+function parseNote(file: string, dir = NOTES_DIR) {
+  const raw = fs.readFileSync(path.join(dir, file), "utf8").replace(/\r\n/g, "\n")
   const lines = raw.split("\n")
   let i = 0
   while (i < lines.length && lines[i].trim() === "") i++ // some notes start with a blank line
@@ -115,7 +119,7 @@ const clean = (s: string) =>
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "") || "note"
-const RESERVED = new Set(["assets", "att", "index", "404", "icon"])
+const RESERVED = new Set(["assets", "att", "index", "404", "icon", "essays"])
 const used = new Set<string>()
 const slugs = parsed.map((p) => {
   const base = clean(p.name)
@@ -185,10 +189,10 @@ const esc = (s: string) =>
 // straight quotes as typed become curly ones (the canvas set them that way); code keeps its own
 const smart = (s: string) =>
   s
-    .replace(/(^|[\s([{\u2014\u2013-])"(?=\S)/g, "$1\u201c")
+    .replace(/(^|[\s([{\u2014\u2013\uE001\uE002-])"(?=\S)/g, "$1\u201c")
     .replace(/"/g, "\u201d")
     .replace(/([\p{L}\p{N}])'/gu, "$1\u2019")
-    .replace(/(^|[\s([{\u2014\u2013-])'(?=\S)/g, "$1\u2018")
+    .replace(/(^|[\s([{\u2014\u2013\uE001\uE002-])'(?=\S)/g, "$1\u2018")
     .replace(/'/g, "\u2019")
 const mk = (s: string) => `<span class="mk">${esc(s)}</span>`
 const mkBlock = (s: string) => `<span class="mk mk-block">${esc(s)}</span>`
@@ -396,6 +400,77 @@ const linkedFrom = notes.map((_, i) =>
     .sort((a, b) => notes[a].name.localeCompare(notes[b].name)),
 )
 
+// ---------- essays: the notes an essay grew from, traced (scripts/essays/trace.py) ----------
+//
+// An essay is a note in 9 - essays. Its provenance names the phrases it borrowed and the note each came from; here each
+// phrase is found in the essay's own text, in order, and marked, so it can be drawn from with JavaScript off too. A
+// phrase is only marked where it is plain words: one that runs across markdown (emphasis, links, code) is skipped
+// rather than split. A note links to its page only if it is a published note; anything else the gate already reduced
+// to a title, and here it is drawn as private whatever the file says (a second lock)
+
+type ProvNode = { kind: string; private: boolean; date: string | null; refs: string[]; url?: string | null }
+type Prov = { v: number; essay: string; spans: { text: string; node: string; kind: string }[]; nodes: Record<string, ProvNode> }
+
+const essayFiles = fs.existsSync(ESSAYS_DIR)
+  ? fs.readdirSync(ESSAYS_DIR).filter((f) => f.endsWith(".md")).sort((a, b) => a.localeCompare(b))
+  : []
+const essaySlugs = new Set<string>()
+const essays = essayFiles
+  .map((f) => ({ file: f, name: f.replace(/\.md$/, ""), ...parseNote(f, ESSAYS_DIR) }))
+  .filter((e) => {
+    if (statusOf(e.raw) === "adult") return true
+    log(`skipped essay ${e.name}: not #adult`)
+    return false
+  })
+  .map((e) => {
+    let slug = clean(e.name)
+    for (let n = 2; essaySlugs.has(slug); n++) slug = `${clean(e.name)}-${n}`
+    essaySlugs.add(slug)
+    const provFile = path.join(PROV_DIR, e.file.replace(/\.md$/, ".json"))
+    let prov: Prov | null = null
+    try {
+      prov = fs.existsSync(provFile) ? JSON.parse(fs.readFileSync(provFile, "utf8")) : null
+      if (prov && (prov.v !== 1 || prov.essay !== e.file)) prov = null
+    } catch {
+      log(`warning: essay ${e.name}: unreadable provenance, drawn without it`)
+    }
+    // mark each borrowed phrase where it stands, searching on from the last one; whitespace may differ (the tracer
+    // joined the paragraph's lines)
+    let body = rewriteEmbeds(e.body, e.name)
+    const spans: { node: string; kind: string }[] = []
+    let at = 0
+    for (const sp of prov?.spans ?? []) {
+      const words = sp.text.trim().split(/\s+/).map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+      const re = new RegExp(words.join("\\s+"), "g")
+      re.lastIndex = at
+      const m = re.exec(body)
+      if (!m || /[*_`[\]]/.test(m[0]) || /\n\s*\n/.test(m[0])) {
+        log(`essay ${e.name}: phrase not marked (${m ? "crosses markdown" : "not found"}): ${sp.text.slice(0, 60)}`)
+        continue
+      }
+      const k = spans.length
+      spans.push({ node: sp.node, kind: sp.kind })
+      body = body.slice(0, m.index) + `${k}` + m[0] + "" + body.slice(m.index + m[0].length)
+      at = m.index + m[0].length + String(k).length + 3
+    }
+    const r = render(body, -1)
+    const html = r.html
+      .replace(/(\d+)/g, (_, k: string) => `<span class="src" data-n="${esc(spans[+k].node)}" data-i="${k}">`)
+      .replace(//g, "</span>")
+    const used = new Set(spans.map((sp) => sp.node))
+    const nodes: Record<string, ProvNode & { page: string | null }> = {}
+    for (const [title, n] of Object.entries(prov?.nodes ?? {})) {
+      const j = byName.get(title.toLowerCase())
+      const open = j != null || (!n.private && n.kind !== "note") // a published note, or source material
+      nodes[title] = open
+        ? { kind: j != null ? "note" : n.kind, private: false, date: n.date, refs: n.refs ?? [], url: n.url ?? null, page: j != null ? `/${slugs[j]}` : null }
+        : { kind: "note", private: true, date: null, refs: [], url: null, page: null }
+    }
+    for (const n of Object.values(nodes)) n.refs = n.refs.filter((x) => x in nodes)
+    return { ...e, slug, html, lead: r.lead.replace(/[-]|\d+/g, ""), spans, nodes, used }
+  })
+if (essays.length) log(`${essays.length} essays, ${essays.reduce((a, e) => a + e.spans.length, 0)} traced phrases`)
+
 // a file's size as Apache's listing prints it (apr_strfsize): bytes under 973, then K to one place below 10
 const size = (b: number) => {
   if (b < 973) return String(b)
@@ -463,6 +538,7 @@ async function bundle(entry: string, name: string) {
 }
 const JS = await bundle("client.ts", "book")
 const DEV_JS = DEV ? await bundle("dev.ts", "dev") : ""
+const ESSAY_JS = essays.length ? await bundle("essay.ts", "essay") : ""
 
 // html: the class "js" shows what only works with the script; "md" is the reader's markdown toggle, kept across notes
 const HEAD_JS = await minify(
@@ -479,6 +555,7 @@ function shell(o: {
   type?: string
   body: string
   head?: string
+  script?: string
 }) {
   const og = o.url
     ? `<link rel="canonical" href="${SITE}${o.url}"><meta property="og:site_name" content="${NAME}"><meta property="og:type" content="${o.type ?? "website"}">` +
@@ -491,6 +568,7 @@ function shell(o: {
     `<link rel="icon" href="/mark.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png">` +
     `${og}${PRELOAD}<style>${CSS}</style>` +
     `<script>${HEAD_JS}${o.head ?? ""}</script></head><body>${o.body}<script src="${JS}" defer></script>` +
+    (o.script ? `<script src="${o.script}" defer></script>` : "") +
     (DEV_JS ? `<script src="${DEV_JS}" defer></script>` : "") +
     `</body></html>\n`
   )
@@ -570,8 +648,16 @@ const order = [...notes].sort(
 )
 const head = (c: string, label: string, cl: string) =>
   `<th class="${cl}"><a href="#" data-c="${c}">${label}</a></th>`
+// essays sit in the listing as its one directory, "essays/", above the files, as Apache lists a folder (its date is the
+// newest essay's); the sort leaves it first
+const newestEssay = essays.map((e) => (e.date ?? "") + e.time).sort().pop() ?? ""
+const essaysRow = essays.length
+  ? `<tr class="sub" data-n="" data-m="" data-s="-1"><td class="n"><a href="/essays/" data-f="essays/" title="essays/">essays/</a></td>` +
+    `<td class="m">${newestEssay.slice(0, 10) || "-"}</td><td class="z">-</td></tr>`
+  : ""
 const dir =
   `<table class="dir" aria-label="All notes"><thead><tr>${head("N", "Name", "n")}${head("M", "Last modified", "m")}${head("S", "Size", "z")}</tr></thead><tbody>` +
+  essaysRow +
   order
     .map((n) => {
       const bytes = Buffer.byteLength(n.raw)
@@ -618,6 +704,64 @@ for (const [i, n] of notes.entries()) {
         `<div class="col note"><header class="bar"><a href="/">Index</a><button type="button" data-md hidden aria-pressed="false">Show markdown</button></header>` +
         `<article><header class="head"><h1 class="title">${mk("# ")}${esc(n.name)}</h1>${meta}</header>` +
         `<div class="body">${n.html}</div>${back}</article></div>${FOOT}`,
+    }),
+  )
+}
+
+// ---------- essay pages: /essays/<slug>, and /essays/ listing them ----------
+
+for (const e of essays) {
+  const meta = `<p class="meta">${e.date ?? "undated"} · ${size(Buffer.byteLength(e.raw))}</p>`
+  // with JavaScript off (or before it runs), the notes the essay drew from are a plain list; the script draws them
+  const listed = Object.keys(e.nodes).filter((n) => e.used.has(n)).sort((a, b) => (e.nodes[a].date ?? "9").localeCompare(e.nodes[b].date ?? "9"))
+  const drawn = listed.length
+    ? `<section class="drawn-list"><h2 class="label">Drawn from</h2><ul>${listed
+        .map((n) => `<li>${e.nodes[n].page ? `<a href="${e.nodes[n].page}">${esc(n)}</a>` : `${esc(n)}${e.nodes[n].private ? " (private)" : ""}`}</li>`)
+        .join("")}</ul></section>`
+    : ""
+  const data = { site: SITE, nodes: e.nodes }
+  fs.mkdirSync(path.join(OUT, "essays"), { recursive: true })
+  fs.writeFileSync(
+    path.join(OUT, "essays", `${e.slug}.html`),
+    shell({
+      title: `${e.name} · ${NAME}`,
+      ogTitle: e.name,
+      desc: describe(e.lead || e.name),
+      url: `/essays/${e.slug}`,
+      type: "article",
+      script: ESSAY_JS,
+      body:
+        `<div class="col note essay"><header class="bar"><a href="/essays/">Essays</a><button type="button" data-md hidden aria-pressed="false">Show markdown</button></header>` +
+        `<article><header class="head"><h1 class="title">${mk("# ")}${esc(e.name)}</h1>${meta}</header>` +
+        `<div class="trace"><div class="body">${e.html}</div>${drawn}</div></article></div>` +
+        `<script type="application/json" id="trace-data">${json(data)}</script>${FOOT}`,
+    }),
+  )
+}
+if (essays.length) {
+  // Apache's listing of a folder: Parent Directory first, then the essays, newest first
+  const rows = [...essays]
+    .sort((a, b) => ((b.date ?? "") + b.time).localeCompare((a.date ?? "") + a.time) || a.name.localeCompare(b.name))
+    .map((e) => {
+      const bytes = Buffer.byteLength(e.raw)
+      return (
+        `<tr data-n="${esc(e.name)}" data-m="${e.date ? e.date + e.time : ""}" data-s="${bytes}">` +
+        `<td class="n"><a href="/essays/${e.slug}" data-f="${esc(e.file)}" title="${esc(e.file)}">${esc(e.file)}</a></td>` +
+        `<td class="m">${e.date ?? "-"}</td><td class="z">${size(bytes)}</td></tr>`
+      )
+    })
+    .join("")
+  fs.writeFileSync(
+    path.join(OUT, "essays", "index.html"),
+    shell({
+      title: `Essays · ${NAME}`,
+      desc: `Essays by ${NAME}, each traced back to the notes it grew from.`,
+      url: "/essays/",
+      body:
+        `<div class="col index essays-index"><header class="bar"><a href="/">Index</a></header>` +
+        `<h1 class="vh">Essays</h1><table class="dir" aria-label="All essays"><thead><tr>${head("N", "Name", "n")}${head("M", "Last modified", "m")}${head("S", "Size", "z")}</tr></thead><tbody>` +
+        `<tr class="sub up" data-n="" data-m="" data-s="-1"><td class="n"><a href="/" data-f="Parent Directory" title="Parent Directory">Parent Directory</a></td><td class="m"></td><td class="z">-</td></tr>` +
+        `${rows}</tbody></table></div>${FOOT}`,
     }),
   )
 }
@@ -697,5 +841,5 @@ fs.writeFileSync(
 
 log(
   `${notes.length} notes, ${notes.reduce((a, n) => a + n.out.length, 0)} links, ${attachments.size} images, ` +
-    `${heroes.length} heroes, ${strips.length} strips${DEV ? ", dev kit" : ""} -> ${OUT}`,
+    `${essays.length} essays, ${heroes.length} heroes, ${strips.length} strips${DEV ? ", dev kit" : ""} -> ${OUT}`,
 )

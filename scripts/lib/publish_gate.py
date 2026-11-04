@@ -40,6 +40,8 @@ PUBLISH_STATUS = "adult"
 
 ATOMIC = "2 - atomic notes"
 STAGED_FOLDERS = [ATOMIC, "3 - source material", "4 - tags", "5 - indexes"]
+# essays are gated like atomic notes: only #adult ones are staged. Optional: a vault without the folder stages none
+ESSAYS = "9 - essays"
 ATTACHMENTS = "7 - attachments"  # synced as-is by local-upload.sh, indexed here
 
 _STATUS = re.compile(r"^status:[ \t]*[\"']?#?([A-Za-z]+)", re.MULTILINE)
@@ -140,7 +142,7 @@ def vault_index(vault: Path) -> Index:
 def published_index(vault: Path, adult: set) -> Index:
     """What resolves to something on the published site."""
     index = Index()
-    for p in adult:
+    for p in adult:  # atomic notes and essays that are #adult
         index.add(p.relative_to(vault))
     for folder in STAGED_FOLDERS[1:] + [ATTACHMENTS]:
         for p in notes(vault / folder):
@@ -349,16 +351,20 @@ def build(vault: Path, dest: Path = None):
     """
     atomic = notes(vault / ATOMIC)
     adult = {p for p in atomic if is_publishable_atomic(p)}
-    published = published_index(vault, adult)
+    essays = notes(vault / ESSAYS) if (vault / ESSAYS).is_dir() else []
+    adult_essays = {p for p in essays if is_publishable_atomic(p)}
+    published = published_index(vault, adult | adult_essays)
     everything = vault_index(vault)
 
     count = 0
     scrubbed = []
-    for folder in STAGED_FOLDERS:
+    for folder in STAGED_FOLDERS + [ESSAYS]:
         if dest is not None:
             (dest / folder).mkdir(parents=True, exist_ok=True)
-        for p in notes(vault / folder):
+        for p in notes(vault / folder) if (vault / folder).is_dir() else []:
             if folder == ATOMIC and p not in adult:
+                continue
+            if folder == ESSAYS and p not in adult_essays:
                 continue
             count += 1
             rel = p.relative_to(vault)

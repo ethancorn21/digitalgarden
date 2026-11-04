@@ -86,13 +86,15 @@ if (dir) {
       up = c === col ? !up : c === "N"
       col = c
       const k = keys[c]
-      const rows = [...body.rows].sort((x, y) => {
+      // a folder (essays/, Parent Directory) stays above the files, as Apache keeps it
+      const fixed = [...body.rows].filter((r) => r.classList.contains("sub"))
+      const rows = [...body.rows].filter((r) => !r.classList.contains("sub")).sort((x, y) => {
         const p = k(x)
         const q = k(y)
         const d = typeof p === "number" ? p - (q as number) : String(p).localeCompare(String(q))
         return up ? d : -d
       })
-      body.append(...rows)
+      body.append(...fixed, ...rows)
     }),
   )
 }

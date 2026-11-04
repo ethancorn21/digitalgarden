@@ -19,13 +19,16 @@ SYNC_FOLDERS=(
   "4 - tags"
   "5 - indexes"
   "7 - attachments"
+  "9 - essays"
 )
 
-# Folders 2-5 go through the publish gate (lib/publish_gate.py): only
-# `status: #adult` atomic notes are kept, and lines linking to unpublished notes
-# are scrubbed from everything that remains. S3, the public git repo and the
-# site never see #baby notes or their titles. The gate fails closed (non-zero
-# exit -> nothing uploads). 7 - attachments is synced as-is.
+# Folders 2-5 and 9 - essays go through the publish gate (lib/publish_gate.py): only
+# `status: #adult` atomic notes and essays are kept, and lines linking to
+# unpublished notes are scrubbed from everything that remains. S3, the public
+# git repo and the site never see #baby notes; the one exception is a title: an
+# essay's provenance names a private note it drew on (Ethan's call, 2026-11-04:
+# title shown, text and links withheld). The gate fails closed (non-zero exit ->
+# nothing uploads). 7 - attachments is synced as-is.
 UNSTAGED_FOLDER="7 - attachments"
 GATE="$(cd "$(dirname "$0")" && pwd)/lib/publish_gate.py"
 STAGE="$(mktemp -d)"
@@ -51,6 +54,17 @@ for folder in "${SYNC_FOLDERS[@]}"; do
     exit 1
   fi
 done
+
+# Essay provenance: written on the dev box by scripts/essays/trace.py, pulled here by scripts/mac/vault-mirror.sh.
+# Uploaded as it is; Fargate's gate drops any for an unpublished essay and reduces unpublished notes to a title.
+PROVENANCE="$HOME/Library/Application Support/digitalgarden/provenance"
+if [ -d "$PROVENANCE" ]; then
+  log "Uploading essay provenance"
+  if ! aws s3 sync "$PROVENANCE/" "s3://$BUCKET/_provenance/" --delete --exclude "*" --include "*.json"; then
+    log "[ERROR] Provenance upload failed"
+    exit 1
+  fi
+fi
 
 # The container's gate needs the names of every vault file, including notes that
 # are never uploaded (rough notes, misc), to hide links that point at them.

@@ -17,6 +17,32 @@ The site for writing.ethanlawcorn.com: one serif column, ink on paper, nothing b
   modern thing in it that moves, drawn as dots like the hero (see Strips). It replaced the pixel parade on 2026-10-24.
 - No dark mode. Ethan, 2026-10-19: the garden is ink on paper only.
 
+## Essays
+
+Essays are notes in the vault's `9 - essays/` folder, published by `status: #adult` like any note, at
+`/essays/<slug>`; `/essays/` lists them Apache-style (Parent Directory first), and the index lists `essays/` as its one
+folder, above the notes. Designed 2026-11-03/04 (rounds in `~/code/projects/essay-provenance/sketches`; this page is
+round 7).
+
+Every essay is traced back to the notes its words came from, automatically:
+
+1. The Mac's `scripts/mac/vault-mirror.sh` (launchd, every 15 min) copies the `.md` files of `9 - essays` and folders 2-5 to the dev box (never `1 - rough notes`)
+   over Tailscale and brings back the provenance files. It only moves files.
+2. On the dev box, `scripts/essays/trace.py` (systemd user timer, `scripts/essays/systemd/`) traces each `#adult`
+   essay against the raw vault: verbatim runs, word overlap, then the AI box's `main` model as a judge (thinking off;
+   answers cached in `~/.cache/essay-trace/judge`). It writes `<essay>.json`: the borrowed phrases, the note each came
+   from, and two generations of what those notes drew on. A private note is a title only (no text, date or links).
+   Golden test: `trace.py --gold golden/nobody-hears-anybody.md golden/nobody-hears-anybody.gold.json VAULT --judge`
+   (precision 0.83, recall 0.90 on 2026-11-04).
+3. `local-upload.sh` uploads them to `s3://.../_provenance/` with the notes; Fargate's gate (`publish-gate.ts`) drops a
+   file whose essay is not published and makes any note that is not a published note or source material a private
+   stub, whatever the file says.
+4. `build.ts` finds each phrase in the essay's text and marks it (a phrase that runs across markdown is skipped, and
+   logged); a note links to its page only if it is published. `essay.ts` draws it: a rail per note in the gutter with
+   a bead level with each borrowed line, sweeping into the notes under the essay (rows by age when crowded, newest on
+   top); click a note to grow what it drew on; a dead end is a hollow dot; off-chain things fade. With JavaScript off
+   the notes are a plain "Drawn from" list.
+
 ## Build
 
 ```sh

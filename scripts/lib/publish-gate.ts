@@ -31,6 +31,10 @@ import { PUBLISH_STATUS, statusOf } from "../../quartz/plugins/filters/adult"
 
 const ATOMIC = "2 - atomic notes"
 const STAGED_FOLDERS = [ATOMIC, "3 - source material", "4 - tags", "5 - indexes"]
+// essays are gated like atomic notes (only #adult ones stay). Their provenance (scripts/essays/trace.py, run on the
+// dev box against the raw vault, uploaded by the Mac) is held to the same policy here, whatever the tracer wrote
+const ESSAYS = "9 - essays"
+const PROVENANCE = "_provenance"
 const ATTACHMENTS = "7 - attachments"
 
 const LINK = /(!?)\[\[([^\]|#^]*)([^\]]*)\]\]/g
@@ -320,8 +324,15 @@ function apply(content: string, manifestFile: string | undefined, dryRun: boolea
     return 1
   }
 
+  const essays = walk(path.join(content, ESSAYS))
+  const adultEssays = new Set(
+    essays.filter(
+      (f) => f.endsWith(".md") && statusOf(fs.readFileSync(f, "utf8")) === PUBLISH_STATUS,
+    ),
+  )
+
   const published = new Index()
-  for (const f of adult) published.add(rel(content, f))
+  for (const f of [...adult, ...adultEssays]) published.add(rel(content, f))
   for (const folder of [...STAGED_FOLDERS.slice(1), ATTACHMENTS]) {
     for (const f of walk(path.join(content, folder))) published.add(rel(content, f))
   }
@@ -332,12 +343,14 @@ function apply(content: string, manifestFile: string | undefined, dryRun: boolea
   const withheldCount = atomic.length - adult.size
   if (!dryRun) {
     for (const f of atomic) if (!adult.has(f)) fs.rmSync(f)
+    for (const f of essays) if (!adultEssays.has(f)) fs.rmSync(f)
   }
 
   const scrubbed: Array<[string, Change[]]> = []
-  for (const folder of STAGED_FOLDERS) {
+  for (const folder of [...STAGED_FOLDERS, ESSAYS]) {
     for (const f of walk(path.join(content, folder))) {
-      if (!f.endsWith(".md") || (folder === ATOMIC && !adult.has(f))) continue
+      if (!f.endsWith(".md") || (folder === ATOMIC && !adult.has(f)) || (folder === ESSAYS && !adultEssays.has(f)))
+        continue
       const original = fs.readFileSync(f, "utf8")
       const [updated, changes] = scrubLinks(original, published, everything)
       if (changes.length === 0) continue
@@ -361,13 +374,67 @@ function apply(content: string, manifestFile: string | undefined, dryRun: boolea
       }
     }
   }
+  const prov = gateProvenance(content, adult, adultEssays, dryRun)
   console.log(`[publish-gate] keeping ${adult.size} atomic notes, withholding ${withheldCount}`)
+  console.log(
+    `[publish-gate] keeping ${adultEssays.size} essays, withholding ${essays.length - adultEssays.size}; ` +
+      `provenance: ${prov.kept} kept, ${prov.dropped} dropped, ${prov.hidden} notes made private`,
+  )
   console.log(
     `[publish-gate] link scrub across ${scrubbed.length} files: ` +
       `${count("drop") + count("child")} lines dropped, ${count("edit")} sentences unlinked, ` +
       `${count("section")} empty sections dropped`,
   )
   return 0
+}
+
+// provenance/<essay>.json: kept only while its essay is published. Inside it, a note is shown as itself only when it
+// is a published atomic note or a source-material file; anything else becomes a private stub (title only: no date,
+// no links), and only the fields the site draws are kept. Unreadable files are dropped
+function gateProvenance(content: string, adult: Set<string>, adultEssays: Set<string>, dryRun: boolean) {
+  const dir = path.join(content, PROVENANCE)
+  const out = { kept: 0, dropped: 0, hidden: 0 }
+  if (!fs.existsSync(dir)) return out
+  const essayNames = new Set([...adultEssays].map((f) => path.basename(f)))
+  const notes = new Set([...adult].map((f) => path.basename(f, ".md")))
+  const sources = new Set(
+    walk(path.join(content, "3 - source material"))
+      .filter((f) => f.endsWith(".md"))
+      .map((f) => path.basename(f, ".md")),
+  )
+  const str = (v: unknown) => (typeof v === "string" ? v : null)
+  for (const f of walk(dir)) {
+    let data: any = null
+    try {
+      data = f.endsWith(".json") ? JSON.parse(fs.readFileSync(f, "utf8")) : null
+    } catch {}
+    if (!data || data.v !== 1 || !essayNames.has(data.essay) || path.basename(f) !== data.essay.replace(/\.md$/, ".json")) {
+      out.dropped++
+      if (!dryRun) fs.rmSync(f)
+      continue
+    }
+    const nodes: Record<string, unknown> = {}
+    for (const [title, n] of Object.entries<any>(data.nodes ?? {})) {
+      const open = notes.has(title) || sources.has(title)
+      if (!open) out.hidden++
+      nodes[title] = open
+        ? {
+            kind: notes.has(title) ? "note" : str(n?.kind) ?? "source",
+            private: false,
+            date: str(n?.date),
+            refs: Array.isArray(n?.refs) ? n.refs.filter((r: unknown) => typeof r === "string") : [],
+            url: /^https?:\/\//.test(str(n?.url) ?? "") ? n.url : null,
+          }
+        : { kind: "note", private: true, date: null, refs: [] }
+    }
+    for (const n of Object.values<any>(nodes)) n.refs = n.refs.filter((r: string) => r in nodes)
+    const spans = (Array.isArray(data.spans) ? data.spans : [])
+      .filter((s: any) => typeof s?.text === "string" && typeof s?.node === "string" && s.node in nodes)
+      .map((s: any) => ({ text: s.text, node: s.node, kind: s.kind === "q" ? "q" : "p" }))
+    out.kept++
+    if (!dryRun) fs.writeFileSync(f, JSON.stringify({ v: 1, essay: data.essay, spans, nodes }, null, 1) + "\n")
+  }
+  return out
 }
 
 function report(content: string): number {

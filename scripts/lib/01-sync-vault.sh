@@ -37,6 +37,20 @@ for folder in "${SYNC_FOLDERS[@]}"; do
   fi
 done
 
+# essays (gated like atomic notes) and their provenance (scripts/essays/trace.py, via the Mac) are optional: until the
+# Mac uploads them there is nothing to sync, and the site simply has no essays
+OPTIONAL_FOLDERS=(
+  "9 - essays"
+  "_provenance"
+)
+for folder in "${OPTIONAL_FOLDERS[@]}"; do
+  if [ -d "$VAULT/$folder" ]; then
+    SYNC_FOLDERS+=("$folder")
+  else
+    rm -rf "${CONTENT:?}/$folder"
+  fi
+done
+
 for folder in "${SYNC_FOLDERS[@]}"; do
   mkdir -p "$CONTENT/$folder"
   if ! rsync -av --delete "$VAULT/$folder/" "$CONTENT/$folder/"; then
