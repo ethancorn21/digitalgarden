@@ -7,11 +7,12 @@
 # and brings the provenance back for local-upload.sh to send on. It only moves files and starts the tracer: tracing
 # runs on the dev box, the publish policy in Fargate. Only these folders go, and only their .md files; rough notes,
 # AI Gen, misc and the rest of the vault stay on the Mac.
+# On the dev box (no Mac in the loop, 2026-11-04) it skips the copy and traces the vault mirror in place.
 
 set -o pipefail
-VAULT="$HOME/Documents/Me"
+VAULT="${VAULT:-$HOME/Documents/Me}"
 DEV="${VAULT_MIRROR_DEV:-ethan@dev}"   # the dev box by its Tailscale name; set VAULT_MIRROR_DEV to override
-PROVENANCE="$HOME/Library/Application Support/digitalgarden/provenance"
+PROVENANCE="${PROVENANCE:-$HOME/Library/Application Support/digitalgarden/provenance}"
 FOLDERS=("2 - atomic notes" "3 - source material" "4 - tags" "5 - indexes" "9 - essays")
 SSH="ssh -o BatchMode=yes -o ConnectTimeout=10"
 TRACE="code/projects/digitalgarden/scripts/essays/trace.py"   # on the dev box, from its home
@@ -22,6 +23,15 @@ mkdir -p "$PROVENANCE"
 if ! grep -qs -m1 '^status:[[:space:]]*#adult' "$VAULT/9 - essays/"*.md; then
   rm -f "$PROVENANCE"/*.json
   log "no published essays: nothing to trace"
+  exit 0
+fi
+
+if [ "$(uname)" != Darwin ]; then
+  # the tracer keeps an essay's last good file when the AI box is busy; 20 minutes is the most this step may take
+  if ! timeout 1200 python3 -B "$(cd "$(dirname "$0")/.." && pwd)/essays/trace.py" "$VAULT" "$PROVENANCE" --judge; then
+    log "[WARN] tracing failed; the last provenance stands"
+  fi
+  log "traced: $(ls "$PROVENANCE" | grep -c '\.json$') essays"
   exit 0
 fi
 

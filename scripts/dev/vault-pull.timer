@@ -1,0 +1,10 @@
+[Unit]
+Description=Hourly vault mirror pull
+
+[Timer]
+OnCalendar=hourly
+RandomizedDelaySec=5min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

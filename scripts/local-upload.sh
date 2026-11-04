@@ -1,14 +1,16 @@
 #!/bin/bash
-# local-upload.sh — Mac-side launchd job: upload vault to S3, then drop the
+# local-upload.sh — nightly job: upload vault to S3, then drop the
 # .sync-complete marker that fires the EventBridge rule -> Fargate pipeline.
-# Replaces pipeline.sh as the local launchd target; build/deploy now happens
-# entirely in the Fargate container.
+# Runs on the dev box from systemd (scripts/dev/garden-upload.*), against the
+# vault mirror that Obsidian Headless keeps; the Mac's launchd job ran it before
+# (2026-11-04: the Mac is a thin client). Build/deploy happens in Fargate.
+# VAULT, PROVENANCE and AWS_PROFILE may be set by the caller.
 
 set -o pipefail
 export PATH="/usr/local/bin:$PATH"
 
 BUCKET="digitalgarden-vault-sync"
-VAULT="$HOME/Documents/Me"
+VAULT="${VAULT:-$HOME/Documents/Me}"
 
 # Must match SYNC_FOLDERS in scripts/lib/01-sync-vault.sh - only what the
 # published site actually needs, not the whole vault (.obsidian, .smart-env,
@@ -55,13 +57,18 @@ for folder in "${SYNC_FOLDERS[@]}"; do
   fi
 done
 
-# Essays: traced now, on the dev box (scripts/mac/vault-mirror.sh does nothing when no essay is published). Best
-# effort: if the dev box is away, the last provenance goes up and the essays still publish.
+# Essays: traced now, on the dev box (scripts/mac/vault-mirror.sh does nothing when no essay is published; on the dev
+# box itself it traces in place). Best effort: if tracing fails, the last provenance goes up and the essays still publish.
+if [ "$(uname)" = Darwin ]; then
+  PROVENANCE="${PROVENANCE:-$HOME/Library/Application Support/digitalgarden/provenance}"
+else
+  PROVENANCE="${PROVENANCE:-${XDG_DATA_HOME:-$HOME/.local/share}/digitalgarden/provenance}"
+fi
+export VAULT PROVENANCE
 if ! bash "$(cd "$(dirname "$0")" && pwd)/mac/vault-mirror.sh"; then
   log "[WARN] essay tracing skipped; uploading the last provenance"
 fi
 # Uploaded as it is; Fargate's gate drops any for an unpublished essay and reduces unpublished notes to a title.
-PROVENANCE="$HOME/Library/Application Support/digitalgarden/provenance"
 if [ -d "$PROVENANCE" ]; then
   log "Uploading essay provenance"
   if ! aws s3 sync "$PROVENANCE/" "s3://$BUCKET/_provenance/" --delete --exclude "*" --include "*.json"; then
@@ -83,6 +90,12 @@ log "Upload complete, dropping sync-complete marker"
 if ! echo "$(date -u +%Y-%m-%dT%H:%M:%SZ)" | aws s3 cp - "s3://$BUCKET/.sync-complete"; then
   log "[ERROR] Failed to write sync-complete marker"
   exit 1
+fi
+
+# Dead-man signal: a CloudWatch alarm on this metric (missing data = breaching) emails through the pipeline's SNS
+# topic when a night passes with no upload, whether the run failed or the box was down. Best effort.
+if ! aws cloudwatch put-metric-data --region us-east-1 --namespace Garden --metric-name UploadOK --value 1; then
+  log "[WARN] could not report the upload to CloudWatch"
 fi
 
 log "Done"
