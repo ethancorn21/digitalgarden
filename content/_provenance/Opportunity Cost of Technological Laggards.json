@@ -1,0 +1,218 @@
+{
+ "v": 1,
+ "essay": "Opportunity Cost of Technological Laggards.md",
+ "spans": [
+  {
+   "text": "Concerning those past humans that refused to use the newest tools,",
+   "node": "Technological Maximalism is Inherent To Evolution",
+   "kind": "p"
+  },
+  {
+   "text": "the latest culture advancements, agriculture.",
+   "node": "Civilization 1 - Humanity's Transition to Agriculture",
+   "kind": "p"
+  },
+  {
+   "text": "The opportunity cost means that while some are busy shaking their fist at the changing tides of the world, others are actualizing their vision for the future by utilizing the technology.",
+   "node": "Sacrifice Now To Escape Shifting Tides of Our Times",
+   "kind": "p"
+  },
+  {
+   "text": "Those that refuse to adapt to new technology will be disadvantaged,",
+   "node": "life long learner",
+   "kind": "p"
+  },
+  {
+   "text": "compared to those that are early adopters and actively utilizing the technology to actualize their vision. They’re doing more than the laggards and late adopters and so they will always be able to outcompete.",
+   "node": "Developing New Products",
+   "kind": "p"
+  },
+  {
+   "text": "Moral view's fades from existence because technology that you refuse to adopt is being adopted by others, and they are not only outproducing in terms of productivity but cultural sway in world views as well.",
+   "node": "life long learner",
+   "kind": "p"
+  },
+  {
+   "text": "Etched into the geologic strata as artifacts of a bygone age.",
+   "node": "The Oracles",
+   "kind": "p"
+  },
+  {
+   "text": "They did not adapt and so everything they valued, withered.",
+   "node": "Problems with the Nonchalant",
+   "kind": "p"
+  },
+  {
+   "text": "Aim not to reverse the tides of change,",
+   "node": "Sacrifice Now To Escape Shifting Tides of Our Times",
+   "kind": "p"
+  },
+  {
+   "text": "but to bring about a world more consistent with your own view.",
+   "node": "On making ourselves the moral compass",
+   "kind": "p"
+  },
+  {
+   "text": "We’re always moving towards places of higher leverage where we can do more at a higher quality with less effort and so knowing that principle,",
+   "node": "The Fundamental Goal of Technology",
+   "kind": "p"
+  },
+  {
+   "text": "We’re not going to magically go back to a pre-AI world we’re only ever going to get more entrenched in it.",
+   "node": "Past metrics of success",
+   "kind": "p"
+  },
+  {
+   "text": "at cheaper prices, with better integration within our systems so that we can always keep doing more work at a higher quality with less.",
+   "node": "Past metrics of success",
+   "kind": "p"
+  },
+  {
+   "text": "Working in congruence with your vision to bring forth alternate technologies is the hard thing to do but it is strictly necessary depending upon your beliefs.",
+   "node": "The Science of Charisma",
+   "kind": "p"
+  },
+  {
+   "text": "How often we find hitting the gas allows us to stay in motion,",
+   "node": "Applying 5 S's To Daily Life",
+   "kind": "p"
+  },
+  {
+   "text": "affected by physical forces that we are already familiar with, and can react accordingly.",
+   "node": "AI as the Means for the Democratization of Intelligence",
+   "kind": "p"
+  },
+  {
+   "text": "Figure out what you wish to champion and use the tools to champion your cause.",
+   "node": "Bottom-Up Approach",
+   "kind": "p"
+  }
+ ],
+ "nodes": {
+  "AI as the Means for the Democratization of Intelligence": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Applying 5 S's To Daily Life": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Bottom-Up Approach": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Civilization 1 - Humanity's Transition to Agriculture": {
+   "kind": "lecture",
+   "private": false,
+   "date": null,
+   "refs": [
+    "ancestor worship"
+   ],
+   "url": null
+  },
+  "Developing New Products": {
+   "kind": "textbook",
+   "private": false,
+   "date": null,
+   "refs": [
+    "The Business Cycle is a collection of Product Life Cycles",
+    "diffusion of innovation"
+   ],
+   "url": null
+  },
+  "Financial and Technological Leverage": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Focus on Code Maintainability and Portability": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "On making ourselves the moral compass": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Past metrics of success": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Problems with the Nonchalant": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Sacrifice Now To Escape Shifting Tides of Our Times": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Technological Maximalism is Inherent To Evolution": {
+   "kind": "note",
+   "private": false,
+   "date": "2025-11-11",
+   "refs": [
+    "Financial and Technological Leverage",
+    "Focus on Code Maintainability and Portability"
+   ],
+   "url": null
+  },
+  "The Business Cycle is a collection of Product Life Cycles": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "The Fundamental Goal of Technology": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "The Oracles": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "The Science of Charisma": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "ancestor worship": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "diffusion of innovation": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "life long learner": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  }
+ }
+}

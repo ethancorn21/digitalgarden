@@ -5,6 +5,8 @@ tags: [[Artificial Intelligence]]; [[analysis]]
 ---
 # Opportunity Cost of Technological Laggards
 
+![[IMG_4364.JPG|200]]
+
 Concerning those past humans that refused to use the newest tools, the latest culture advancements, agriculture. What do you think happened to their culture, their moral worldview, their history? 
 
 Being a technological decelerationist, brings you nothing. Because of the mechanics of inaction. The opportunity cost means that while some are busy shaking their fist at the changing tides of the world, others are actualizing their vision for the future by utilizing the technology. So over generations, an automatic systematic deletion happens.

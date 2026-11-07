@@ -1,0 +1,420 @@
+{
+ "v": 1,
+ "essay": "Justification of Being Wanted Through The Commercialization of Taste.md",
+ "spans": [
+  {
+   "text": "We feel so drawn to project out aspects of the self onto social media.",
+   "node": "Social Media Addiction as a Byproduct of Consciousness Projection",
+   "kind": "p"
+  },
+  {
+   "text": "Aspects that we think makes us rare, rareness which we see as justification of our wanting to be prized.",
+   "node": "Superiority Through Adherence To Shared Esoteric Principles",
+   "kind": "p"
+  },
+  {
+   "text": "because there is a certain aspect of the human psyche that is drawn to that distinctiveness.",
+   "node": "Superiority Through Adherence To Shared Esoteric Principles",
+   "kind": "p"
+  },
+  {
+   "text": "we allow ourselves to draw inspiration from them.",
+   "node": "Intrigue of Parallel Worlds",
+   "kind": "p"
+  },
+  {
+   "text": "Of course there is nothing wrong with this,",
+   "node": "Deep Work",
+   "kind": "q"
+  },
+  {
+   "text": "our ancestors have been doing it since the dawn of humanity. It is inherent to being a human.",
+   "node": "Technological Maximalism is Inherent To Evolution",
+   "kind": "p"
+  },
+  {
+   "text": "We are social creatures and so naturally we look for social advantages to incorporate within ourselves.",
+   "node": "The Human Condition is Social Condition",
+   "kind": "p"
+  },
+  {
+   "text": "But because we adopt these new aspects of ourselves to gain a social advantage, naturally of course, competition will follow. It becomes a competition to have the best taste, to be the most sophisticated, to be the most interesting.",
+   "node": "Superiority Through Adherence To Shared Esoteric Principles",
+   "kind": "p"
+  },
+  {
+   "text": "This leads us to algorithms that take advantage of a natural psychological tendency,",
+   "node": "Primal design principles",
+   "kind": "p"
+  },
+  {
+   "text": "but removes the guard rails by supernormally enlarging our social circle.",
+   "node": "Hedonic Pleasure Treadmill",
+   "kind": "p"
+  },
+  {
+   "text": "These apps are designed to sell the attention and fame that seemingly comes from being unique.",
+   "node": "Primal design principles",
+   "kind": "p"
+  },
+  {
+   "text": "They sell you on being wanted.",
+   "node": "How I Will Live my Life",
+   "kind": "p"
+  },
+  {
+   "text": "On attention.",
+   "node": "Primal design principles",
+   "kind": "p"
+  },
+  {
+   "text": "Such that, we seek to capture our own version of the attention we see others get by trying to emulate the ways in which they show they are different. We are being algorithmically sold taste as the differentiator that will make us feel wanted.",
+   "node": "Superiority Through Adherence To Shared Esoteric Principles",
+   "kind": "p"
+  },
+  {
+   "text": "You're interacting with photos that are appealing to you so that you can cultivate an aesthetic.",
+   "node": "Primal design principles",
+   "kind": "p"
+  },
+  {
+   "text": "To have a marker that we can point to, which says, \"I am unique and that justifies me being wanted\".",
+   "node": "Primal design principles",
+   "kind": "p"
+  },
+  {
+   "text": "and my answer to that would of course be gotten from invoking [[Inversion Philosophy]].",
+   "node": "Acknowledge People's Ideas",
+   "kind": "p"
+  },
+  {
+   "text": "It's the people that are ok with not partaking in the latest trends and don't think that their non-participation makes them any different.",
+   "node": "Value Production Cannot be Ascertained From Revenue",
+   "kind": "p"
+  },
+  {
+   "text": "don't chase being different.",
+   "node": "Advice for 20 year olds - Alex Hormozi",
+   "kind": "p"
+  },
+  {
+   "text": "Superficial taste is not what makes us cool.",
+   "node": "Problems with the Nonchalant",
+   "kind": "p"
+  },
+  {
+   "text": "Tendency to ritualize shared experiences (even those online) so that we can have a commonality amongst a group: [[Superiority Through Adherence To Shared Esoteric Principles]]",
+   "node": "Superiority Through Adherence To Shared Esoteric Principles",
+   "kind": "p"
+  }
+ ],
+ "nodes": {
+  "2 - atomic notes/deep work": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Acknowledge People's Ideas": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Advice for 20 year olds - Alex Hormozi": {
+   "kind": "video",
+   "private": false,
+   "date": "2025-10-02",
+   "refs": [
+    "All You Have In Life is Time and Energy",
+    "The Law of Accumulation",
+    "deliberate practice",
+    "knowledge debt",
+    "obsession = consistent effort"
+   ],
+   "url": "https://www.youtube.com/watch?v=ub1D6RQocRU"
+  },
+  "All You Have In Life is Time and Energy": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Deep Work": {
+   "kind": "book",
+   "private": false,
+   "date": "2025-08-24",
+   "refs": [
+    "2 - atomic notes/deep work",
+    "Make it Stick",
+    "The Deep Work Hypothesis",
+    "corrective feedback",
+    "deliberate practice",
+    "technopoly"
+   ],
+   "url": null
+  },
+  "Dunning-Kruger effect": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Feynman Technique": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Financial and Technological Leverage": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Fluid intelligence": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Focus on Code Maintainability and Portability": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Hedonic Pleasure Treadmill": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "How I Will Live my Life": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Intrigue of Parallel Worlds": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Make it Stick": {
+   "kind": "book",
+   "private": false,
+   "date": null,
+   "refs": [
+    "Dunning-Kruger effect",
+    "Feynman Technique",
+    "Fluid intelligence",
+    "On making ourselves the moral compass",
+    "The Origin of Consciousness in the Breakdown of the Bicameral Mind",
+    "abstraction",
+    "calibration",
+    "crystallized intelligence",
+    "curse of knowledge",
+    "deliberate practice",
+    "elaboration",
+    "false consensus effect",
+    "generation effect",
+    "hindsight bias",
+    "interleaving",
+    "reflection",
+    "spaced repetition",
+    "testing effect",
+    "variating practice"
+   ],
+   "url": null
+  },
+  "On making ourselves the moral compass": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Primal design principles": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Problems with the Nonchalant": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Social Media Addiction as a Byproduct of Consciousness Projection": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Superiority Through Adherence To Shared Esoteric Principles": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Technological Maximalism is Inherent To Evolution": {
+   "kind": "note",
+   "private": false,
+   "date": "2025-11-11",
+   "refs": [
+    "Financial and Technological Leverage",
+    "Focus on Code Maintainability and Portability"
+   ],
+   "url": null
+  },
+  "The Deep Work Hypothesis": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "The Human Condition is Social Condition": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "The Law of Accumulation": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "The Origin of Consciousness in the Breakdown of the Bicameral Mind": {
+   "kind": "book",
+   "private": false,
+   "date": "2025-10-31",
+   "refs": [],
+   "url": null
+  },
+  "Value Production Cannot be Ascertained From Revenue": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "abstraction": {
+   "kind": "note",
+   "private": false,
+   "date": "2025-09-28",
+   "refs": [
+    "spaced repetition"
+   ],
+   "url": null
+  },
+  "calibration": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "corrective feedback": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "crystallized intelligence": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "curse of knowledge": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "deliberate practice": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "elaboration": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "false consensus effect": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "generation effect": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "hindsight bias": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "interleaving": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "knowledge debt": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "obsession = consistent effort": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "reflection": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "spaced repetition": {
+   "kind": "note",
+   "private": false,
+   "date": "2025-09-28",
+   "refs": [
+    "Make it Stick",
+    "abstraction",
+    "deliberate practice"
+   ],
+   "url": null
+  },
+  "technopoly": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "testing effect": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "variating practice": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  }
+ }
+}
