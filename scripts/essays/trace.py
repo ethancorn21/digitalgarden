@@ -9,7 +9,8 @@ notes drew on. Private notes appear by title only: no text, no date, no links. E
 file, and a file whose essay is gone or withheld is deleted. Fargate's publish gate enforces the same rules again.
 
 Layers: verbatim runs of 5+ words (quotes); IDF-weighted word overlap (rewordings); with --judge, each paragraph and
-its 8 nearest notes go to the AI box's `main` model, and code checks every id it answers with. Answers are cached by
+its 8 nearest notes go to the AI box's `main` model, code checks every id it answers with, and each pick is asked
+again alone (clause vs that one sentence, YES/NO); clauses under 3 content words are never judged. Answers are cached by
 prompt, so an unchanged paragraph costs nothing on the next run.
 
   trace.py VAULT OUT [--essays FOLDER] [--judge]          trace every published essay
@@ -288,6 +289,17 @@ def longest_run(a, b):
 
 
 TOP_NOTES = 8        # notes per paragraph the judge sees
+MIN_JUDGED = 3       # a rewording needs at least this many content words of its own: "On attention." carries no idea
+VERIFY = """One clause from an essay and one sentence from the author's own notes.
+
+CLAUSE: {clause}
+NOTE SENTENCE ({note}): {sent}
+
+Which is true?
+A. The clause carries this sentence's idea: it quotes it, rewords it, or makes the same point (even loosely).
+B. Same topic or theme, but the clause makes a different point.
+C. Unrelated: they only share a word or a mood.
+Answer with one letter: A, B or C."""
 JUDGE = """You trace where an essay's ideas came from in the author's own notes.
 
 Below is one essay paragraph cut into numbered clauses, then candidate notes with numbered sentences.
@@ -355,6 +367,23 @@ def judge_paragraph(para, units, ranked, nodes, cache_dir):
     return out
 
 
+def ask_cached(prompt, cache_dir):
+    os.makedirs(cache_dir, exist_ok=True)
+    key = os.path.join(cache_dir, hashlib.sha256(("nothink\n" + prompt).encode()).hexdigest()[:20] + ".txt")
+    if os.path.exists(key):
+        return open(key, encoding="utf-8").read()
+    ans = lc_chat(prompt)
+    open(key, "w", encoding="utf-8").write(ans)
+    return ans
+
+
+def verify_pick(clause, nid, sent, cache_dir):
+    """Second look at one judge pick, alone: the first pass chooses among eight notes at once and over-reaches
+    (Ethan 2026-11-07: Plato's Forms traced to a Bootstrap note on web forms). Unsure or unreadable = no."""
+    ans = re.sub(r"<think>.*?</think>", "", ask_cached(VERIFY.format(clause=clause.strip(), note=nid, sent=sent), cache_dir), flags=re.S)
+    return re.match(r"\W*A\b", ans.strip()) is not None
+
+
 def trace(essay, nodes, judge=False, cache_dir=".judge-cache"):
     pool = []   # (node id, sentence or None for the title, word list, content set)
     for nid, n in nodes.items():
@@ -418,8 +447,13 @@ def trace(essay, nodes, judge=False, cache_dir=".judge-cache"):
             # a verbatim run is proof and stays; every rewording needs the judge's word
             for ui in [ui for ui, b in lex.items() if b[1] != "q"]:
                 del lex[ui]
-            for ui, nid, sent in picks:
-                lex.setdefault(ui, (0.5, "p", nid, sent))
+            picks = [(ui, nid, sent) for ui, nid, sent in picks if ui not in lex
+                     and len(set(content(words(para[units[ui][0]:units[ui][1]])))) >= MIN_JUDGED]
+            with ThreadPoolExecutor(min(8, len(picks)) or 1) as vx:
+                keep = list(vx.map(lambda pk: verify_pick(para[units[pk[0]][0]:units[pk[0]][1]], pk[1], pk[2], cache_dir), picks))
+            for (ui, nid, sent), ok in zip(picks, keep):
+                if ok:
+                    lex.setdefault(ui, (0.5, "p", nid, sent))
 
     out = []
     for para, units, lex, _ in passes:
