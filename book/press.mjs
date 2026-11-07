@@ -110,14 +110,14 @@ const STYLE = {
             if (uSquash > 0.) ink *= 1. - uSquash * max(0., b.g - .55) / .45;
             ink *= m.a > .1 ? m.r : 1. - uDens * .5;
           }
-          float a = ink;
+          float d = 0.;
           if (uDent > 0. && ink < .5) {
             float xl = texture(uB, uv - vec2(uPx.x, 0.)).g, xr = texture(uB, uv + vec2(uPx.x, 0.)).g;
             float yu = texture(uB, uv + vec2(0., uPx.y)).g, yd = texture(uB, uv - vec2(0., uPx.y)).g;
             float sh = uDent * ((xr - xl) + (yd - yu)) * .5 * uDpr * 1.6;
-            if (sh > 0.) a = max(a, min(.22, sh));
+            if (sh > 0.) d = min(.22, sh);
           }
-          o = vec4(uCol * a, a); }`);
+          o = vec4(uCol * ink, ink + d * (1. - ink)); }`);
       const buf = g.createBuffer(); g.bindBuffer(g.ARRAY_BUFFER, buf); g.bufferData(g.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), g.STATIC_DRAW);
       const tex = () => { const t = g.createTexture(); g.bindTexture(g.TEXTURE_2D, t);
         for (const [k, v] of [[g.TEXTURE_MIN_FILTER, g.NEAREST], [g.TEXTURE_MAG_FILTER, g.NEAREST], [g.TEXTURE_WRAP_S, g.CLAMP_TO_EDGE], [g.TEXTURE_WRAP_T, g.CLAMP_TO_EDGE]]) g.texParameteri(g.TEXTURE_2D, k, v); return t; };
@@ -165,7 +165,9 @@ const STYLE = {
   }
   function st0Of(mode) { return STYLE[mode]; }
   function printGroup(block, gs, st0, box, own) {
-    const dpr = Math.min(devicePixelRatio || 1, 3);
+    /* (set at 2x at least: the spread can be no finer than a pixel, so on a 1x screen it was twice as wide; the browser
+       shrinks the canvas to the screen) */
+    const dpr = Math.min(Math.max(devicePixelRatio || 1, 2), 3);
     const fs = parseFloat(getComputedStyle(block).fontSize) || 20, st = { ...st0, gain: st0.gain * Math.min(1, fs / 32) };
     const W = Math.ceil((box.width + 2 * PAD) * dpr), H = Math.ceil((box.height + 2 * PAD) * dpr);
     if (W * H > 12e6) return null;
@@ -208,15 +210,17 @@ const STYLE = {
         /* (each letter's own ink: from the nearest covered pixel; the blur keeps it the letter's) */
         ink *= den[i] < 1 && cov[i] > .1 ? den[i] : 1 - st.dens * .5;
       }
-      let a = ink, r = col[0], gg = col[1], bb = col[2];
+      let a = ink;
       if (st.dent && wide && ink < .5) {
         /* the impression: the paper pressed in round the letter, its slope lit from the top left */
         const xl = wide[i - 1] ?? 0, xr = wide[i + 1] ?? 0, yu = wide[i - W] ?? 0, yd = wide[i + W] ?? 0;
         const slope = ((xr - xl) + (yd - yu)) * .5;   /* > 0: the side facing away from the light */
         const sh = st.dent * slope * dpr * 1.6;
-        if (sh > 0) a = Math.max(a, Math.min(.22, sh));
+        if (sh > 0) a = ink + Math.min(.22, sh) * (1 - ink);
       }
-      o[i * 4] = r; o[i * 4 + 1] = gg; o[i * 4 + 2] = bb; o[i * 4 + 3] = Math.round(a * 255);
+      /* (the dent is a shadow, black, under the ink: in the ink's colour it was a glow round each letter on the dark) */
+      const k = a ? ink / a : 0;
+      o[i * 4] = col[0] * k; o[i * 4 + 1] = col[1] * k; o[i * 4 + 2] = col[2] * k; o[i * 4 + 3] = Math.round(a * 255);
     }
     g.putImageData(out, 0, 0);
     return own ? finish(c, box) : c;
