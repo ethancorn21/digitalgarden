@@ -44,6 +44,14 @@ if ! /usr/bin/python3 -B -I "$GATE" stage "$VAULT" "$STAGE"; then
   exit 1
 fi
 
+# A published note whose image never reached this box (Obsidian Sync skips files over its size cap) would lose the
+# image on the site: refuse the whole upload instead, so the missed-upload alarm says so.
+log "Checking published images"
+if ! /usr/bin/python3 -B -I "$(dirname "$GATE")/check_embeds.py" "$STAGE" "$VAULT/$UNSTAGED_FOLDER"; then
+  log "[ERROR] A published note embeds an image the vault does not have; nothing uploaded"
+  exit 1
+fi
+
 log "Uploading vault folders to s3://$BUCKET"
 for folder in "${SYNC_FOLDERS[@]}"; do
   if [ "$folder" = "$UNSTAGED_FOLDER" ]; then
