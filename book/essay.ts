@@ -98,8 +98,8 @@ function mount(trace: HTMLElement, N: Record<string, Note>) {
     const x0 = eL + 6
     // the notes may run on past the essay's right edge into the empty margin, so on a wide screen they sit in one row
     // (Ethan 2026-11-07: a second row "breaks"); a phone still stacks them
-    const RW = W + Math.max(0, Math.min(420, window.innerWidth - tr.right - 24))
-    const CARD = 168
+    const RW = W + Math.max(0, Math.min(520, window.innerWidth - tr.right - 24))
+    const CARD = 140 // narrowest a note may get before the row wraps
     const PER = Math.max(1, Math.floor((RW - x0 - 10) / CARD))
     const rows: string[][] = []
     for (let end = ORDER.length; end > 0; end -= PER) rows.push(ORDER.slice(Math.max(0, end - PER), end))
