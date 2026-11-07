@@ -662,22 +662,21 @@ const order = [...notes].sort(
 )
 const head = (c: string, label: string, cl: string) =>
   `<th class="${cl}"><a href="#" data-c="${c}">${label}</a></th>`
-// essays sit in the listing as its one directory, "essays/", above the files, as Apache lists a folder (its date is the
-// newest essay's); the sort leaves it first
-const newestEssay = essays.map((e) => (e.date ?? "") + e.time).sort().pop() ?? ""
-const essaysRow = essays.length
-  ? `<tr class="sub" data-n="" data-m="" data-s="-1"><td class="n"><a href="/essays/" data-f="essays/" title="essays/">essays/</a></td>` +
-    `<td class="m">${newestEssay.slice(0, 10) || "-"}</td><td class="z">-</td></tr>`
-  : ""
+// essays are files in the listing like the notes (Ethan 2026-11-07: "why are the essays in a folder?"), each
+// "<Title>.md" with its date and size, sorted in with the notes; they open on their own pages under /essays/
 const dir =
   `<table class="dir" aria-label="All notes"><thead><tr>${head("N", "Name", "n")}${head("M", "Last modified", "m")}${head("S", "Size", "z")}</tr></thead><tbody>` +
-  essaysRow +
-  order
+  [...order.map((n) => ({ ...n, href: `/${n.slug}` })), ...essays.map((e) => ({ ...e, href: `/essays/${e.slug}` }))]
+    .sort(
+      (a, b) =>
+        ((b.date ?? "") + b.time).localeCompare((a.date ?? "") + a.time) ||
+        a.name.localeCompare(b.name),
+    )
     .map((n) => {
       const bytes = Buffer.byteLength(n.raw)
       return (
         `<tr data-n="${esc(n.name)}" data-m="${n.date ? n.date + n.time : ""}" data-s="${bytes}">` +
-        `<td class="n"><a href="/${n.slug}" data-f="${esc(n.file)}" title="${esc(n.file)}">${esc(n.file)}</a></td>` +
+        `<td class="n"><a href="${n.href}" data-f="${esc(n.file)}" title="${esc(n.file)}">${esc(n.file)}</a></td>` +
         `<td class="m">${n.date ?? "-"}</td><td class="z">${size(bytes)}</td></tr>`
       )
     })

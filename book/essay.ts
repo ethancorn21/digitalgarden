@@ -96,10 +96,14 @@ function mount(trace: HTMLElement, N: Record<string, Note>) {
     const focus = new Set([...path, ...(last ? refsOf(last) : [])])
     fade = (n) => (path.length && !focus.has(n) ? " faded" : "")
     const x0 = eL + 6
-    const PER = Math.max(1, Math.floor((W - x0 - 10) / 132))
+    // the notes may run on past the essay's right edge into the empty margin, so on a wide screen they sit in one row
+    // (Ethan 2026-11-07: a second row "breaks"); a phone still stacks them
+    const RW = W + Math.max(0, Math.min(420, window.innerWidth - tr.right - 24))
+    const CARD = 168
+    const PER = Math.max(1, Math.floor((RW - x0 - 10) / CARD))
     const rows: string[][] = []
     for (let end = ORDER.length; end > 0; end -= PER) rows.push(ORDER.slice(Math.max(0, end - PER), end))
-    const sw = (W - x0 - 10) / Math.min(PER, ORDER.length)
+    const sw = Math.min(230, (RW - x0 - 10) / Math.min(PER, ORDER.length))
     const ROWGAP = 170
     let svg = ""
     // the row's name sits in the margin to its left, clear of the rails; on a narrow screen there is no room for it
@@ -159,9 +163,9 @@ function mount(trace: HTMLElement, N: Record<string, Note>) {
         return
       }
       // new notes grow under the one they came from, centred on it, so the flow runs straight on down
-      const fw = Math.min(170, (W - x0 - 10) / fresh.length)
+      const fw = Math.min(CARD + 10, (RW - x0 - 10) / fresh.length)
       const dotY = Math.max(loopFloor, drop) + 120
-      const fx0 = Math.min(Math.max(x0, v.x - (fw * (fresh.length - 1)) / 2), W - 10 - fw * fresh.length)
+      const fx0 = Math.min(Math.max(x0, v.x - (fw * (fresh.length - 1)) / 2), RW - 10 - fw * fresh.length)
       fresh.forEach((c, j) => {
         const key = "br" + pn + "\u0000" + c
         const cx = fx0 + fw * j
@@ -177,7 +181,7 @@ function mount(trace: HTMLElement, N: Record<string, Note>) {
     for (const [n, v] of Object.entries(vis))
       dots += `<circle class="nd${refsOf(n).length ? "" : " hollow"}${chain.has(n) ? " chain" : ""}${fade(n)}" data-n="${esc(n)}" cx="${v.x}" cy="${v.y}" r="4.5"/>`
     spacer.style.height = Math.max(0, floor - eBot + 40) + "px"
-    ov.setAttribute("width", String(W))
+    ov.setAttribute("width", String(RW))
     ov.setAttribute("height", String(trace.offsetHeight))
     ov.innerHTML = svg + ex + dots
   }

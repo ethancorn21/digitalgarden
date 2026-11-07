@@ -699,7 +699,7 @@ html:not(.js) .strip-foot {
   white-space: nowrap;
   font-family: var(--label-font);
   font-style: italic;
-  font-size: 14px;
+  font-size: 16px;
   color: var(--muted);
 }
 /* a note: its name beside its dot (the space under every dot stays free for the line to go on), its date, and when
@@ -709,7 +709,7 @@ html:not(.js) .strip-foot {
   font-family: var(--display);
   font-style: italic;
   font-weight: 500;
-  font-size: 15px;
+  font-size: 18px;
   line-height: 1.12;
   transition: opacity 0.3s;
 }
@@ -739,7 +739,7 @@ html:not(.js) .strip-foot {
   display: block;
   font-family: var(--mono);
   font-style: normal;
-  font-size: 10px;
+  font-size: 11px;
   color: var(--muted);
   margin-top: 3px;
 }
@@ -748,7 +748,7 @@ html:not(.js) .strip-foot {
   font-family: var(--serif);
   font-style: normal;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 13.5px;
   line-height: 1.45;
   color: var(--muted);
   margin-top: 6px;
