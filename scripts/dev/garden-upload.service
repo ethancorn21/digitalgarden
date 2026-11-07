@@ -1,13 +1,17 @@
 # garden-upload: the nightly publish run, moved off the Mac 2026-11-04. Pulls the vault, gates it, uploads to S3 with
-# the bucket-only `garden` key, and drops .sync-complete, which starts Fargate.
+# the bucket-only `garden` key, and drops .sync-complete, which starts Fargate. Runs as svc from svc's own checkout
+# (/var/lib/svc/digitalgarden), which is updated by hand only: a push to GitHub never changes what runs here.
 [Unit]
-Description=Digital garden: gate + upload vault to S3 (fires Fargate)
+Description=Digital garden: gate + upload vault to S3, fires Fargate (svc)
 Requires=vault-pull.service
 After=vault-pull.service network-online.target
 
 [Service]
 Type=oneshot
-Environment=AWS_PROFILE=garden VAULT=%h/vault/Me
-ExecStart=/bin/bash %h/code/projects/digitalgarden/scripts/local-upload.sh
+User=svc
+Group=svc
+Environment=HOME=/var/lib/svc AWS_PROFILE=garden VAULT=/var/lib/svc/vault/Me
+ExecStart=/bin/bash /var/lib/svc/digitalgarden/scripts/local-upload.sh
 TimeoutStartSec=45min
 Nice=10
+#HARDENING

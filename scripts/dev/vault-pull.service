@@ -1,12 +1,17 @@
-# vault-pull: bring the dev box's vault mirror up to date from Obsidian Sync (Obsidian Headless, `ob`, pinned in
-# ~/opt/obsidian-headless). The mirror is mirror-remote: it only downloads and reverts any change made here, so nothing
-# on the dev box can write back into the vault. One pull at a time; garden-upload waits for it.
+# vault-pull: bring svc's vault mirror up to date from Obsidian Sync (Obsidian Headless, pinned in
+# /opt/obsidian-headless, root-owned). mirror-remote: only downloads and reverts local changes, so nothing on the
+# dev box writes back into the vault. Runs as svc, never as ethan: agents run as ethan and cannot read it.
 [Unit]
-Description=Obsidian Sync: pull the vault mirror
+Description=Obsidian Sync: pull the vault mirror (svc)
 After=network-online.target
+Wants=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=%h/opt/obsidian-headless/node_modules/.bin/ob sync --path %h/vault/Me
+User=svc
+Group=svc
+Environment=HOME=/var/lib/svc
+ExecStart=/usr/bin/node /opt/obsidian-headless/node_modules/obsidian-headless/cli.js sync --path /var/lib/svc/vault/Me
 TimeoutStartSec=30min
 Nice=10
+#HARDENING
