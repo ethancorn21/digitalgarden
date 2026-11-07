@@ -1,0 +1,52 @@
+{
+ "v": 1,
+ "essay": "Contracts of Self-Criticism and Dissatisfaction.md",
+ "spans": [
+  {
+   "text": "We tell ourselves to aspire to something,",
+   "node": "Modern Lobotomization of The Self",
+   "kind": "p"
+  },
+  {
+   "text": "This propels me to do insane things that are impressive,",
+   "node": "Your work volume has to be insane",
+   "kind": "p"
+  },
+  {
+   "text": "A constant and perpetual state of future facing prospects,",
+   "node": "Free Will Thought Experiment",
+   "kind": "p"
+  },
+  {
+   "text": "[[Ever Moving Goal Post Of Satisfaction]]",
+   "node": "Ever Moving Goal Post Of Satisfaction",
+   "kind": "q"
+  }
+ ],
+ "nodes": {
+  "Ever Moving Goal Post Of Satisfaction": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Free Will Thought Experiment": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Modern Lobotomization of The Self": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "Your work volume has to be insane": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  }
+ }
+}

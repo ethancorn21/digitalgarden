@@ -1,6 +1,5 @@
 2026-06-15 21:16
 status: #adult 
-tags: [[Artificial Intelligence]]; [[things to think about]]; [[technology]]; [[synthesis]]; [[analysis]]
 
 ---
 # Roadblocks For Mechanistic Consciousness

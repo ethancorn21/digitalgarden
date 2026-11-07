@@ -1,2 +1,0 @@
-By Donella H Meadows
-

@@ -1,0 +1,30 @@
+{
+ "v": 1,
+ "essay": "Technological Maximalism is Inherent To Evolution.md",
+ "spans": [
+  {
+   "text": "essential for our survival and thriving, on their utility.",
+   "node": "The Human Condition is Social Condition",
+   "kind": "p"
+  },
+  {
+   "text": "The best way to survive technological evolution is to [[Focus on Code Maintainability and Portability]]",
+   "node": "Evolvability In Systems",
+   "kind": "p"
+  }
+ ],
+ "nodes": {
+  "Evolvability In Systems": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "The Human Condition is Social Condition": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  }
+ }
+}

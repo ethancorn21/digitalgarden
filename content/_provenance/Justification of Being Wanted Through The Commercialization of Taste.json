@@ -13,11 +13,6 @@
    "kind": "q"
   },
   {
-   "text": "our ancestors have been doing it since the dawn of humanity.",
-   "node": "Technological Maximalism is Inherent To Evolution",
-   "kind": "p"
-  },
-  {
    "text": "We are social creatures and so naturally we look for social advantages to incorporate within ourselves.",
    "node": "The Human Condition is Social Condition",
    "kind": "p"
@@ -46,18 +41,10 @@
    "refs": []
   },
   "Deep Work": {
-   "kind": "book",
-   "private": false,
-   "date": "2025-08-24",
-   "refs": [
-    "2 - atomic notes/deep work",
-    "Make it Stick",
-    "The Deep Work Hypothesis",
-    "corrective feedback",
-    "deliberate practice",
-    "technopoly"
-   ],
-   "url": null
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
   },
   "Dunning-Kruger effect": {
    "kind": "note",
@@ -71,50 +58,17 @@
    "date": null,
    "refs": []
   },
-  "Financial and Technological Leverage": {
-   "kind": "note",
-   "private": true,
-   "date": null,
-   "refs": []
-  },
   "Fluid intelligence": {
    "kind": "note",
    "private": true,
    "date": null,
    "refs": []
   },
-  "Focus on Code Maintainability and Portability": {
+  "Make it Stick": {
    "kind": "note",
    "private": true,
    "date": null,
    "refs": []
-  },
-  "Make it Stick": {
-   "kind": "book",
-   "private": false,
-   "date": null,
-   "refs": [
-    "Dunning-Kruger effect",
-    "Feynman Technique",
-    "Fluid intelligence",
-    "On making ourselves the moral compass",
-    "The Origin of Consciousness in the Breakdown of the Bicameral Mind",
-    "abstraction",
-    "calibration",
-    "crystallized intelligence",
-    "curse of knowledge",
-    "deliberate practice",
-    "elaboration",
-    "false consensus effect",
-    "generation effect",
-    "hindsight bias",
-    "interleaving",
-    "reflection",
-    "spaced repetition",
-    "testing effect",
-    "variating practice"
-   ],
-   "url": null
   },
   "On making ourselves the moral compass": {
    "kind": "note",
@@ -140,16 +94,6 @@
    "date": null,
    "refs": []
   },
-  "Technological Maximalism is Inherent To Evolution": {
-   "kind": "note",
-   "private": false,
-   "date": "2025-11-11",
-   "refs": [
-    "Financial and Technological Leverage",
-    "Focus on Code Maintainability and Portability"
-   ],
-   "url": null
-  },
   "The Deep Work Hypothesis": {
    "kind": "note",
    "private": true,
@@ -163,20 +107,16 @@
    "refs": []
   },
   "The Origin of Consciousness in the Breakdown of the Bicameral Mind": {
-   "kind": "book",
-   "private": false,
-   "date": "2025-10-31",
-   "refs": [],
-   "url": null
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
   },
   "abstraction": {
    "kind": "note",
-   "private": false,
-   "date": "2025-09-28",
-   "refs": [
-    "spaced repetition"
-   ],
-   "url": null
+   "private": true,
+   "date": null,
+   "refs": []
   },
   "calibration": {
    "kind": "note",
@@ -246,14 +186,9 @@
   },
   "spaced repetition": {
    "kind": "note",
-   "private": false,
-   "date": "2025-09-28",
-   "refs": [
-    "Make it Stick",
-    "abstraction",
-    "deliberate practice"
-   ],
-   "url": null
+   "private": true,
+   "date": null,
+   "refs": []
   },
   "technopoly": {
    "kind": "note",

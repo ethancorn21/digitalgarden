@@ -1,1 +1,0 @@
-AWS Solution Architect Associate notes

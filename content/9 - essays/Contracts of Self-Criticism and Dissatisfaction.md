@@ -1,6 +1,5 @@
 2026-07-13 21:22
 status: #adult
-tags: [[analysis]]; [[psychology]]; 
 
 ---
 # Contracts of Self-Criticism and Dissatisfaction

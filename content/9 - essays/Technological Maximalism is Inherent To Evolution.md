@@ -1,6 +1,5 @@
 2025-11-11 11:57
 status: #adult
-tags: [[technology]] ; [[The Human Condition Throughout Time]]; [[systems design]]
 
 ---
 # Technological Maximalism is Inherent

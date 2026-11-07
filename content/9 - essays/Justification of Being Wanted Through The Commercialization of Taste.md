@@ -1,6 +1,5 @@
 2026-08-27 14:10
 status: #adult 
-tags: [[analysis]]; [[synthesis]];
 
 ---
 # Justification of Being Wanted Through The Commercialization of Taste
@@ -33,7 +32,7 @@ I mean take the Pinterest app. It is literally taste slop. You're interacting wi
 
 If everyone is trying to differentiate themselves, who really becomes differentiated?
 
-That is the real question, and my answer to that would of course be gotten from invoking [[Inversion Philosophy]]. The people who truly don't care about being different. Not those that feign not caring, because that is easy to see through, but those that actually could not care less about being seen as different. Am I them? No, 100% not. It's the people that are ok with not partaking in the latest trends and don't think that their non-participation makes them any different.
+That is the real question, and my answer to that would of course be gotten from invoking Inversion Philosophy. The people who truly don't care about being different. Not those that feign not caring, because that is easy to see through, but those that actually could not care less about being seen as different. Am I them? No, 100% not. It's the people that are ok with not partaking in the latest trends and don't think that their non-participation makes them any different.
 
 So I would say, as anticlimactic as it is, don't chase being different. The moment we chase being different, we cease to be so. Superficial taste is not what makes us cool.
 

@@ -3,13 +3,8 @@
  "essay": "Opportunity Cost of Technological Laggards.md",
  "spans": [
   {
-   "text": "Concerning those past humans that refused to use the newest tools,",
-   "node": "Technological Maximalism is Inherent To Evolution",
-   "kind": "p"
-  },
-  {
-   "text": "The opportunity cost means that while some are busy shaking their fist at the changing tides of the world,",
-   "node": "Sacrifice Now To Escape Shifting Tides of Our Times",
+   "text": "they force new horizons and frontiers to be charted.",
+   "node": "settling the frontier and human advancement",
    "kind": "p"
   },
   {
@@ -18,8 +13,8 @@
    "kind": "p"
   },
   {
-   "text": "Moral view's fades from existence because technology that you refuse to adopt is being adopted by others,",
-   "node": "life long learner",
+   "text": "There lies the easy lesson.",
+   "node": "Modern Lobotomization of The Self",
    "kind": "p"
   },
   {
@@ -38,25 +33,30 @@
    "kind": "p"
   },
   {
+   "text": "Rather than slamming the brakes and being forced to ingest and dissipate our own inertia and new unfamiliar forces.",
+   "node": "Applying 5 S's To Daily Life",
+   "kind": "p"
+  },
+  {
    "text": "Figure out what you wish to champion and use the tools to champion your cause.",
    "node": "Bottom-Up Approach",
    "kind": "p"
   }
  ],
  "nodes": {
+  "Applying 5 S's To Daily Life": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
   "Bottom-Up Approach": {
    "kind": "note",
    "private": true,
    "date": null,
    "refs": []
   },
-  "Financial and Technological Leverage": {
-   "kind": "note",
-   "private": true,
-   "date": null,
-   "refs": []
-  },
-  "Focus on Code Maintainability and Portability": {
+  "Modern Lobotomization of The Self": {
    "kind": "note",
    "private": true,
    "date": null,
@@ -68,22 +68,6 @@
    "date": null,
    "refs": []
   },
-  "Sacrifice Now To Escape Shifting Tides of Our Times": {
-   "kind": "note",
-   "private": true,
-   "date": null,
-   "refs": []
-  },
-  "Technological Maximalism is Inherent To Evolution": {
-   "kind": "note",
-   "private": false,
-   "date": "2025-11-11",
-   "refs": [
-    "Financial and Technological Leverage",
-    "Focus on Code Maintainability and Portability"
-   ],
-   "url": null
-  },
   "The Fundamental Goal of Technology": {
    "kind": "note",
    "private": true,
@@ -91,6 +75,12 @@
    "refs": []
   },
   "life long learner": {
+   "kind": "note",
+   "private": true,
+   "date": null,
+   "refs": []
+  },
+  "settling the frontier and human advancement": {
    "kind": "note",
    "private": true,
    "date": null,
