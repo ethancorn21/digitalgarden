@@ -11,12 +11,18 @@ aws s3 sync s3://digitalgarden-vault-sync "$VAULT" --delete
 REPO_DIR="${1:-$(cd "$(dirname "$0")/../.." && pwd)}"
 CONTENT="$REPO_DIR/content"
 
+# The site is essays only (Ethan 2026-11-07): an #adult note in 9 - essays, the images essays embed, and the essays'
+# provenance (scripts/essays/trace.py, run on the dev box). The folders published before are deleted from content/, so
+# the commit takes them off the public repo and the site, whatever an older uploader left in the bucket
 SYNC_FOLDERS=(
+  "9 - essays"
+  "7 - attachments"
+)
+RETIRED_FOLDERS=(
   "2 - atomic notes"
   "3 - source material"
   "4 - tags"
   "5 - indexes"
-  "7 - attachments"
 )
 
 log() { echo "[$(date +'%Y-%m-%d %H:%M:%S')] $*"; }
@@ -36,20 +42,15 @@ for folder in "${SYNC_FOLDERS[@]}"; do
     exit 1
   fi
 done
-
-# essays (gated like atomic notes) and their provenance (scripts/essays/trace.py, via the Mac) are optional: until the
-# Mac uploads them there is nothing to sync, and the site simply has no essays
-OPTIONAL_FOLDERS=(
-  "9 - essays"
-  "_provenance"
-)
-for folder in "${OPTIONAL_FOLDERS[@]}"; do
-  if [ -d "$VAULT/$folder" ]; then
-    SYNC_FOLDERS+=("$folder")
-  else
-    rm -rf "${CONTENT:?}/$folder"
-  fi
+for folder in "${RETIRED_FOLDERS[@]}"; do
+  rm -rf "${CONTENT:?}/$folder"
 done
+
+if [ -d "$VAULT/_provenance" ]; then
+  SYNC_FOLDERS+=("_provenance")
+else
+  rm -rf "${CONTENT:?}/_provenance"
+fi
 
 for folder in "${SYNC_FOLDERS[@]}"; do
   mkdir -p "$CONTENT/$folder"

@@ -3,8 +3,11 @@
 
 Two rules, applied to the vault before anything is uploaded:
 
-1. Status gate. A note in "2 - atomic notes" is published only when its header
+1. Essay gate. Only essays are published: a note in "9 - essays" whose header
    block carries `status: #adult`. #baby, empty status, no status: withheld.
+   Nothing else leaves the vault: no atomic notes, source material, tags or
+   indexes (Ethan 2026-11-07: #adult alone is not enough, it must also be an
+   essay), and of the attachments only the images a published essay embeds.
    Default deny.
 
 2. Link scrub. Links to vault notes that are NOT published are hidden in every
@@ -23,10 +26,10 @@ YAML ` #` starts a comment, so `status: #adult` would parse as null. The status
 rule is mirrored in quartz/plugins/filters/adult.ts as a second layer.
 
 Usage:
-  publish_gate.py stage  VAULT DEST   write the publishable, scrubbed copy of
-                                      folders 2-5 into DEST
+  publish_gate.py stage  VAULT DEST   write the publishable, scrubbed essays
+                                      and their images into DEST
   publish_gate.py links  VAULT        dry run: print every line the scrub changes
-  publish_gate.py report VAULT        status counts for the atomic notes
+  publish_gate.py report VAULT        status counts for the essays
 """
 
 import os
@@ -38,11 +41,11 @@ from pathlib import Path
 
 PUBLISH_STATUS = "adult"
 
-ATOMIC = "2 - atomic notes"
-STAGED_FOLDERS = [ATOMIC, "3 - source material", "4 - tags", "5 - indexes"]
-# essays are gated like atomic notes: only #adult ones are staged. Optional: a vault without the folder stages none
 ESSAYS = "9 - essays"
-ATTACHMENTS = "7 - attachments"  # synced as-is by local-upload.sh, indexed here
+ATTACHMENTS = "7 - attachments"  # only the images a published essay embeds are staged
+# folders that were published before 2026-11-07; local-upload.sh empties them in the bucket
+RETIRED_FOLDERS = ["2 - atomic notes", "3 - source material", "4 - tags", "5 - indexes"]
+_IMAGE = re.compile(r"\.(png|jpe?g|gif|webp|svg)$", re.IGNORECASE)
 
 _STATUS = re.compile(r"^status:[ \t]*[\"']?#?([A-Za-z]+)", re.MULTILINE)
 _RULE = re.compile(r"^---[ \t]*$")
@@ -100,8 +103,28 @@ def notes(src: Path):
     return sorted(p for p in src.rglob("*") if p.is_file() and not p.name.startswith("."))
 
 
-def is_publishable_atomic(path: Path) -> bool:
+def is_publishable(path: Path) -> bool:
     return path.suffix == ".md" and read_status(path) == PUBLISH_STATUS
+
+
+def embedded_images(texts, vault: Path) -> set:
+    """The attachment files that ![[x]] embeds in these texts draw, resolved as book/build.ts does: case-insensitive,
+    an excalidraw drawing by its exported .svg or .png."""
+    folder = vault / ATTACHMENTS
+    files = {p.name.lower(): p for p in notes(folder)} if folder.is_dir() else {}
+    found = set()
+    for text in texts:
+        for m in _LINK.finditer(text):
+            t = m.group(2).strip()
+            if not m.group(1) or not t:
+                continue
+            tries = [t + ".svg", t + ".png"] if t.lower().endswith(".excalidraw") else [t, t + ".svg"]
+            for c in tries:
+                hit = files.get(c.lower())
+                if hit and _IMAGE.search(hit.name):
+                    found.add(hit)
+                    break
+    return found
 
 
 # --- link scrub -------------------------------------------------------------
@@ -139,14 +162,11 @@ def vault_index(vault: Path) -> Index:
     return index
 
 
-def published_index(vault: Path, adult: set) -> Index:
+def published_index(vault: Path, published: set) -> Index:
     """What resolves to something on the published site."""
     index = Index()
-    for p in adult:  # atomic notes and essays that are #adult
+    for p in published:  # #adult essays and the images they embed
         index.add(p.relative_to(vault))
-    for folder in STAGED_FOLDERS[1:] + [ATTACHMENTS]:
-        for p in notes(vault / folder):
-            index.add(p.relative_to(vault))
     return index
 
 
@@ -349,22 +369,19 @@ def build(vault: Path, dest: Path = None):
     Returns (published_count, withheld_count, scrubbed) where scrubbed is a list
     of (relative path, [(kind, before, after)]).
     """
-    atomic = notes(vault / ATOMIC)
-    adult = {p for p in atomic if is_publishable_atomic(p)}
-    essays = notes(vault / ESSAYS) if (vault / ESSAYS).is_dir() else []
-    adult_essays = {p for p in essays if is_publishable_atomic(p)}
-    published = published_index(vault, adult | adult_essays)
+    essays = notes(vault / ESSAYS)
+    adult = {p for p in essays if is_publishable(p)}
+    images = embedded_images((_read(p) for p in adult), vault)
+    published = published_index(vault, adult | images)
     everything = vault_index(vault)
 
     count = 0
     scrubbed = []
-    for folder in STAGED_FOLDERS + [ESSAYS]:
+    for folder in [ESSAYS, ATTACHMENTS]:
         if dest is not None:
             (dest / folder).mkdir(parents=True, exist_ok=True)
         for p in notes(vault / folder) if (vault / folder).is_dir() else []:
-            if folder == ATOMIC and p not in adult:
-                continue
-            if folder == ESSAYS and p not in adult_essays:
+            if p not in adult and p not in images:
                 continue
             count += 1
             rel = p.relative_to(vault)
@@ -384,12 +401,12 @@ def build(vault: Path, dest: Path = None):
                 os.utime(out, ns=(st.st_atime_ns, st.st_mtime_ns))
             else:
                 shutil.copy2(p, out)
-    return count, len(atomic) - len(adult), scrubbed
+    return count, len([p for p in essays if p.suffix == ".md"]) - len(adult), scrubbed
 
 
 def cmd_stage(vault: Path, dest: Path) -> int:
-    if not (vault / ATOMIC).is_dir():
-        print(f"[publish_gate] not a vault: {vault}", file=sys.stderr)
+    if not (vault / ESSAYS).is_dir():
+        print(f"[publish_gate] no {ESSAYS} folder, not a vault: {vault}", file=sys.stderr)
         return 1
     if dest.exists():
         shutil.rmtree(dest)
@@ -397,7 +414,7 @@ def cmd_stage(vault: Path, dest: Path) -> int:
 
     count, withheld, scrubbed = build(vault, dest)
     kinds = Counter(kind for _, changes in scrubbed for kind, _, _ in changes)
-    print(f"[publish_gate] staging {count} files, withholding {withheld} atomic notes")
+    print(f"[publish_gate] staging {count} files (essays and their images), withholding {withheld} essays")
     print(
         f"[publish_gate] link scrub across {len(scrubbed)} files: "
         f"{kinds['drop'] + kinds['child']} lines dropped, {kinds['edit']} sentences unlinked, "
@@ -406,8 +423,8 @@ def cmd_stage(vault: Path, dest: Path) -> int:
 
     # Fail closed: a parse bug or empty vault would otherwise stage nothing and
     # `aws s3 sync --delete` would wipe the remote copy.
-    if not any((dest / ATOMIC).glob("**/*.md")):
-        print("[publish_gate] ERROR: zero publishable notes, refusing to continue", file=sys.stderr)
+    if not any((dest / ESSAYS).glob("**/*.md")):
+        print("[publish_gate] ERROR: zero publishable essays, refusing to continue", file=sys.stderr)
         return 1
     return 0
 
@@ -436,7 +453,7 @@ def cmd_links(vault: Path) -> int:
 
 def cmd_report(vault: Path) -> int:
     counts = Counter()
-    for p in notes(vault / ATOMIC):
+    for p in notes(vault / ESSAYS):
         counts[read_status(p) or "(none)" if p.suffix == ".md" else "(non-md)"] += 1
     for status, n in counts.most_common():
         print(f"{n:5d}  {status}")

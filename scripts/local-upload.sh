@@ -16,22 +16,25 @@ VAULT="${VAULT:-$HOME/Documents/Me}"
 # published site actually needs, not the whole vault (.obsidian, .smart-env,
 # rough notes, AI Gen, etc. stay off S3 entirely).
 SYNC_FOLDERS=(
+  "7 - attachments"
+  "9 - essays"
+)
+# published until 2026-11-07, when the site became essays only: emptied in the bucket on every run
+RETIRED_FOLDERS=(
   "2 - atomic notes"
   "3 - source material"
   "4 - tags"
   "5 - indexes"
-  "7 - attachments"
-  "9 - essays"
 )
 
-# Folders 2-5 and 9 - essays go through the publish gate (lib/publish_gate.py): only
-# `status: #adult` atomic notes and essays are kept, and lines linking to
-# unpublished notes are scrubbed from everything that remains. S3, the public
-# git repo and the site never see #baby notes; the one exception is a title: an
-# essay's provenance names a private note it drew on (Ethan's call, 2026-11-04:
-# title shown, text and links withheld). The gate fails closed (non-zero exit ->
-# nothing uploads). 7 - attachments is synced as-is.
-UNSTAGED_FOLDER="7 - attachments"
+# Everything uploaded goes through the publish gate (lib/publish_gate.py): only
+# `status: #adult` notes in 9 - essays are kept, with the images they embed, and
+# lines linking to unpublished notes are scrubbed. S3, the public git repo and
+# the site never see any other note; the one exception is a title: an essay's
+# provenance names a private note it drew on (Ethan's call, 2026-11-04: title
+# shown, text and links withheld). The gate fails closed (non-zero exit ->
+# nothing uploads).
+ATTACHMENTS="7 - attachments"
 GATE="$(cd "$(dirname "$0")" && pwd)/lib/publish_gate.py"
 STAGE="$(mktemp -d)"
 trap 'rm -rf "$STAGE"' EXIT
@@ -47,20 +50,23 @@ fi
 # A published note whose image never reached this box (Obsidian Sync skips files over its size cap) would lose the
 # image on the site: refuse the whole upload instead, so the missed-upload alarm says so.
 log "Checking published images"
-if ! /usr/bin/python3 -B -I "$(dirname "$GATE")/check_embeds.py" "$STAGE" "$VAULT/$UNSTAGED_FOLDER"; then
+if ! /usr/bin/python3 -B -I "$(dirname "$GATE")/check_embeds.py" "$STAGE" "$VAULT/$ATTACHMENTS"; then
   log "[ERROR] A published note embeds an image the vault does not have; nothing uploaded"
   exit 1
 fi
 
 log "Uploading vault folders to s3://$BUCKET"
 for folder in "${SYNC_FOLDERS[@]}"; do
-  if [ "$folder" = "$UNSTAGED_FOLDER" ]; then
-    src="$VAULT/$folder"
-  else
-    src="$STAGE/$folder"
-  fi
-  if ! aws s3 sync "$src/" "s3://$BUCKET/$folder/" --delete; then
+  if ! aws s3 sync "$STAGE/$folder/" "s3://$BUCKET/$folder/" --delete; then
     log "[ERROR] Upload failed for: $folder"
+    exit 1
+  fi
+done
+EMPTY="$STAGE/.empty"
+mkdir -p "$EMPTY"
+for folder in "${RETIRED_FOLDERS[@]}"; do
+  if ! aws s3 sync "$EMPTY/" "s3://$BUCKET/$folder/" --delete; then
+    log "[ERROR] Could not empty retired folder: $folder"
     exit 1
   fi
 done

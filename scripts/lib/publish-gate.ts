@@ -3,9 +3,12 @@
 // Runs in content/ after the vault is synced from S3 and before anything is
 // committed, so withheld notes never reach the public repo or the site.
 //
-//   1. Status gate. A note in "2 - atomic notes" is kept only when its header
-//      says `status: #adult` (rule lives in quartz/plugins/filters/adult.ts).
-//      #baby, empty, missing: deleted. Default deny.
+//   1. Essay gate. Only essays are published (Ethan 2026-11-07: #adult alone is
+//      not enough, it must also be an essay): a note in "9 - essays" is kept
+//      only when its header says `status: #adult` (rule lives in
+//      quartz/plugins/filters/adult.ts); of the attachments, only the images a
+//      kept essay embeds. Every other folder (atomic notes, source material,
+//      tags, indexes) is deleted, whatever the uploader sent. Default deny.
 //   2. Link scrub. In every kept markdown note, links to vault notes that are
 //      NOT published are hidden, by how the link sits in its line:
 //        - a pointer (a line of only links, "label: [[x]]", "see [[x]]",
@@ -29,13 +32,13 @@ import fs from "node:fs"
 import path from "node:path"
 import { PUBLISH_STATUS, statusOf } from "../../quartz/plugins/filters/adult"
 
-const ATOMIC = "2 - atomic notes"
-const STAGED_FOLDERS = [ATOMIC, "3 - source material", "4 - tags", "5 - indexes"]
-// essays are gated like atomic notes (only #adult ones stay). Their provenance (scripts/essays/trace.py, run on the
-// dev box against the raw vault, uploaded by the Mac) is held to the same policy here, whatever the tracer wrote
+// essays: only #adult ones stay. Their provenance (scripts/essays/trace.py, run on the dev box against the raw vault)
+// is held to the same policy here, whatever the tracer wrote
 const ESSAYS = "9 - essays"
 const PROVENANCE = "_provenance"
 const ATTACHMENTS = "7 - attachments"
+const KEPT_FOLDERS = new Set([ESSAYS, PROVENANCE, ATTACHMENTS])
+const IMAGE = /\.(png|jpe?g|gif|webp|svg)$/i
 
 const LINK = /(!?)\[\[([^\]|#^]*)([^\]]*)\]\]/g
 const LINK_SEP = /^\s*(?:,|;|&|\/|\band\b|\bor\b)?\s*$/i
@@ -86,6 +89,28 @@ function walk(root: string): string[] {
   }
   if (fs.existsSync(root)) visit(root)
   return out.sort()
+}
+
+/** The attachment files that ![[x]] embeds in these texts draw, resolved as book/build.ts does: case-insensitive, an
+ * excalidraw drawing by its exported .svg or .png. */
+function embeddedImages(texts: string[], files: string[]): Set<string> {
+  const byName = new Map(files.map((f) => [path.basename(f).toLowerCase(), f]))
+  const found = new Set<string>()
+  for (const text of texts) {
+    for (const m of text.matchAll(LINK)) {
+      const t = m[2].trim()
+      if (!m[1] || !t) continue
+      const tries = /\.excalidraw$/i.test(t) ? [t + ".svg", t + ".png"] : [t, t + ".svg"]
+      for (const c of tries) {
+        const hit = byName.get(c.toLowerCase())
+        if (hit && IMAGE.test(hit)) {
+          found.add(hit)
+          break
+        }
+      }
+    }
+  }
+  return found
 }
 
 // --- link scrub --------------------------------------------------------------
@@ -286,9 +311,8 @@ function scrubLinks(text: string, published: Index, everything: Index): [string,
 const rel = (root: string, file: string) => path.relative(root, file).split(path.sep).join("/")
 
 function apply(content: string, manifestFile: string | undefined, dryRun: boolean): number {
-  const atomicDir = path.join(content, ATOMIC)
-  if (!fs.existsSync(atomicDir)) {
-    console.error(`[publish-gate] not a content dir: ${content}`)
+  if (!fs.existsSync(path.join(content, ESSAYS))) {
+    console.error(`[publish-gate] not a content dir (no ${ESSAYS}): ${content}`)
     return 1
   }
 
@@ -310,20 +334,6 @@ function apply(content: string, manifestFile: string | undefined, dryRun: boolea
     console.warn("[publish-gate] WARNING: no manifest; links to never-uploaded notes will survive")
   }
 
-  const atomic = walk(atomicDir)
-  const adult = new Set(
-    atomic.filter(
-      (f) => f.endsWith(".md") && statusOf(fs.readFileSync(f, "utf8")) === PUBLISH_STATUS,
-    ),
-  )
-
-  // Fail closed: a parse bug or empty sync would otherwise publish nothing and
-  // the commit would delete the whole site.
-  if (adult.size === 0) {
-    console.error("[publish-gate] ERROR: zero publishable notes, refusing to continue")
-    return 1
-  }
-
   const essays = walk(path.join(content, ESSAYS))
   const adultEssays = new Set(
     essays.filter(
@@ -331,32 +341,41 @@ function apply(content: string, manifestFile: string | undefined, dryRun: boolea
     ),
   )
 
-  const published = new Index()
-  for (const f of [...adult, ...adultEssays]) published.add(rel(content, f))
-  for (const folder of [...STAGED_FOLDERS.slice(1), ATTACHMENTS]) {
-    for (const f of walk(path.join(content, folder))) published.add(rel(content, f))
+  // Fail closed: a parse bug or empty sync would otherwise publish nothing and
+  // the commit would delete the whole site.
+  if (adultEssays.size === 0) {
+    console.error("[publish-gate] ERROR: zero publishable essays, refusing to continue")
+    return 1
   }
+
+  const images = embeddedImages(
+    [...adultEssays].map((f) => fs.readFileSync(f, "utf8")),
+    walk(path.join(content, ATTACHMENTS)),
+  )
+  const published = new Index()
+  for (const f of [...adultEssays, ...images]) published.add(rel(content, f))
   for (const entry of fs.readdirSync(content, { withFileTypes: true })) {
     if (entry.isFile() && !entry.name.startsWith(".")) published.add(entry.name) // index.md
   }
 
-  const withheldCount = atomic.length - adult.size
+  const retired = fs
+    .readdirSync(content, { withFileTypes: true })
+    .filter((e) => e.isDirectory() && !e.name.startsWith(".") && !KEPT_FOLDERS.has(e.name))
+    .map((e) => e.name)
+  const strayImages = walk(path.join(content, ATTACHMENTS)).filter((f) => !images.has(f))
   if (!dryRun) {
-    for (const f of atomic) if (!adult.has(f)) fs.rmSync(f)
+    for (const d of retired) fs.rmSync(path.join(content, d), { recursive: true, force: true })
     for (const f of essays) if (!adultEssays.has(f)) fs.rmSync(f)
+    for (const f of strayImages) fs.rmSync(f)
   }
 
   const scrubbed: Array<[string, Change[]]> = []
-  for (const folder of [...STAGED_FOLDERS, ESSAYS]) {
-    for (const f of walk(path.join(content, folder))) {
-      if (!f.endsWith(".md") || (folder === ATOMIC && !adult.has(f)) || (folder === ESSAYS && !adultEssays.has(f)))
-        continue
-      const original = fs.readFileSync(f, "utf8")
-      const [updated, changes] = scrubLinks(original, published, everything)
-      if (changes.length === 0) continue
-      scrubbed.push([rel(content, f), changes])
-      if (!dryRun) fs.writeFileSync(f, updated)
-    }
+  for (const f of adultEssays) {
+    const original = fs.readFileSync(f, "utf8")
+    const [updated, changes] = scrubLinks(original, published, everything)
+    if (changes.length === 0) continue
+    scrubbed.push([rel(content, f), changes])
+    if (!dryRun) fs.writeFileSync(f, updated)
   }
 
   const count = (kind: ChangeKind) =>
@@ -374,8 +393,11 @@ function apply(content: string, manifestFile: string | undefined, dryRun: boolea
       }
     }
   }
-  const prov = gateProvenance(content, adult, adultEssays, dryRun)
-  console.log(`[publish-gate] keeping ${adult.size} atomic notes, withholding ${withheldCount}`)
+  const prov = gateProvenance(content, adultEssays, dryRun)
+  console.log(
+    `[publish-gate] removing ${retired.length} unpublished folders${retired.length ? ` (${retired.join(", ")})` : ""}, ` +
+      `keeping ${images.size} images essays embed, removing ${strayImages.length}`,
+  )
   console.log(
     `[publish-gate] keeping ${adultEssays.size} essays, withholding ${essays.length - adultEssays.size}; ` +
       `provenance: ${prov.kept} kept, ${prov.dropped} dropped, ${prov.hidden} notes made private`,
@@ -388,21 +410,14 @@ function apply(content: string, manifestFile: string | undefined, dryRun: boolea
   return 0
 }
 
-// provenance/<essay>.json: kept only while its essay is published. Inside it, a note is shown as itself only when it
-// is a published atomic note or a source-material file; anything else becomes a private stub (title only: no date,
-// no links), and only the fields the site draws are kept. Unreadable files are dropped
-function gateProvenance(content: string, adult: Set<string>, adultEssays: Set<string>, dryRun: boolean) {
+// provenance/<essay>.json: kept only while its essay is published. Inside it, every note an essay drew on is a private
+// stub (title only: no date, no links), since only essays are published; only the fields the site draws are kept.
+// Unreadable files are dropped
+function gateProvenance(content: string, adultEssays: Set<string>, dryRun: boolean) {
   const dir = path.join(content, PROVENANCE)
   const out = { kept: 0, dropped: 0, hidden: 0 }
   if (!fs.existsSync(dir)) return out
   const essayNames = new Set([...adultEssays].map((f) => path.basename(f)))
-  const notes = new Set([...adult].map((f) => path.basename(f, ".md")))
-  const sources = new Set(
-    walk(path.join(content, "3 - source material"))
-      .filter((f) => f.endsWith(".md"))
-      .map((f) => path.basename(f, ".md")),
-  )
-  const str = (v: unknown) => (typeof v === "string" ? v : null)
   for (const f of walk(dir)) {
     let data: any = null
     try {
@@ -414,18 +429,9 @@ function gateProvenance(content: string, adult: Set<string>, adultEssays: Set<st
       continue
     }
     const nodes: Record<string, unknown> = {}
-    for (const [title, n] of Object.entries<any>(data.nodes ?? {})) {
-      const open = notes.has(title) || sources.has(title)
-      if (!open) out.hidden++
-      nodes[title] = open
-        ? {
-            kind: notes.has(title) ? "note" : str(n?.kind) ?? "source",
-            private: false,
-            date: str(n?.date),
-            refs: Array.isArray(n?.refs) ? n.refs.filter((r: unknown) => typeof r === "string") : [],
-            url: /^https?:\/\//.test(str(n?.url) ?? "") ? n.url : null,
-          }
-        : { kind: "note", private: true, date: null, refs: [] }
+    for (const title of Object.keys(data.nodes ?? {})) {
+      out.hidden++
+      nodes[title] = { kind: "note", private: true, date: null, refs: [] }
     }
     for (const n of Object.values<any>(nodes)) n.refs = n.refs.filter((r: string) => r in nodes)
     const spans = (Array.isArray(data.spans) ? data.spans : [])
@@ -439,7 +445,7 @@ function gateProvenance(content: string, adult: Set<string>, adultEssays: Set<st
 
 function report(content: string): number {
   const counts = new Map<string, number>()
-  for (const f of walk(path.join(content, ATOMIC))) {
+  for (const f of walk(path.join(content, ESSAYS))) {
     const key = f.endsWith(".md") ? statusOf(fs.readFileSync(f, "utf8")) || "(none)" : "(non-md)"
     counts.set(key, (counts.get(key) ?? 0) + 1)
   }

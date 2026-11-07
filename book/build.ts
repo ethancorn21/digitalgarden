@@ -69,8 +69,6 @@ const fail = (msg: string): never => {
 }
 const log = (msg: string) => console.log(`[book] ${msg}`)
 
-if (!fs.existsSync(NOTES_DIR)) fail(`no notes folder at ${NOTES_DIR}`)
-
 // ---------- parse ----------
 
 // Vault notes have no YAML. Header lines (date, status, tags) run until a blank line or a --- rule. Only the date is
@@ -98,8 +96,8 @@ function parseNote(file: string, dir = NOTES_DIR) {
   return { raw, date, time, body }
 }
 
-const files = fs
-  .readdirSync(NOTES_DIR)
+// since 2026-11-07 only essays are published (scripts/lib/publish-gate.ts), so the notes folder is normally absent
+const files = (fs.existsSync(NOTES_DIR) ? fs.readdirSync(NOTES_DIR) : [])
   .filter((f) => f.endsWith(".md"))
   .sort((a, b) => a.localeCompare(b))
 const parsed = files
@@ -109,7 +107,6 @@ const parsed = files
     log(`skipped ${p.name}: not #adult`)
     return false
   })
-if (!parsed.length) fail("no notes to publish")
 const byName = new Map(parsed.map((p, i) => [p.name.toLowerCase(), i]))
 
 // ---------- addresses: /<slug>, lower case; the old Quartz slug is kept for redirects ----------
@@ -200,7 +197,7 @@ const mk = (s: string) => `<span class="mk">${esc(s)}</span>`
 const mkBlock = (s: string) => `<span class="mk mk-block">${esc(s)}</span>`
 const LABEL = /^(see also|reference|references|related|sources?)\s*:?\s*$/i
 
-type Ctx = { src: string; out: Set<number>; self: number; quote: boolean }
+type Ctx = { src: string; out: Set<number>; self: number; essay: string | null; quote: boolean }
 type Node = {
   type: string
   value?: string
@@ -268,7 +265,10 @@ function link(n: Node, ctx: Ctx): string {
     } catch {}
     const open = m[1] === "wikia" ? `[[${target}|` : "[["
     const j = byName.get(target.toLowerCase())
-    // a link to a note that is not published (source material, an index) or to itself stays as words
+    // a link to an essay goes to its page; one to a note that is not published, or to itself, stays as words
+    const essay = essayPage.get(target.toLowerCase())
+    if (j == null && essay != null && essay !== ctx.essay)
+      return `${mk(open)}<a href="/essays/${essay}">${text}</a>${mk("]]")}`
     if (j == null || j === ctx.self) return `${mk(open)}${text}${mk("]]")}`
     ctx.out.add(j)
     return `${mk(open)}<a href="/${slugs[j]}">${text}</a>${mk("]]")}`
@@ -374,11 +374,11 @@ function prune(kids: Node[]) {
 }
 
 const md = unified().use(remarkParse).use(remarkGfm)
-function render(body: string, self: number) {
+function render(body: string, self: number, essay: string | null = null) {
   const src = rewriteWiki(body)
   const tree = md.parse(src) as unknown as Node
   prune(tree.children!)
-  const ctx: Ctx = { src, out: new Set(), self, quote: false }
+  const ctx: Ctx = { src, out: new Set(), self, essay, quote: false }
   const firstPara = tree.children!.find((c) => c.type === "paragraph" && plain(c).trim())
   return {
     html: blocks(tree.children!, ctx),
@@ -386,6 +386,27 @@ function render(body: string, self: number) {
     lead: firstPara ? smart(plain(firstPara).replace(/\s+/g, " ").trim()) : "",
   }
 }
+
+// essays by name, each with its address (/essays/<slug>), so a link to an essay reaches its page
+const essayFiles = fs.existsSync(ESSAYS_DIR)
+  ? fs.readdirSync(ESSAYS_DIR).filter((f) => f.endsWith(".md")).sort((a, b) => a.localeCompare(b))
+  : []
+const essaySlugs = new Set<string>()
+const essayList = essayFiles
+  .map((f) => ({ file: f, name: f.replace(/\.md$/, ""), ...parseNote(f, ESSAYS_DIR) }))
+  .filter((e) => {
+    if (statusOf(e.raw) === "adult") return true
+    log(`skipped essay ${e.name}: not #adult`)
+    return false
+  })
+  .map((e) => {
+    let slug = clean(e.name)
+    for (let n = 2; essaySlugs.has(slug); n++) slug = `${clean(e.name)}-${n}`
+    essaySlugs.add(slug)
+    return { ...e, slug }
+  })
+const essayPage = new Map(essayList.map((e) => [e.name.toLowerCase(), e.slug]))
+if (!parsed.length && !essayList.length) fail("nothing to publish: no notes and no essays")
 
 // ---------- notes ----------
 
@@ -413,21 +434,9 @@ const linkedFrom = notes.map((_, i) =>
 type ProvNode = { kind: string; private: boolean; date: string | null; refs: string[]; url?: string | null }
 type Prov = { v: number; essay: string; spans: { text: string; node: string; kind: string }[]; nodes: Record<string, ProvNode> }
 
-const essayFiles = fs.existsSync(ESSAYS_DIR)
-  ? fs.readdirSync(ESSAYS_DIR).filter((f) => f.endsWith(".md")).sort((a, b) => a.localeCompare(b))
-  : []
-const essaySlugs = new Set<string>()
-const essays = essayFiles
-  .map((f) => ({ file: f, name: f.replace(/\.md$/, ""), ...parseNote(f, ESSAYS_DIR) }))
-  .filter((e) => {
-    if (statusOf(e.raw) === "adult") return true
-    log(`skipped essay ${e.name}: not #adult`)
-    return false
-  })
+const essays = essayList
   .map((e) => {
-    let slug = clean(e.name)
-    for (let n = 2; essaySlugs.has(slug); n++) slug = `${clean(e.name)}-${n}`
-    essaySlugs.add(slug)
+    const slug = e.slug
     const provFile = path.join(PROV_DIR, e.file.replace(/\.md$/, ".json"))
     let prov: Prov | null = null
     try {
@@ -456,7 +465,7 @@ const essays = essayFiles
       body = body.slice(0, m.index) + `${k}` + m[0] + "" + body.slice(m.index + m[0].length)
       at = m.index + m[0].length + String(k).length + 3
     }
-    const r = render(body, -1)
+    const r = render(body, -1, slug)
     const html = r.html
       .replace(/(\d+)/g, (_, k: string) => `<span class="src" data-n="${esc(spans[+k].node)}" data-i="${k}">`)
       .replace(//g, "</span>")
@@ -686,7 +695,7 @@ fs.writeFileSync(
   path.join(OUT, "index.html"),
   shell({
     title: NAME,
-    desc: `A digital commonplace notebook by ${NAME}: short notes on ideas, each connected to the others.`,
+    desc: `A digital commonplace notebook by ${NAME}: essays on ideas, each traced to the notes it grew from.`,
     url: "/",
     head: LEGACY_JS,
     body:
@@ -836,6 +845,8 @@ const redirects = [
     `/2---atomic-notes/${n.old} /${n.slug} 301`,
     `/2---atomic-notes/${n.old}.html /${n.slug} 301`,
   ]),
+  // a note that became an essay (Ethan 2026-11-07: only essays are published) keeps its old address
+  ...essays.filter((e) => !notes.some((n) => n.slug === e.slug)).map((e) => `/${e.slug} /essays/${e.slug} 301`),
   "/2---atomic-notes/* / 302",
   "/3---source-material/* / 302",
   "/4---tags/* / 302",
