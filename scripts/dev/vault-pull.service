@@ -13,5 +13,7 @@ Group=svc
 Environment=HOME=/var/lib/svc
 ExecStart=/usr/bin/node /opt/obsidian-headless/node_modules/obsidian-headless/cli.js sync --path /var/lib/svc/vault/Me
 TimeoutStartSec=30min
+# ob prints every file name it moves; keep note titles out of the journal (ethan can read it). Errors still log.
+StandardOutput=null
 Nice=10
 #HARDENING
