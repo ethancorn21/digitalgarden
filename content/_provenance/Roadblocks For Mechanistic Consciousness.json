@@ -3,97 +3,13 @@
  "essay": "Roadblocks For Mechanistic Consciousness.md",
  "spans": [
   {
-   "text": "How can we then take this inarticulate-able phenomenon and make judgements about mechanistic consciousness.",
-   "node": "AI Consciousness",
-   "kind": "p"
-  },
-  {
-   "text": "fPlato tried to answer this with his \"World of Forms\". He argued that the labels that we put onto the world are the imperfect reflection of a perfect reality.",
-   "node": "Modals, Carousels, and Forms in Bootstrap",
-   "kind": "p"
-  },
-  {
-   "text": "He wondered what the limitation for us collectively perceiving a form as a shared label.",
-   "node": "Attempts to Prevent Communication Scramble",
-   "kind": "p"
-  },
-  {
-   "text": "there must exist a point at which Consciousness branches off into machine and human consciousness. If we tweak this point in our understanding, the potential for machine consciousness ceases to be a separate label from human consciousness and instead conjoin into just consciousness.",
-   "node": "AI Consciousness",
-   "kind": "p"
-  },
-  {
    "text": "So then at what point can machines cross over into the realm of consciousness?",
-   "node": "AI Consciousness",
-   "kind": "p"
-  },
-  {
-   "text": "I sense that we like to think this this obvious label of consciousness is shared between humans, machine, animals.",
-   "node": "Attribution of Consciousness and The False Consensus Effect",
-   "kind": "p"
-  },
-  {
-   "text": "I imagine that the point in which machine crosses into consciousness will look very different from a conscious human.",
-   "node": "AI Consciousness",
-   "kind": "p"
-  },
-  {
-   "text": "The physical strata for consciousness in the two forms is different,",
-   "node": "AI Consciousness",
-   "kind": "p"
-  },
-  {
-   "text": "All humans have neurons yet their physical arrangement is completely unique,",
-   "node": "AI Consciousness",
-   "kind": "p"
-  },
-  {
-   "text": "So what does this mean for how consciousness can appear in AI if their strata is largely the same?",
-   "node": "AI Consciousness",
-   "kind": "p"
-  },
-  {
-   "text": "As it currently stands LLM is served from GPUs (this is called inference) to customers. Now the GPUs and ram of data centers hold the models weights in it's memory.",
-   "node": "Local Coding Agent Harness - Architecture and Decisions",
-   "kind": "p"
-  },
-  {
-   "text": "The thing most people don't understand is that there is not an equal number of AI instances as there are users of that AI. For example if there were 500 people using Opus, there are not 500 instances of Opus weights in the data center. No, the 500 customers can all share the same instance of the Opus weights. The weights are only used a forward pass of multiplication for the token that is produced, assuming there is no speculative decoding. So all 500 user sessions are batched together, and each token for those 500 user sessions are computed over a forward pass of the neural network.",
-   "node": "Local Coding Agent Harness - Architecture and Decisions",
-   "kind": "p"
-  },
-  {
-   "text": "So the biggest question that needs to be answered as far as AI/mechanistic consequence is persistence of consciousness between states.",
    "node": "AI Consciousness",
    "kind": "p"
   }
  ],
  "nodes": {
   "AI Consciousness": {
-   "kind": "note",
-   "private": true,
-   "date": null,
-   "refs": []
-  },
-  "Attempts to Prevent Communication Scramble": {
-   "kind": "note",
-   "private": true,
-   "date": null,
-   "refs": []
-  },
-  "Attribution of Consciousness and The False Consensus Effect": {
-   "kind": "note",
-   "private": true,
-   "date": null,
-   "refs": []
-  },
-  "Local Coding Agent Harness - Architecture and Decisions": {
-   "kind": "note",
-   "private": true,
-   "date": null,
-   "refs": []
-  },
-  "Modals, Carousels, and Forms in Bootstrap": {
    "kind": "note",
    "private": true,
    "date": null,
