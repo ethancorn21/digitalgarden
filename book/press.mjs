@@ -17,8 +17,11 @@
    An ES module: run(root, mode, selector), clear(root), state (ms, used: gpu | js). mode: 'press' | 'news'. */
 const STYLE = {
     /* jit: px off the line, tilt (rad), ink spread (gain: how far the threshold drops), fibre: how far the fibres move
-       it (edges only), feather: the edge's softness, squash: rim vs middle, dent: the impression's depth */
-    press: { jx: .14, jy: .22, tilt: .006, dens: .07, gain: .07, fibre: .10, feather: .07, squash: .10, dent: .10 },
+       it (edges only), feather: the edge's softness, squash: rim vs middle, dent: the impression's depth.
+       press toned down 2026-11-07 (Ethan: "every single hole ... bled through", "a little bit hard to read"): the
+       spread and the fibres about halved (gain .07 -> .04, fibre .10 -> .06, feather .07 -> .055), the dent .10 -> .06,
+       so a letter's counters stay open; the jitter, the tilt and the ink's density are as they were */
+    press: { jx: .14, jy: .22, tilt: .006, dens: .07, gain: .04, fibre: .06, feather: .055, squash: .10, dent: .06 },
     news: { jx: 0, jy: .08, tilt: 0, dens: .035, gain: .05, fibre: .17, feather: .09, squash: 0, dent: 0 },
   };
   const hash = (x, y, s) => { let h = (x * 374761393 + y * 668265263 + s * 2147483647) | 0; h = Math.imul(h ^ (h >>> 13), 1274126177); return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
