@@ -198,8 +198,32 @@ function mount(trace: HTMLElement, N: Record<string, Note>) {
       } else if (!(e.classList.contains("bead") && i != null && e.dataset.i !== i)) e.classList.add("on")
     })
   }
+  // a borrowed line, clicked, goes down to the note it came from (Ethan 2026-11-07). On a touch screen the first tap
+  // only shows the line, as a hover does, and a second tap on it goes, so a reader scrolling or resting a thumb never
+  // jumps; a tap that ends a scroll is no click at all. A click that ends a text selection selects, and goes nowhere
+  let tapped: HTMLElement | null = null
+  trace.addEventListener("pointerdown", (e) => {
+    const s = (e.target as HTMLElement).closest<HTMLElement>(".src")
+    tapped = e.pointerType !== "mouse" && s && !s.classList.contains("on") ? s : null
+  })
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches
+  let unlight = 0
+  let hold = 0
   trace.addEventListener("click", (e) => {
     const t = e.target as HTMLElement
+    const s = t.closest<HTMLElement>(".src")
+    if (s && !t.closest("a")) {
+      if (s === tapped || !getSelection()?.isCollapsed) return
+      const nl = labels.querySelector<HTMLElement>(`.nl[data-n="${q(s.dataset.n!)}"][data-l="0"]`)
+      if (!nl) return
+      nl.scrollIntoView({ block: "center", behavior: still ? "auto" : "smooth" })
+      light(s.dataset.n!, s.dataset.i)
+      // held while the page scrolls under the pointer, which would otherwise hover something else
+      hold = performance.now() + 2400
+      clearTimeout(unlight)
+      unlight = window.setTimeout(() => light(null), 2400)
+      return
+    }
     const go = t.closest<HTMLElement>("[data-go]")
     if (go) {
       e.preventDefault()
@@ -219,6 +243,7 @@ function mount(trace: HTMLElement, N: Record<string, Note>) {
     draw()
   })
   trace.addEventListener("mouseover", (e) => {
+    if (performance.now() < hold) return
     const t = e.target as HTMLElement
     if (t.closest(".more")) return
     const s = t.closest<HTMLElement>(".src")
@@ -226,7 +251,7 @@ function mount(trace: HTMLElement, N: Record<string, Note>) {
     const nl = t.closest<HTMLElement>(".nl")
     light(nl && ORDER.includes(nl.dataset.n!) ? nl.dataset.n! : null)
   })
-  trace.addEventListener("mouseleave", () => light(null))
+  trace.addEventListener("mouseleave", () => performance.now() < hold || light(null))
 
   let w = innerWidth
   let queued = false

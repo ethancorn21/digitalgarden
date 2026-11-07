@@ -3,7 +3,7 @@
 // (press.mjs), and the light/dark moon. The hero is picked by a small inline script in the index itself, so it never flashes.
 
 import { mountPlate } from "./hero/plate.js"
-import { run as press } from "./press.mjs"
+import { clear as unpress, run as press } from "./press.mjs"
 import { mountStrip } from "./strips/strips.js"
 
 // the type, printed (Ethan 2026-11-04, from the sketch in design/home-r5: "dark press looks the best. The ink bleed is
@@ -178,8 +178,13 @@ if (toggle) {
   toggle.hidden = false
   toggle.addEventListener("click", () => {
     const on = !root.classList.contains("md")
+    // the marks move every letter, so the old print would hang over the new text until it is set again (Ethan
+    // 2026-11-07: "a ghosting effect"): drop it at once, show the browser's text, and print again straight away
+    const col = document.querySelector(".col")
+    if (col) unpress(col)
     set(on)
-    reprint()
+    clearTimeout(pressT)
+    if (col) press(col, "press", PRINTED)
     // the reader's choice follows them to the next note
     try {
       localStorage.setItem("md", on ? "1" : "0")

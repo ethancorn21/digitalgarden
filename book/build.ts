@@ -161,7 +161,8 @@ function rewriteEmbeds(body: string, note: string): string {
         log(`warning: ${note}: embed ${whole} has no image in 7 - attachments, dropped`)
         return ""
       }
-      const width = /^\d+$/.test((opt ?? "").trim()) ? ` "${opt!.trim()}"` : "" // ![[x.jpg|400]]
+      // ![[x.jpg|400]]; a width of 0 (Obsidian writes it when a drag shrinks the image away) is no width, not hidden
+      const width = /^[1-9]\d*$/.test((opt ?? "").trim()) ? ` "${opt!.trim()}"` : ""
       return `![${target.trim().replace(/\.[a-z]+$/i, "")}](<${url}>${width})`
     },
   )
