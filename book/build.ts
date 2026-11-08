@@ -13,6 +13,7 @@
 import fs from "node:fs"
 import path from "node:path"
 import crypto from "node:crypto"
+import { execFileSync } from "node:child_process"
 import * as esbuild from "esbuild"
 import { unified } from "unified"
 import remarkParse from "remark-parse"
@@ -789,6 +790,57 @@ if (essays.length) {
   )
 }
 
+// ---------- /essays.json: the essays by when they were published, for the home's "Newest in writing" ----------
+//
+// An essay's date is the day its note was begun, and most were begun long before they were published (Ethan
+// 2026-11-07: the home should show "the most recent writing that I publish"). Published = the commit that first put the
+// file in 9 - essays (the pipeline commits before it builds, from a full clone); a rename inside the folder keeps the
+// old time. An essay git has not seen yet is being published now. Without git, the written date alone orders them
+
+function publishedTimes(): Map<string, string> | null {
+  let out: string
+  try {
+    out = execFileSync(
+      "git",
+      ["-C", REPO, "log", "--reverse", "-M", "--name-status", "--format=%x00%aI", "--", "content/9 - essays"],
+      { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"], maxBuffer: 64 << 20 },
+    )
+  } catch {
+    return null
+  }
+  const seen = new Map<string, string>()
+  for (const commit of out.split("\0").slice(1)) {
+    const [when, ...rows] = commit.trim().split("\n")
+    for (const row of rows) {
+      const [st, a, b] = row.split("\t")
+      const name = (p: string) => p.replace(/^content\/9 - essays\//, "")
+      if (st === "A" && a && !seen.has(name(a))) seen.set(name(a), when)
+      else if (st?.startsWith("R") && b) seen.set(name(b), seen.get(name(a)) ?? when)
+    }
+  }
+  return seen
+}
+const published = publishedTimes()
+const now = new Date().toISOString()
+fs.writeFileSync(
+  path.join(OUT, "essays.json"),
+  JSON.stringify(
+    essays
+      .map((e) => ({
+        title: e.name,
+        url: `${SITE}/essays/${e.slug}`,
+        date: e.date,
+        published: published ? (published.get(e.file) ?? now) : null,
+      }))
+      .sort(
+        (a, b) =>
+          (b.published ?? "").localeCompare(a.published ?? "") ||
+          (b.date ?? "").localeCompare(a.date ?? "") ||
+          a.title.localeCompare(b.title),
+      ),
+  ) + "\n",
+)
+
 // ---------- 404, attachments, redirects, headers ----------
 
 fs.writeFileSync(
@@ -861,6 +913,7 @@ fs.writeFileSync(
     "/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n",
     "/assets/*\n  Cache-Control: public, max-age=31536000, immutable\n",
     "/att/*\n  Cache-Control: public, max-age=2592000\n",
+    "/essays.json\n  Cache-Control: public, max-age=300\n  Access-Control-Allow-Origin: https://ethanlawcorn.com\n",
   ].join("\n"),
 )
 
