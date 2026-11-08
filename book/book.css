@@ -261,12 +261,12 @@ html:not(.js) .dir td.n a {
   font-size: 0.68em;
   color: var(--muted);
 }
-/* phones: the note and the listing a step smaller (they read huge and cut the names short), a ragged note, and no
-   Size column */
+/* phones: all reading type a step smaller (20px read huge and gave ~35 letters a line; 17px is iOS body text and
+   about Medium's 18px once Literata's tall x-height is counted, Ethan 2026-11-08), a ragged note, and no Size
+   column */
 @media (max-width: 520px) {
-  .index .letter,
-  .index .dir {
-    font-size: 17px;
+  :root {
+    --fs: 17px;
   }
   .letter p {
     text-align: left;
