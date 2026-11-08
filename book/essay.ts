@@ -255,15 +255,27 @@ function mount(trace: HTMLElement, N: Record<string, Note>) {
 
   let w = innerWidth
   let queued = false
-  addEventListener("resize", () => {
-    if (queued || innerWidth === w) return
+  const redraw = () => {
+    if (queued) return
     queued = true
     requestAnimationFrame(() => {
       queued = false
       w = innerWidth
       draw()
     })
-  })
+  }
+  addEventListener("resize", () => innerWidth === w || redraw())
+  // the essay's own box moving draws again too: an image (lazy, no height until it lands) arriving after the first draw
+  // pushed the text down under rails and notes drawn for the old page, so on a phone they ran through the last lines
+  // (Ethan 2026-11-07). The shift draw() sets changes only the width, so this settles after one more draw
+  let eh = 0
+  let ew = 0
+  new ResizeObserver(() => {
+    if (ess.offsetHeight === eh && ess.offsetWidth === ew) return
+    eh = ess.offsetHeight
+    ew = ess.offsetWidth
+    redraw()
+  }).observe(ess)
   draw()
   document.fonts?.ready.then(draw)
 }
